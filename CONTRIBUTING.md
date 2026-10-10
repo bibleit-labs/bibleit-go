@@ -12,7 +12,8 @@ Run `go test -race -count=1 ./...`, `go vet ./...`, and `go build ./...`
 for executable changes. CI validates Windows, Ubuntu, and macOS. Review links
 and content for documentation-only changes.
 
-Keep endpoint and credentials explicit. CLI profiles, terminal presentation,
+Keep credentials explicit and the service endpoint project-managed. Do not
+add constructor, environment or config endpoint overrides. CLI profiles, terminal presentation,
 browser orchestration, and process adapters belong in `bibleit-cli`; this
 library must not import the CLI. Add tests for meaningful protocol behavior,
 including unknown fields and malformed responses when relevant.
@@ -47,3 +48,7 @@ in the documentation. Use semantic-version tags for reviewed releases and
 explain compatibility changes in release notes. Consumers, including the CLI,
 choose when to update their pinned dependency; branch publication alone is
 not a stable API release.
+
+Publication is paused by the user. Keep commits and release work local until
+publication is explicitly resumed. `ServerEndpoint` is a loopback development
+placeholder; set the real production HTTPS address before shipping a release.

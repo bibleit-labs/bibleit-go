@@ -10,15 +10,15 @@ This module is released independently from [bibleit-cli](https://github.com/bibl
 It requires Go 1.27.1. The CLI imports this library; the library does not depend
 on the CLI or access its profiles. Python, Ruby, and Rust clients have separate repositories.
 
-```sh
-go get github.com/bibleit-labs/bibleit-go@latest
-```
+Publication is paused. Use the local checkout for development; no release
+version is available yet. The project-managed service address is currently
+`http://localhost:8080`, and will be replaced with the production HTTPS address.
+Applications cannot override it through configuration or environment variables.
 
 ## Usage
 
 ```go
 client, err := bibleit.NewClient(bibleit.Config{
-    Endpoint: "https://your-private-service",
     Token: token,
 })
 if err != nil {
@@ -66,9 +66,11 @@ do not log it indiscriminately.
 
 ## Behavior and current limits
 
-- Credentials and the endpoint are explicit. The client does not access CLI
-  profiles, launch a browser, or read environment variables.
-- Requests use HTTPS; HTTP is accepted only for loopback development URLs.
+- Credentials are explicit. The endpoint is the project-owned `ServerEndpoint`
+  constant; no constructor or environment override is provided. The client
+  does not access CLI profiles, launch a browser, or read environment variables.
+- The service uses a loopback HTTP placeholder during development. Set the
+  production HTTPS constant before release; remote HTTP remains rejected.
 - The default HTTP timeout is 15 seconds. Supply an `HTTPClient` to customize
   transport and timeouts. The client copies it and disables redirects.
 - Commands are limited to 8192 bytes and JSON request bodies to 16384 bytes,
@@ -194,12 +196,12 @@ labels with escaped controls, and expired/revoked credential exclusion.
 
 ## Authorization transport
 
-Use `NewAuthClient(AuthConfig{Endpoint: endpoint})` before a bearer credential
+Use `NewAuthClient(AuthConfig{})` before a bearer credential
 exists. The application owns PKCE verifier generation, browser authorization,
 callback-state validation and storage. Then exchange the approved code:
 
 ```go
-auth, err := bibleit.NewAuthClient(bibleit.AuthConfig{Endpoint: endpoint})
+auth, err := bibleit.NewAuthClient(bibleit.AuthConfig{})
 if err != nil {
     return err
 }
@@ -210,7 +212,7 @@ if err != nil {
     return err
 }
 client, err := bibleit.NewClient(bibleit.Config{
-    Endpoint: endpoint, Token: credential.AccessToken,
+    Token: credential.AccessToken,
 })
 if err != nil {
     return err
@@ -244,3 +246,17 @@ consumption, revocation and post-revocation authentication rejection.
 This is a public open source project. See [CONTRIBUTING.md](CONTRIBUTING.md)
 for development, validation, Conventional Commits and release expectations.
 The client is distributed under the [MIT license](LICENSE).
+
+
+## Fixed service address and local development
+
+Commands, browser-code exchange, and revocation construct requests at the same
+project-managed service. The optional HTTP client still configures transport and
+timeouts; it does not add a service URL option. Redirects remain blocked.
+The server repository stays separate and private. Future Python, Ruby and Rust
+clients follow the same fixed-service policy.
+
+Tests use in-memory transports. Disposable server integration routing exists only
+in `_test.go` helpers, excluded from customer builds. Keep this checkout beside
+`bibleit-cli` and use a local workspace while publication is paused. Do not push
+commits, tags or releases until the user resumes publication.

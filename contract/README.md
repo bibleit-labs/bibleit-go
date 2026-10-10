@@ -96,7 +96,7 @@ all typed results and authorization transport. See docs/status.md for counts.
 
 1. Resolve the remaining SECRET SET and repeated stats-field discrepancies.
 2. Finalize shell completion/destructive-command UX and native platform CI;
-   endpoint-bound profiles and versioned JSON/NDJSON are implemented.
+   account profiles at the project-managed service and versioned JSON/NDJSON are implemented.
 3. Define public bearer-authenticated workspace and event contracts with the server.
 4. Validate the core contract with Python, then Ruby and Rust; settle stable
    repository/package paths before publishing independent releases.
