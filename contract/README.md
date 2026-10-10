@@ -115,8 +115,10 @@ python3 ../bibleit-cli/scripts/check_server.py
 python3 ../bibleit-cli/scripts/check_server.py --integration
 ```
 
-Identical repeated response fields are accepted for compatibility with current
-Live stats; conflicting repeated values are rejected.
+Identical repeated response fields are accepted for compatibility with older
+Live stats responses; conflicting repeated values are rejected. The server
+encoder fix on 2026-10-10 emits one connection count; canonical and legacy
+response fixtures cover both forms.
 
 ## Translation metadata encoder issue
 

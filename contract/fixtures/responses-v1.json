@@ -15,12 +15,12 @@
   },
   {
     "name": "unicode-and-escapes",
-    "wire": "OK text=\"João \\\"amor\\\" \\\\ caminho\" empty=\"\"\n",
+    "wire": "OK text=\"Jo\u00e3o \\\"amor\\\" \\\\ caminho\" empty=\"\"\n",
     "records": [
       {
         "type": "ok",
         "fields": {
-          "text": "João \"amor\" \\ caminho",
+          "text": "Jo\u00e3o \"amor\" \\ caminho",
           "empty": ""
         }
       }
@@ -62,7 +62,7 @@
   },
   {
     "name": "live-stats",
-    "wire": "OK connections=1 connections=1 future=true\nCONNECTION id=\"c1\"\nEND\n",
+    "wire": "OK connections=1 future=true\nCONNECTION id=\"c1\"\nEND\n",
     "records": [
       {
         "type": "ok",
@@ -79,6 +79,25 @@
       }
     ],
     "server_response_term": "{ok,{live_stats,#{subscribers=>[#{id=><<\"c1\">>}],connections=>1,future=>true}}}"
+  },
+  {
+    "name": "legacy-live-stats-identical-duplicates",
+    "wire": "OK connections=1 connections=1 future=true\nCONNECTION id=\"c1\"\nEND\n",
+    "records": [
+      {
+        "type": "ok",
+        "fields": {
+          "connections": "1",
+          "future": "true"
+        }
+      },
+      {
+        "type": "connection",
+        "fields": {
+          "id": "c1"
+        }
+      }
+    ]
   },
   {
     "name": "live-push",
@@ -376,7 +395,7 @@
       {
         "type": "ok",
         "fields": {
-          "label": "first\nsecond\r\t\u0001"
+          "label": "first\nsecond\r\t\u0001\u007f"
         }
       }
     ],

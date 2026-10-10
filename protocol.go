@@ -175,7 +175,7 @@ func ParseRecord(line string) (Record, error) {
 			return Record{}, errors.New("empty protocol field")
 		}
 		if previous, exists := r.Fields[key]; exists {
-			// Current LIVE STATS emits connections twice. Identical values are
+			// Older LIVE STATS responses emitted connections twice. Identical values are
 			// unambiguous; conflicting duplicates remain malformed.
 			if previous != value {
 				return Record{}, fmt.Errorf("conflicting protocol field %q", key)

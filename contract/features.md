@@ -42,11 +42,11 @@ source. Browser presence alone does not imply a supported bearer API.
 
 ## Outstanding server discrepancies
 
-`SECRET SET` documentation differs from the parser. Also, the current stats
-encoder emits `connections` from both its explicit count and the stats map.
-The client accepts identical repeated values, deduplicates their output order,
-and rejects conflicting repeated values. Both observations have regression
-fixtures. Server-side fixes are still needed before declaring this contract stable.
+`SECRET SET` documentation differs from the parser and remains server-owned.
+The assessment fixed duplicate `LIVE STATS` connection counts on 2026-10-10;
+the encoder now emits one count derived from subscriber records. Canonical
+fixtures use a single field. The client retains compatibility with older identical
+duplicates, deduplicates their output order and rejects conflicting values.
 
 
 The assessment fixed token scope serialization using permission CSV. Real token

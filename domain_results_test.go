@@ -70,7 +70,7 @@ func TestTypedLiveOptionalFieldsAndUnknownStatus(t *testing.T) {
 }
 func TestTypedLiveStatisticsAndStack(t *testing.T) {
 	client := discoveryClient(t, map[string]string{
-		"LIVE live STATS":      "OK id=live connections=1 connections=1 actor_connections=1 anonymous_connections=0 running_for_seconds=0 revision=2 stack_entries=1 future=stats\nCONNECTION actor=user access=actor connected_at=100 connected_for_seconds=0 future=row\nEND\n",
+		"LIVE live STATS":      "OK id=live connections=1 actor_connections=1 anonymous_connections=0 running_for_seconds=0 revision=2 stack_entries=1 future=stats\nCONNECTION actor=user access=actor connected_at=100 connected_for_seconds=0 future=row\nEND\n",
 		"LIVE live STACK INFO": "OK id=live count=1\nSTACK position=1 translation=web reference=\"\" text=Verse future=entry\nEND\n",
 	})
 	stats, err := client.GetLiveStats(context.Background(), "live")
