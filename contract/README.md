@@ -22,7 +22,10 @@ not multiplexed interactive channels.
 Commands are constructed from supported operations and individual arguments.
 Arguments containing spaces or tabs are double quoted. CR, LF, NUL, and double
 quotes are rejected: the current server request tokenizer does not implement
-escaped quotes. Backslashes in requests are literal and must not be doubled.
+escaped quotes. The server rejects empty quoted arguments, unmatched quotes,
+concatenated quote segments and attempted escaped embedded quotes with
+`bad_command`. Backslashes in requests are literal and must not be doubled; a
+backslash immediately before a closing delimiter remains part of the value.
 The server's response encoder does escape quotes, backslashes, LF/CR/tab and ASCII control characters
 (`\n`, `\r`, `\t`, `\uNNNN`); clients decode these when parsing field values. Request and response escaping differ in v1.
 
