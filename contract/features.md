@@ -55,3 +55,12 @@ metadata integration passes, including permission denial and inactive-token filt
 The assessment also fixed an intermediate normal Live-deletion regression during
 stream authorization changes. The real OpenSSH subscription once again receives
 EVENT closed; the complete integration run passes.
+
+Fresh local integration (2026-10-10), using client `9332d35` and CLI `045fd20`,
+passes all 27 decoder/18 encoder fixtures, 7 targeted security cases, 11 HTTP
+subtests, real OpenSSH subscription/profile/output checks and 8 auth/key EUnit
+tests. `server-baseline.json` records the tested server snapshot at HEAD
+`1a266cc8bf6aa726c4890b78ddf95a3aadda0ba0` plus assessment changes. Both full
+runs passed; subsequent translation/registry edits remain outside that snapshot.
+The runner isolates the fixed localhost:8080 endpoint and removes its disposable
+database. No production endpoint or browser-only API coverage is implied.
