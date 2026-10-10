@@ -18,9 +18,7 @@ Applications cannot override it through configuration or environment variables.
 ## Usage
 
 ```go
-client, err := bibleit.NewClient(bibleit.Config{
-    Token: token,
-})
+client, err := bibleit.NewClient(apiToken)
 if err != nil {
     return err
 }
@@ -196,12 +194,12 @@ labels with escaped controls, and expired/revoked credential exclusion.
 
 ## Authorization transport
 
-Use `NewAuthClient(AuthConfig{})` before a bearer credential
+Use `NewAuthClient()` before a bearer credential
 exists. The application owns PKCE verifier generation, browser authorization,
 callback-state validation and storage. Then exchange the approved code:
 
 ```go
-auth, err := bibleit.NewAuthClient(bibleit.AuthConfig{})
+auth, err := bibleit.NewAuthClient()
 if err != nil {
     return err
 }
@@ -211,9 +209,7 @@ credential, err := auth.ExchangeCode(ctx, bibleit.CodeExchange{
 if err != nil {
     return err
 }
-client, err := bibleit.NewClient(bibleit.Config{
-    Token: credential.AccessToken,
-})
+client, err := bibleit.NewClient(credential.AccessToken)
 if err != nil {
     return err
 }
@@ -256,7 +252,27 @@ timeouts; it does not add a service URL option. Redirects remain blocked.
 The server repository stays separate and private. Future Python, Ruby and Rust
 clients follow the same fixed-service policy.
 
-Tests use in-memory transports. Disposable server integration routing exists only
-in `_test.go` helpers, excluded from customer builds. Keep this checkout beside
+Tests use in-memory transports. Real-server integration uses the public constructors and a disposable server
+at the fixed endpoint; client URLs and destinations are not overridden. Keep this checkout beside
 `bibleit-cli` and use a local workspace while publication is paused. Do not push
 commits, tags or releases until the user resumes publication.
+
+
+## API token and custom HTTP transport
+
+Use the term **API token** for the bearer credential supplied to this client.
+It matches the server's scoped, expiring token resources. `NewClient(apiToken)`
+returns `(*Client, error)` and rejects invalid credentials before network access.
+The API token is kept private; constructor errors do not include its value.
+
+For HTTP transport or timeout customization, use
+`NewClientWithHTTPClient(apiToken, httpClient)` or
+`NewAuthClientWithHTTPClient(httpClient)`. The supplied client is copied, redirects
+are blocked, and the service endpoint remains fixed. No operation is retried.
+This keeps the ordinary constructor to a single credential argument, inspired by
+[Resend's constructor pattern](https://github.com/resend/resend-go/blob/main/resend.go).
+
+To run real-server checks while the host service is using port 8080, use the CLI's
+`python3 ../bibleit-cli/scripts/check_server_container.py`. That runner builds a
+frozen source snapshot in an isolated container namespace with its own temporary
+database; it does not expose host ports or require client endpoint configuration.

@@ -52,3 +52,9 @@ not a stable API release.
 Publication is paused by the user. Keep commits and release work local until
 publication is explicitly resumed. `ServerEndpoint` is a loopback development
 placeholder; set the real production HTTPS address before shipping a release.
+
+The standard constructor is `NewClient(apiToken)` with a validation error return.
+Use `NewClientWithHTTPClient` for transport customization. Real-server integration
+now exercises those public constructors at the fixed endpoint; it does not change
+client destinations. The CLI's container harness provides an isolated namespace
+when the developer's port 8080 is in use.

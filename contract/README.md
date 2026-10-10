@@ -159,3 +159,13 @@ bad-verifier consumption, logout and post-logout rejection.
 These fixtures are a versioned snapshot in this client. The CLI keeps a matching
 snapshot for its server integration harness. Synchronize changes explicitly
 across client repositories; no fixture download occurs during builds.
+
+
+## Fixed-service integration (2026-10-10)
+
+The public `NewClient(apiToken)` and `NewAuthClient()` constructors pass against
+a real server at the fixed `http://localhost:8080` address, without private
+URL/destination overrides. Use
+`python3 ../bibleit-cli/scripts/check_server_container.py` for an isolated
+container namespace while host port 8080 is occupied. The matching baseline
+records current server source fingerprints and the fixed HTTP endpoint.

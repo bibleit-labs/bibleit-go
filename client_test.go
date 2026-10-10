@@ -8,6 +8,7 @@ import (
 	"net/http"
 	"strings"
 	"testing"
+	"time"
 )
 
 type roundTripFunc func(*http.Request) (*http.Response, error)
@@ -18,7 +19,7 @@ func reply(status int, body string) *http.Response {
 }
 func testClient(t *testing.T, fn roundTripFunc) *Client {
 	t.Helper()
-	c, err := NewClient(Config{Token: "bt_test", HTTPClient: &http.Client{Transport: fn}})
+	c, err := NewClientWithHTTPClient("bt_test", &http.Client{Transport: fn})
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -176,11 +177,11 @@ func TestPublicClientsUseProjectEndpoint(t *testing.T) {
 			return reply(200, "OK pong=true\n"), nil
 		}
 	})}
-	client, err := NewClient(Config{Token: "bt_test", HTTPClient: transport})
+	client, err := NewClientWithHTTPClient("bt_test", transport)
 	if err != nil {
 		t.Fatal(err)
 	}
-	auth, err := NewAuthClient(AuthConfig{HTTPClient: transport})
+	auth, err := NewAuthClientWithHTTPClient(transport)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -195,5 +196,32 @@ func TestPublicClientsUseProjectEndpoint(t *testing.T) {
 	}
 	if strings.Join(paths, ",") != "/api/cli/command,/api/cli/token,/api/cli/logout" {
 		t.Fatal(paths)
+	}
+}
+
+func TestSimpleClientRejectsInvalidAPITokens(t *testing.T) {
+	calls := 0
+	httpClient := &http.Client{Transport: roundTripFunc(func(*http.Request) (*http.Response, error) {
+		calls++
+		return reply(200, "OK pong=true\n"), nil
+	})}
+	for _, apiToken := range []string{"", " \t", "bad\r\ntoken", "bad\x00token"} {
+		if _, err := NewClient(apiToken); err == nil {
+			t.Fatal("simple constructor accepted an invalid API token")
+		}
+		if _, err := NewClientWithHTTPClient(apiToken, httpClient); err == nil {
+			t.Fatal("custom constructor accepted an invalid API token")
+		}
+	}
+	if calls != 0 {
+		t.Fatal("constructor made a request")
+	}
+	client, err := NewClient("bt_test")
+	if err != nil || client.endpoint != ServerEndpoint || client.apiToken != "bt_test" || client.http.Timeout != 15*time.Second {
+		t.Fatal("invalid default client", err)
+	}
+	auth, err := NewAuthClient()
+	if err != nil || auth.endpoint != ServerEndpoint || auth.http.Timeout != 15*time.Second {
+		t.Fatal("invalid default auth client", err)
 	}
 }
