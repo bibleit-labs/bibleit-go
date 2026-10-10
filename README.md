@@ -237,3 +237,10 @@ credential or one whose revocation was acknowledged.
 
 Real HTTP checks cover successful exchange/use, replay rejection, bad-verifier
 consumption, revocation and post-revocation authentication rejection.
+
+
+## Contributing and license
+
+This is a public open source project. See [CONTRIBUTING.md](CONTRIBUTING.md)
+for development, validation, Conventional Commits and release expectations.
+The client is distributed under the [MIT license](LICENSE).
