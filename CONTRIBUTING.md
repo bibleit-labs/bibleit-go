@@ -49,8 +49,9 @@ explain compatibility changes in release notes. Consumers, including the CLI,
 choose when to update their pinned dependency; branch publication alone is
 not a stable API release.
 
-Publication is paused by the user. Keep commits and release work local until
-publication is explicitly resumed. `ServerEndpoint` is a loopback development
+Source branch pushes and private CI are authorized as of 2026-10-11. Use
+Conventional Commits and branches without a codex prefix. Customer release tags
+and releases remain paused pending production readiness. `ServerEndpoint` is a loopback development
 placeholder; set the real production HTTPS address before shipping a release.
 
 The standard constructor is `NewClient(apiToken)` with a validation error return.

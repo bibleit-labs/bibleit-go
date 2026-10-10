@@ -10,7 +10,8 @@ This module is released independently from [bibleit-cli](https://github.com/bibl
 It requires Go 1.27.1. The CLI imports this library; the library does not depend
 on the CLI or access its profiles. Python, Ruby, and Rust clients have separate repositories.
 
-Publication is paused. Use the local checkout for development; no release
+Source pushes and private CI are authorized. Customer releases and tags remain
+paused; use the checkout for development. No release
 version is available yet. The project-managed service address is currently
 `http://localhost:8080`, and will be replaced with the production HTTPS address.
 Applications cannot override it through configuration or environment variables.
@@ -262,8 +263,9 @@ clients follow the same fixed-service policy.
 
 Tests use in-memory transports. Real-server integration uses the public constructors and a disposable server
 at the fixed endpoint; client URLs and destinations are not overridden. Keep this checkout beside
-`bibleit-cli` and use a local workspace while publication is paused. Do not push
-commits, tags or releases until the user resumes publication.
+`bibleit-cli` and use a local workspace while the client remains unreleased.
+Source branches may be pushed to the private repository; customer release tags
+and releases remain gated on production readiness.
 
 
 ## API token and custom HTTP transport
