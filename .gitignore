@@ -1,0 +1,7 @@
+build/
+*.test
+*.exe
+coverage.out
+go.work
+go.work.sum
+.DS_Store
