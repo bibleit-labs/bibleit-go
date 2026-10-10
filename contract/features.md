@@ -64,3 +64,11 @@ tests. `server-baseline.json` records the tested server snapshot at HEAD
 runs passed; subsequent translation/registry edits remain outside that snapshot.
 The runner isolates the fixed localhost:8080 endpoint and removes its disposable
 database. No production endpoint or browser-only API coverage is implied.
+
+Latest assessment validation (2026-10-10), CLI harness `26de771` and client
+`5138077`, passes the full HTTP/SSH gate plus 10 import-access and 14 publication
+cases. The immutable publication module, concurrent archive installation and
+retained-handle changes are included. Source (63) and test (57) fingerprints in
+`server-baseline.json` matched the server working tree at completion. The optional
+`--imports` runner executes actual suite callbacks/cases with local fixtures,
+not the full Common Test campaign; later server edits need a fresh snapshot.
