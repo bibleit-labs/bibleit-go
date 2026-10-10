@@ -1,5 +1,24 @@
 # Bibleit client contract: protocol v1
 
+## Latest assessment compatibility snapshot — 11 October 2026
+
+Full isolated HTTP/SSH/import checks passed against server
+c2beef5334c249f65daedd0e279b8d9252f0d51b plus assessment working-tree changes,
+with native libbibleit f6fed37919c848b1aa0208900af992a5e8a507f2. The baseline
+records 65 Erlang source, 62 test and 11 native build-input fingerprints. The
+native source is rebuilt inside the isolated Linux container; snapshot copying
+rejects changes to native inputs or revision during capture. Both repositories
+carry identical verified baseline bytes. This is a development snapshot, not a
+compatibility claim against a committed/deployed release.
+
+Passing coverage: 34 decoder/18 encoder fixtures, seven server security cases,
+11 Go HTTP subtests, real OpenSSH subscription/pause/reconnect/delete closure,
+single-credential/output parity, 17 auth/key/protocol tests and 25 import-access/
+publication cases. The disposable database is removed after validation. No
+management WebSocket client transport is implemented; its soak/full-suite results
+belong to the separate server assessment.
+
+
 This directory starts a language-neutral compatibility suite for the Go,
 Python, Ruby, and Rust clients. It records current server behavior. It does not
 change the server protocol or constitute a complete formal specification.
