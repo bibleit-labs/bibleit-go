@@ -34,27 +34,29 @@ func (e *RequestSizeError) Error() string {
 	return fmt.Sprintf("%s is %d bytes; maximum is %d", e.Part, e.Bytes, e.Limit)
 }
 
-// Config supplies credentials explicitly. HTTPClient is optional; the default
-// has a 15-second timeout. No operation is retried automatically.
-type Config struct {
-	Token      string
-	HTTPClient *http.Client
-}
 type Client struct {
 	endpoint string
-	token    string
+	apiToken string
 	http     *http.Client
 }
 
-func NewClient(config Config) (*Client, error) {
-	if config.Token == "" || strings.ContainsAny(config.Token, "\r\n") {
-		return nil, errors.New("a bearer token is required")
+// NewClient creates a client using an API token and the project-managed service.
+// The default HTTP timeout is 15 seconds. Operations are never retried automatically.
+func NewClient(apiToken string) (*Client, error) {
+	return NewClientWithHTTPClient(apiToken, nil)
+}
+
+// NewClientWithHTTPClient configures HTTP transport/timeouts while retaining the
+// fixed service endpoint. The supplied HTTP client is copied and redirects blocked.
+func NewClientWithHTTPClient(apiToken string, httpClient *http.Client) (*Client, error) {
+	if strings.TrimSpace(apiToken) == "" || strings.ContainsAny(apiToken, "\r\n\x00") {
+		return nil, errors.New("a valid API token is required")
 	}
-	endpoint, h, err := newHTTPTransport(ServerEndpoint, config.HTTPClient)
+	endpoint, h, err := newHTTPTransport(ServerEndpoint, httpClient)
 	if err != nil {
 		return nil, err
 	}
-	return &Client{endpoint: endpoint, token: config.Token, http: h}, nil
+	return &Client{endpoint: endpoint, apiToken: apiToken, http: h}, nil
 }
 
 func newHTTPTransport(endpoint string, supplied *http.Client) (string, *http.Client, error) {
@@ -109,7 +111,7 @@ func (c *Client) Execute(ctx context.Context, command Command) (Response, error)
 	if err != nil {
 		return Response{}, err
 	}
-	req.Header.Set("Authorization", "Bearer "+c.token)
+	req.Header.Set("Authorization", "Bearer "+c.apiToken)
 	req.Header.Set("Content-Type", "application/json")
 	res, err := c.http.Do(req)
 	if err != nil {

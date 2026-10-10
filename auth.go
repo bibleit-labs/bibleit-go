@@ -11,12 +11,6 @@ import (
 	"strings"
 )
 
-// AuthConfig supplies an optional HTTP transport, without a bearer token.
-// Authorization always uses the project-managed ServerEndpoint.
-type AuthConfig struct {
-	HTTPClient *http.Client
-}
-
 // AuthClient exchanges an approved browser code. It does not run a browser,
 // validate callback state, persist credentials, or retry a consumed code.
 type AuthClient struct {
@@ -24,8 +18,15 @@ type AuthClient struct {
 	http     *http.Client
 }
 
-func NewAuthClient(config AuthConfig) (*AuthClient, error) {
-	endpoint, h, err := newHTTPTransport(ServerEndpoint, config.HTTPClient)
+// NewAuthClient creates an unauthenticated client for browser-code exchange.
+func NewAuthClient() (*AuthClient, error) {
+	return NewAuthClientWithHTTPClient(nil)
+}
+
+// NewAuthClientWithHTTPClient configures transport/timeouts for code exchange
+// at the same fixed service endpoint. It copies the supplied HTTP client.
+func NewAuthClientWithHTTPClient(httpClient *http.Client) (*AuthClient, error) {
+	endpoint, h, err := newHTTPTransport(ServerEndpoint, httpClient)
 	if err != nil {
 		return nil, err
 	}
@@ -99,7 +100,7 @@ func (c *Client) RevokeCredential(ctx context.Context) error {
 	if err != nil {
 		return err
 	}
-	req.Header.Set("Authorization", "Bearer "+c.token)
+	req.Header.Set("Authorization", "Bearer "+c.apiToken)
 	res, err := c.http.Do(req)
 	if err != nil {
 		return err

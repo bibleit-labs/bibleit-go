@@ -17,7 +17,7 @@ func main() {
 	}
 }
 func run() error {
-	client, err := bibleit.NewClient(bibleit.Config{Token: os.Getenv("BIBLEIT_TOKEN")})
+	client, err := bibleit.NewClient(os.Getenv("BIBLEIT_TOKEN"))
 	if err != nil {
 		return err
 	}
