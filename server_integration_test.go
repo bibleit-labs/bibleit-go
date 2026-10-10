@@ -14,7 +14,7 @@ func TestServerHTTPIntegration(t *testing.T) {
 	if os.Getenv("BIBLEIT_CLIENT_TEST_DISPOSABLE") != "1" {
 		t.Skip("run python3 scripts/check_server.py --integration")
 	}
-	c, err := NewClient(Config{Endpoint: os.Getenv("BIBLEIT_INTEGRATION_ENDPOINT"), Token: os.Getenv("BIBLEIT_INTEGRATION_TOKEN")})
+	c, err := integrationClient(Config{Token: os.Getenv("BIBLEIT_INTEGRATION_TOKEN")})
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -57,14 +57,14 @@ func TestServerHTTPIntegration(t *testing.T) {
 		if !foundManual || !foundScoped {
 			t.Fatal("missing manual/scoped metadata")
 		}
-		scoped, err := NewClient(Config{Endpoint: os.Getenv("BIBLEIT_INTEGRATION_ENDPOINT"), Token: os.Getenv("BIBLEIT_SCOPED_TOKEN")})
+		scoped, err := integrationClient(Config{Token: os.Getenv("BIBLEIT_SCOPED_TOKEN")})
 		if err != nil {
 			t.Fatal(err)
 		}
 		if _, err = scoped.ListTokens(ctx); err != nil {
 			t.Fatal(err)
 		}
-		denied, err := NewClient(Config{Endpoint: os.Getenv("BIBLEIT_INTEGRATION_ENDPOINT"), Token: os.Getenv("BIBLEIT_DENIED_TOKEN")})
+		denied, err := integrationClient(Config{Token: os.Getenv("BIBLEIT_DENIED_TOKEN")})
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -76,7 +76,7 @@ func TestServerHTTPIntegration(t *testing.T) {
 	})
 
 	t.Run("typed authorization exchange and revocation", func(t *testing.T) {
-		auth, err := NewAuthClient(AuthConfig{Endpoint: os.Getenv("BIBLEIT_INTEGRATION_ENDPOINT")})
+		auth, err := integrationAuthClient()
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -88,7 +88,7 @@ func TestServerHTTPIntegration(t *testing.T) {
 		if result.Actor != "security-owner" || result.TokenID == "" || result.IdentityName == "" || result.AccessToken == "" {
 			t.Fatal("missing authorization metadata")
 		}
-		credential, err := NewClient(Config{Endpoint: os.Getenv("BIBLEIT_INTEGRATION_ENDPOINT"), Token: result.AccessToken})
+		credential, err := integrationClient(Config{Token: result.AccessToken})
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -128,7 +128,7 @@ func TestServerHTTPIntegration(t *testing.T) {
 		if token == "" {
 			t.Fatal("missing expired-token fixture")
 		}
-		expired, err := NewClient(Config{Endpoint: os.Getenv("BIBLEIT_INTEGRATION_ENDPOINT"), Token: token})
+		expired, err := integrationClient(Config{Token: token})
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -333,4 +333,28 @@ func TestServerHTTPIntegration(t *testing.T) {
 	if !errors.As(err, &serverErr) || serverErr.Code != "not_found" {
 		t.Fatalf("missing Live: %v", err)
 	}
+}
+
+// Fixture routing is private to the test binary, never part of the client API.
+func integrationClient(config Config) (*Client, error) {
+	client, err := NewClient(config)
+	if err == nil {
+		endpoint, transport, transportErr := newHTTPTransport(os.Getenv("BIBLEIT_INTEGRATION_ENDPOINT"), config.HTTPClient)
+		if transportErr != nil {
+			return nil, transportErr
+		}
+		client.endpoint, client.http = endpoint, transport
+	}
+	return client, err
+}
+func integrationAuthClient() (*AuthClient, error) {
+	client, err := NewAuthClient(AuthConfig{})
+	if err == nil {
+		endpoint, transport, transportErr := newHTTPTransport(os.Getenv("BIBLEIT_INTEGRATION_ENDPOINT"), nil)
+		if transportErr != nil {
+			return nil, transportErr
+		}
+		client.endpoint, client.http = endpoint, transport
+	}
+	return client, err
 }

@@ -11,9 +11,9 @@ import (
 	"strings"
 )
 
-// AuthConfig supplies an endpoint and optional transport, without a bearer token.
+// AuthConfig supplies an optional HTTP transport, without a bearer token.
+// Authorization always uses the project-managed ServerEndpoint.
 type AuthConfig struct {
-	Endpoint   string
 	HTTPClient *http.Client
 }
 
@@ -25,7 +25,7 @@ type AuthClient struct {
 }
 
 func NewAuthClient(config AuthConfig) (*AuthClient, error) {
-	endpoint, h, err := newHTTPTransport(config.Endpoint, config.HTTPClient)
+	endpoint, h, err := newHTTPTransport(ServerEndpoint, config.HTTPClient)
 	if err != nil {
 		return nil, err
 	}

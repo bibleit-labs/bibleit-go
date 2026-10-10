@@ -40,7 +40,7 @@ func TestCodeExchangeAndRevocation(t *testing.T) {
 		}
 	}))
 	defer server.Close()
-	c, err := NewAuthClient(AuthConfig{Endpoint: server.URL, HTTPClient: server.Client()})
+	c, err := NewAuthClient(AuthConfig{HTTPClient: server.Client()})
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -48,7 +48,7 @@ func TestCodeExchangeAndRevocation(t *testing.T) {
 	if err != nil || result.Actor != "user" || result.IdentityName != "@user" || result.AuthProvider != "email" || result.TokenID != "id" || result.AccessToken != "bt_secret" || string(result.Fields["future"]) != `{"kept":true}` {
 		t.Fatal("invalid exchange result", err)
 	}
-	authenticated, err := NewClient(Config{Endpoint: server.URL, HTTPClient: server.Client(), Token: result.AccessToken})
+	authenticated, err := NewClient(Config{HTTPClient: server.Client(), Token: result.AccessToken})
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -82,13 +82,13 @@ func TestAuthenticationFailures(t *testing.T) {
 				fmt.Fprint(w, test.body)
 			}))
 			defer server.Close()
-			c, _ := NewAuthClient(AuthConfig{Endpoint: server.URL, HTTPClient: server.Client()})
+			c, _ := NewAuthClient(AuthConfig{HTTPClient: server.Client()})
 			_, err := c.ExchangeCode(context.Background(), CodeExchange{Code: "code", Verifier: "verifier"})
 			var httpErr *HTTPError
 			if !errors.As(err, &httpErr) || httpErr.StatusCode != test.status || httpErr.Code != test.code {
 				t.Fatalf("%v", err)
 			}
-			authenticated, _ := NewClient(Config{Endpoint: server.URL, HTTPClient: server.Client(), Token: "secret"})
+			authenticated, _ := NewClient(Config{HTTPClient: server.Client(), Token: "secret"})
 			err = authenticated.RevokeCredential(context.Background())
 			if !errors.As(err, &httpErr) || httpErr.StatusCode != test.status || httpErr.Code != test.code {
 				t.Fatalf("%v", err)
@@ -103,7 +103,7 @@ func TestAuthenticationFailures(t *testing.T) {
 	}
 	for _, body := range []string{`{}`, `null`, `{"actor":"user","access_token":42}`, `{"actor":"user","access_token":"bad\r\ntoken"}`, `{"access_token":"secret"}`, `{"actor":"user","access_token":""}`, `{"actor":"user","access_token":"secret"} trailing`, strings.Repeat("x", maxResponseBytes+1)} {
 		server := authTestServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) { fmt.Fprint(w, body) }))
-		c, _ := NewAuthClient(AuthConfig{Endpoint: server.URL, HTTPClient: server.Client()})
+		c, _ := NewAuthClient(AuthConfig{HTTPClient: server.Client()})
 		if _, err := c.ExchangeCode(context.Background(), CodeExchange{Code: "code", Verifier: "verifier"}); err == nil {
 			t.Error("accepted invalid response")
 		}
@@ -113,7 +113,7 @@ func TestAuthenticationFailures(t *testing.T) {
 
 func TestAuthValidationCancellationAndTransportCopy(t *testing.T) {
 	for _, endpoint := range []string{"http://remote.example", "https://user:secret@server.example", "https://server.example?query=x", "https://server.example#fragment", "invalid"} {
-		if _, err := NewAuthClient(AuthConfig{Endpoint: endpoint}); err == nil {
+		if _, _, err := newHTTPTransport(endpoint, nil); err == nil {
 			t.Error("accepted invalid endpoint")
 		}
 	}
@@ -121,7 +121,7 @@ func TestAuthValidationCancellationAndTransportCopy(t *testing.T) {
 	server := authTestServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) { calls.Add(1); w.WriteHeader(204) }))
 	defer server.Close()
 	supplied := server.Client()
-	c, err := NewAuthClient(AuthConfig{Endpoint: server.URL, HTTPClient: supplied})
+	c, err := NewAuthClient(AuthConfig{HTTPClient: supplied})
 	if err != nil || supplied.CheckRedirect != nil || c.http == supplied {
 		t.Fatal("transport not copied", err)
 	}
@@ -135,7 +135,7 @@ func TestAuthValidationCancellationAndTransportCopy(t *testing.T) {
 	if _, err := c.ExchangeCode(ctx, CodeExchange{Code: "code", Verifier: "verifier"}); !errors.Is(err, context.Canceled) {
 		t.Fatalf("%v", err)
 	}
-	authenticated, _ := NewClient(Config{Endpoint: server.URL, HTTPClient: server.Client(), Token: "secret"})
+	authenticated, _ := NewClient(Config{HTTPClient: server.Client(), Token: "secret"})
 	if err := authenticated.RevokeCredential(ctx); !errors.Is(err, context.Canceled) {
 		t.Fatalf("%v", err)
 	}

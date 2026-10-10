@@ -18,7 +18,7 @@ func reply(status int, body string) *http.Response {
 }
 func testClient(t *testing.T, fn roundTripFunc) *Client {
 	t.Helper()
-	c, err := NewClient(Config{Endpoint: "https://bibleit.example", Token: "bt_test", HTTPClient: &http.Client{Transport: fn}})
+	c, err := NewClient(Config{Token: "bt_test", HTTPClient: &http.Client{Transport: fn}})
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -121,14 +121,14 @@ func TestHTTPRejectsStreamingAndZeroCommandLocally(t *testing.T) {
 	}
 }
 
-func TestEndpointValidation(t *testing.T) {
+func TestInternalTransportValidation(t *testing.T) {
 	for _, endpoint := range []string{"http://remote.example", "https://user:pass@example.com", "https://example.com?token=secret", "https://example.com#fragment", "missing"} {
-		if _, err := NewClient(Config{Endpoint: endpoint, Token: "bt_test"}); err == nil {
+		if _, _, err := newHTTPTransport(endpoint, nil); err == nil {
 			t.Fatalf("accepted %s", endpoint)
 		}
 	}
 	for _, endpoint := range []string{"https://example.com", "http://127.0.0.1:8080", "http://localhost:8080", "http://[::1]:8080"} {
-		if _, err := NewClient(Config{Endpoint: endpoint, Token: "bt_test"}); err != nil {
+		if _, _, err := newHTTPTransport(endpoint, nil); err != nil {
 			t.Fatalf("%s: %v", endpoint, err)
 		}
 	}
@@ -156,5 +156,44 @@ func TestHTTPJSONErrorMetadata(t *testing.T) {
 	var e *HTTPError
 	if !errors.As(err, &e) || e.StatusCode != 413 || e.Code != "request_too_large" || e.Fields["future"] != "kept" {
 		t.Fatalf("got %#v", err)
+	}
+}
+
+func TestPublicClientsUseProjectEndpoint(t *testing.T) {
+	t.Setenv("BIBLEIT_ENDPOINT", "https://other.example")
+	paths := []string{}
+	transport := &http.Client{Transport: roundTripFunc(func(r *http.Request) (*http.Response, error) {
+		if r.URL.Scheme+"://"+r.URL.Host != ServerEndpoint {
+			t.Fatalf("unexpected destination: %s", r.URL)
+		}
+		paths = append(paths, r.URL.Path)
+		switch r.URL.Path {
+		case "/api/cli/token":
+			return reply(200, `{"actor":"user","access_token":"bt_test"}`), nil
+		case "/api/cli/logout":
+			return reply(204, ""), nil
+		default:
+			return reply(200, "OK pong=true\n"), nil
+		}
+	})}
+	client, err := NewClient(Config{Token: "bt_test", HTTPClient: transport})
+	if err != nil {
+		t.Fatal(err)
+	}
+	auth, err := NewAuthClient(AuthConfig{HTTPClient: transport})
+	if err != nil {
+		t.Fatal(err)
+	}
+	if _, err := client.Ping(context.Background()); err != nil {
+		t.Fatal(err)
+	}
+	if _, err := auth.ExchangeCode(context.Background(), CodeExchange{Code: "code", Verifier: "verifier"}); err != nil {
+		t.Fatal(err)
+	}
+	if err := client.RevokeCredential(context.Background()); err != nil {
+		t.Fatal(err)
+	}
+	if strings.Join(paths, ",") != "/api/cli/command,/api/cli/token,/api/cli/logout" {
+		t.Fatal(paths)
 	}
 }

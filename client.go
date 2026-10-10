@@ -13,6 +13,11 @@ import (
 	"time"
 )
 
+// ServerEndpoint is the project-managed Bibleit service address. Applications
+// cannot override it through configuration or environment variables. This local
+// development placeholder will be replaced with the production HTTPS address.
+const ServerEndpoint = "http://localhost:8080"
+
 const maxResponseBytes = 2 << 20
 
 const MaxCommandBytes = 8192
@@ -32,7 +37,6 @@ func (e *RequestSizeError) Error() string {
 // Config supplies credentials explicitly. HTTPClient is optional; the default
 // has a 15-second timeout. No operation is retried automatically.
 type Config struct {
-	Endpoint   string
 	Token      string
 	HTTPClient *http.Client
 }
@@ -46,7 +50,7 @@ func NewClient(config Config) (*Client, error) {
 	if config.Token == "" || strings.ContainsAny(config.Token, "\r\n") {
 		return nil, errors.New("a bearer token is required")
 	}
-	endpoint, h, err := newHTTPTransport(config.Endpoint, config.HTTPClient)
+	endpoint, h, err := newHTTPTransport(ServerEndpoint, config.HTTPClient)
 	if err != nil {
 		return nil, err
 	}
