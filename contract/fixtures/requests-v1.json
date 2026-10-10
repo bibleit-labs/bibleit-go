@@ -133,5 +133,40 @@
     "name": "account-tokens",
     "wire": "ACCOUNT TOKEN LIST",
     "server_term": "{ok,account_list_tokens}"
+  },
+  {
+    "name": "escaped-embedded-quotes-rejected",
+    "wire": "LIVE CREATE \"He said \\\"hello\\\"\"",
+    "server_term": "{error,bad_command}"
+  },
+  {
+    "name": "unquoted-quote-segment-rejected",
+    "wire": "LIVE CREATE name\"suffix\"",
+    "server_term": "{error,bad_command}"
+  },
+  {
+    "name": "quoted-suffix-rejected",
+    "wire": "LIVE CREATE \"name\"suffix",
+    "server_term": "{error,bad_command}"
+  },
+  {
+    "name": "adjacent-quoted-segments-rejected",
+    "wire": "LIVE CREATE \"name\"\"suffix\"",
+    "server_term": "{error,bad_command}"
+  },
+  {
+    "name": "empty-quoted-argument-rejected",
+    "wire": "LIVE CREATE \"\"",
+    "server_term": "{error,bad_command}"
+  },
+  {
+    "name": "trailing-literal-backslash",
+    "wire": "LIVE CREATE \"path\\\"",
+    "server_term": "{ok,{create_live,<<\"path\\\\\">>}}"
+  },
+  {
+    "name": "literal-backslash-sequences",
+    "wire": "LIVE CREATE \"literal \\n \\t \\\\ path\"",
+    "server_term": "{ok,{create_live,<<\"literal \\\\n \\\\t \\\\\\\\ path\">>}}"
   }
 ]

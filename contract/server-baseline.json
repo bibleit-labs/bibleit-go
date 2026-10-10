@@ -49,7 +49,7 @@
     "src/live/bibleit_live_session.erl": "45f8e9589d8c0cb576ee165e7d2007e8f993b6bb11d483658d11dfe60c5f9f1e",
     "src/live/bibleit_live_session_sup.erl": "a761a43b1c1e1be584260a11b7efa058640a92d0c5b759daf336465f5933cab1",
     "src/live/bibleit_live_store.erl": "a74b28663b4124a328b24ff21f423edc22067d833417fdc2c33cfe9d95ac7543",
-    "src/protocol/bibleit_protocol.erl": "ff3a0e2692fbe6772c7908fa1cf8cca100c87d1fffc3de0d787bcffe1e89cb43",
+    "src/protocol/bibleit_protocol.erl": "899d4ebb6daeefc0dbc4e5025cd4ffa346e4a76571a11be0a6ff80488234736b",
     "src/ssh/bibleit_ssh_channel.erl": "236d4a8f1fbcfb6909495a55a027274dac3e7345dd953604cd348a55a0a9ef70",
     "src/ssh/bibleit_ssh_identity.erl": "b1e058e62d94849be63b6d3a9006ecb4c0baa3b916c073692bfca50b7212ca2d",
     "src/ssh/bibleit_ssh_key_cb.erl": "f33a1d2f24cbc824cd9d14b26b8e0b699af47dfa3183d5ff14482cef302b4e9c",
@@ -64,7 +64,7 @@
     "src/translations/bibleit_translation_catalog.erl": "f8bcc938f3c012f299d4409fe9d9384e7fbda0ed527fe7dc29330db4a52d3eb0",
     "src/translations/bibleit_translation_fetcher.erl": "4c725bc6d10fb60314be5bd90e0e05b629e7c2587a368b78efdb265785502cd9",
     "src/translations/bibleit_translation_nif.erl": "ae21a272b7cc4cafa33ff9a9b4b06a714be39c7888348ae30ac585f63a699ac8",
-    "src/translations/bibleit_translation_publication.erl": "22414fd491ef69c52ad645811ad7810bab72c99dd5ce901432de3879bb8c4519",
+    "src/translations/bibleit_translation_publication.erl": "c6402fdb02003ad800626488fc7d6ea1847aca8cddb048a9ac53b20150a6ae01",
     "src/translations/bibleit_translation_registry.erl": "c900cd4a96513c9c486ff053cc605bd192918113db94c14fe7f8fba38a82a561"
   },
   "test_files_sha256": {
@@ -82,7 +82,7 @@
     "test/bibleit_http_oauth_SUITE.erl": "74f77072ef69c311ad39364aa9de71682fa1ca88f4c9a58fcf8b58947ebb6c4c",
     "test/bibleit_http_quota_SUITE.erl": "57abef7b69e85b3fe9a1d57090d3f1982911bd64d34add5be97c43c4ffb51ce3",
     "test/bibleit_import_access_SUITE.erl": "bd570710f28df885efe756528dad29b8622c437abd3dd1755c2cc8c5eb4e66f1",
-    "test/bibleit_import_publication_SUITE.erl": "4c5a063b2b77c3a217ceb7d4cb97ad08fda1580abfe2ceea43b9fa3ca2038859",
+    "test/bibleit_import_publication_SUITE.erl": "c2a8fc2c90c0b4ffcb7ef1fd06e7d169a35913efb8d5cb8ef5cd02dca07c57d7",
     "test/bibleit_infrastructure_SUITE.erl": "20fcccd04ae7413a8d8554dadd8b5d6bdee1996a8df2c7b72b78675469aa1901",
     "test/bibleit_live_design_SUITE.erl": "9152e8aa3ed7dce2b408a5d32ace4ffc18d9b6a09c2944c5f59d7b87b8f8c146",
     "test/bibleit_live_persistence_SUITE.erl": "bf5c79d6bb701a0ea0d0e381284884a2137b200ffce9d7d6357cceee615ea9c4",
@@ -120,6 +120,7 @@
     "test/unit/bibleit_notification_preferences_tests.erl": "7b6e86a49e6b9182e790f9d778bda127fb3fe67d6ed50c33abeb395cda412a7c",
     "test/unit/bibleit_password_tests.erl": "7c8331a57ecc471788f7ba531360f6a7ee04dbbe541c4e65ecc12f349e66ba38",
     "test/unit/bibleit_plan_tests.erl": "4f851d69841fb1d76369f819c5d7d1e5f9ce4e64c873e77705509592378ef813",
+    "test/unit/bibleit_protocol_request_tests.erl": "3468084eed41785fde47c82a90c276b642e9da9e017907cf08f238a893774ebc",
     "test/unit/bibleit_protocol_stats_tests.erl": "48918a1eab3e0e384dedc612c9e0c4cccfca95d337dfa2ad5b1d20ca26b9d9b4",
     "test/unit/bibleit_rate_limit_tests.erl": "e8acf599c3f2ae7863ef97441c1c5ff9ea32c6df9060ccf237946fede613b7e7",
     "test/unit/bibleit_resend_mailer_tests.erl": "4237d697cca5c083aac82ef34354026f07b0a1c727759709de2e4ed73ff248d9",
@@ -128,7 +129,7 @@
   },
   "verification": {
     "integration": true,
-    "request_decoder_cases": 27,
+    "request_decoder_cases": 34,
     "fixed_http_endpoint": "http://localhost:8080",
     "response_encoder_cases": 18,
     "import_suite_cases": true

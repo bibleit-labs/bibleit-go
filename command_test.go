@@ -1,9 +1,12 @@
 package bibleit
 
-import "testing"
+import (
+	"strings"
+	"testing"
+)
 
 func TestCommandArgumentsCannotChangeOperations(t *testing.T) {
-	for _, input := range []string{"x\nLIVE DELETE ALL", "x\rPING", "bad\"quote", "bad\x00value", ""} {
+	for _, input := range []string{"x\nLIVE DELETE ALL", "x\rPING", "bad\"quote", `He said \"hello\"`, "bad\x00value", ""} {
 		constructors := []func() (Command, error){
 			func() (Command, error) { return SearchCommand(input, "query") },
 			func() (Command, error) { return SearchCommand("web", input) },
@@ -46,6 +49,19 @@ func TestSecretCommandsMatchServerGrammar(t *testing.T) {
 		c, err := LiveSecretCommand("abc", action, value)
 		if err != nil || c.String() != expected {
 			t.Fatalf("%q, %v", c.String(), err)
+		}
+	}
+}
+
+func TestCommandPreservesLiteralBackslashes(t *testing.T) {
+	for _, name := range []string{`plain\path`, `path\`, `literal \n \t \\ path`, `Sunday Service\`} {
+		c, err := CreateLiveCommand(name)
+		expected := "LIVE CREATE " + name
+		if strings.ContainsAny(name, " \t") {
+			expected = "LIVE CREATE \"" + name + "\""
+		}
+		if err != nil || c.String() != expected {
+			t.Fatalf("name=%q command=%q error=%v", name, c.String(), err)
 		}
 	}
 }

@@ -91,7 +91,10 @@ do not log it indiscriminately.
   double quotes. Builders reject double quotes, CR, LF, and NUL. Backslashes
   are preserved literally in requests; response strings use escaped quotes,
   backslashes and escaped control characters. Response escaping is not a request
-  escape syntax; the server does not round-trip escaped embedded quotes.
+  escape syntax. The verified server rejects malformed quote segments, empty
+  quoted arguments and attempted escaped embedded quotes with `bad_command`.
+  Live secrets are server-generated through CREATE/ROTATE; custom SECRET SET
+  remains unsupported and is rejected by the client.
 - Browser orchestration and credential persistence remain in the CLI; code
   exchange and revocation use library methods.
 

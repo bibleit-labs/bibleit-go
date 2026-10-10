@@ -47,7 +47,8 @@ func (r Reference) arguments(requireTranslation bool) ([]string, error) {
 
 func command(prefix string, args ...string) (Command, error) {
 	for _, arg := range args {
-		// The server's v1 request tokenizer has no escaped-quote syntax.
+		// V1 has no request escapes: quotes delimit whole nonempty arguments.
+		// Backslashes stay literal, including immediately before a closing quote.
 		if arg == "" || strings.ContainsAny(arg, "\r\n\x00\"") {
 			return Command{}, errors.New("arguments must be non-empty single lines without double quotes or NUL")
 		}
