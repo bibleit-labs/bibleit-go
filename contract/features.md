@@ -89,5 +89,8 @@ real OpenSSH lifecycle/profile/output checks, and 17 auth/key/protocol EUnit tes
 The nine new server request tests cover malformed quoting and generated-secret
 commands. All 10 import-access and 15 publication cases pass. The synchronized
 baseline records 63 source and 58 test fingerprints and UTC review date; it matched
-the assessment working tree at validation completion. The full server assessment
-campaign is separate and remains in progress.
+the assessment working tree at validation completion. The assessment subsequently confirmed its full `make test` on 2026-10-11:
+248 Common Test cases, 48 Erlang unit tests, 71 JavaScript tests and the native
+C test, with no skips. This server-owned evidence is recorded in
+`../private-service/docs/developers/security-test-results.md`; it is separate
+from the client integration run and confirms the same protocol contract.
