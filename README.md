@@ -66,11 +66,15 @@ do not log it indiscriminately.
 
 - Credentials are explicit. The endpoint is the project-owned `ServerEndpoint`
   constant; no constructor or environment override is provided. The client
-  does not access CLI profiles, launch a browser, or read environment variables.
+  does not access CLI profiles, launch a browser, or load API tokens or service
+  addresses from environment variables. HTTP transport/proxy behavior is owned by
+  `net/http` or the supplied transport.
 - The service uses a loopback HTTP placeholder during development. Set the
   production HTTPS constant before release; remote HTTP remains rejected.
-- The default HTTP timeout is 15 seconds. Supply an `HTTPClient` to customize
-  transport and timeouts. The client copies it and disables redirects.
+- The default HTTP timeout is 15 seconds. Use `NewClientWithHTTPClient` or
+  `NewAuthClientWithHTTPClient` with a `*http.Client` to customize transport and
+  timeouts. Its value is copied and redirects are disabled; its `Transport` and
+  `Jar` remain shared. An explicit custom client controls its own timeout.
 - Commands are limited to 8192 bytes and JSON request bodies to 16384 bytes,
   matching the reviewed server. Oversized requests fail before network access.
 - All requests accept a context. Operations are never retried automatically.
@@ -86,7 +90,8 @@ do not log it indiscriminately.
 - The server's request tokenizer supports quoted whitespace but not embedded
   double quotes. Builders reject double quotes, CR, LF, and NUL. Backslashes
   are preserved literally in requests; response strings use escaped quotes,
-  backslashes and escaped control characters.
+  backslashes and escaped control characters. Response escaping is not a request
+  escape syntax; the server does not round-trip escaped embedded quotes.
 - Browser orchestration and credential persistence remain in the CLI; code
   exchange and revocation use library methods.
 

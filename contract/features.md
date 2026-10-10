@@ -43,6 +43,13 @@ source. Browser presence alone does not imply a supported bearer API.
 ## Outstanding server discrepancies
 
 `SECRET SET` documentation differs from the parser and remains server-owned.
+Request quoting also has no embedded-quote escape syntax: a synthetic
+`LIVE CREATE "He said \"hello\""` decodes to `He said \hello\`, silently
+changing the intended value. Go builders reject embedded quotes to prevent this
+loss. Both protocol issues were reproduced and reported to the assessment on
+2026-10-10. Changing literal-backslash semantics requires an explicit compatible
+contract before client restrictions can be relaxed.
+
 The assessment fixed duplicate `LIVE STATS` connection counts on 2026-10-10;
 the encoder now emits one count derived from subscriber records. Canonical
 fixtures use a single field. The client retains compatibility with older identical
