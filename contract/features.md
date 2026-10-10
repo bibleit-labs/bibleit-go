@@ -94,3 +94,10 @@ the assessment working tree at validation completion. The assessment subsequentl
 C test, with no skips. This server-owned evidence is recorded in
 `../private-service/docs/developers/security-test-results.md`; it is separate
 from the client integration run and confirms the same protocol contract.
+
+The 2026-10-11 single-configuration CLI integration refresh passed the full tracked
+HTTP/SSH/auth/import gate: 34 decoder/18 encoder fixtures, 11 HTTP subtests, real
+SSH lifecycle and single-credential output parity, 17 auth/key/protocol tests and
+25 import cases. The synchronized snapshot now records 63 source and 59 test
+fingerprints, including further assessment plan-support changes. Snapshotting
+a test is not a claim that the client harness executes every server test.
