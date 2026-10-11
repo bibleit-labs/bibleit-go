@@ -1,22 +1,21 @@
 # Bibleit Go client
 
 A dependency-free Go client for reading and searching Bible translations,
-managing Lives, and inspecting your Bibleit account. It supports Bibleit Server
-protocol v1 and connects to the project-managed service at `https://bibleit.app`.
+managing Lives, and inspecting your Bibleit account. It connects to the project-managed service at `https://bibleit.app`.
 
 The client is released independently from the [Bibleit CLI](https://github.com/bibleit-labs/bibleit-cli).
-It requires **Go 1.27.1**. The CLI imports this library; the library does not depend
+Use the Go toolchain specified in [go.mod](go.mod). The CLI imports this library;
+the library does not depend
 on CLI configuration or credential storage.
 
 ## Installation
 
-Version [v0.0.1](https://github.com/bibleit-labs/bibleit-go/tree/v0.0.1) is tagged privately.
 The repository is currently private: configure Git access with an authorized
 GitHub account and mark the module private before downloading it.
 
 ```sh
 export GOPRIVATE='github.com/bibleit-labs/*'
-go get github.com/bibleit-labs/bibleit-go@v0.0.1
+go get github.com/bibleit-labs/bibleit-go
 ```
 
 `GOPRIVATE` controls module proxy/checksum lookup; it does not authenticate Git.
@@ -189,7 +188,7 @@ subsequent authenticated requests with that credential are expected to fail.
 
 ## Development
 
-From this repository, with Go 1.27.1:
+From this repository, using the toolchain in go.mod:
 
 ```sh
 GOWORK=off go test -race ./...
