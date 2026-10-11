@@ -316,5 +316,28 @@
       "Luke17:37": "exact read passed"
     }
   },
-  "synthetic_fixture_cleanup_verified_at_source": "c586107a6f5a7e3fd4d06bfccb13d0973252e98d"
+  "synthetic_fixture_cleanup_verified_at_source": "c586107a6f5a7e3fd4d06bfccb13d0973252e98d",
+  "latest_reported_deployment": {
+    "server_source": "14628f3a738436dce771a05e3bad450dc01b89f0",
+    "native_source": "d6e31dc8eb7c478e2f915e7bd156b047a2cb279e",
+    "deployment_run": "https://github.com/bibleit-labs/bibleit-server/actions/runs/38157279015",
+    "change": "font-only Georgia replacement; assessment reports auth/security/native unchanged",
+    "evidence_owner": "Issues pos deployement chat 01a12b2a-9268-7c03-9142-629c3c035a6f",
+    "reported_public_checks": [
+      "auth.css and plans.css HTTP 200 with no Iowan references",
+      "signup heading uses Georgia",
+      "signup and readiness HTTP 200"
+    ],
+    "qualification_scope": "separate narrow public font/readiness report; no inherited full4243 qualification",
+    "exact_image_digest_recorded": false
+  },
+  "provider_acceptance_coordination": {
+    "status": "awaiting human results requested by assessment",
+    "requested_checks": [
+      "real backend fresh-token acceptance and replay rejection; helper three booleans",
+      "controlled email signup, delivery and link verification"
+    ],
+    "fixture_evidence_is_not_provider_acceptance": true,
+    "raw_tokens_credentials_and_identifiers_recorded": false
+  }
 }

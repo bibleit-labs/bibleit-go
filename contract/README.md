@@ -328,3 +328,10 @@ The 2026-10-11 refresh supersedes the localhost fixture strategy: run
 `python3 scripts/check_server_container.py --imports` for the egress-disabled
 HTTPS/SSH fixture at the fixed production hostname. Direct host integration is
 rejected. See the latest compatibility snapshot above.
+
+
+A later font-only deployment is reported at source14628f3/run38157279015/native d6.
+Its owner confirms public CSS/signup/readiness and Georgia rendering; exact image
+identity is not yet recorded here. This narrow follow-up does not silently inherit
+4243's artifact/full qualification. Both real-provider acceptance gates remain
+open, with human helper and controlled-email steps requested by the assessment.
