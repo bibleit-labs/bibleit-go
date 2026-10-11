@@ -51,11 +51,12 @@ not a stable API release.
 
 Source branch pushes and private CI are authorized as of 2026-10-11. Use
 Conventional Commits and branches without a codex prefix. Customer release tags
-and releases remain paused pending production readiness. `ServerEndpoint` is a loopback development
-placeholder; set the real production HTTPS address before shipping a release.
+and releases remain paused pending release readiness. `ServerEndpoint` is the fixed
+production origin `https://bibleit-server.fly.dev`; no customer override is exposed.
 
 The standard constructor is `NewClient(apiToken)` with a validation error return.
 Use `NewClientWithHTTPClient` for transport customization. Real-server integration
 now exercises those public constructors at the fixed endpoint; it does not change
-client destinations. The CLI's container harness provides an isolated namespace
-when the developer's port 8080 is in use.
+client destinations. The CLI's container harness has no external network route,
+maps the fixed hostname to loopback and verifies TLS with a fixture-only CA.
+Direct host integration is rejected; host ports and trust stores are untouched.

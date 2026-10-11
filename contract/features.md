@@ -72,7 +72,7 @@ subtests, real OpenSSH subscription/profile/output checks and 8 auth/key EUnit
 tests. `server-baseline.json` records the tested server snapshot at HEAD
 `1a266cc8bf6aa726c4890b78ddf95a3aadda0ba0` plus assessment changes. Both full
 runs passed; subsequent translation/registry edits remain outside that snapshot.
-The runner isolates the fixed localhost:8080 endpoint and removes its disposable
+At that historical checkpoint the runner isolated the localhost:8080 endpoint and removes its disposable
 database. No production endpoint or browser-only API coverage is implied.
 
 Latest assessment validation (2026-10-10), CLI harness `26de771` and client
@@ -101,3 +101,17 @@ SSH lifecycle and single-credential output parity, 17 auth/key/protocol tests an
 25 import cases. The synchronized snapshot now records 63 source and 59 test
 fingerprints, including further assessment plan-support changes. Snapshotting
 a test is not a claim that the client harness executes every server test.
+
+## Fixed production origin and final assessment compatibility — 11 October 2026
+
+ServerEndpoint is now https://bibleit-server.fly.dev. The CLI uses ordinary SSH
+at bibleit-server.fly.dev:22. Credential-only constructors and redirect blocking
+remain unchanged; default HTTPS certificate verification is enforced.
+Fresh integration at clean server 8923d86/native f6fed37 passes 34 decoder/18
+encoder fixtures, seven security cases, 11 HTTP subtests, real OpenSSH lifecycle
+and JSON parity, 18 auth/key/protocol tests and 26 import cases. Baselines record
+68 source/70 test/11 native fingerprints. The fixture has no egress, maps the
+service name to loopback and trusts its CA only inside the container; three TLS
+boundary checks pass. Assessment separately closes 25/25 scoped packages and
+qualifies the actual deployed edge. This does not add browser-only API coverage
+or publish a client version.

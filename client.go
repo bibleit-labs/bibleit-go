@@ -14,9 +14,9 @@ import (
 )
 
 // ServerEndpoint is the project-managed Bibleit service address. Applications
-// cannot override it through configuration or environment variables. This local
-// development placeholder will be replaced with the production HTTPS address.
-const ServerEndpoint = "http://localhost:8080"
+// cannot override it through configuration or environment variables. HTTPS
+// certificate verification is enabled by the default transport.
+const ServerEndpoint = "https://bibleit-server.fly.dev"
 
 const maxResponseBytes = 2 << 20
 

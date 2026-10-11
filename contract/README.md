@@ -1,34 +1,33 @@
 # Bibleit client contract: protocol v1
 
-## Latest assessment compatibility snapshot — 11 October 2026
+## Latest fixed-endpoint compatibility snapshot — 11 October 2026
 
-Package-25 isolated HTTP/SSH/import checks passed against server
-c2beef5334c249f65daedd0e279b8d9252f0d51b plus assessment working-tree changes,
-with native libbibleit f6fed37919c848b1aa0208900af992a5e8a507f2. The baseline
-records 67 Erlang source, 66 test and 11 native build-input fingerprints. Native
-code is rebuilt in the isolated Linux container; snapshot copying rejects changes
-to native inputs or revision. Client and CLI carry identical verified baseline
-bytes. This development snapshot does not certify a committed/deployed release.
+Fresh isolated HTTP/SSH/import checks passed against clean server
+8923d8675b2e129bdd868e307dd89c599235f25a, which includes deployed code
+7442010eebcfb1a2a9105db312ebaeae5f789003. Native libbibleit remains
+f6fed37919c848b1aa0208900af992a5e8a507f2. The synchronized baseline records
+68 Erlang source, 70 test and 11 native build-input fingerprints. Native code is
+rebuilt from the frozen snapshot; concurrent copy-input changes are rejected.
+
+The fixed HTTPS origin is https://bibleit-server.fly.dev; ordinary CLI SSH uses
+bibleit-server.fly.dev:22. Public constructors use the production URL unchanged.
+The disposable container has no external network route and maps the hostname
+exclusively to loopback. TLS verification uses a fixture CA only in the container;
+correct trust/name succeeds, while wrong name and untrusted CA fail. No host
+certificate installation, customer endpoint override or PROXY preamble is used.
 
 Passing coverage: 34 decoder/18 encoder fixtures, seven server security cases,
-11 Go HTTP subtests, real OpenSSH subscription/pause/reconnect/delete closure,
-single-credential/output parity, 17 auth/key/protocol tests and 26 import-access/
+11 Go HTTP subtests, OpenSSH subscription/pause/reconnect/delete closure and
+single-credential JSON parity, 18 auth/key/protocol tests, and 26 import-access/
 publication cases (11 access, 15 publication). Approved import delivery is adapted
-only inside suite setup; production URL policy, authorization, validation and
-publication remain real. An authorized unreviewed/private-source import is denied.
-Recorded source/test/native inputs matched immediately after the run, and the
-disposable database was removed. No production provider or database was contacted.
+only inside suite setup; URL policy, authorization, validation and publication
+remain real. Authorized unreviewed/private-source import rejection passes.
+The disposable database is removed; no production principal/data is modified.
 
-The refresh includes the package-25 server boot and canonical public-origin fixes
-and their security tests. No client command/response/error-name change was needed.
-The server assessment separately reports 326 integration, 51 Erlang unit, 71
-JavaScript, native and ten SSH-bootstrap tests, plus 16 final-image checks, passing.
-Overall assessment progress remains 24/25: approved Fly boundary tests, native
-amd64 server-image execution, proxy fairness, database trust and volume ownership
-remain open. The fixed production service/browser origin and an agreed committed/
-deployed snapshot must be verified before release. Management WebSockets and the
-production entrypoint/image are outside this client integration runner's scope.
-
+The assessment separately records 25/25 scoped packages complete and qualifies
+actual HTTPS/SSH/Fly routing. This isolated client check does not certify a new
+public-edge deployment, browser/provider login or bearer management WebSocket API.
+A released client version and standalone CLI candidate remain release gates.
 
 ## Transport
 
@@ -102,7 +101,7 @@ Original logical records and unknown fields remain available in typed results.
 Go tests consume these fixtures now. The other language clients should reuse
 this file. Fixtures were derived from `bibleit-server/src/protocol/bibleit_protocol.erl`
 and its protocol tests; 27 request fixtures and 18 response encodings are now verified against compiled
-server source with `python3 ../bibleit-cli/scripts/check_server.py`. Malformed and future-error
+server source with `python3 scripts/check_server.py`. Malformed and future-error
 response cases remain client-decoder robustness fixtures. Server code has not been modified by this extraction.
 
 ## Server review status (2026-10-10)
@@ -140,15 +139,14 @@ fixtures with `server_response_term` are checked against the real server encoder
 Source fingerprints are recorded in `server-baseline.json`.
 
 ```sh
-python3 ../bibleit-cli/scripts/check_server.py
-python3 ../bibleit-cli/scripts/check_server.py --integration
-python3 ../bibleit-cli/scripts/check_server_container.py --imports --baseline ../bibleit-cli/contract/server-baseline.json
+python3 scripts/check_server.py
+python3 scripts/check_server.py --integration
+# Include latest assessment import-access/publication cases in the isolated runner:
+python3 scripts/check_server_container.py --imports --baseline contract/server-baseline.json
 ```
 
 Identical repeated response fields are accepted for compatibility with older
-Live stats responses; conflicting repeated values are rejected. The server
-encoder fix on 2026-10-10 emits one connection count; canonical and legacy
-response fixtures cover both forms.
+Live stats; conflicting repeated values are rejected.
 
 ## Translation metadata encoder issue
 
@@ -188,16 +186,12 @@ Both methods share HTTPS/loopback endpoint rules, reject redirects, accept
 contexts and bound response bodies. Real HTTP checks verify exchange, replay,
 bad-verifier consumption, logout and post-logout rejection.
 
-These fixtures are a versioned snapshot in this client. The CLI keeps a matching
-snapshot for its server integration harness. Synchronize changes explicitly
-across client repositories; no fixture download occurs during builds.
-
 
 ## Fixed-service integration (2026-10-10)
 
-The public `NewClient(apiToken)` and `NewAuthClient()` constructors pass against
-a real server at the fixed `http://localhost:8080` address, without private
-URL/destination overrides. Use
-`python3 ../bibleit-cli/scripts/check_server_container.py` for an isolated
-container namespace while host port 8080 is occupied. The matching baseline
-records current server source fingerprints and the fixed HTTP endpoint.
+The simple API-token constructors now pass against a real server at the fixed
+`http://localhost:8080` endpoint. No client destination override is used. If host
+port 8080 is occupied, run `python3 scripts/check_server_container.py` to use an
+isolated container namespace and disposable database. The verified baseline
+includes the fixed endpoint and current source fingerprints. The server checkout
+and developer service are not changed.
