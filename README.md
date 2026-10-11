@@ -8,12 +8,12 @@ import bibleit "github.com/bibleit-labs/bibleit-go"
 
 This module is released independently from [bibleit-cli](https://github.com/bibleit-labs/bibleit-cli).
 It requires Go 1.27.1. The CLI imports this library; the library does not depend
-on the CLI or access its profiles. Python, Ruby, and Rust clients have separate repositories.
+on the CLI or its credential configuration. Python, Ruby, and Rust clients have separate repositories.
 
 Source pushes and private CI are authorized. Customer releases and tags remain
 paused; use the checkout for development. No release
 version is available yet. The project-managed service address is currently
-`http://localhost:8080`, and will be replaced with the production HTTPS address.
+`https://legacy.bibleit.example`. HTTPS certificate verification is enabled.
 Applications cannot override it through configuration or environment variables.
 
 ## Usage

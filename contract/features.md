@@ -72,7 +72,7 @@ subtests, real OpenSSH subscription/profile/output checks and 8 auth/key EUnit
 tests. `server-baseline.json` records the tested server snapshot at HEAD
 `[private digest withheld]` plus assessment changes. Both full
 runs passed; subsequent translation/registry edits remain outside that snapshot.
-The runner isolates the fixed localhost:8080 endpoint and removes its disposable
+At that historical checkpoint the runner isolated the localhost:8080 endpoint and removes its disposable
 database. No production endpoint or browser-only API coverage is implied.
 
 Latest assessment validation (2026-10-10), CLI harness `26de771` and client
@@ -101,3 +101,4 @@ SSH lifecycle and single-credential output parity, 17 auth/key/protocol tests an
 25 import cases. The synchronized snapshot now records 63 source and 59 test
 fingerprints, including further assessment plan-support changes. Snapshotting
 a test is not a claim that the client harness executes every server test.
+

@@ -3,6 +3,7 @@ package bibleit
 import (
 	"context"
 	"errors"
+	"net"
 	"os"
 	"strings"
 	"testing"
@@ -12,7 +13,19 @@ import (
 // Enabled only by scripts/check_server.py's isolated fixture harness.
 func TestServerHTTPIntegration(t *testing.T) {
 	if os.Getenv("BIBLEIT_CLIENT_TEST_DISPOSABLE") != "1" {
-		t.Skip("run python3 scripts/check_server.py --integration")
+		t.Skip("run python3 scripts/check_server_container.py --imports from bibleit-cli")
+	}
+	if os.Getenv("BIBLEIT_FIXED_ENDPOINT_FIXTURE") != "1" {
+		t.Fatal("production endpoint integration requires the isolated fixture gateway")
+	}
+	addresses, err := net.LookupIP("legacy.bibleit.example")
+	if err != nil || len(addresses) == 0 {
+		t.Fatal("fixture hostname resolution failed", err)
+	}
+	for _, address := range addresses {
+		if !address.IsLoopback() {
+			t.Fatal("fixture resolved outside loopback")
+		}
 	}
 	c, err := NewClient(os.Getenv("BIBLEIT_INTEGRATION_TOKEN"))
 	if err != nil {
