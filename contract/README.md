@@ -357,3 +357,8 @@ The staging correction covers all eight migrations and rejects omissions; a fina
 image is still required. Production remains14628f3. Fly requests narrow security-
 release approval excluding undeployed Reader changes; real fresh/replay retesting
 remains open after that exact corrected rollout.
+
+The packaging correction is committed at3359535, parentd160773, on the exact
+security-only branch explicitly approved by the human in Fly. Reader changes are
+excluded. Corrected run38163282528 is source/ref-pinned and queued/running; no
+qualified image or provider gate closure is yet claimed.

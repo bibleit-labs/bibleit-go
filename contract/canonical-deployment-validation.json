@@ -35,8 +35,7 @@
     "identities": 0
   },
   "remaining_acceptance": [
-    "approve narrow server security-release deployment path excluding undeployed Reader changes",
-    "qualify corrected release image containing SQL008 and deploy exact repair",
+    "qualify/deploy corrected3359535 release image with all eight migration identities",
     "genuine fresh-token acceptance and replay rejection"
   ],
   "client_runtime_changed": false,
@@ -346,7 +345,7 @@
     "artifact_report_sha256": "fae669c50cb335154bfc9672e414f8043fda68ae6978841fe2e70c18c359f420"
   },
   "provider_acceptance_coordination": {
-    "status": "email passed; replay remains failed on unchanged production; packaging fix and deployment approval/image qualification/real retest pending",
+    "status": "email passed; approved security-only corrected deployment in progress; real replay gate still open",
     "requested_checks": [
       "real backend fresh-token acceptance and replay rejection; helper three booleans",
       "controlled email signup, delivery and link verification"
@@ -400,7 +399,7 @@
   "turnstile_replay_repair": {
     "server_source": "d1607733da5c93b8eccc7b3d8fcb3037f51f2f75",
     "native_source": "d6e31dc8eb7c478e2f915e7bd156b047a2cb279e",
-    "status": "local runtime qualification passed; production-image build failed before deployment; packaging fix staged, deployment exception approval pending",
+    "status": "local repair and packaging staging passed; approved exact3359535 deployment qualification pending",
     "guard": "atomic shared PostgreSQL claim; SHA-256 only, ten-minute TTL, indexed/bounded 1000-row expired cleanup",
     "migration": "append008; identities001-007 unchanged",
     "provider_hostname_action_and_tls_checks_retained": true,
@@ -430,13 +429,20 @@
     "deployment_status": "workflow38162034582 failed before publish/deploy: migration008 missing from explicit release allowlist",
     "packaging_followup": {
       "cause": "SQL008 omitted by explicit release-resource allowlist",
-      "fix_status": "prepared and staging checks passed; no final qualified image yet",
+      "fix_status": "committed3359535; approved security-only branch deployment queued",
       "early_manifest_checks": "all eight SQL migrations staged; omitted migration rejected",
       "runtime_changed_by_packaging_fix": false,
       "production_unchanged": true,
       "deployment_constraint": "main now includes separately approved Reader source changes not approved for deployment; Fly owner requests narrow security-release branch exception",
       "approval_owner": "Fly deployment chat",
-      "approval_pending": true
-    }
+      "approval_pending": false,
+      "human_approved_exact_branch": "codex/turnstile-replay-release",
+      "packaging_source": "3359535ff92c7b8c56bce2d8f837cfbb52242438",
+      "packaging_parent": "d1607733da5c93b8eccc7b3d8fcb3037f51f2f75",
+      "candidate_excludes_reader": true,
+      "branch_naming_exception": "assessment reports newer explicit human approval for exact server branch; client branch naming unchanged"
+    },
+    "corrected_deployment_run": "https://github.com/bibleit-labs/bibleit-server/actions/runs/38163282528",
+    "corrected_deployment_status": "queued/running; exact3359535 source and approved branch verified by Fly owner"
   }
 }
