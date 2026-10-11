@@ -1,62 +1,54 @@
 # Contributing to bibleit-go
 
-This is a public MIT-licensed Go client maintained in `bibleit-labs`.
-Focused bug reports, documentation improvements, and pull requests are welcome.
-Discuss larger API changes in an issue first. Do not include credentials or
-private server data in issues, source, or test fixtures.
+The SDK is MIT licensed and the repository currently remains private. Authorized
+contributors can open issues and focused pull requests; discuss larger API changes
+before implementation. Public contributions await approved launch. Report
+vulnerabilities through [SECURITY.md](SECURITY.md), and redact credentials/account
+or private server data from issues, source, examples and fixtures.
 
-## Development and validation
+## Development
 
-Use Go **1.27.1**. The module path is `github.com/bibleit-labs/bibleit-go`.
-Run `go test -race -count=1 ./...`, `go vet ./...`, and `go build ./...`
-for executable changes. CI validates Windows, Ubuntu, and macOS. Review links
-and content for documentation-only changes.
+Use Go **1.27.1**. The module is github.com/bibleit-labs/bibleit-go and has no
+external Go module dependencies. A CLI/server checkout is not required:
 
-Keep credentials explicit and the service endpoint project-managed. Do not
-add constructor, environment or config endpoint overrides. CLI profiles, terminal presentation,
-browser orchestration, and process adapters belong in `bibleit-cli`; this
-library must not import the CLI. Add tests for meaningful protocol behavior,
-including unknown fields and malformed responses when relevant.
+```sh
+GOWORK=off go test -race -count=1 ./...
+GOWORK=off go vet ./...
+GOWORK=off go build ./...
+```
 
-Protocol fixtures in `contract/` are versioned snapshots. Synchronize changes
-explicitly with the CLI and other client repositories. The CLI's
-`../bibleit-cli/scripts/check_server.py --integration --go-client .` can
-exercise the real-server tests from this checkout when its required server,
-Erlang and Docker dependencies are available. Standard unit tests skip those
-live-server cases. State the tested server baseline rather than claiming
-coverage of all server APIs.
+Normal tests use in-memory transports and synthetic protocol fixtures; optional
+server integration cases are skipped unless explicitly enabled. Native CI covers
+Linux, macOS and Windows. Review links, commands and content for docs-only changes.
 
-## Commits and pull requests
+Credentials are explicit, and the service address is project-managed. There are
+no constructor/environment endpoint overrides. Preserve HTTPS verification,
+context cancellation and the no-automatic-retry behavior. Browser orchestration,
+credential storage, terminal presentation and OpenSSH integration belong in the
+CLI; the library must not import it. Add meaningful tests for changed protocol
+behavior, including malformed responses and unknown fields when applicable.
 
-Use [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/):
-`type(scope): description`, with an optional scope. For example:
+[Contract coverage](contract/features.md) and [shared fixtures](contract/README.md)
+record supported behavior and tested baselines. Synchronize fixture changes
+explicitly with the CLI. Authorized maintainers may use the CLI's isolated
+container harness for private server integration; see the CLI native-validation
+guide. Passing fixture tests does not establish production/provider behavior.
 
-- `feat(tokens): expose typed token metadata`
-- `fix(protocol): reject incomplete response envelopes`
-- `docs: explain client configuration`
-- `ci: validate native Windows tests`
+## Commits and releases
 
-Use `!` or a `BREAKING CHANGE:` footer for incompatible changes. Describe the
-customer-visible outcome and relevant validation in pull requests. Do not use
-`codex/` as a branch prefix.
+Use Conventional Commits, for example `fix(protocol): reject incomplete envelopes`
+or `docs: clarify typed results`. Use `!` or BREAKING CHANGE for incompatible
+changes, and branches without a codex prefix. Explain the resulting behavior and
+relevant validation in pull requests.
 
-## Releases
+SDK v0.0.1 is tagged privately and is the CLI's pinned dependency. SDK and CLI
+release versions are independent. Consumers choose when to update; a branch
+push is not a stable release. Keep supported operations, Go version, tested server
+baseline and compatibility changes documented. Release tags and repository
+visibility changes require approval. CLI v0.0.2 installer checks do not change
+the SDK version; pending Windows installer/Scoop checks are not SDK test failures.
 
-Release this module independently from the CLI and other language clients.
-Keep its supported operations, minimum Go version, and tested server baseline
-in the documentation. Use semantic-version tags for reviewed releases and
-explain compatibility changes in release notes. Consumers, including the CLI,
-choose when to update their pinned dependency; branch publication alone is
-not a stable API release.
-
-Source branch pushes and private CI are authorized as of 2026-10-11. Use
-Conventional Commits and branches without a codex prefix. Customer release tags
-and releases remain paused pending release readiness. `ServerEndpoint` is the fixed
-production origin `https://bibleit.app`; no customer override is exposed.
-
-The standard constructor is `NewClient(apiToken)` with a validation error return.
-Use `NewClientWithHTTPClient` for transport customization. Real-server integration
-now exercises those public constructors at the fixed endpoint; it does not change
-client destinations. The CLI's container harness has no external network route,
-maps the fixed hostname to loopback and verifies TLS with a fixture-only CA.
-Direct host integration is rejected; host ports and trust stores are untouched.
+Retain the MIT copyright/permission notice when redistributing SDK source.
+The software grant does not cover translations obtained through the service,
+account access or service quotas. Applications distributing compiled binaries
+must also retain applicable Go/dependency notices.

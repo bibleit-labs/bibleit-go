@@ -10,12 +10,12 @@ on CLI configuration or credential storage.
 
 ## Installation
 
-Version [v0.0.1](https://github.com/bibleit-labs/bibleit-go/releases/tag/v0.0.1) is released.
+Version [v0.0.1](https://github.com/bibleit-labs/bibleit-go/tree/v0.0.1) is tagged privately.
 The repository is currently private: configure Git access with an authorized
 GitHub account and mark the module private before downloading it.
 
 ```sh
-go env -w 'GOPRIVATE=github.com/bibleit-labs/*'
+export GOPRIVATE='github.com/bibleit-labs/*'
 go get github.com/bibleit-labs/bibleit-go@v0.0.1
 ```
 
@@ -203,3 +203,7 @@ repository is separate and private.
 
 See the [changelog](CHANGELOG.md) and [contributing guide](CONTRIBUTING.md).
 Contributions use Conventional Commits. Licensed under [MIT](LICENSE).
+
+The MIT software license does not grant rights to Bible translations returned by
+the service, account access or quotas. Report vulnerabilities privately through
+[SECURITY.md](SECURITY.md).
