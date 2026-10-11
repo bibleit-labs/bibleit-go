@@ -1,0 +1,26 @@
+# Changelog
+
+## v0.0.1 — 2026-10-11
+
+Initial Go client release for Bibleit, requiring Go 1.27.1.
+
+- Explicit API-token construction with `bibleit.NewClient(apiToken)` and the fixed
+  HTTPS origin `https://bibleit.app`; no endpoint overrides or credential loading.
+- Typed identity, API-token metadata, translations and reference catalogues,
+  reading/search and Live results, retaining raw records and unknown fields.
+- Browser-auth code exchange and credential revocation methods.
+- Strict finite-response decoding, contextual requests, bounded request/response
+  sizes, disabled redirects and explicit rate-limit/error metadata.
+
+HTTP subscriptions require SSH; OpenSSH execution, streaming, browser opening
+and credential persistence belong to the CLI. Requests support quoted whitespace
+but reject embedded double quotes and control characters. Live secrets are
+server-generated; custom SECRET SET is unsupported. Catalogue verse counts are
+the highest source identifier, so omitted verse numbers remain gaps. See README
+for the full behavior and current limits.
+
+Historical service deployment evidence is maintained privately. Public client
+compatibility fixtures remain in contract/.
+
+This release remains in a private repository. Fresh module retrieval requires
+authorized Git access and GOPRIVATE=github.com/bibleit-labs/bibleit-go.
