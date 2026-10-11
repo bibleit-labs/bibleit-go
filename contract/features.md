@@ -126,3 +126,11 @@ actual changed saved-key rejection. Synchronized baselines record 69 source,
 71 test and 11 native hashes. This working-tree candidate does not certify a final
 committed source or actual custom-domain DNS/TLS/SSH/authentication deployment;
 those qualifications remain with assessment/Fly before customer release.
+
+Final assessed source 5969f2f passes independent fixed-endpoint integration and
+boot qualification. All 69 source/72 test hashes match that commit, native
+f6fed37 retains 11 verified inputs. Coverage additionally includes the canonical
+hostname/default/normalization/stale-host boot case and 24 auth/key/protocol/
+canonical/provider unit tests. Unrelated frontend edits keep dirty metadata true.
+Actual public custom-domain and human-widget qualification remain pending;
+no client runtime changes or customer publication occur in this metadata refresh.

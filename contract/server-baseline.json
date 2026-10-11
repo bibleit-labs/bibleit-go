@@ -1,6 +1,6 @@
 {
   "reviewed_at": "2026-10-11",
-  "head": "0c0da9ff5f759a0998ac151818db27c70065810c",
+  "head": "5969f2f73547010cddd3ae5b0828839cad118f2e",
   "working_tree_changes": true,
   "files_sha256": {
     "src/auth/bibleit_account.erl": "46b70fb1e683ccfff029c198cb3a5cb851798991f63abdba7672e80876e04192",
@@ -21,7 +21,7 @@
     "src/bibleit_rate_limit.erl": "1595d04c6628e4335f29ec69cbdd3c83f733b171e656746b41892efcdba420f3",
     "src/bibleit_server.erl": "852051322c781383123d77be8e1984c4c70b8a5ebcf413bd231bd44cfe34dccc",
     "src/bibleit_server_app.erl": "136e3cf141bb09fe37cd2a422d838a8a15b59132dcfaf4b45bbcd9553f2efdb2",
-    "src/bibleit_server_boot.erl": "e28812cb86b3f4177af6134bf8d8ad5639de83fbcf7af3ec1ab8522b93e52e12",
+    "src/bibleit_server_boot.erl": "5e37efcec5f9e6b41b26345c4cf1ad4d9f1297c328f12f56ab79cf79a85da940",
     "src/bibleit_server_env.erl": "af66ff0ae425f508205f9e8cb4deddf069b1466592e67eba0b24e8ef82f28d39",
     "src/bibleit_server_sup.erl": "21c4e5316c3b21add8a7d53e818a2e781cc8e7541f1fd8c43ffaa7a9516ca8b3",
     "src/bibleit_stream_auth.erl": "6ad3407fd4dfd5294c2652182de5a8ae8f3af3e26b4940cc97a9281396506204",
@@ -109,7 +109,7 @@
     "test/bibleit_security_chaos_SUITE.erl": "df475902c94192e09f4057deb3b149213c756f6900f5af33a8ad275429671e12",
     "test/bibleit_security_input_SUITE.erl": "e7a863e99fe3de9f21bb84817f7de2aefb2b9bf2a942cc6863c639d8ce766246",
     "test/bibleit_security_lifecycle_SUITE.erl": "21852560e49b84276dd93d7fd210622321eecfda23f06cc42ad6ed9eb0bd925f",
-    "test/bibleit_security_review_SUITE.erl": "1c429f1be508c1f524d183db6547bfdf5b403a79602907c5e51d3910d21150d1",
+    "test/bibleit_security_review_SUITE.erl": "459bccf7063cd1f6d816cb0d3324ccda16092116e363e60f714ac8baf78825d6",
     "test/bibleit_stream_resilience_SUITE.erl": "cf8717190075fae011cb50563afe75e575cb87df153bc7af1d060b74fa74c663",
     "test/bibleit_test_database.erl": "c4ef099219c8dad592cafa0d43b569134df8f6261c3d9b63a9b310cf89cfcf51",
     "test/bibleit_tls_proxy.erl": "397e16411e2e1b0cc6c155fe30584730486d299b0b301707b7d7e2ce6713d645",
@@ -144,7 +144,8 @@
     "test/unit/bibleit_runtime_security_tests.erl": "578d96e84c0c5f6d0d210b4c3833eb0fad0f25f750bd6dd09a3b9e83529ebad6",
     "test/unit/bibleit_ssh_identity_tests.erl": "3c5abb9624d21ff661741c5041fbde59850407aec08cbb1b9cadadd0578f115f",
     "test/unit/bibleit_ssh_proxy_tests.erl": "d2711489ff5f12969e918bdf86ba32a2729f2f16bffc6d73b41f6a5986b36370",
-    "test/unit/bibleit_test_database_tests.erl": "0fde852e777ce92a36abc7c0063fe3bdb232a0d4c0843b0bdca10a7bca3adfa3"
+    "test/unit/bibleit_test_database_tests.erl": "0fde852e777ce92a36abc7c0063fe3bdb232a0d4c0843b0bdca10a7bca3adfa3",
+    "test/unit/bibleit_turnstile_tests.erl": "7886c8b5c58bbd24072125411b58c0df1f0fc49cb9ec148d41933f06688bf1c5"
   },
   "verification": {
     "integration": true,
@@ -152,6 +153,8 @@
     "fixed_http_endpoint": "https://bibleit.app",
     "fixed_ssh_endpoint": "bibleit.app:22",
     "ssh_host_key_alias": "bibleit-server.fly.dev",
+    "boot_configuration_cases": 1,
+    "eunit_cases": 24,
     "tls_boundary_cases": 3,
     "egress_disabled_fixture": true,
     "response_encoder_cases": 18,

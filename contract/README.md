@@ -2,12 +2,12 @@
 
 ## Latest canonical-domain compatibility snapshot — 11 October 2026
 
-Fresh isolated HTTP/SSH/import checks passed against server
-0c0da9ff5f759a0998ac151818db27c70065810c plus assessment canonical-host
-working-tree changes. The synchronized baseline records 69 Erlang source,
-71 test and 11 native input fingerprints; native remains
-f6fed37919c848b1aa0208900af992a5e8a507f2. Recorded inputs match immediately
-after the run. This is a tested candidate, not a final committed/deployed release.
+Fresh isolated HTTP/SSH/import and boot checks passed against assessment revision
+5969f2f73547010cddd3ae5b0828839cad118f2e. The synchronized baseline records
+69 Erlang source, 72 test and 11 native input fingerprints; all Erlang inputs
+match that commit. Native remains f6fed37919c848b1aa0208900af992a5e8a507f2.
+Unrelated frontend working-tree edits were present, so dirty metadata stays true;
+no server checkout was modified by the client harness.
 
 The fixed HTTPS/browser origin is https://bibleit.app; ordinary CLI SSH uses
 bibleit.app:22. The historical Fly name is solely an OpenSSH known_hosts alias,
@@ -23,8 +23,9 @@ exercising client paths and unsets it before other suite teardown. No PROXY prea
 host certificate installation or production principal/data mutation is involved.
 
 Passing coverage: 34 decoder/18 encoder fixtures, seven security cases, 11 Go HTTP
-subtests, real OpenSSH lifecycle/JSON parity and changed-key rejection, 18 auth/key/
-protocol tests, and 26 import-access/publication cases (11 access, 15 publication).
+subtests, real OpenSSH lifecycle/JSON parity and changed-key rejection, 24 auth/key/
+protocol/canonical/provider unit tests, one boot configuration case, and 26 import
+access/publication cases (11 access, 15 publication).
 Import delivery is adapted only inside suite setup; URL policy, authorization,
 validation and publication remain real. The unique disposable database is removed.
 
@@ -32,8 +33,8 @@ The earlier assessment closed 25/25 packages for the Fly-hostname deployment.
 Actual custom-domain DNS/TLS/SSH, canonical-origin authentication and retained
 production host fingerprint qualification remain assessment/Fly-owned and pending.
 This check does not certify the new public route or browser/provider integrations.
-Final server freeze, released client version and standalone CLI candidate remain
-release gates. Earlier Fly-hostname native/candidate results are historical.
+Final packaging/deployment input freeze, released client version and standalone
+CLI candidate remain release gates. Earlier Fly-hostname native/candidate results are historical.
 
 ## Transport
 
