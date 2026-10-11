@@ -150,3 +150,23 @@ server-boot-validation.json records supplemental provenance and links the retain
 were not repeated. Assessment-owned repaired-source broad results pass 337 CT/63
 EUnit/71 JavaScript/native 65536/10 bootstrap. Actual public-domain qualification
 and human-widget acceptance remain pending; no client runtime or release changes.
+
+## Actual canonical public deployment acceptance — 11 October 2026
+
+Actual public-DNS technical qualification passes on source c586107, runtime
+repair ef63e91/native f6fed37 and immutable image
+sha256:1140436c3d9e7de1b1f80e88aa208a0a6c06cff4b7ba371e0f5ddcbb5b6ace22.
+403 source hashes and 20 actual-image checks matched. HTTPS boundary23/alias39
+checks pass on each address family, plus auth11/canonical SSH10/paired rate15.
+The actual public SSH fingerprint is unchanged and scoped synthetic fixture
+counts are zero after cleanup. Credential-free canonical-deployment-validation.json
+links deployed source/image and redacted report hashes to the retained client
+integration and supplemental boot evidence. No client runtime changed.
+
+The operator confirms real Google/GitHub OAuth sign-in. The legacy Live
+certificate is removed while all three new-server certificates remain Issued;
+legacy app/data/volumes and Pages remain intact. Real Turnstile backend
+fresh-token success/replay is the remaining domain acceptance gate; visible
+widget success and two fail-closed backend denials are only partial evidence.
+Customer release tags/assets remain held, with standalone dependency/packaging
+validation and release decisions still required.

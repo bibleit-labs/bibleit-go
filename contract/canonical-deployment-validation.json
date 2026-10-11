@@ -1,0 +1,102 @@
+{
+  "reviewed_at": "2026-10-11",
+  "evidence_owner": "security assessment and Fly deployment chats",
+  "server_source": "c586107a6f5a7e3fd4d06bfccb13d0973252e98d",
+  "runtime_repair": "ef63e913ae4d7f3e28a2dc561e869976db667a20",
+  "native_source": "f6fed37919c848b1aa0208900af992a5e8a507f2",
+  "image": "registry.fly.io/bibleit-server@sha256:1140436c3d9e7de1b1f80e88aa208a0a6c06cff4b7ba371e0f5ddcbb5b6ace22",
+  "deployment_run": "https://github.com/bibleit-labs/bibleit-server/actions/runs/38129282912",
+  "deployed_source_hashes_verified": 403,
+  "actual_image_checks_passed": 20,
+  "endpoints": {
+    "http": "https://bibleit.app",
+    "ssh": "bibleit.app:22"
+  },
+  "dns": {
+    "ipv4": "137.66.54.95",
+    "ipv6": "2a09:8280:1::1b0:958e:0",
+    "www_cname": "mdonzjm.bibleit-server.fly.dev.",
+    "routing": "DNS-only",
+    "verified_by": [
+      "hope.ns.cloudflare.com",
+      "lochlan.ns.cloudflare.com",
+      "1.1.1.1",
+      "8.8.8.8"
+    ]
+  },
+  "ssh_host_fingerprint": "SHA256:MUnCXVIEU/t8AZk0es6XgyeE9c9Ak6LmCZdEmy99ips",
+  "acceptance": "actual public canonical DNS; not address-override pre-cutover probes",
+  "technical_checks": {
+    "public-boundary-v4.json": {
+      "checks_passed": 23,
+      "report_sha256": "5e57fe8b1887584460783dea3c2d8bc11199594b14b8c735c69dda8c2a0ea05c"
+    },
+    "public-boundary-v6.json": {
+      "checks_passed": 23,
+      "report_sha256": "b1db7cd9c4cd0eb287a5c20060b628743f5e083121e9e1f2c1573b8cdbee2de0"
+    },
+    "public-aliases-v4.json": {
+      "checks_passed": 39,
+      "report_sha256": "27d8d1ee8a3e88194b5b88ed347c9a33c0f675ff0fd1aa57d144b80c698a6637"
+    },
+    "public-aliases-v6.json": {
+      "checks_passed": 39,
+      "report_sha256": "e903019f5f86101d8315586658f38d7abccb9fbe152e9f8ebd3018fdd3e56005"
+    },
+    "public-auth.json": {
+      "checks_passed": 11,
+      "report_sha256": "6a5c3e2f1d1c1609708659d0d50ec02e3d202c24b46e875fee4c184f02e32a31"
+    },
+    "public-ssh-auth.json": {
+      "checks_passed": 10,
+      "report_sha256": "64cdab6701233ad4997916f1f91ae79feebe401e5cfffd6cc1ca17db946e0eda"
+    },
+    "paired-rate.json": {
+      "checks_passed": 15,
+      "report_sha256": "860a7dd70e9aaf810487f5b4464d036955c86dd8996f6d6f3eb3636a74385260"
+    },
+    "public-turnstile-fail-closed.json": {
+      "checks_passed": 2,
+      "report_sha256": "95078cf50a2c11c0b9fe3c8dcf738a8cdfa192cc30a27bf9454f5bab36586e73"
+    },
+    "public-dns.json": {
+      "passed": true,
+      "report_sha256": "bb5a861992b1867825819964a5e20991aae48c1bbf51c9d8c3e92deb0b78a89f"
+    },
+    "public-fixture-cleanup.json": {
+      "passed": true,
+      "report_sha256": "ec8d9c6d05676557cdd14837dc8f6d0ef37098bbcadc5e0d9405356af14692e7"
+    }
+  },
+  "synthetic_fixture_counts_after_cleanup": {
+    "users": 0,
+    "accounts": 0,
+    "lives": 0,
+    "sessions": 0,
+    "ssh_keys": 0,
+    "identities": 0
+  },
+  "remaining_acceptance": [
+    "real Turnstile token backend success and replay rejection"
+  ],
+  "client_runtime_changed": false,
+  "customer_release_published": false,
+  "independent_client_evidence": {
+    "server-baseline.json": "2a3ec268dd434dc5e1f4bd661d64c1862671cecab447c42dbaacbde8f76d1354",
+    "server-boot-validation.json": "ce29b0b8d0e0054f3e1ffb2bef69f98b3332646b49096fdff261466bdc4e1eeb"
+  },
+  "human_provider_acceptance": {
+    "Google": "confirmed by operator",
+    "GitHub": "confirmed by operator"
+  },
+  "certificates": {
+    "bibleit-server": [
+      "bibleit.app",
+      "live.bibleit.app",
+      "www.bibleit.app"
+    ],
+    "status": "Issued",
+    "legacy_live_certificate_removed": true,
+    "legacy_app_data_and_Pages_preserved": true
+  }
+}

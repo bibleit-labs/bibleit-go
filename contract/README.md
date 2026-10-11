@@ -30,9 +30,9 @@ Import delivery is adapted only inside suite setup; URL policy, authorization,
 validation and publication remain real. The unique disposable database is removed.
 
 The earlier assessment closed 25/25 packages for the Fly-hostname deployment.
-Actual custom-domain DNS/TLS/SSH, canonical-origin authentication and retained
-production host fingerprint qualification remain assessment/Fly-owned and pending.
-This check does not certify the new public route or browser/provider integrations.
+Actual custom-domain technical acceptance has since passed; see the deployed
+qualification below. This isolated check itself does not certify the public
+route or browser/provider integrations.
 Final packaging/deployment input freeze, released client version and standalone
 CLI candidate remain release gates. Earlier Fly-hostname native/candidate results are historical.
 
@@ -61,8 +61,31 @@ python3 scripts/check_server_boot.py --revision ef63e913ae4d7f3e28a2dc561e869976
 ```
 
 The assessment reports its full suite green: 337 CT/63 EUnit/71 JavaScript/native
-65536/10 bootstrap cases. Actual custom-domain DNS/TLS/SSH/authentication and
-human-widget acceptance remain assessment/Fly-owned release gates.
+65536/10 bootstrap cases. The subsequent actual public-domain technical
+qualification is recorded below; human Google/GitHub sign-in passes. Real
+Turnstile backend acceptance remains open.
+
+## Actual public canonical-domain technical qualification — 11 October 2026
+
+Assessment/Fly confirms actual public-DNS acceptance on deployed c586107, runtime
+repair ef63e91/native f6fed37 and immutable image
+sha256:1140436c3d9e7de1b1f80e88aa208a0a6c06cff4b7ba371e0f5ddcbb5b6ace22.
+The deployment verified 403 source hashes and 20 actual-image checks. Two DNS
+authorities plus Cloudflare/Google confirm the DNS-only apex/live routes and www
+CNAME. Each address family passes 23 HTTPS boundary and 39 alias checks; 11 auth,
+10 actual canonical SSH and 15 paired rate checks pass. Public SSH retains
+SHA256:MUnCXVIEU/t8AZk0es6XgyeE9c9Ak6LmCZdEmy99ips. Scoped synthetic fixture
+counts are zero after cleanup; their credentials/private key were removed.
+
+`canonical-deployment-validation.json` records credential-free source/image,
+endpoint, report-hash and cleanup provenance, and links the two independent
+client evidence files. It contains no customer credentials. The summary is
+identical across Go/CLI and does not change their runtime or publish a release.
+
+The operator confirms Google/GitHub sign-in. Real Turnstile backend token
+success/replay remains pending. Visible widget success and two passing
+missing/bogus-token backend denials are partial evidence only. Keep customer releases held until the
+remaining acceptance and standalone release gates close.
 
 ## Transport
 
