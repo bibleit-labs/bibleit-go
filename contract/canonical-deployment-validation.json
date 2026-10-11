@@ -35,7 +35,7 @@
     "identities": 0
   },
   "remaining_acceptance": [
-    "confirmed real Turnstile replay acceptance: repair and requalify fresh-token acceptance/replay rejection"
+    "exact d160773 replay-repair deployment qualification and genuine fresh-token/replay acceptance"
   ],
   "client_runtime_changed": false,
   "customer_release_published": false,
@@ -344,7 +344,7 @@
     "artifact_report_sha256": "fae669c50cb335154bfc9672e414f8043fda68ae6978841fe2e70c18c359f420"
   },
   "provider_acceptance_coordination": {
-    "status": "human email delivery/verification passed; real Turnstile replay failure confirmed and assessment repairing",
+    "status": "email delivery/verification passed; replay repair committed and locally qualified, exact deployment/real retest pending",
     "requested_checks": [
       "real backend fresh-token acceptance and replay rejection; helper three booleans",
       "controlled email signup, delivery and link verification"
@@ -394,5 +394,37 @@
       "planned_repair": "atomic shared database replay guard across concurrency/restarts; temporarily store only token SHA-256 hashes",
       "repair_qualification_complete": false
     }
+  },
+  "turnstile_replay_repair": {
+    "server_source": "d1607733da5c93b8eccc7b3d8fcb3037f51f2f75",
+    "native_source": "d6e31dc8eb7c478e2f915e7bd156b047a2cb279e",
+    "status": "committed local qualification complete; exact deployment and real provider retest pending",
+    "guard": "atomic shared PostgreSQL claim; SHA-256 only, ten-minute TTL, indexed/bounded 1000-row expired cleanup",
+    "migration": "append008; identities001-007 unchanged",
+    "provider_hostname_action_and_tls_checks_retained": true,
+    "focused_eunit": 6,
+    "focused_database_http_common_test": 4,
+    "focused_cases": [
+      "provider repeated success denied",
+      "twenty concurrent requests exactly one accepted",
+      "restart persistence",
+      "bounded expiry cleanup",
+      "database errors fail closed",
+      "HTTP fresh invalid-email then identical replay human-verification denial; no account/email created"
+    ],
+    "full_server_suite": {
+      "common_test": 344,
+      "eunit": 68,
+      "javascript": 75,
+      "bootstrap": 10,
+      "native_corpus": 65536
+    },
+    "disposable_database_removed": true,
+    "client_runtime_changed": false,
+    "qualification_owner": "assessment",
+    "deployed": false,
+    "genuine_provider_retest_passed": false,
+    "deployment_run": "https://github.com/bibleit-labs/bibleit-server/actions/runs/38162034582",
+    "deployment_status": "in progress; source pinned to d160773; no gate closure yet"
   }
 }

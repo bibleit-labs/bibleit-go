@@ -344,3 +344,9 @@ The improved human retry confirms same-body token replay reaches input validatio
 twice, with CSRF/rate/continuity interference ruled out. Assessment repair is in
 progress; genuine fresh-token/replay acceptance must be requalified before release.
 Mail delivery/verification remains separately human-confirmed.
+
+Replay guard source d160773 is now committed and locally qualified (344 CT,
+68 EUnit,75 JS,10 bootstrap,native65536;focused six unit/four DB-HTTP cases).
+It appends migration008 and preserves prior identities. Exact-image deployment
+run38162034582 and genuine fresh-token/replay acceptance remain pending; client
+runtime and native d6e31dc are unchanged.
