@@ -16,7 +16,7 @@ import (
 // ServerEndpoint is the project-managed Bibleit service address. Applications
 // cannot override it through configuration or environment variables. HTTPS
 // certificate verification is enabled by the default transport.
-const ServerEndpoint = "https://legacy.bibleit.example"
+const ServerEndpoint = "https://bibleit.app"
 
 const maxResponseBytes = 2 << 20
 

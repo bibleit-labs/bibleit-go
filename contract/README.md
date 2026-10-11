@@ -1,34 +1,5 @@
 # Bibleit client contract: protocol v1
 
-## Latest fixed-endpoint compatibility snapshot — 11 October 2026
-
-Fresh isolated HTTP/SSH/import checks passed against clean server
-[private digest withheld], which includes deployed code
-7442010eebcfb1a2a9105db312ebaeae5f789003. Native libbibleit remains
-[private digest withheld]. The synchronized baseline records
-68 Erlang source, 70 test and 11 native build-input fingerprints. Native code is
-rebuilt from the frozen snapshot; concurrent copy-input changes are rejected.
-
-The fixed HTTPS origin is https://legacy.bibleit.example; ordinary CLI SSH uses
-legacy.bibleit.example:22. Public constructors use the production URL unchanged.
-The disposable container has no external network route and maps the hostname
-exclusively to loopback. TLS verification uses a fixture CA only in the container;
-correct trust/name succeeds, while wrong name and untrusted CA fail. No host
-certificate installation, customer endpoint override or PROXY preamble is used.
-
-Passing coverage: 34 decoder/18 encoder fixtures, seven server security cases,
-11 Go HTTP subtests, OpenSSH subscription/pause/reconnect/delete closure and
-single-credential JSON parity, 18 auth/key/protocol tests, and 26 import-access/
-publication cases (11 access, 15 publication). Approved import delivery is adapted
-only inside suite setup; URL policy, authorization, validation and publication
-remain real. Authorized unreviewed/private-source import rejection passes.
-The disposable database is removed; no production principal/data is modified.
-
-The assessment separately records 25/25 scoped packages complete and qualifies
-actual HTTPS/SSH/Fly routing. This isolated client check does not certify a new
-public-edge deployment, browser/provider login or bearer management WebSocket API.
-A released client version and standalone CLI candidate remain release gates.
-
 ## Transport
 
 `POST /api/cli/command` takes `Authorization: Bearer <token>` and a JSON body
