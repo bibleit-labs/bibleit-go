@@ -36,6 +36,34 @@ This check does not certify the new public route or browser/provider integration
 Final packaging/deployment input freeze, released client version and standalone
 CLI candidate remain release gates. Earlier Fly-hostname native/candidate results are historical.
 
+## Supplemental alias boot qualification — 11 October 2026
+
+The assessment subsequently repaired the missing BIBLEIT_HTTP_REDIRECT_HOSTS
+parser registration at ef63e913ae4d7f3e28a2dc561e869976db667a20. The new direct
+boot regression passes independently in a read-only, egress-disabled container:
+configured aliases normalize, absent aliases remain empty and wildcards fail.
+Each child process clears its environment, uses an empty cwd and synthetic DB
+settings, and calls configure() without starting a service or connecting to a DB.
+
+`server-boot-validation.json` records all 69 source/73 test/11 native hashes at
+that committed repair, the preceding integration-baseline hash and the sole
+runtime difference: the one-line alias parser registration. Native f6fed37 is
+unchanged. Unrelated frontend edits retain truthful dirty metadata. The original
+`server-baseline.json` deliberately retains the full HTTP/SSH/import run at
+5969f2f; those unchanged client checks were not repeated at ef63e91. Both evidence
+files are identical in the Go and CLI repositories. The full future integration
+runner now includes this direct boot EUnit case alongside the existing checks.
+
+Reproduce the focused qualification using the existing integration tools image:
+
+```sh
+python3 scripts/check_server_boot.py --revision ef63e913ae4d7f3e28a2dc561e869976db667a20 --report contract/server-boot-validation.json
+```
+
+The assessment reports its full suite green: 337 CT/63 EUnit/71 JavaScript/native
+65536/10 bootstrap cases. Actual custom-domain DNS/TLS/SSH/authentication and
+human-widget acceptance remain assessment/Fly-owned release gates.
+
 ## Transport
 
 `POST /api/cli/command` takes `Authorization: Bearer <token>` and a JSON body

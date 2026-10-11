@@ -134,3 +134,19 @@ hostname/default/normalization/stale-host boot case and 24 auth/key/protocol/
 canonical/provider unit tests. Unrelated frontend edits keep dirty metadata true.
 Actual public custom-domain and human-widget qualification remain pending;
 no client runtime changes or customer publication occur in this metadata refresh.
+
+## Supplemental direct alias boot repair — 11 October 2026
+
+Assessment repair ef63e91 registers BIBLEIT_HTTP_REDIRECT_HOSTS in the real
+dotenv parser. Independent direct boot qualification passes normalized configured
+aliases, absent aliases and wildcard rejection, using the committed server
+regression in cleared-env child processes with empty cwd and no external route.
+No database connection or service is started. All 69 source/73 test hashes match
+that committed repair; the 11 native inputs remain f6fed37. The sole runtime
+difference from the previous full client run is the one-line parser registration.
+
+server-boot-validation.json records supplemental provenance and links the retained
+5969f2f full HTTP/SSH/import baseline by SHA-256. Those unchanged client checks
+were not repeated. Assessment-owned repaired-source broad results pass 337 CT/63
+EUnit/71 JavaScript/native 65536/10 bootstrap. Actual public-domain qualification
+and human-widget acceptance remain pending; no client runtime or release changes.
