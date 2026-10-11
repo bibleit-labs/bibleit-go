@@ -1,0 +1,8 @@
+{
+  "scope": "Historical service validation; detailed deployment and infrastructure evidence is maintained privately.",
+  "public_endpoints": {
+    "http": "https://bibleit.app",
+    "ssh": "bibleit.app:22"
+  },
+  "reviewed_at": "2026-10-11"
+}
