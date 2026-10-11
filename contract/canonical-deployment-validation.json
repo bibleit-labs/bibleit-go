@@ -35,7 +35,9 @@
     "identities": 0
   },
   "remaining_acceptance": [
-    "exact d160773 replay-repair deployment qualification and genuine fresh-token/replay acceptance"
+    "approve narrow server security-release deployment path excluding undeployed Reader changes",
+    "qualify corrected release image containing SQL008 and deploy exact repair",
+    "genuine fresh-token acceptance and replay rejection"
   ],
   "client_runtime_changed": false,
   "customer_release_published": false,
@@ -344,7 +346,7 @@
     "artifact_report_sha256": "fae669c50cb335154bfc9672e414f8043fda68ae6978841fe2e70c18c359f420"
   },
   "provider_acceptance_coordination": {
-    "status": "email delivery/verification passed; replay repair committed and locally qualified, exact deployment/real retest pending",
+    "status": "email passed; replay remains failed on unchanged production; packaging fix and deployment approval/image qualification/real retest pending",
     "requested_checks": [
       "real backend fresh-token acceptance and replay rejection; helper three booleans",
       "controlled email signup, delivery and link verification"
@@ -398,7 +400,7 @@
   "turnstile_replay_repair": {
     "server_source": "d1607733da5c93b8eccc7b3d8fcb3037f51f2f75",
     "native_source": "d6e31dc8eb7c478e2f915e7bd156b047a2cb279e",
-    "status": "committed local qualification complete; exact deployment and real provider retest pending",
+    "status": "local runtime qualification passed; production-image build failed before deployment; packaging fix staged, deployment exception approval pending",
     "guard": "atomic shared PostgreSQL claim; SHA-256 only, ten-minute TTL, indexed/bounded 1000-row expired cleanup",
     "migration": "append008; identities001-007 unchanged",
     "provider_hostname_action_and_tls_checks_retained": true,
@@ -425,6 +427,16 @@
     "deployed": false,
     "genuine_provider_retest_passed": false,
     "deployment_run": "https://github.com/bibleit-labs/bibleit-server/actions/runs/38162034582",
-    "deployment_status": "in progress; source pinned to d160773; no gate closure yet"
+    "deployment_status": "workflow38162034582 failed before publish/deploy: migration008 missing from explicit release allowlist",
+    "packaging_followup": {
+      "cause": "SQL008 omitted by explicit release-resource allowlist",
+      "fix_status": "prepared and staging checks passed; no final qualified image yet",
+      "early_manifest_checks": "all eight SQL migrations staged; omitted migration rejected",
+      "runtime_changed_by_packaging_fix": false,
+      "production_unchanged": true,
+      "deployment_constraint": "main now includes separately approved Reader source changes not approved for deployment; Fly owner requests narrow security-release branch exception",
+      "approval_owner": "Fly deployment chat",
+      "approval_pending": true
+    }
   }
 }
