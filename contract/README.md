@@ -330,8 +330,17 @@ HTTPS/SSH fixture at the fixed production hostname. Direct host integration is
 rejected. See the latest compatibility snapshot above.
 
 
-A later font-only deployment is reported at source14628f3/run38157279015/native d6.
-Its owner confirms public CSS/signup/readiness and Georgia rendering; exact image
-identity is not yet recorded here. This narrow follow-up does not silently inherit
-4243's artifact/full qualification. Both real-provider acceptance gates remain
-open, with human helper and controlled-email steps requested by the assessment.
+A later font-only deployment is independently recorded at source14628f3/native d6,
+workflow38157279015, image registry.fly.io/bibleit-server@sha256:28fb9a0baa99d2bae3bbdc3a6f3247896fc67f2f2956a2a7ef322ea48a9660f9.
+Its artifact verifies406 hashes/eight stages/native amd64/cleanup[0,0], with185
+APK comparisons and zero fixed alerts; published and running image match. Its
+owner confirms public CSS/signup/readiness. This separate proof does not silently
+inherit4243's full client/public-boundary qualification. Assessment ledger a40d27d
+records human email delivery/verification and fresh-token acceptance; real replay
+rejection remains pending an improved human helper retry. No identifiers/secrets
+are retained and no customer release is published.
+
+The improved human retry confirms same-body token replay reaches input validation
+twice, with CSRF/rate/continuity interference ruled out. Assessment repair is in
+progress; genuine fresh-token/replay acceptance must be requalified before release.
+Mail delivery/verification remains separately human-confirmed.

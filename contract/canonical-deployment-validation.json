@@ -35,8 +35,7 @@
     "identities": 0
   },
   "remaining_acceptance": [
-    "real Turnstile token backend success and replay rejection",
-    "actual email delivery and verification"
+    "confirmed real Turnstile replay acceptance: repair and requalify fresh-token acceptance/replay rejection"
   ],
   "client_runtime_changed": false,
   "customer_release_published": false,
@@ -328,16 +327,72 @@
       "signup heading uses Georgia",
       "signup and readiness HTTP 200"
     ],
-    "qualification_scope": "separate narrow public font/readiness report; no inherited full4243 qualification",
-    "exact_image_digest_recorded": false
+    "qualification_scope": "exact source/native image build and startup workflow/artifact evidence plus narrow public font/signup/readiness report; full4243 client and public-boundary proof remains separately attributed",
+    "exact_image_digest_recorded": true,
+    "image": "registry.fly.io/bibleit-server@sha256:28fb9a0baa99d2bae3bbdc3a6f3247896fc67f2f2956a2a7ef322ea48a9660f9",
+    "validated_image_id": "sha256:392fc1869e8d2d74b38c77f733f0798764ff3e6e5b897ef5309578b4dbac08ba",
+    "published_running_digest_match": true,
+    "deployed_source_hashes_verified": 406,
+    "build_stages_passed": 8,
+    "platform": "native linux/amd64",
+    "artifact_cleanup_counts": [
+      0,
+      0
+    ],
+    "apk_comparisons": 185,
+    "fixed_advisory_alerts": 0,
+    "artifact_report_sha256": "fae669c50cb335154bfc9672e414f8043fda68ae6978841fe2e70c18c359f420"
   },
   "provider_acceptance_coordination": {
-    "status": "awaiting human results requested by assessment",
+    "status": "human email delivery/verification passed; real Turnstile replay failure confirmed and assessment repairing",
     "requested_checks": [
       "real backend fresh-token acceptance and replay rejection; helper three booleans",
       "controlled email signup, delivery and link verification"
     ],
     "fixture_evidence_is_not_provider_acceptance": true,
-    "raw_tokens_credentials_and_identifiers_recorded": false
+    "raw_tokens_credentials_and_identifiers_recorded": false,
+    "assessment_ledger": "a40d27d",
+    "deployed_source": "14628f3a738436dce771a05e3bad450dc01b89f0",
+    "deployed_image": "registry.fly.io/bibleit-server@sha256:28fb9a0baa99d2bae3bbdc3a6f3247896fc67f2f2956a2a7ef322ea48a9660f9",
+    "email_delivery_and_verification": "human confirmed check-email page, delivered email and completed verification into the new account",
+    "real_fresh_token_accepted": true,
+    "replay_rejection": "FAIL: improved same-body human test reached invalid-email validation twice; no CSRF/rate/continuity interference",
+    "original_helper_result": {
+      "freshAcceptedBeforeInputValidation": true,
+      "replayRejected": false,
+      "passed": false,
+      "statuses": [
+        400,
+        400
+      ]
+    },
+    "helper_followup": {
+      "classification": "rendered feedback-error paragraph, allowlisted booleans, locale/CSRF/rate/continuity detection",
+      "offline_classification_cases_passed": 6,
+      "unique_invalid_email_avoids_shared_synthetic_rate_bucket": true,
+      "same_body_replay": true,
+      "new_real_provider_calls_by_assessment": false
+    },
+    "provider_gates_closed": false,
+    "improved_human_result": {
+      "fresh_status": 400,
+      "replay_status": 400,
+      "fresh_invalid_email": true,
+      "replay_invalid_email": true,
+      "fresh_human_denied": false,
+      "replay_human_denied": false,
+      "csrf_rejected": false,
+      "rate_limited": false,
+      "csrf_unchanged": true
+    },
+    "next_step": "assessment repair, relevant changed-source/deployed qualification, then fresh real-token success/replay retest; no publication until green",
+    "configuration_diagnosis": {
+      "evidence_owner": "assessment",
+      "integration_enabled": true,
+      "documented_test_secret_configured": false,
+      "bogus_token_rejected": true,
+      "planned_repair": "atomic shared database replay guard across concurrency/restarts; temporarily store only token SHA-256 hashes",
+      "repair_qualification_complete": false
+    }
   }
 }
