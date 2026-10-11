@@ -238,3 +238,10 @@ Replay guard source [private revision withheld] is now committed and locally qua
 It appends migration008 and preserves prior identities. Exact-image deployment
 run38162034582 and genuine fresh-token/replay acceptance remain pending; client
 runtime and native [private revision withheld] are unchanged.
+
+Production-image run38162034582 failed before publish/deploy: its SQL release
+allowlist omitted008. Local runtime tests did not qualify assembled packaging.
+The staging correction covers all eight migrations and rejects omissions; a final
+image is still required. Production remains[private revision withheld]. Fly requests narrow security-
+release approval excluding undeployed Reader changes; real fresh/replay retesting
+remains open after that exact corrected rollout.
