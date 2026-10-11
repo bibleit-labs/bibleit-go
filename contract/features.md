@@ -224,6 +224,13 @@ row count; omitted verses return verse_not_found and chapter rows preserve gaps.
 
 server-catalog-validation.json records the focused compatibility snapshot; full
 5969f2f/f6 protocol/auth/Live/import evidence and ef63e91/f6 boot evidence remain
-separately attributed. No unnecessary broad client protocol repetition. Exact
-UTF-8 repaired-source deployment/public qualification and real Turnstile/email
-acceptance remain pending. Customer tags/assets remain held.
+separately attributed. No unnecessary broad client protocol repetition. Exact repaired deployment/public qualification now passes at 4243c9a/d6e31dc,
+image sha256:46670b5fba63859a6892d64c1501122ecdddfd1edc1410555eba7c165143b5c1
+(workflow 38147193441): 406 committed hashes, eight successful stages, 20 actual
+image startup checks, published/running digest parity and 185 APK comparisons
+with zero fixed-advisory alerts. Boundary 23/alias 39 checks pass independently
+on IPv4 and IPv6; native form CSRF admission and missing-token denial pass.
+Production BPML's 66 BOOK records pass strict UTF-8 and match Gênesis. Five public
+report hashes are retained in canonical-deployment-validation.json. Real
+Turnstile backend success/replay and actual email delivery/verification remain
+pending. Customer tags/assets remain held.

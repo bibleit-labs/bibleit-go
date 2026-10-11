@@ -140,8 +140,16 @@ Go/CLI. No broad protocol/auth/Live suite was unnecessarily repeated.
 A catalogue chapter's verses value is its highest source verse identifier, not
 a dense row count. An omitted verse returns verse_not_found; chapter reads include
 only present rows and preserve source numbering. The strict client UTF-8 decoder
-is unchanged. Exact UTF-8 repaired-source deployment/public qualification and
-real Turnstile/email acceptance remain pending; no customer tags/assets.
+is unchanged. Exact repaired deployment/public qualification is complete at server
+4243c9a/native d6e31dc, image
+sha256:46670b5fba63859a6892d64c1501122ecdddfd1edc1410555eba7c165143b5c1 (workflow
+38147193441): 406 committed hashes, eight successful stages, 20 actual-image startup
+checks, published/running digest parity and 185 APK comparisons with zero fixed-advisory
+alerts. Refreshed boundary 23/alias 39 checks pass independently on IPv4 and IPv6;
+native form CSRF admission and missing-token denial pass. Production BPML has 66 strict
+UTF-8 BOOK records and matching Gênesis. The five public report hashes are recorded in
+canonical-deployment-validation.json. Real Turnstile backend success/replay and actual
+email delivery/verification remain open. No customer tags/assets.
 
 Reproduce with the existing disposable fixture:
 

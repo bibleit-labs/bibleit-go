@@ -1,12 +1,12 @@
 {
   "reviewed_at": "2026-10-11",
   "evidence_owner": "security assessment and Fly deployment chats",
-  "server_source": "6ba81e2d2ec7d4bfbe5bbf819e77438a0f205665",
+  "server_source": "4243c9a3c1b6e8f8b1f94b93f0880b3aa98464f6",
   "runtime_repair": "ef63e913ae4d7f3e28a2dc561e869976db667a20",
   "native_source": "d6e31dc8eb7c478e2f915e7bd156b047a2cb279e",
-  "image": "registry.fly.io/bibleit-server@sha256:7456bfec37b1d2285041387ef6135685dc707748ea82adbff60417e96c5fec47",
-  "deployment_run": "https://github.com/bibleit-labs/bibleit-server/actions/runs/38144732991",
-  "deployed_source_hashes_verified": 405,
+  "image": "registry.fly.io/bibleit-server@sha256:46670b5fba63859a6892d64c1501122ecdddfd1edc1410555eba7c165143b5c1",
+  "deployment_run": "https://github.com/bibleit-labs/bibleit-server/actions/runs/38147193441",
+  "deployed_source_hashes_verified": 406,
   "actual_image_checks_passed": 20,
   "endpoints": {
     "http": "https://bibleit.app",
@@ -35,7 +35,6 @@
     "identities": 0
   },
   "remaining_acceptance": [
-    "exact repaired UTF-8 source deployment and relevant public qualification",
     "real Turnstile token backend success and replay rejection",
     "actual email delivery and verification"
   ],
@@ -124,43 +123,50 @@
     "limits": "auth/SSH/rate/provider evidence belongs to this preceding deployment; those unchanged client protocol checks were not repeated here"
   },
   "technical_checks": {
-    "catalog-boundary-v4.json": {
-      "checks_passed": 23,
-      "report_sha256": "497f3351d2fee570f6b3a27cda2e9356388ba461c4e837d064edb75c2dbc3753"
-    },
-    "catalog-boundary-v6.json": {
-      "checks_passed": 23,
-      "report_sha256": "ab7be3171e15c487f9022c02de1afdbcf70e0dee3ea0f12be6ccf015e8293db9"
-    },
-    "catalog-aliases-v4.json": {
+    "utf8-aliases-v4.json": {
+      "report_sha256": "ef076782731ae8d1497f1f1f57b8391ae5aaa089e500f29c21414491abce1195",
       "checks_passed": 39,
-      "report_sha256": "654b1138a4365248d55844f98057a5b548b0e9a029a196bb59cf15f965aecf53"
+      "address_family": "AF_INET"
     },
-    "catalog-aliases-v6.json": {
+    "utf8-aliases-v6.json": {
+      "report_sha256": "f729951101b6896ac99957df3b69a6a35860c2c89533445504173f1f1f98c04d",
       "checks_passed": 39,
-      "report_sha256": "d3fdd660630aedddf4bad3291d56bea7f0734ede9447558196ce969e2e8cc71d"
+      "address_family": "AF_INET6"
     },
-    "catalog-native-form.json": {
+    "utf8-boundary-v4.json": {
+      "report_sha256": "c019a844d9e0328d7c5e93916f4cc81143c4a3acf0cd0392f4ff068c201e1fac",
+      "checks_passed": 23,
+      "address_family": "AF_INET"
+    },
+    "utf8-boundary-v6.json": {
+      "report_sha256": "7db4ed7060f69a5794f492658d1055fea9847d98a2bde49f8ea4f16b777ce32e",
+      "checks_passed": 23,
+      "address_family": "AF_INET6"
+    },
+    "utf8-native-form.json": {
+      "report_sha256": "5c8ce2df94f970e6ea5b0191eb45db8f809d3d1d0e5ad380bc7426cf7a362c59",
       "passed": true,
+      "native_form_passed_csrf": true,
+      "missing_token_rejected": true,
       "provider_traffic_blocked": true,
       "account_created": false,
-      "email_sent": false,
-      "report_sha256": "a4c3a0e48ca693aa3475e2ba82c5aebb8ef52221b57ef342c1d8b929fdf0aa1d"
+      "email_sent": false
     }
   },
   "runtime_browser_form_repair": "34d80f811b3ac9179d6afe0966185e2b3517181e",
   "changed_runtime_files_from_boot_qualification": [
     "src/http/bibleit_http_security_headers.erl",
+    "src/translations/bibleit_translation_catalog.erl",
     "src/translations/bibleit_translation_publication.erl"
   ],
   "local_server_suite": {
-    "common_test": 339,
-    "eunit": 63,
+    "common_test": 340,
+    "eunit": 66,
     "javascript": 75,
     "bootstrap": 10,
-    "native_corpus": "passed with sanitizers"
+    "native_corpus": 65536
   },
-  "qualification_scope": "catalog6ba81e2/d6e31dc operational/deployment point-in-time qualification; localized finite-client UTF-8 bug subsequently discovered",
+  "qualification_scope": "exact 4243c9a/d6e31dc repaired deployment, public technical checks and independent focused HTTP/SSH catalogue compatibility; earlier broad protocol/auth/Live/import proof remains separately attributed",
   "newer_catalog_rollout": {
     "server_source": "6ba81e2d2ec7d4bfbe5bbf819e77438a0f205665",
     "native_source": "d6e31dc8eb7c478e2f915e7bd156b047a2cb279e",
@@ -214,10 +220,6 @@
   },
   "build_stages_passed": 8,
   "platform": "native linux/amd64",
-  "artifact_cleanup_counts": [
-    0,
-    0
-  ],
   "published_running_digest_match": true,
   "apk_comparisons": 185,
   "fixed_advisory_alerts": 0,
@@ -227,7 +229,7 @@
     "Luke17:37": "exact read passed"
   },
   "localized_catalogue_utf8_followup": {
-    "status": "committed repair and independent focused client qualification pass; exact repaired deployment pending",
+    "status": "independent focused client qualification and exact repaired deployment/public qualification complete",
     "repair_source": "4243c9a3c1b6e8f8b1f94b93f0880b3aa98464f6",
     "native_source": "d6e31dc8eb7c478e2f915e7bd156b047a2cb279e",
     "language_pack_names_validated": 198,
@@ -248,7 +250,71 @@
       "native_corpus": 65536
     },
     "client_decoder_relaxed": false,
-    "native_changed_by_utf8_repair": false
+    "native_changed_by_utf8_repair": false,
+    "deployed_image": "registry.fly.io/bibleit-server@sha256:46670b5fba63859a6892d64c1501122ecdddfd1edc1410555eba7c165143b5c1",
+    "workflow_run": 38147193441,
+    "production_read_only_acceptance": {
+      "books": 66,
+      "encoded_BOOK_records": 66,
+      "strict_utf8": true,
+      "localized_Genesis_match": true,
+      "evidence_owner": "assessment read-only production interpreter; no distribution or data mutation"
+    }
   },
-  "native_changed_from_boot_qualification": true
+  "native_changed_from_boot_qualification": true,
+  "previous_catalog_deployment": {
+    "server_source": "6ba81e2d2ec7d4bfbe5bbf819e77438a0f205665",
+    "native_source": "d6e31dc8eb7c478e2f915e7bd156b047a2cb279e",
+    "image": "registry.fly.io/bibleit-server@sha256:7456bfec37b1d2285041387ef6135685dc707748ea82adbff60417e96c5fec47",
+    "deployment_run": "https://github.com/bibleit-labs/bibleit-server/actions/runs/38144732991",
+    "deployed_source_hashes_verified": 405,
+    "actual_image_checks_passed": 20,
+    "technical_checks": {
+      "catalog-boundary-v4.json": {
+        "checks_passed": 23,
+        "report_sha256": "497f3351d2fee570f6b3a27cda2e9356388ba461c4e837d064edb75c2dbc3753"
+      },
+      "catalog-boundary-v6.json": {
+        "checks_passed": 23,
+        "report_sha256": "ab7be3171e15c487f9022c02de1afdbcf70e0dee3ea0f12be6ccf015e8293db9"
+      },
+      "catalog-aliases-v4.json": {
+        "checks_passed": 39,
+        "report_sha256": "654b1138a4365248d55844f98057a5b548b0e9a029a196bb59cf15f965aecf53"
+      },
+      "catalog-aliases-v6.json": {
+        "checks_passed": 39,
+        "report_sha256": "d3fdd660630aedddf4bad3291d56bea7f0734ede9447558196ce969e2e8cc71d"
+      },
+      "catalog-native-form.json": {
+        "passed": true,
+        "provider_traffic_blocked": true,
+        "account_created": false,
+        "email_sent": false,
+        "report_sha256": "a4c3a0e48ca693aa3475e2ba82c5aebb8ef52221b57ef342c1d8b929fdf0aa1d"
+      }
+    },
+    "local_server_suite": {
+      "common_test": 339,
+      "eunit": 63,
+      "javascript": 75,
+      "bootstrap": 10,
+      "native_corpus": "passed with sanitizers"
+    },
+    "build_stages_passed": 8,
+    "platform": "native linux/amd64",
+    "artifact_cleanup_counts": [
+      0,
+      0
+    ],
+    "published_running_digest_match": true,
+    "apk_comparisons": 185,
+    "fixed_advisory_alerts": 0,
+    "existing_BPML_acceptance": {
+      "books": 66,
+      "Luke17:36": "notfound",
+      "Luke17:37": "exact read passed"
+    }
+  },
+  "synthetic_fixture_cleanup_verified_at_source": "c586107a6f5a7e3fd4d06bfccb13d0973252e98d"
 }
