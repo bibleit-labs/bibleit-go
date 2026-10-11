@@ -67,11 +67,11 @@ do not log it indiscriminately.
 
 - Credentials are explicit. The endpoint is the project-owned `ServerEndpoint`
   constant; no constructor or environment override is provided. The client
-  does not access CLI profiles, launch a browser, or load API tokens or service
+  does not access CLI credentials, launch a browser, or load API tokens or service
   addresses from environment variables. HTTP transport/proxy behavior is owned by
   `net/http` or the supplied transport.
-- The service uses a loopback HTTP placeholder during development. Set the
-  production HTTPS constant before release; remote HTTP remains rejected.
+- The fixed production HTTPS origin is `https://bibleit-server.fly.dev`.
+  Standard certificate verification is enabled; remote HTTP remains rejected.
 - The default HTTP timeout is 15 seconds. Use `NewClientWithHTTPClient` or
   `NewAuthClientWithHTTPClient` with a `*http.Client` to customize transport and
   timeouts. Its value is copied and redirects are disabled; its `Transport` and

@@ -181,17 +181,22 @@ Codes are one-use; a bad verifier also consumes the code. No automatic retries.
 `POST /api/cli/logout` uses the credential's bearer header. HTTP 204 acknowledges
 revocation; an already invalid credential returns 401. The Go library retains
 error status/code/metadata and leaves local storage decisions to the application.
-The CLI retains its profile on failed revocation and clears it after 204 or 401.
+The CLI retains its saved credential on failed revocation and clears it after 204 or 401.
 Both methods share HTTPS/loopback endpoint rules, reject redirects, accept
 contexts and bound response bodies. Real HTTP checks verify exchange, replay,
 bad-verifier consumption, logout and post-logout rejection.
 
 
-## Fixed-service integration (2026-10-10)
+## Historical fixed-service integration (2026-10-10)
 
-The simple API-token constructors now pass against a real server at the fixed
+At that checkpoint the simple API-token constructors passed against a real server at the fixed
 `http://localhost:8080` endpoint. No client destination override is used. If host
 port 8080 is occupied, run `python3 scripts/check_server_container.py` to use an
 isolated container namespace and disposable database. The verified baseline
 includes the fixed endpoint and current source fingerprints. The server checkout
 and developer service are not changed.
+
+The 2026-10-11 refresh supersedes the localhost fixture strategy: run
+`python3 scripts/check_server_container.py --imports` for the egress-disabled
+HTTPS/SSH fixture at the fixed production hostname. Direct host integration is
+rejected. See the latest compatibility snapshot above.
