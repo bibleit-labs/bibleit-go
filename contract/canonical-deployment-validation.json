@@ -168,5 +168,7 @@
     "workflow": "https://github.com/bibleit-labs/bibleit-server/actions/runs/38144732991",
     "status": "separately human-authorized rollout in progress; deployment/catalog qualification owned by catalog chat",
     "inherits_this_qualification": false
-  }
+  },
+  "ssh_fingerprint_verified_at_source": "c586107a6f5a7e3fd4d06bfccb13d0973252e98d",
+  "human_provider_acceptance_verified_before_native_form_repair": true
 }
