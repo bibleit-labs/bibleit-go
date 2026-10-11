@@ -2,7 +2,7 @@
 
 ## Latest assessment compatibility snapshot — 11 October 2026
 
-Package-24 isolated HTTP/SSH/import checks passed against server
+Package-25 isolated HTTP/SSH/import checks passed against server
 c2beef5334c249f65daedd0e279b8d9252f0d51b plus assessment working-tree changes,
 with native libbibleit f6fed37919c848b1aa0208900af992a5e8a507f2. The baseline
 records 67 Erlang source, 66 test and 11 native build-input fingerprints. Native
@@ -16,14 +16,18 @@ single-credential/output parity, 17 auth/key/protocol tests and 26 import-access
 publication cases (11 access, 15 publication). Approved import delivery is adapted
 only inside suite setup; production URL policy, authorization, validation and
 publication remain real. An authorized unreviewed/private-source import is denied.
-Recorded source/test/native inputs still match after the run, and the disposable
-database is removed. No production provider or database is contacted.
+Recorded source/test/native inputs matched immediately after the run, and the
+disposable database was removed. No production provider or database was contacted.
 
-No CLI command/response/error-name change was needed. Migration journal identity,
-verified provider HTTPS and guarded server packaging are server rollout concerns;
-complete assessment/deployment review and freeze the agreed release baseline
-before production compatibility checks. Management WebSockets remain outside the
-client transport; their full-suite/soak results belong to the server assessment.
+The refresh includes the package-25 server boot and canonical public-origin fixes
+and their security tests. No client command/response/error-name change was needed.
+The server assessment separately reports 326 integration, 51 Erlang unit, 71
+JavaScript, native and ten SSH-bootstrap tests, plus 16 final-image checks, passing.
+Overall assessment progress remains 24/25: approved Fly boundary tests, native
+amd64 server-image execution, proxy fairness, database trust and volume ownership
+remain open. The fixed production service/browser origin and an agreed committed/
+deployed snapshot must be verified before release. Management WebSockets and the
+production entrypoint/image are outside this client integration runner's scope.
 
 
 ## Transport
