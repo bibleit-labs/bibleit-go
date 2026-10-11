@@ -46,7 +46,7 @@ release versions are independent. Consumers choose when to update; a branch
 push is not a stable release. Keep supported operations, Go version, tested server
 baseline and compatibility changes documented. Release tags and repository
 visibility changes require approval. CLI v0.0.2 installer checks do not change
-the SDK version; pending Windows installer/Scoop checks are not SDK test failures.
+the SDK version; native installer evidence and SDK test results are independent.
 
 Retain the MIT copyright/permission notice when redistributing SDK source.
 The software grant does not cover translations obtained through the service,
