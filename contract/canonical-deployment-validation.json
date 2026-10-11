@@ -1,11 +1,11 @@
 {
   "reviewed_at": "2026-10-11",
   "evidence_owner": "security assessment and Fly deployment chats",
-  "server_source": "c586107a6f5a7e3fd4d06bfccb13d0973252e98d",
+  "server_source": "34d80f811b3ac9179d6afe0966185e2b3517181e",
   "runtime_repair": "ef63e913ae4d7f3e28a2dc561e869976db667a20",
   "native_source": "f6fed37919c848b1aa0208900af992a5e8a507f2",
-  "image": "registry.fly.io/bibleit-server@sha256:1140436c3d9e7de1b1f80e88aa208a0a6c06cff4b7ba371e0f5ddcbb5b6ace22",
-  "deployment_run": "https://github.com/bibleit-labs/bibleit-server/actions/runs/38129282912",
+  "image": "registry.fly.io/bibleit-server@sha256:33b4ca3c13829c1c25f0745037212cc0c14e5e7768c2f78e58206c461ef8d35d",
+  "deployment_run": "https://github.com/bibleit-labs/bibleit-server/actions/runs/38144206075",
   "deployed_source_hashes_verified": 403,
   "actual_image_checks_passed": 20,
   "endpoints": {
@@ -26,48 +26,6 @@
   },
   "ssh_host_fingerprint": "SHA256:MUnCXVIEU/t8AZk0es6XgyeE9c9Ak6LmCZdEmy99ips",
   "acceptance": "actual public canonical DNS; not address-override pre-cutover probes",
-  "technical_checks": {
-    "public-boundary-v4.json": {
-      "checks_passed": 23,
-      "report_sha256": "5e57fe8b1887584460783dea3c2d8bc11199594b14b8c735c69dda8c2a0ea05c"
-    },
-    "public-boundary-v6.json": {
-      "checks_passed": 23,
-      "report_sha256": "b1db7cd9c4cd0eb287a5c20060b628743f5e083121e9e1f2c1573b8cdbee2de0"
-    },
-    "public-aliases-v4.json": {
-      "checks_passed": 39,
-      "report_sha256": "27d8d1ee8a3e88194b5b88ed347c9a33c0f675ff0fd1aa57d144b80c698a6637"
-    },
-    "public-aliases-v6.json": {
-      "checks_passed": 39,
-      "report_sha256": "e903019f5f86101d8315586658f38d7abccb9fbe152e9f8ebd3018fdd3e56005"
-    },
-    "public-auth.json": {
-      "checks_passed": 11,
-      "report_sha256": "6a5c3e2f1d1c1609708659d0d50ec02e3d202c24b46e875fee4c184f02e32a31"
-    },
-    "public-ssh-auth.json": {
-      "checks_passed": 10,
-      "report_sha256": "64cdab6701233ad4997916f1f91ae79feebe401e5cfffd6cc1ca17db946e0eda"
-    },
-    "paired-rate.json": {
-      "checks_passed": 15,
-      "report_sha256": "860a7dd70e9aaf810487f5b4464d036955c86dd8996f6d6f3eb3636a74385260"
-    },
-    "public-turnstile-fail-closed.json": {
-      "checks_passed": 2,
-      "report_sha256": "95078cf50a2c11c0b9fe3c8dcf738a8cdfa192cc30a27bf9454f5bab36586e73"
-    },
-    "public-dns.json": {
-      "passed": true,
-      "report_sha256": "bb5a861992b1867825819964a5e20991aae48c1bbf51c9d8c3e92deb0b78a89f"
-    },
-    "public-fixture-cleanup.json": {
-      "passed": true,
-      "report_sha256": "ec8d9c6d05676557cdd14837dc8f6d0ef37098bbcadc5e0d9405356af14692e7"
-    }
-  },
   "synthetic_fixture_counts_after_cleanup": {
     "users": 0,
     "accounts": 0,
@@ -77,8 +35,8 @@
     "identities": 0
   },
   "remaining_acceptance": [
-    "native HTML form referrer-policy repair qualification and repaired server rollout",
-    "real Turnstile token backend success and replay rejection"
+    "real Turnstile token backend success and replay rejection",
+    "actual email delivery and verification"
   ],
   "client_runtime_changed": false,
   "customer_release_published": false,
@@ -101,7 +59,7 @@
     "legacy_app_data_and_Pages_preserved": true
   },
   "subsequent_browser_flow_blocker": {
-    "status": "assessment repair in progress; not deployed/qualified here",
+    "status": "repaired source and deployed technical native admission qualified",
     "reproduction": "real Chromium requestSubmit emits Origin:null under global no-referrer and strict CSRF rejects it",
     "affected_flows": [
       "email signup",
@@ -109,9 +67,106 @@
       "CLI browser approval",
       "settings forms"
     ],
-    "candidate_policy": "same-origin for ordinary HTML; retain no-referrer on one-time token/callback URLs, assets, redirects and non-HTML",
+    "candidate_policy": "deployed ordinary HTML same-origin; retain no-referrer on token/callback/Live viewer/explicit private handler/assets/redirect/non-HTML",
     "strict_origin_and_csrf_rejection_retained": true,
     "prior_public_probes": "point-in-time technical results; fetch/explicit-Origin probes did not cover native form serialization",
-    "client_protocol_changed": false
+    "client_protocol_changed": false,
+    "limits": "production native admission reaches missing-token rejection with provider traffic blocked; no actual email/token success is claimed"
+  },
+  "previous_deployment": {
+    "server_source": "c586107a6f5a7e3fd4d06bfccb13d0973252e98d",
+    "image": "registry.fly.io/bibleit-server@sha256:1140436c3d9e7de1b1f80e88aa208a0a6c06cff4b7ba371e0f5ddcbb5b6ace22",
+    "deployment_run": "https://github.com/bibleit-labs/bibleit-server/actions/runs/38129282912",
+    "technical_checks": {
+      "public-boundary-v4.json": {
+        "checks_passed": 23,
+        "report_sha256": "5e57fe8b1887584460783dea3c2d8bc11199594b14b8c735c69dda8c2a0ea05c"
+      },
+      "public-boundary-v6.json": {
+        "checks_passed": 23,
+        "report_sha256": "b1db7cd9c4cd0eb287a5c20060b628743f5e083121e9e1f2c1573b8cdbee2de0"
+      },
+      "public-aliases-v4.json": {
+        "checks_passed": 39,
+        "report_sha256": "27d8d1ee8a3e88194b5b88ed347c9a33c0f675ff0fd1aa57d144b80c698a6637"
+      },
+      "public-aliases-v6.json": {
+        "checks_passed": 39,
+        "report_sha256": "e903019f5f86101d8315586658f38d7abccb9fbe152e9f8ebd3018fdd3e56005"
+      },
+      "public-auth.json": {
+        "checks_passed": 11,
+        "report_sha256": "6a5c3e2f1d1c1609708659d0d50ec02e3d202c24b46e875fee4c184f02e32a31"
+      },
+      "public-ssh-auth.json": {
+        "checks_passed": 10,
+        "report_sha256": "64cdab6701233ad4997916f1f91ae79feebe401e5cfffd6cc1ca17db946e0eda"
+      },
+      "paired-rate.json": {
+        "checks_passed": 15,
+        "report_sha256": "860a7dd70e9aaf810487f5b4464d036955c86dd8996f6d6f3eb3636a74385260"
+      },
+      "public-turnstile-fail-closed.json": {
+        "checks_passed": 2,
+        "report_sha256": "95078cf50a2c11c0b9fe3c8dcf738a8cdfa192cc30a27bf9454f5bab36586e73"
+      },
+      "public-dns.json": {
+        "passed": true,
+        "report_sha256": "bb5a861992b1867825819964a5e20991aae48c1bbf51c9d8c3e92deb0b78a89f"
+      },
+      "public-fixture-cleanup.json": {
+        "passed": true,
+        "report_sha256": "ec8d9c6d05676557cdd14837dc8f6d0ef37098bbcadc5e0d9405356af14692e7"
+      }
+    },
+    "limits": "auth/SSH/rate/provider evidence belongs to this preceding deployment; those unchanged client protocol checks were not repeated here"
+  },
+  "technical_checks": {
+    "signup-fix-boundary-v4.json": {
+      "checks_passed": 23,
+      "report_sha256": "f33a4ae3b0f42213955e5088d0abe361c6ae8edc5286e72a419191f09f7cd68b"
+    },
+    "signup-fix-boundary-v6.json": {
+      "checks_passed": 23,
+      "report_sha256": "9162889ca68976b68307aeb3b8094c9a8538b693e52ff37a3df6c1b44249aafa"
+    },
+    "signup-fix-aliases-v4.json": {
+      "checks_passed": 39,
+      "report_sha256": "2b2872e8399da393a4c310ee7079e01acad73876819194b1a8e90c1eb2974c52"
+    },
+    "signup-fix-aliases-v6.json": {
+      "checks_passed": 39,
+      "report_sha256": "35483925421ef171d74712865c0829d03ed11cbb9caeb1b65bf9d5c4f19a20f8"
+    },
+    "native-form-signup-fix.json": {
+      "passed": true,
+      "native_form_passed_csrf": true,
+      "canonical_origin": "https://bibleit.app",
+      "referrer_policy": "same-origin",
+      "missing_token_rejected": true,
+      "provider_traffic_blocked": true,
+      "account_created": false,
+      "email_sent": false,
+      "report_sha256": "42388c477d19b728db836ef6678d4d00755954cf2480a571e95ace1d12840079"
+    }
+  },
+  "runtime_browser_form_repair": "34d80f811b3ac9179d6afe0966185e2b3517181e",
+  "changed_runtime_files_from_boot_qualification": [
+    "src/http/bibleit_http_security_headers.erl"
+  ],
+  "local_server_suite": {
+    "common_test": 338,
+    "eunit": 63,
+    "javascript": 71,
+    "bootstrap": 10,
+    "native_corpus": "passed; native source unchanged"
+  },
+  "qualification_scope": "point-in-time qualification of signup repair source34d80f8/nativef6fed37; not evidence for later catalog rollout",
+  "newer_catalog_rollout": {
+    "server_source": "6ba81e2d2ec7d4bfbe5bbf819e77438a0f205665",
+    "native_source": "d6e31dc",
+    "workflow": "https://github.com/bibleit-labs/bibleit-server/actions/runs/38144732991",
+    "status": "separately human-authorized rollout in progress; deployment/catalog qualification owned by catalog chat",
+    "inherits_this_qualification": false
   }
 }

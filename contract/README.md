@@ -87,18 +87,29 @@ success/replay remains pending. Visible widget success and two passing
 missing/bogus-token backend denials are partial evidence only. Keep customer releases held until the
 remaining acceptance and standalone release gates close.
 
-## Subsequent native HTML form blocker
+## Repaired native HTML form deployment qualification
 
-The assessment reproduced Origin:null from real Chromium requestSubmit under the
-global no-referrer policy; strict CSRF rejects native signup/login/CLI approval/
-settings forms. Earlier fetch/explicit-Origin probes missed this behavior. The
-candidate fix uses same-origin policy for ordinary HTML while preserving
-no-referrer on one-time token/callback URLs, assets, redirects and non-HTML;
-null/forged Origin and CSRF rejection remain strict. Assessment-owned real-browser
-regression, full suite and repaired rollout are pending. Keep the previous
-technical evidence as point-in-time provenance and hold final qualification
-freeze/customer release. No client protocol/runtime change is required. Real
-Turnstile backend fresh-token success/replay remains a separate pending gate.
+Repair source 34d80f811b3ac9179d6afe0966185e2b3517181e/native f6fed37 is deployed
+and technically qualified on immutable image
+sha256:33b4ca3c13829c1c25f0745037212cc0c14e5e7768c2f78e58206c461ef8d35d,
+[run 38144206075](https://github.com/bibleit-labs/bibleit-server/actions/runs/38144206075).
+403 source hashes and 20 actual-image checks match. Real production requestSubmit
+carries canonical Origin/Referer and passes CSRF before missing-token denial;
+ordinary HTML uses same-origin referrer policy. Token/callback/Live viewer/
+explicit private handler/assets/redirects/non-HTML retain no-referrer, and strict
+Origin/CSRF/CSP is retained. Provider traffic is blocked and no account/email is
+created. Updated 23 boundary/39 alias cases pass per address family; local final
+source passes 338 CT/63 EUnit/71 JS/native/10 bootstrap.
+
+canonical-deployment-validation.json records current repaired report hashes and
+source/native/image provenance, retaining earlier auth/SSH/rate/provider evidence
+at its tested source. The full client integration/boot snapshots remain unchanged;
+those client checks were not unnecessarily repeated. Real Turnstile backend
+fresh-token success/replay and actual email delivery/verification remain pending.
+Keep customer releases held for that manual gate and standalone packaging. The
+separately approved catalog rollout uses server 6ba81e2/native d6e31dc
+(workflow 38144732991) and needs independent deployment/catalog qualification.
+The 34d80f8/f6fed37 evidence is point-in-time and does not qualify that later image. No client runtime changes are required.
 
 ## Transport
 

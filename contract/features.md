@@ -182,3 +182,22 @@ rejection. Preserve earlier technical provenance, but hold final qualification
 freeze until repaired-source/browser-regression/full-suite/rollout acceptance.
 Real Turnstile backend success/replay remains pending separately. No Go client
 protocol/runtime change is needed; customer release remains held.
+
+## Qualified native form repair deployment
+
+Signup repair source34d80f8/nativef6fed37 is technically qualified on image
+sha256:33b4ca3c13829c1c25f0745037212cc0c14e5e7768c2f78e58206c461ef8d35d,
+run38144206075:403 source hashes/20 image checks match. Production requestSubmit
+carries canonical Origin/Referer and passes CSRF before missing-token denial.
+Provider traffic is blocked, no account/email is created, and response policy
+is same-origin. Updated boundary23/alias39 checks pass per address family;
+source338CT/63EUnit/71JS/native/10bootstrap passes. Redacted reports carry exact
+source/native/image provenance. Earlier auth/SSH/rate results remain linked at
+their tested source; unchanged client protocol tests were not repeated.
+
+Real Turnstile backend fresh-token success/replay and actual email delivery/
+verification remain manual gates. Separate catalog rollout server6ba81e2/native
+d6e31dc (workflow38144732991) has human approval and independent ownership; its
+deployment/catalog qualification is pending. This point-in-time signup repair
+qualification must not be claimed for that newer source/native/image. No client
+runtime changes or customer tags/assets occur in this metadata update.
