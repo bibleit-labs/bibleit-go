@@ -1,12 +1,12 @@
 {
   "reviewed_at": "2026-10-11",
   "evidence_owner": "security assessment and Fly deployment chats",
-  "server_source": "34d80f811b3ac9179d6afe0966185e2b3517181e",
+  "server_source": "6ba81e2d2ec7d4bfbe5bbf819e77438a0f205665",
   "runtime_repair": "ef63e913ae4d7f3e28a2dc561e869976db667a20",
-  "native_source": "f6fed37919c848b1aa0208900af992a5e8a507f2",
-  "image": "registry.fly.io/bibleit-server@sha256:33b4ca3c13829c1c25f0745037212cc0c14e5e7768c2f78e58206c461ef8d35d",
-  "deployment_run": "https://github.com/bibleit-labs/bibleit-server/actions/runs/38144206075",
-  "deployed_source_hashes_verified": 403,
+  "native_source": "d6e31dc8eb7c478e2f915e7bd156b047a2cb279e",
+  "image": "registry.fly.io/bibleit-server@sha256:7456bfec37b1d2285041387ef6135685dc707748ea82adbff60417e96c5fec47",
+  "deployment_run": "https://github.com/bibleit-labs/bibleit-server/actions/runs/38144732991",
+  "deployed_source_hashes_verified": 405,
   "actual_image_checks_passed": 20,
   "endpoints": {
     "http": "https://bibleit.app",
@@ -35,6 +35,7 @@
     "identities": 0
   },
   "remaining_acceptance": [
+    "exact repaired UTF-8 source deployment and relevant public qualification",
     "real Turnstile token backend success and replay rejection",
     "actual email delivery and verification"
   ],
@@ -42,7 +43,8 @@
   "customer_release_published": false,
   "independent_client_evidence": {
     "server-baseline.json": "2a3ec268dd434dc5e1f4bd661d64c1862671cecab447c42dbaacbde8f76d1354",
-    "server-boot-validation.json": "ce29b0b8d0e0054f3e1ffb2bef69f98b3332646b49096fdff261466bdc4e1eeb"
+    "server-boot-validation.json": "ce29b0b8d0e0054f3e1ffb2bef69f98b3332646b49096fdff261466bdc4e1eeb",
+    "server-catalog-validation.json": "4921f61ca30b9ad279f45549daafd5f1ab4ff0075778a98fc5b0156b1da5525b"
   },
   "human_provider_acceptance": {
     "Google": "confirmed by operator",
@@ -122,53 +124,131 @@
     "limits": "auth/SSH/rate/provider evidence belongs to this preceding deployment; those unchanged client protocol checks were not repeated here"
   },
   "technical_checks": {
-    "signup-fix-boundary-v4.json": {
+    "catalog-boundary-v4.json": {
       "checks_passed": 23,
-      "report_sha256": "f33a4ae3b0f42213955e5088d0abe361c6ae8edc5286e72a419191f09f7cd68b"
+      "report_sha256": "497f3351d2fee570f6b3a27cda2e9356388ba461c4e837d064edb75c2dbc3753"
     },
-    "signup-fix-boundary-v6.json": {
+    "catalog-boundary-v6.json": {
       "checks_passed": 23,
-      "report_sha256": "9162889ca68976b68307aeb3b8094c9a8538b693e52ff37a3df6c1b44249aafa"
+      "report_sha256": "ab7be3171e15c487f9022c02de1afdbcf70e0dee3ea0f12be6ccf015e8293db9"
     },
-    "signup-fix-aliases-v4.json": {
+    "catalog-aliases-v4.json": {
       "checks_passed": 39,
-      "report_sha256": "2b2872e8399da393a4c310ee7079e01acad73876819194b1a8e90c1eb2974c52"
+      "report_sha256": "654b1138a4365248d55844f98057a5b548b0e9a029a196bb59cf15f965aecf53"
     },
-    "signup-fix-aliases-v6.json": {
+    "catalog-aliases-v6.json": {
       "checks_passed": 39,
-      "report_sha256": "35483925421ef171d74712865c0829d03ed11cbb9caeb1b65bf9d5c4f19a20f8"
+      "report_sha256": "d3fdd660630aedddf4bad3291d56bea7f0734ede9447558196ce969e2e8cc71d"
     },
-    "native-form-signup-fix.json": {
+    "catalog-native-form.json": {
       "passed": true,
-      "native_form_passed_csrf": true,
-      "canonical_origin": "https://bibleit.app",
-      "referrer_policy": "same-origin",
-      "missing_token_rejected": true,
       "provider_traffic_blocked": true,
       "account_created": false,
       "email_sent": false,
-      "report_sha256": "42388c477d19b728db836ef6678d4d00755954cf2480a571e95ace1d12840079"
+      "report_sha256": "a4c3a0e48ca693aa3475e2ba82c5aebb8ef52221b57ef342c1d8b929fdf0aa1d"
     }
   },
   "runtime_browser_form_repair": "34d80f811b3ac9179d6afe0966185e2b3517181e",
   "changed_runtime_files_from_boot_qualification": [
-    "src/http/bibleit_http_security_headers.erl"
+    "src/http/bibleit_http_security_headers.erl",
+    "src/translations/bibleit_translation_publication.erl"
   ],
   "local_server_suite": {
-    "common_test": 338,
+    "common_test": 339,
     "eunit": 63,
-    "javascript": 71,
+    "javascript": 75,
     "bootstrap": 10,
-    "native_corpus": "passed; native source unchanged"
+    "native_corpus": "passed with sanitizers"
   },
-  "qualification_scope": "point-in-time qualification of signup repair source34d80f8/nativef6fed37; not evidence for later catalog rollout",
+  "qualification_scope": "catalog6ba81e2/d6e31dc operational/deployment point-in-time qualification; localized finite-client UTF-8 bug subsequently discovered",
   "newer_catalog_rollout": {
     "server_source": "6ba81e2d2ec7d4bfbe5bbf819e77438a0f205665",
-    "native_source": "d6e31dc",
+    "native_source": "d6e31dc8eb7c478e2f915e7bd156b047a2cb279e",
     "workflow": "https://github.com/bibleit-labs/bibleit-server/actions/runs/38144732991",
-    "status": "separately human-authorized rollout in progress; deployment/catalog qualification owned by catalog chat",
+    "status": "independent deployed artifact/catalog/public technical qualification complete",
     "inherits_this_qualification": false
   },
   "ssh_fingerprint_verified_at_source": "c586107a6f5a7e3fd4d06bfccb13d0973252e98d",
-  "human_provider_acceptance_verified_before_native_form_repair": true
+  "human_provider_acceptance_verified_before_native_form_repair": true,
+  "previous_signup_repair_deployment": {
+    "server_source": "34d80f811b3ac9179d6afe0966185e2b3517181e",
+    "native_source": "f6fed37919c848b1aa0208900af992a5e8a507f2",
+    "image": "registry.fly.io/bibleit-server@sha256:33b4ca3c13829c1c25f0745037212cc0c14e5e7768c2f78e58206c461ef8d35d",
+    "deployment_run": "https://github.com/bibleit-labs/bibleit-server/actions/runs/38144206075",
+    "technical_checks": {
+      "signup-fix-boundary-v4.json": {
+        "checks_passed": 23,
+        "report_sha256": "f33a4ae3b0f42213955e5088d0abe361c6ae8edc5286e72a419191f09f7cd68b"
+      },
+      "signup-fix-boundary-v6.json": {
+        "checks_passed": 23,
+        "report_sha256": "9162889ca68976b68307aeb3b8094c9a8538b693e52ff37a3df6c1b44249aafa"
+      },
+      "signup-fix-aliases-v4.json": {
+        "checks_passed": 39,
+        "report_sha256": "2b2872e8399da393a4c310ee7079e01acad73876819194b1a8e90c1eb2974c52"
+      },
+      "signup-fix-aliases-v6.json": {
+        "checks_passed": 39,
+        "report_sha256": "35483925421ef171d74712865c0829d03ed11cbb9caeb1b65bf9d5c4f19a20f8"
+      },
+      "native-form-signup-fix.json": {
+        "passed": true,
+        "native_form_passed_csrf": true,
+        "canonical_origin": "https://bibleit.app",
+        "referrer_policy": "same-origin",
+        "missing_token_rejected": true,
+        "provider_traffic_blocked": true,
+        "account_created": false,
+        "email_sent": false,
+        "report_sha256": "42388c477d19b728db836ef6678d4d00755954cf2480a571e95ace1d12840079"
+      }
+    },
+    "local_server_suite": {
+      "common_test": 338,
+      "eunit": 63,
+      "javascript": 71,
+      "bootstrap": 10,
+      "native_corpus": "passed; native source unchanged"
+    }
+  },
+  "build_stages_passed": 8,
+  "platform": "native linux/amd64",
+  "artifact_cleanup_counts": [
+    0,
+    0
+  ],
+  "published_running_digest_match": true,
+  "apk_comparisons": 185,
+  "fixed_advisory_alerts": 0,
+  "existing_BPML_acceptance": {
+    "books": 66,
+    "Luke17:36": "notfound",
+    "Luke17:37": "exact read passed"
+  },
+  "localized_catalogue_utf8_followup": {
+    "status": "committed repair and independent focused client qualification pass; exact repaired deployment pending",
+    "repair_source": "4243c9a3c1b6e8f8b1f94b93f0880b3aa98464f6",
+    "native_source": "d6e31dc8eb7c478e2f915e7bd156b047a2cb279e",
+    "language_pack_names_validated": 198,
+    "installed_catalogue_languages": [
+      "English",
+      "German",
+      "Portuguese"
+    ],
+    "focused_client_languages": [
+      "BPML",
+      "LUT1912"
+    ],
+    "local_server_suite": {
+      "common_test": 340,
+      "eunit": 66,
+      "javascript": 75,
+      "bootstrap": 10,
+      "native_corpus": 65536
+    },
+    "client_decoder_relaxed": false,
+    "native_changed_by_utf8_repair": false
+  },
+  "native_changed_from_boot_qualification": true
 }

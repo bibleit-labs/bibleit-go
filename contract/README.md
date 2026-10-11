@@ -108,8 +108,46 @@ those client checks were not unnecessarily repeated. Real Turnstile backend
 fresh-token success/replay and actual email delivery/verification remain pending.
 Keep customer releases held for that manual gate and standalone packaging. The
 separately approved catalog rollout uses server 6ba81e2/native d6e31dc
-(workflow 38144732991) and needs independent deployment/catalog qualification.
+(workflow 38144732991) is operationally qualified; its focused compatibility and
+subsequent UTF-8 repair evidence are recorded below.
 The 34d80f8/f6fed37 evidence is point-in-time and does not qualify that later image. No client runtime changes are required.
+
+## Sparse native and localized finite-client qualification
+
+Catalog source6ba81e2/native d6e31dc is independently operationally qualified on
+image sha256:7456bfec37b1d2285041387ef6135685dc707748ea82adbff60417e96c5fec47,
+[run38144732991](https://github.com/bibleit-labs/bibleit-server/actions/runs/38144732991):
+405 source hashes/eight build stages/20 actual-image checks, native amd64, matching
+published/running digest and clean fixture cleanup. Public boundary23/alias39
+checks pass per explicit address family, along with native browser admission.
+Existing BPML66-book catalogue and omitted/present Luke17:36/37 semantics pass.
+
+Focused clients then exposed Latin-1 bytes in Portuguese/German catalogue binary
+literals. Server repair4243c9a3c1b6e8f8b1f94b93f0880b3aa98464f6 makes those
+literals UTF-8; native d6e31dc8eb7c478e2f915e7bd156b047a2cb279e is unchanged.
+Server340 CT/66 EUnit/75 JS/native65536/10 bootstrap passes, with all198 language
+names and installed66-book catalogue dashboard/protocol agreement across3languages.
+
+Independent fixed-endpoint --catalog-only qualification passes five typed HTTP
+groups, both BPML/LUT1912 catalogues and accented named reads, five HTTP/SSH parity
+cases, invalid-index publication rejection preserving the prior sparse generation,
+and three TLS checks. All69source/75test/11native hashes match committed4243/d6
+and after-run inputs; unrelated frontend edits preserve truthful dirty metadata.
+server-catalog-validation.json records this focused evidence separately from the
+full5969f2f/f6 integration and ef63e91/f6 boot snapshots. All files match across
+Go/CLI. No broad protocol/auth/Live suite was unnecessarily repeated.
+
+A catalogue chapter's verses value is its highest source verse identifier, not
+a dense row count. An omitted verse returns verse_not_found; chapter reads include
+only present rows and preserve source numbering. The strict client UTF-8 decoder
+is unchanged. Exact UTF-8 repaired-source deployment/public qualification and
+real Turnstile/email acceptance remain pending; no customer tags/assets.
+
+Reproduce with the existing disposable fixture:
+
+```sh
+python3 scripts/check_server_container.py --catalog-only --revision 4243c9a3c1b6e8f8b1f94b93f0880b3aa98464f6 --baseline contract/server-catalog-validation.json
+```
 
 ## Transport
 

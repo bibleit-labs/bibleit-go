@@ -13,8 +13,11 @@ type TranslationInfo struct {
 	Raw                                             Response
 }
 type CatalogChapter struct {
-	Number, Verses int64
-	Fields         map[string]string
+	Number int64
+	// Verses is the highest source verse identifier, not the number of present
+	// rows. Editions may omit identifiers; reading an omitted verse fails.
+	Verses int64
+	Fields map[string]string
 }
 type CatalogBook struct {
 	ID       int64 // Server source book identifier; not the book's position in Books.

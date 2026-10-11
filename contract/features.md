@@ -201,3 +201,29 @@ d6e31dc (workflow38144732991) has human approval and independent ownership; its
 deployment/catalog qualification is pending. This point-in-time signup repair
 qualification must not be claimed for that newer source/native/image. No client
 runtime changes or customer tags/assets occur in this metadata update.
+
+## Focused sparse-native and localized catalogue client qualification
+
+Server6ba81e2/native d6e31dc deployment is independently operationally qualified
+(run38144732991/image7456bfec,405 source hashes/eight stages/20 image checks,
+native amd64, clean fixtures and matching published/running digest). Updated
+public boundary23/alias39 passes per family; existing BPML66-book catalogue and
+omitted/present Luke17:36/37 behavior pass. Those image results do not qualify
+the subsequently discovered localized finite-protocol UTF-8 issue.
+
+The focused client harness reproduced invalid Latin-1 book-name bytes in BPML/
+LUT1912. Server repair4243c9a/native d6e31dc now passes our exact-source five typed
+HTTP groups, full66-book localized catalogues, accented named reads, five HTTP/SSH
+parity cases, invalid-index publication preserving prior sparse data and TLS3
+checks. Recorded69source/75test/11native hashes match the commits and after-run
+inputs; unrelated frontend edits retain truthful dirty metadata. The server also
+passes340 CT/66 EUnit/75 JS/native65536/10 bootstrap and validates all198 names
+with three-language dashboard/protocol agreement. Strict client decoding is
+unchanged. Catalogue chapter Verses is the highest source identifier, not a dense
+row count; omitted verses return verse_not_found and chapter rows preserve gaps.
+
+server-catalog-validation.json records the focused compatibility snapshot; full
+5969f2f/f6 protocol/auth/Live/import evidence and ef63e91/f6 boot evidence remain
+separately attributed. No unnecessary broad client protocol repetition. Exact
+UTF-8 repaired-source deployment/public qualification and real Turnstile/email
+acceptance remain pending. Customer tags/assets remain held.
