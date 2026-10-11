@@ -362,3 +362,16 @@ The packaging correction is committed at3359535, parentd160773, on the exact
 security-only branch explicitly approved by the human in Fly. Reader changes are
 excluded. Corrected run38163282528 is source/ref-pinned and queued/running; no
 qualified image or provider gate closure is yet claimed.
+
+
+Final provider qualification: exact3359535/native d6 image0bbb449/run38163282528
+is qualified and running (408 hashes/eight stages/20 image checks/native amd64/
+cleanup[0,0]/digest parity;185 APK comparisons/zero fixed alerts; eight migration
+hashes/table metadata verified). Native form/boundary23/alias39 pass each family.
+The redacted genuine human report confirms passed/fresh/replayRejected all true,
+with stable CSRF/no rate limiting and no helper-created account/email. Actual
+email delivery/verification remains separately attributed to the prior14628 flow.
+Ledger53239ad closes both provider gates. Six public/human report hashes and the
+artifact report hash are recorded in canonical-deployment-validation.json;
+earlier failures and independent client snapshots retain their tested provenance.
+No customer tag/release or client runtime change is implied.

@@ -1,12 +1,12 @@
 {
   "reviewed_at": "2026-10-11",
   "evidence_owner": "security assessment and Fly deployment chats",
-  "server_source": "4243c9a3c1b6e8f8b1f94b93f0880b3aa98464f6",
+  "server_source": "3359535ff92c7b8c56bce2d8f837cfbb52242438",
   "runtime_repair": "ef63e913ae4d7f3e28a2dc561e869976db667a20",
   "native_source": "d6e31dc8eb7c478e2f915e7bd156b047a2cb279e",
-  "image": "registry.fly.io/bibleit-server@sha256:46670b5fba63859a6892d64c1501122ecdddfd1edc1410555eba7c165143b5c1",
-  "deployment_run": "https://github.com/bibleit-labs/bibleit-server/actions/runs/38147193441",
-  "deployed_source_hashes_verified": 406,
+  "image": "registry.fly.io/bibleit-server@sha256:0bbb44909ac0c171789bdf8522c3e941f753042389cbcd271070406e5b35df89",
+  "deployment_run": "https://github.com/bibleit-labs/bibleit-server/actions/runs/38163282528",
+  "deployed_source_hashes_verified": 408,
   "actual_image_checks_passed": 20,
   "endpoints": {
     "http": "https://bibleit.app",
@@ -34,10 +34,7 @@
     "ssh_keys": 0,
     "identities": 0
   },
-  "remaining_acceptance": [
-    "qualify/deploy corrected3359535 release image with all eight migration identities",
-    "genuine fresh-token acceptance and replay rejection"
-  ],
+  "remaining_acceptance": [],
   "client_runtime_changed": false,
   "customer_release_published": false,
   "independent_client_evidence": {
@@ -123,28 +120,40 @@
     "limits": "auth/SSH/rate/provider evidence belongs to this preceding deployment; those unchanged client protocol checks were not repeated here"
   },
   "technical_checks": {
-    "utf8-aliases-v4.json": {
-      "report_sha256": "ef076782731ae8d1497f1f1f57b8391ae5aaa089e500f29c21414491abce1195",
+    "replayguard-aliases-v4.json": {
+      "report_sha256": "058488dca9c015176c077402e4bbbf55908542c276e506aee1cdc25b4947f0ff",
       "checks_passed": 39,
       "address_family": "AF_INET"
     },
-    "utf8-aliases-v6.json": {
-      "report_sha256": "f729951101b6896ac99957df3b69a6a35860c2c89533445504173f1f1f98c04d",
+    "replayguard-aliases-v6.json": {
+      "report_sha256": "876eb01251959ea0f8043e6275b8c23aead95a6cbfda7508f30252f2e6b24258",
       "checks_passed": 39,
       "address_family": "AF_INET6"
     },
-    "utf8-boundary-v4.json": {
-      "report_sha256": "c019a844d9e0328d7c5e93916f4cc81143c4a3acf0cd0392f4ff068c201e1fac",
+    "replayguard-boundary-v4.json": {
+      "report_sha256": "b2dda14d31da55f45b4df1485fd3738ad37a3a78052ddba403a51be6a39d6a38",
       "checks_passed": 23,
       "address_family": "AF_INET"
     },
-    "utf8-boundary-v6.json": {
-      "report_sha256": "7db4ed7060f69a5794f492658d1055fea9847d98a2bde49f8ea4f16b777ce32e",
+    "replayguard-boundary-v6.json": {
+      "report_sha256": "924d13ab50bbb854eb611fc63137660e36d6151c2f24e4474c1aadead57a397b",
       "checks_passed": 23,
       "address_family": "AF_INET6"
     },
-    "utf8-native-form.json": {
-      "report_sha256": "5c8ce2df94f970e6ea5b0191eb45db8f809d3d1d0e5ad380bc7426cf7a362c59",
+    "replayguard-human-turnstile.json": {
+      "report_sha256": "05caf252cd1050fdb70a2c8429364495d153aa22f077f19a25b9c1396699a185",
+      "passed": true,
+      "fresh_token_accepted": true,
+      "replay_rejected": true,
+      "account_created": false,
+      "email_sent": false,
+      "statuses": [
+        400,
+        400
+      ]
+    },
+    "replayguard-native-form.json": {
+      "report_sha256": "1bb7f7cff48ef0d83948a8b4fa0a432e47381bea8102299ca841ec31078e1571",
       "passed": true,
       "native_form_passed_csrf": true,
       "missing_token_rejected": true,
@@ -160,13 +169,14 @@
     "src/translations/bibleit_translation_publication.erl"
   ],
   "local_server_suite": {
-    "common_test": 340,
-    "eunit": 66,
+    "common_test": 344,
+    "eunit": 68,
     "javascript": 75,
     "bootstrap": 10,
-    "native_corpus": 65536
+    "native_corpus": 65536,
+    "runtime_tested_revision": "d1607733da5c93b8eccc7b3d8fcb3037f51f2f75"
   },
-  "qualification_scope": "exact 4243c9a/d6e31dc repaired deployment, public technical checks and independent focused HTTP/SSH catalogue compatibility; earlier broad protocol/auth/Live/import proof remains separately attributed",
+  "qualification_scope": "exact3359535 image/startup/eight-migration and public technical/provider qualification; full344 server runtime tests at unchanged d160; older independent client snapshots remain separately attributed",
   "newer_catalog_rollout": {
     "server_source": "6ba81e2d2ec7d4bfbe5bbf819e77438a0f205665",
     "native_source": "d6e31dc8eb7c478e2f915e7bd156b047a2cb279e",
@@ -318,6 +328,193 @@
   },
   "synthetic_fixture_cleanup_verified_at_source": "c586107a6f5a7e3fd4d06bfccb13d0973252e98d",
   "latest_reported_deployment": {
+    "server_source": "3359535ff92c7b8c56bce2d8f837cfbb52242438",
+    "native_source": "d6e31dc8eb7c478e2f915e7bd156b047a2cb279e",
+    "image": "registry.fly.io/bibleit-server@sha256:0bbb44909ac0c171789bdf8522c3e941f753042389cbcd271070406e5b35df89",
+    "deployment_run": "https://github.com/bibleit-labs/bibleit-server/actions/runs/38163282528",
+    "deployed_source_hashes_verified": 408,
+    "artifact_cleanup_counts": [
+      0,
+      0
+    ],
+    "published_running_digest_match": true,
+    "status": "qualified and running",
+    "reader_excluded": true
+  },
+  "provider_acceptance_coordination": {
+    "status": "both human provider follow-up gates complete",
+    "requested_checks": [
+      "real backend fresh-token acceptance and replay rejection; helper three booleans",
+      "controlled email signup, delivery and link verification"
+    ],
+    "fixture_evidence_is_not_provider_acceptance": true,
+    "raw_tokens_credentials_and_identifiers_recorded": false,
+    "assessment_ledger": "53239ad",
+    "email_delivery_and_verification": "human confirmed check-email page, delivered email and completed verification into the new account",
+    "real_fresh_token_accepted": true,
+    "replay_rejection": "PASS: genuine fresh-token accepted; same-body replay human-verification denial with no input-validation acceptance",
+    "original_helper_result": {
+      "freshAcceptedBeforeInputValidation": true,
+      "replayRejected": false,
+      "passed": false,
+      "statuses": [
+        400,
+        400
+      ]
+    },
+    "helper_followup": {
+      "classification": "rendered feedback-error paragraph, allowlisted booleans, locale/CSRF/rate/continuity detection",
+      "offline_classification_cases_passed": 6,
+      "unique_invalid_email_avoids_shared_synthetic_rate_bucket": true,
+      "same_body_replay": true,
+      "new_real_provider_calls_by_assessment": false
+    },
+    "provider_gates_closed": true,
+    "improved_human_result": {
+      "fresh_status": 400,
+      "replay_status": 400,
+      "fresh_invalid_email": true,
+      "replay_invalid_email": true,
+      "fresh_human_denied": false,
+      "replay_human_denied": false,
+      "csrf_rejected": false,
+      "rate_limited": false,
+      "csrf_unchanged": true
+    },
+    "next_step": "choose release versions/customer access; release and pin semantic Go client; qualify final candidate; approve draft publication and tap PR",
+    "configuration_diagnosis": {
+      "evidence_owner": "assessment",
+      "integration_enabled": true,
+      "documented_test_secret_configured": false,
+      "bogus_token_rejected": true,
+      "planned_repair": "atomic shared database replay guard across concurrency/restarts; temporarily store only token SHA-256 hashes",
+      "repair_qualification_complete": true
+    },
+    "human_retest_source": "3359535ff92c7b8c56bce2d8f837cfbb52242438",
+    "human_retest_image": "registry.fly.io/bibleit-server@sha256:0bbb44909ac0c171789bdf8522c3e941f753042389cbcd271070406e5b35df89",
+    "human_retest_report_sha256": "05caf252cd1050fdb70a2c8429364495d153aa22f077f19a25b9c1396699a185",
+    "human_retest_result": {
+      "passed": true,
+      "freshAcceptedBeforeInputValidation": true,
+      "replayRejected": true,
+      "statuses": [
+        400,
+        400
+      ],
+      "csrf_unchanged": true,
+      "rate_limited": false,
+      "account_created": false,
+      "email_sent": false
+    },
+    "email_and_original_failure_source": "14628f3a738436dce771a05e3bad450dc01b89f0",
+    "email_and_original_failure_image": "registry.fly.io/bibleit-server@sha256:28fb9a0baa99d2bae3bbdc3a6f3247896fc67f2f2956a2a7ef322ea48a9660f9",
+    "historical_failed_results": "original_helper_result and improved_human_result predate the deployed repair; human_retest_result is the final acceptance"
+  },
+  "turnstile_replay_repair": {
+    "server_source": "d1607733da5c93b8eccc7b3d8fcb3037f51f2f75",
+    "native_source": "d6e31dc8eb7c478e2f915e7bd156b047a2cb279e",
+    "status": "exact corrected deployment and genuine provider retest passed",
+    "guard": "atomic shared PostgreSQL claim; SHA-256 only, ten-minute TTL, indexed/bounded 1000-row expired cleanup",
+    "migration": "append008; identities001-007 unchanged",
+    "provider_hostname_action_and_tls_checks_retained": true,
+    "focused_eunit": 6,
+    "focused_database_http_common_test": 4,
+    "focused_cases": [
+      "provider repeated success denied",
+      "twenty concurrent requests exactly one accepted",
+      "restart persistence",
+      "bounded expiry cleanup",
+      "database errors fail closed",
+      "HTTP fresh invalid-email then identical replay human-verification denial; no account/email created"
+    ],
+    "full_server_suite": {
+      "common_test": 344,
+      "eunit": 68,
+      "javascript": 75,
+      "bootstrap": 10,
+      "native_corpus": 65536
+    },
+    "disposable_database_removed": true,
+    "client_runtime_changed": false,
+    "qualification_owner": "assessment",
+    "deployed": true,
+    "genuine_provider_retest_passed": true,
+    "deployment_run": "https://github.com/bibleit-labs/bibleit-server/actions/runs/38162034582",
+    "deployment_status": "workflow38162034582 failed before publish/deploy: migration008 missing from explicit release allowlist",
+    "packaging_followup": {
+      "cause": "SQL008 omitted by explicit release-resource allowlist",
+      "fix_status": "qualified production3359535 image contains all eight migrations",
+      "early_manifest_checks": "all eight SQL migrations staged; omitted migration rejected",
+      "runtime_changed_by_packaging_fix": false,
+      "production_unchanged": false,
+      "deployment_constraint": "main now includes separately approved Reader source changes not approved for deployment; Fly owner requests narrow security-release branch exception",
+      "approval_owner": "Fly deployment chat",
+      "approval_pending": false,
+      "human_approved_exact_branch": "codex/turnstile-replay-release",
+      "packaging_source": "3359535ff92c7b8c56bce2d8f837cfbb52242438",
+      "packaging_parent": "d1607733da5c93b8eccc7b3d8fcb3037f51f2f75",
+      "candidate_excludes_reader": true,
+      "branch_naming_exception": "assessment reports newer explicit human approval for exact server branch; client branch naming unchanged"
+    },
+    "corrected_deployment_run": "https://github.com/bibleit-labs/bibleit-server/actions/runs/38163282528",
+    "corrected_deployment_status": "qualified/published/running; exact3359535 native amd64 image",
+    "deployed_image": "registry.fly.io/bibleit-server@sha256:0bbb44909ac0c171789bdf8522c3e941f753042389cbcd271070406e5b35df89",
+    "artifact_report_sha256": "d22383056954baa1537612dc987978032d5992f480981803af35c6e4e27f1a61",
+    "validated_image_id": "sha256:89f329285fffa1e65872d64f31982ee055883560548180cf5c767b8f6af4ec34"
+  },
+  "previous_utf8_deployment": {
+    "server_source": "4243c9a3c1b6e8f8b1f94b93f0880b3aa98464f6",
+    "native_source": "d6e31dc8eb7c478e2f915e7bd156b047a2cb279e",
+    "image": "registry.fly.io/bibleit-server@sha256:46670b5fba63859a6892d64c1501122ecdddfd1edc1410555eba7c165143b5c1",
+    "deployment_run": "https://github.com/bibleit-labs/bibleit-server/actions/runs/38147193441",
+    "deployed_source_hashes_verified": 406,
+    "actual_image_checks_passed": 20,
+    "technical_checks": {
+      "utf8-aliases-v4.json": {
+        "report_sha256": "ef076782731ae8d1497f1f1f57b8391ae5aaa089e500f29c21414491abce1195",
+        "checks_passed": 39,
+        "address_family": "AF_INET"
+      },
+      "utf8-aliases-v6.json": {
+        "report_sha256": "f729951101b6896ac99957df3b69a6a35860c2c89533445504173f1f1f98c04d",
+        "checks_passed": 39,
+        "address_family": "AF_INET6"
+      },
+      "utf8-boundary-v4.json": {
+        "report_sha256": "c019a844d9e0328d7c5e93916f4cc81143c4a3acf0cd0392f4ff068c201e1fac",
+        "checks_passed": 23,
+        "address_family": "AF_INET"
+      },
+      "utf8-boundary-v6.json": {
+        "report_sha256": "7db4ed7060f69a5794f492658d1055fea9847d98a2bde49f8ea4f16b777ce32e",
+        "checks_passed": 23,
+        "address_family": "AF_INET6"
+      },
+      "utf8-native-form.json": {
+        "report_sha256": "5c8ce2df94f970e6ea5b0191eb45db8f809d3d1d0e5ad380bc7426cf7a362c59",
+        "passed": true,
+        "native_form_passed_csrf": true,
+        "missing_token_rejected": true,
+        "provider_traffic_blocked": true,
+        "account_created": false,
+        "email_sent": false
+      }
+    },
+    "local_server_suite": {
+      "common_test": 340,
+      "eunit": 66,
+      "javascript": 75,
+      "bootstrap": 10,
+      "native_corpus": 65536
+    },
+    "qualification_scope": "exact 4243c9a/d6e31dc repaired deployment, public technical checks and independent focused HTTP/SSH catalogue compatibility; earlier broad protocol/auth/Live/import proof remains separately attributed",
+    "build_stages_passed": 8,
+    "platform": "native linux/amd64",
+    "published_running_digest_match": true,
+    "apk_comparisons": 185,
+    "fixed_advisory_alerts": 0
+  },
+  "previous_font_deployment": {
     "server_source": "14628f3a738436dce771a05e3bad450dc01b89f0",
     "native_source": "d6e31dc8eb7c478e2f915e7bd156b047a2cb279e",
     "deployment_run": "https://github.com/bibleit-labs/bibleit-server/actions/runs/38157279015",
@@ -344,105 +541,17 @@
     "fixed_advisory_alerts": 0,
     "artifact_report_sha256": "fae669c50cb335154bfc9672e414f8043fda68ae6978841fe2e70c18c359f420"
   },
-  "provider_acceptance_coordination": {
-    "status": "email passed; approved security-only corrected deployment in progress; real replay gate still open",
-    "requested_checks": [
-      "real backend fresh-token acceptance and replay rejection; helper three booleans",
-      "controlled email signup, delivery and link verification"
-    ],
-    "fixture_evidence_is_not_provider_acceptance": true,
-    "raw_tokens_credentials_and_identifiers_recorded": false,
-    "assessment_ledger": "a40d27d",
-    "deployed_source": "14628f3a738436dce771a05e3bad450dc01b89f0",
-    "deployed_image": "registry.fly.io/bibleit-server@sha256:28fb9a0baa99d2bae3bbdc3a6f3247896fc67f2f2956a2a7ef322ea48a9660f9",
-    "email_delivery_and_verification": "human confirmed check-email page, delivered email and completed verification into the new account",
-    "real_fresh_token_accepted": true,
-    "replay_rejection": "FAIL: improved same-body human test reached invalid-email validation twice; no CSRF/rate/continuity interference",
-    "original_helper_result": {
-      "freshAcceptedBeforeInputValidation": true,
-      "replayRejected": false,
-      "passed": false,
-      "statuses": [
-        400,
-        400
-      ]
-    },
-    "helper_followup": {
-      "classification": "rendered feedback-error paragraph, allowlisted booleans, locale/CSRF/rate/continuity detection",
-      "offline_classification_cases_passed": 6,
-      "unique_invalid_email_avoids_shared_synthetic_rate_bucket": true,
-      "same_body_replay": true,
-      "new_real_provider_calls_by_assessment": false
-    },
-    "provider_gates_closed": false,
-    "improved_human_result": {
-      "fresh_status": 400,
-      "replay_status": 400,
-      "fresh_invalid_email": true,
-      "replay_invalid_email": true,
-      "fresh_human_denied": false,
-      "replay_human_denied": false,
-      "csrf_rejected": false,
-      "rate_limited": false,
-      "csrf_unchanged": true
-    },
-    "next_step": "assessment repair, relevant changed-source/deployed qualification, then fresh real-token success/replay retest; no publication until green",
-    "configuration_diagnosis": {
-      "evidence_owner": "assessment",
-      "integration_enabled": true,
-      "documented_test_secret_configured": false,
-      "bogus_token_rejected": true,
-      "planned_repair": "atomic shared database replay guard across concurrency/restarts; temporarily store only token SHA-256 hashes",
-      "repair_qualification_complete": false
-    }
-  },
-  "turnstile_replay_repair": {
-    "server_source": "d1607733da5c93b8eccc7b3d8fcb3037f51f2f75",
-    "native_source": "d6e31dc8eb7c478e2f915e7bd156b047a2cb279e",
-    "status": "local repair and packaging staging passed; approved exact3359535 deployment qualification pending",
-    "guard": "atomic shared PostgreSQL claim; SHA-256 only, ten-minute TTL, indexed/bounded 1000-row expired cleanup",
-    "migration": "append008; identities001-007 unchanged",
-    "provider_hostname_action_and_tls_checks_retained": true,
-    "focused_eunit": 6,
-    "focused_database_http_common_test": 4,
-    "focused_cases": [
-      "provider repeated success denied",
-      "twenty concurrent requests exactly one accepted",
-      "restart persistence",
-      "bounded expiry cleanup",
-      "database errors fail closed",
-      "HTTP fresh invalid-email then identical replay human-verification denial; no account/email created"
-    ],
-    "full_server_suite": {
-      "common_test": 344,
-      "eunit": 68,
-      "javascript": 75,
-      "bootstrap": 10,
-      "native_corpus": 65536
-    },
-    "disposable_database_removed": true,
-    "client_runtime_changed": false,
-    "qualification_owner": "assessment",
-    "deployed": false,
-    "genuine_provider_retest_passed": false,
-    "deployment_run": "https://github.com/bibleit-labs/bibleit-server/actions/runs/38162034582",
-    "deployment_status": "workflow38162034582 failed before publish/deploy: migration008 missing from explicit release allowlist",
-    "packaging_followup": {
-      "cause": "SQL008 omitted by explicit release-resource allowlist",
-      "fix_status": "committed3359535; approved security-only branch deployment queued",
-      "early_manifest_checks": "all eight SQL migrations staged; omitted migration rejected",
-      "runtime_changed_by_packaging_fix": false,
-      "production_unchanged": true,
-      "deployment_constraint": "main now includes separately approved Reader source changes not approved for deployment; Fly owner requests narrow security-release branch exception",
-      "approval_owner": "Fly deployment chat",
-      "approval_pending": false,
-      "human_approved_exact_branch": "codex/turnstile-replay-release",
-      "packaging_source": "3359535ff92c7b8c56bce2d8f837cfbb52242438",
-      "packaging_parent": "d1607733da5c93b8eccc7b3d8fcb3037f51f2f75",
-      "candidate_excludes_reader": true,
-      "branch_naming_exception": "assessment reports newer explicit human approval for exact server branch; client branch naming unchanged"
-    },
-    "corrected_deployment_run": "https://github.com/bibleit-labs/bibleit-server/actions/runs/38163282528",
-    "corrected_deployment_status": "queued/running; exact3359535 source and approved branch verified by Fly owner"
+  "runtime_tested_revision": "d1607733da5c93b8eccc7b3d8fcb3037f51f2f75",
+  "artifact_cleanup_counts": [
+    0,
+    0
+  ],
+  "migration_acceptance": {
+    "identities": 8,
+    "source_hashes_match": true,
+    "previous_seven_unchanged": true,
+    "redemption_table_exists": true,
+    "token_rows_queried": false,
+    "evidence_owner": "assessment/Fly readonly production metadata"
   }
 }

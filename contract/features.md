@@ -232,5 +232,26 @@ with zero fixed-advisory alerts. Boundary 23/alias 39 checks pass independently
 on IPv4 and IPv6; native form CSRF admission and missing-token denial pass.
 Production BPML's 66 BOOK records pass strict UTF-8 and match Gênesis. Five public
 report hashes are retained in canonical-deployment-validation.json. Real
-Turnstile backend success/replay and actual email delivery/verification remain
-pending. Customer tags/assets remain held.
+Turnstile backend success/replay and actual email delivery/verification were
+pending at this checkpoint; the final acceptance below closes those gates.
+
+
+### Final production provider acceptance
+
+Assessment ledger53239ad confirms both human provider gates complete. Qualified
+source3359535/native d6e31dc/image0bbb/run38163282528 passes408 committed hashes,
+eight build stages,20 actual-image checks, native amd64 and cleanup[0,0]. All
+eight migration hashes match production metadata. Public native-form checks and
+23 boundary/39 alias checks pass independently on IPv4 and IPv6.
+
+The genuine browser helper reports passed=true, freshAcceptedBeforeInputValidation=true
+and replayRejected=true, with stable CSRF and no rate limiting. Actual email
+delivery/account verification remains separately confirmed at source14628f3.
+The helper itself creates no account and sends no email. Earlier replay failures
+and the omitted-migration build remain historical evidence.
+
+Independent broad, boot and localized catalogue client checks retain their
+original tested revisions; no unchanged protocol suite is claimed as repeated.
+Next release steps are approved versions/customer access, semantic Go release
+and CLI pin, final standalone candidate, then reviewed publication and tap PR.
+No customer tag, release or visibility change accompanies this evidence update.
