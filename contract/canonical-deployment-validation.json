@@ -77,6 +77,7 @@
     "identities": 0
   },
   "remaining_acceptance": [
+    "native HTML form referrer-policy repair qualification and repaired server rollout",
     "real Turnstile token backend success and replay rejection"
   ],
   "client_runtime_changed": false,
@@ -98,5 +99,19 @@
     "status": "Issued",
     "legacy_live_certificate_removed": true,
     "legacy_app_data_and_Pages_preserved": true
+  },
+  "subsequent_browser_flow_blocker": {
+    "status": "assessment repair in progress; not deployed/qualified here",
+    "reproduction": "real Chromium requestSubmit emits Origin:null under global no-referrer and strict CSRF rejects it",
+    "affected_flows": [
+      "email signup",
+      "native login",
+      "CLI browser approval",
+      "settings forms"
+    ],
+    "candidate_policy": "same-origin for ordinary HTML; retain no-referrer on one-time token/callback URLs, assets, redirects and non-HTML",
+    "strict_origin_and_csrf_rejection_retained": true,
+    "prior_public_probes": "point-in-time technical results; fetch/explicit-Origin probes did not cover native form serialization",
+    "client_protocol_changed": false
   }
 }

@@ -87,6 +87,19 @@ success/replay remains pending. Visible widget success and two passing
 missing/bogus-token backend denials are partial evidence only. Keep customer releases held until the
 remaining acceptance and standalone release gates close.
 
+## Subsequent native HTML form blocker
+
+The assessment reproduced Origin:null from real Chromium requestSubmit under the
+global no-referrer policy; strict CSRF rejects native signup/login/CLI approval/
+settings forms. Earlier fetch/explicit-Origin probes missed this behavior. The
+candidate fix uses same-origin policy for ordinary HTML while preserving
+no-referrer on one-time token/callback URLs, assets, redirects and non-HTML;
+null/forged Origin and CSRF rejection remain strict. Assessment-owned real-browser
+regression, full suite and repaired rollout are pending. Keep the previous
+technical evidence as point-in-time provenance and hold final qualification
+freeze/customer release. No client protocol/runtime change is required. Real
+Turnstile backend fresh-token success/replay remains a separate pending gate.
+
 ## Transport
 
 `POST /api/cli/command` takes `Authorization: Bearer <token>` and a JSON body

@@ -170,3 +170,15 @@ fresh-token success/replay is the remaining domain acceptance gate; visible
 widget success and two fail-closed backend denials are only partial evidence.
 Customer release tags/assets remain held, with standalone dependency/packaging
 validation and release decisions still required.
+
+## Subsequent native browser form qualification blocker
+
+Real Chromium requestSubmit reproduces Origin:null under the global no-referrer
+policy; strict CSRF rejects native signup/login/CLI approval/settings forms.
+Earlier fetch/explicit-Origin probes did not cover actual native serialization.
+The assessment is validating same-origin policy for ordinary HTML while retaining
+no-referrer on sensitive URLs/assets/redirects/non-HTML and strict Origin/CSRF
+rejection. Preserve earlier technical provenance, but hold final qualification
+freeze until repaired-source/browser-regression/full-suite/rollout acceptance.
+Real Turnstile backend success/replay remains pending separately. No Go client
+protocol/runtime change is needed; customer release remains held.
