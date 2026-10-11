@@ -1,216 +1,166 @@
 # Bibleit Go client
 
-A dependency-free Go client for Bibleit Server protocol v1. Import it as:
+A dependency-free Go client for reading and searching Bible translations,
+managing Lives, and inspecting your Bibleit account. It supports Bibleit Server
+protocol v1 and connects to the project-managed service at `https://bibleit.app`.
 
-```go
-import bibleit "github.com/bibleit-labs/bibleit-go"
+The client is released independently from the [Bibleit CLI](https://github.com/bibleit-labs/bibleit-cli).
+It requires **Go 1.27.1**. The CLI imports this library; the library does not depend
+on CLI configuration or credential storage.
+
+## Installation
+
+Version [v0.0.1](https://github.com/bibleit-labs/bibleit-go/releases/tag/v0.0.1) is released.
+The repository is currently private: configure Git access with an authorized
+GitHub account and mark the module private before downloading it.
+
+```sh
+go env -w 'GOPRIVATE=github.com/bibleit-labs/*'
+go get github.com/bibleit-labs/bibleit-go@v0.0.1
 ```
 
-This module is released independently from [bibleit-cli](https://github.com/bibleit-labs/bibleit-cli).
-It requires Go 1.27.1. The CLI imports this library; the library does not depend
-on the CLI or its credential configuration. Python, Ruby, and Rust clients have separate repositories.
+`GOPRIVATE` controls module proxy/checksum lookup; it does not authenticate Git.
+A sibling CLI checkout or Go workspace is not required.
+After public access is enabled, ordinary `go get` can use the public module path.
 
-Source pushes and private CI are authorized. Customer releases and tags remain
-paused; use the checkout for development. No release
-version is available yet. The project-managed service address is currently
-`https://bibleit.app`. HTTPS certificate verification is enabled.
-Applications cannot override it through configuration or environment variables.
-The custom-domain cutover is being qualified; customer release remains paused.
+## Quickstart
 
-## Usage
+Supply an **API token** to `bibleit.NewClient(apiToken)`. The application chooses
+where to obtain the token; the library does not read environment variables.
 
 ```go
-client, err := bibleit.NewClient(apiToken)
-if err != nil {
-    return err
-}
-result, err := client.Read(ctx, bibleit.Reference{
-    Translation: "web",
-    Book: "Song of Songs",
-    Chapter: 2,
-    Verse: 1,
-})
-if err != nil {
-    return err
-}
-for _, record := range result.Records {
-    fmt.Println(record.Fields["text"])
-}
-```
+package main
 
-`Read`, `Search`, `Ping`, `Identity`, and `ListTranslations` provide convenient
-methods. `GetServerInfo`, `Help(ctx, topic)`, `GetAccountInfo`, and
-`ListQuotas` return typed results. Use an empty help topic for root discovery;
-the server filters discovery by the authenticated principal's authority.
+import (
+    "context"
+    "fmt"
+    "log"
+    "os"
 
-Each typed result retains `Raw`, including original wire records and unknown
-fields. Quota entries expose a `QuotaLimit`: zero is a finite limit, while
-`Unlimited` is explicit. Counts are non-negative 64-bit integers; malformed
-numbers and mismatched record counts fail rather than becoming zero. Account
-notification preferences remain opaque Erlang-term text in the raw fields.
+    bibleit "github.com/bibleit-labs/bibleit-go"
+)
 
-Other customer operations use validated command builders:
+func main() {
+    client, err := bibleit.NewClient(os.Getenv("BIBLEIT_TOKEN"))
+    if err != nil {
+        log.Fatal(err)
+    }
 
-```go
-command, err := bibleit.CreateLiveCommand("Sunday Service")
-if err != nil {
-    return err
-}
-result, err := client.Execute(ctx, command)
-```
-
-Builders cover account translation add/remove, Live lifecycle and settings,
-secrets, and stack operations. They expose no arbitrary protocol constructor.
-`Command.String()` exists for transport adapters and may contain a Live secret;
-do not log it indiscriminately.
-
-## Behavior and current limits
-
-- Credentials are explicit. The endpoint is the project-owned `ServerEndpoint`
-  constant; no constructor or environment override is provided. The client
-  does not access CLI credentials, launch a browser, or load API tokens or service
-  addresses from environment variables. HTTP transport/proxy behavior is owned by
-  `net/http` or the supplied transport.
-- The fixed production HTTPS origin is `https://bibleit.app`.
-  Standard certificate verification is enabled; remote HTTP remains rejected.
-- The default HTTP timeout is 15 seconds. Use `NewClientWithHTTPClient` or
-  `NewAuthClientWithHTTPClient` with a `*http.Client` to customize transport and
-  timeouts. Its value is copied and redirects are disabled; its `Transport` and
-  `Jar` remain shared. An explicit custom client controls its own timeout.
-- Commands are limited to 8192 bytes and JSON request bodies to 16384 bytes,
-  matching the reviewed server. Oversized requests fail before network access.
-- All requests accept a context. Operations are never retried automatically.
-- Responses retain wire lines and parsed records. V1 field values remain
-  strings, and unknown fields are retained in the typed models.
-- `*ServerError` retains unknown error codes and metadata. Use `errors.As` and
-  `RetryAfter()` for rate-limit information. `*HTTPError` reports HTTP failures
-  that do not provide a usable protocol error; JSON error codes and metadata are retained.
-- Catalogue chapter `Verses` is the highest source verse identifier. Some
-  editions omit numbers: `ReadVerses` returns `verse_not_found` for an omitted
-  verse, while chapter reads include only present rows. Source numbering remains
-  unchanged.
-- Finite responses are limited to 2 MiB; oversized and incomplete responses
-  fail explicitly.
-- The HTTP transport rejects subscriptions with `streaming_requires_ssh`.
-  OpenSSH execution and subscriptions remain CLI adapters in this increment.
-- The server's request tokenizer supports quoted whitespace but not embedded
-  double quotes. Builders reject double quotes, CR, LF, and NUL. Backslashes
-  are preserved literally in requests; response strings use escaped quotes,
-  backslashes and escaped control characters. Response escaping is not a request
-  escape syntax. The verified server rejects malformed quote segments, empty
-  quoted arguments and attempted escaped embedded quotes with `bad_command`.
-  Live secrets are server-generated through CREATE/ROTATE; custom SECRET SET
-  remains unsupported and is rejected by the client.
-- Browser orchestration and credential persistence remain in the CLI; code
-  exchange and revocation use library methods.
-
-Run `go test ./...` from the repository root. Shared response fixtures live in
-`contract/fixtures/responses-v1.json`; see `contract/README.md` for their schema.
-
-
-## Translation metadata and reference catalogue
-
-`GetTranslationInfo(ctx, slug)` returns the short/full name, edition, update
-label, rights status/label/URLs, attribution and trademark notice where supplied.
-Optional fields stay empty when omitted; unknown fields remain in Raw.
-
-`GetTranslationCatalog(ctx, slug)` returns ordered books and their chapters with
-verse counts. `CatalogBook.ID` is the server book identifier, not an array position.
-IDs and chapter numbers may be sparse. Names are supplied by the server and can
-be localized. Use the returned ID or name when constructing a Reference.
-The catalogue describes installed indexed data; metadata availability alone
-does not imply installation or enablement in the personal translation library.
-
-The typed parser checks book/chapter counts, parent IDs, duplicate IDs/numbers
-and positive chapter/verse values. It retains unknown book/chapter fields.
-Raw Execute remains available for callers inspecting newer protocol shapes.
-
-Real-server metadata and catalogue verification pass. The assessment session
-fixed an encoder mismatch between atom and binary field names; shared encoder
-fixtures now cover binary metadata keys as well.
-
-For example, use the catalogue to inspect the references actually installed:
-
-```go
-catalog, err := client.GetTranslationCatalog(ctx, "web")
-if err != nil {
-    return err
-}
-for _, book := range catalog.Books {
-    for _, chapter := range book.Chapters {
-        fmt.Printf("%d %s %d:1-%d\n",
-            book.ID, book.Name, chapter.Number, chapter.Verses)
+    reading, err := client.ReadVerses(context.Background(), bibleit.Reference{
+        Translation: "web",
+        Book:        "John",
+        Chapter:     3,
+        Verse:       16,
+    })
+    if err != nil {
+        log.Fatal(err)
+    }
+    for _, verse := range reading.Verses {
+        fmt.Println(verse.Text)
     }
 }
 ```
 
+Use a translation enabled for your account; `web` is an example.
+The translation catalogue supplies book identifiers and names, which may be localized.
+Omit `Verse` to read a chapter, or both `Chapter` and `Verse` to read a book.
 
+The constructor returns `(*Client, error)` and validates the API token before
+network access. Constructor errors do not include its value.
 
-## Typed identity, reading and Live results
+## API overview
 
-Raw `Identity`, `Read`, `Search` and `Execute` remain available. These additive
-methods return domain models and retain Raw/Fields for original records and
-future fields:
-
-| Method | Result |
+| Methods | Purpose |
 | --- | --- |
-| GetIdentity | Actor, display identity/provider, roles, permissions, SSH fingerprint |
-| ReadVerses / SearchVerses | Translation, optional response coordinates and verse texts |
-| CreateLive / GetLive / SetLive | Live state and optional management metadata |
-| ListLives | Ordered Live states |
-| GetLiveStats | Revision, duration, stack counts and connection details |
-| GetLiveStack | Ordered entries with positions and verse payloads |
-| PushLive / PopLive | Verse payload or clear acknowledgement |
-| ControlLive | Start/stop state, pause/resume flag, clear/delete event |
+| `Ping`, `GetServerInfo`, `Help` | Inspect service availability and capabilities |
+| `GetIdentity`, `GetAccountInfo`, `ListQuotas` | Inspect identity, account details, and limits |
+| `ListTokens` | Inspect active personal token metadata |
+| `ListTranslations`, `GetTranslationInfo`, `GetTranslationCatalog` | Discover translations and their references |
+| `ReadVerses`, `SearchVerses` | Return typed readings and search results |
+| `CreateLive`, `ListLives`, `GetLive`, `SetLive` | Create, discover, and configure Lives |
+| `GetLiveStats`, `GetLiveStack`, `PushLive`, `PopLive`, `ControlLive` | Inspect and control Lives and their stacks |
 
-`Reading.Book/Chapter/Verse` describe coordinates supplied by the response header.
-Chapter/book/search records supply text only; the client does not extract or
-invent per-verse coordinates from that text. Search coordinates are normally nil.
-Empty searches and stacks return empty slices.
+`Read`, `Search`, and `Identity` return protocol responses for callers that need
+records directly. `Execute` accepts validated command builders for additional
+operations such as translation add/remove and Live secret management. There is
+no arbitrary protocol-string constructor. `Command.String()` is intended for
+transport adapters and may contain a Live secret; avoid logging it.
 
-`LiveState.Owned`, `Protected`, `Owner`, `CreatedAt` and other optional fields
-use pointers so absence differs from false, zero, or an empty string. Public
-Live list/create replies omit management metadata that owner INFO may supply.
-Unknown status, role, permission and access strings remain intact.
+Typed results preserve `Raw` records and unknown fields. Parsers reject malformed
+numbers/booleans, conflicting duplicates, inconsistent counts, and invalid stack
+positions instead of silently accepting them. Unknown status, role, permission,
+and error-code strings remain available.
 
-ControlLive accepts START, STOP, PAUSE, RESUME, CLEAR and DELETE only. Its result
-describes the server acknowledgement without a follow-up request. Push/pop
-preserve all verse entries, including repeated translation names in a stack.
-Decode failures after a mutation do not imply rollback; mutations are not retried.
+### Translation metadata and catalogue
 
-The typed models reject malformed numeric/boolean fields, mismatched counts,
-duplicate Live IDs, inconsistent connection totals and invalid stack positions.
-The read example in `examples/read` now uses ReadVerses.
+`GetTranslationInfo(ctx, slug)` returns names, edition, update label, rights,
+attribution, and trademark details when supplied.
+`GetTranslationCatalog(ctx, slug)` returns ordered books and chapters.
+Book IDs are server identifiers, not array positions; IDs and chapter numbers may be sparse.
+Metadata availability does not guarantee installation or account enablement.
 
+A catalogue chapter's `Verses` is the highest source verse identifier, not a dense
+count. Editions may omit verse numbers: an omitted individual verse returns
+`verse_not_found`, while a chapter read contains the available rows.
+Source numbering is preserved.
 
-## Typed token metadata
+### Readings and Lives
 
-`ListTokens(ctx)` sends `ACCOUNT TOKEN LIST` and returns `TokenList` with the
-actor, ordered `TokenMetadata` entries and Raw. Entries expose ID, source,
-issuer, label, scopes, Unix-second issue/last-use/expiry timestamps and retirement
-status. Optional fields use pointers; absent scopes stay nil while an explicitly
-empty scope list means the credential inherits the actor's current permissions.
-Scopes describe a restriction, not a guarantee of effective permissions.
-Unknown source/permission names and fields remain available.
+`Reading.Book`, `Chapter`, and `Verse` reflect coordinates supplied by the response
+header. Chapter/book reads and search results contain verse text without invented
+per-verse coordinates. Search coordinates are normally nil. Empty searches and
+stacks return empty slices.
 
-This is a list of currently active personal credentials, not a credential
-history: the server excludes revoked, expired and expired rotation-grace tokens.
-The endpoint returns metadata only, never bearer values. Token creation,
-rotation and revocation are not added by this increment.
+Optional Live management fields use pointers so absence differs from false, zero,
+or an empty string. Public list/create replies may omit owner-only metadata.
+`ControlLive` accepts START, STOP, PAUSE, RESUME, CLEAR, and DELETE and returns the
+acknowledgement without a follow-up request. Push/pop retain all verse entries,
+including repeated translation names.
 
-The client validates record counts/types, unique IDs and numeric/boolean values.
-Response control-character escapes are decoded without splitting a label into
-protocol records. Requests retain their existing, stricter quoting rules.
+### Token metadata
 
-The assessment fixed the scoped-token encoder to use permission CSV. Real HTTP
-verification now covers manual and scoped credentials, restricted-list denial,
-labels with escaped controls, and expired/revoked credential exclusion.
+`ListTokens(ctx)` returns active personal credential metadata: IDs, sources,
+issuers, labels, scopes, timestamps, and retirement status when supplied.
+It returns no bearer values and is not a credential history; revoked and expired
+tokens are excluded. Missing scopes remain nil; an explicitly empty list means
+the credential inherits the actor's current permissions. Scopes restrict access
+and do not guarantee effective permissions.
 
-## Authorization transport
+## Behavior and current limits
 
-Use `NewAuthClient()` before a bearer credential
-exists. The application owns PKCE verifier generation, browser authorization,
-callback-state validation and storage. Then exchange the approved code:
+- The service endpoint is fixed. Constructors and environment variables cannot
+  override it. HTTPS certificate verification stays enabled and redirects are blocked.
+- All requests accept a context. The default HTTP timeout is 15 seconds.
+  Operations are never retried automatically; a decoding failure after a mutation
+  does not imply rollback.
+- Use `NewClientWithHTTPClient(apiToken, httpClient)` or
+  `NewAuthClientWithHTTPClient(httpClient)` to customize transport and timeout.
+  The supplied `http.Client` value is copied; its `Transport` and `Jar` remain
+  shared. A custom client controls its own timeout, but redirects remain blocked.
+- Commands are limited to 8192 bytes, JSON request bodies to 16384 bytes, and
+  finite responses to 2 MiB. Oversized or incomplete responses fail explicitly.
+- Request arguments support quoted whitespace, but embedded double quotes, CR,
+  LF, and NUL are rejected. Backslashes are literal in requests. Escaped response
+  strings do not define a request escape syntax.
+- Live secrets are generated by the server through CREATE/ROTATE. Custom SECRET
+  SET is unsupported and rejected by the client.
+- HTTP subscriptions return `streaming_requires_ssh`. OpenSSH execution and
+  subscriptions are provided by the CLI, not this HTTP library.
+- Browser authorization and credential storage belong to the application.
+  The library provides code exchange and credential revocation.
+
+Use `errors.As` with `*bibleit.ServerError` for protocol errors and `RetryAfter()`
+for rate-limit metadata. `*bibleit.HTTPError` represents HTTP failures without a
+usable protocol error and preserves available JSON error codes/metadata.
+
+See the [protocol contract](contract/README.md) and
+[feature coverage](contract/features.md) for compatibility details.
+
+## Browser authorization
+
+Use `NewAuthClient()` before an API token exists. Your application owns PKCE
+verifier generation, browser authorization, callback-state validation, and storage.
+Exchange an approved code, then construct an authenticated client:
 
 ```go
 auth, err := bibleit.NewAuthClient()
@@ -227,67 +177,29 @@ client, err := bibleit.NewClient(credential.AccessToken)
 if err != nil {
     return err
 }
-// Later, explicitly revoke this credential:
-err = client.RevokeCredential(ctx)
 ```
 
-`AuthorizationResult` preserves actor, identity/provider, token ID, bearer value
-and unknown JSON fields. Its Fields also includes the bearer value. Applications
-must decide how to store it and avoid logging the result.
+`AuthorizationResult` and its `Fields` contain the bearer value; avoid logging them.
+An authorization code is single-use, including when an invalid verifier consumes it.
+Omitting `DeviceName` uses the server's default label.
 
-Both transports share endpoint validation, a copied HTTP client, default timeout
-and redirect rejection. Methods accept contexts, limit response bodies to 2 MiB,
-and never retry. Exchange forms are limited to the server's 16384-byte limit.
-Omitting DeviceName selects the server default label. HTTP errors retain status,
-error code and JSON/protocol metadata; use `errors.As` with `*HTTPError`.
+Call `client.RevokeCredential(ctx)` to revoke the credential. Only HTTP 204 is
+accepted as success. Revocation does not erase local storage or modify the client;
+subsequent authenticated requests with that credential are expected to fail.
 
-A code is one-use, and even an invalid verifier consumes it on the current server.
-RevokeCredential succeeds only on HTTP 204. It does not erase local credentials
-or modify the client; another request after revocation is expected to fail.
-The CLI keeps credentials when logout fails and clears an already unauthorized
-credential or one whose revocation was acknowledged.
+## Development
 
-Real HTTP checks cover successful exchange/use, replay rejection, bad-verifier
-consumption, revocation and post-revocation authentication rejection.
+From this repository, with Go 1.27.1:
 
+```sh
+GOWORK=off go test -race ./...
+GOWORK=off go vet ./...
+```
 
-## Contributing and license
+Unit tests use in-memory transports. Shared protocol fixtures live in
+`contract/fixtures/responses-v1.json`. Native CI covers Linux, macOS, and Windows.
+The CLI repository owns isolated real-server integration checks; the server
+repository is separate and private.
 
-This is a public open source project. See [CONTRIBUTING.md](CONTRIBUTING.md)
-for development, validation, Conventional Commits and release expectations.
-The client is distributed under the [MIT license](LICENSE).
-
-
-## Fixed service address and local development
-
-Commands, browser-code exchange, and revocation construct requests at the same
-project-managed service. The optional HTTP client still configures transport and
-timeouts; it does not add a service URL option. Redirects remain blocked.
-The server repository stays separate and private. Future Python, Ruby and Rust
-clients follow the same fixed-service policy.
-
-Tests use in-memory transports. Real-server integration uses the public constructors and a disposable server
-at the fixed endpoint; client URLs and destinations are not overridden. Keep this checkout beside
-`bibleit-cli` and use a local workspace while the client remains unreleased.
-Source branches may be pushed to the private repository; customer release tags
-and releases remain gated on production readiness.
-
-
-## API token and custom HTTP transport
-
-Use the term **API token** for the bearer credential supplied to this client.
-It matches the server's scoped, expiring token resources. `NewClient(apiToken)`
-returns `(*Client, error)` and rejects invalid credentials before network access.
-The API token is kept private; constructor errors do not include its value.
-
-For HTTP transport or timeout customization, use
-`NewClientWithHTTPClient(apiToken, httpClient)` or
-`NewAuthClientWithHTTPClient(httpClient)`. The supplied client is copied, redirects
-are blocked, and the service endpoint remains fixed. No operation is retried.
-This keeps the ordinary constructor to a single credential argument, inspired by
-[Resend's constructor pattern](https://github.com/resend/resend-go/blob/main/resend.go).
-
-To run real-server checks while the host service is using port 8080, use the CLI's
-`python3 ../bibleit-cli/scripts/check_server_container.py`. That runner builds a
-frozen source snapshot in an isolated container namespace with its own temporary
-database; it does not expose host ports or require client endpoint configuration.
+See the [changelog](CHANGELOG.md) and [contributing guide](CONTRIBUTING.md).
+Contributions use Conventional Commits. Licensed under [MIT](LICENSE).
