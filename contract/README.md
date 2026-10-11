@@ -1,5 +1,42 @@
 # Bibleit client contract: protocol v1
 
+## Sparse native and localized finite-client qualification
+
+Catalog source[private revision withheld]/native [private revision withheld] is independently operationally qualified on
+image sha256:[private digest withheld],
+[run38144732991]([private service reference withheld]):
+405 source hashes/eight build stages/20 actual-image checks, native amd64, matching
+published/running digest and clean fixture cleanup. Public boundary23/alias39
+checks pass per explicit address family, along with native browser admission.
+Existing BPML66-book catalogue and omitted/present Luke17:36/37 semantics pass.
+
+Focused clients then exposed Latin-1 bytes in Portuguese/German catalogue binary
+literals. Server repair[private digest withheld] makes those
+literals UTF-8; native [private digest withheld] is unchanged.
+Server340 CT/66 EUnit/75 JS/native65536/10 bootstrap passes, with all198 language
+names and installed66-book catalogue dashboard/protocol agreement across3languages.
+
+Independent fixed-endpoint --catalog-only qualification passes five typed HTTP
+groups, both BPML/LUT1912 catalogues and accented named reads, five HTTP/SSH parity
+cases, invalid-index publication rejection preserving the prior sparse generation,
+and three TLS checks. All69source/75test/11native hashes match committed4243/d6
+and after-run inputs; unrelated frontend edits preserve truthful dirty metadata.
+server-catalog-validation.json records this focused evidence separately from the
+full[private revision withheld]/f6 integration and [private revision withheld]/f6 boot snapshots. All files match across
+Go/CLI. No broad protocol/auth/Live suite was unnecessarily repeated.
+
+A catalogue chapter's verses value is its highest source verse identifier, not
+a dense row count. An omitted verse returns verse_not_found; chapter reads include
+only present rows and preserve source numbering. The strict client UTF-8 decoder
+is unchanged. Exact UTF-8 repaired-source deployment/public qualification and
+real Turnstile/email acceptance remain pending; no customer tags/assets.
+
+Reproduce with the existing disposable fixture:
+
+```sh
+python3 scripts/check_server_container.py --catalog-only --revision [private digest withheld] --baseline contract/server-catalog-validation.json
+```
+
 ## Transport
 
 `POST /api/cli/command` takes `Authorization: Bearer <token>` and a JSON body

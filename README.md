@@ -85,6 +85,10 @@ do not log it indiscriminately.
 - `*ServerError` retains unknown error codes and metadata. Use `errors.As` and
   `RetryAfter()` for rate-limit information. `*HTTPError` reports HTTP failures
   that do not provide a usable protocol error; JSON error codes and metadata are retained.
+- Catalogue chapter `Verses` is the highest source verse identifier. Some
+  editions omit numbers: `ReadVerses` returns `verse_not_found` for an omitted
+  verse, while chapter reads include only present rows. Source numbering remains
+  unchanged.
 - Finite responses are limited to 2 MiB; oversized and incomplete responses
   fail explicitly.
 - The HTTP transport rejects subscriptions with `streaming_requires_ssh`.
