@@ -52,7 +52,7 @@ not a stable API release.
 Source branch pushes and private CI are authorized as of 2026-10-11. Use
 Conventional Commits and branches without a codex prefix. Customer release tags
 and releases remain paused pending release readiness. `ServerEndpoint` is the fixed
-production origin `https://bibleit-server.fly.dev`; no customer override is exposed.
+production origin `https://bibleit.app`; no customer override is exposed.
 
 The standard constructor is `NewClient(apiToken)` with a validation error return.
 Use `NewClientWithHTTPClient` for transport customization. Real-server integration

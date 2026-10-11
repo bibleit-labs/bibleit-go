@@ -115,3 +115,14 @@ service name to loopback and trusts its CA only inside the container; three TLS
 boundary checks pass. Assessment separately closes 25/25 scoped packages and
 qualifies the actual deployed edge. This does not add browser-only API coverage
 or publish a client version.
+
+## Canonical-domain candidate compatibility — 11 October 2026
+
+The confirmed fixed origin is now https://bibleit.app. CLI SSH connects to
+bibleit.app:22 and preserves existing verified service trust with the historical
+Fly-hostname known_hosts alias. Fresh isolated HTTP/SSH/import passes at server
+0c0da9f plus assessment canonical-host candidate changes/native f6fed37, including
+actual changed saved-key rejection. Synchronized baselines record 69 source,
+71 test and 11 native hashes. This working-tree candidate does not certify a final
+committed source or actual custom-domain DNS/TLS/SSH/authentication deployment;
+those qualifications remain with assessment/Fly before customer release.

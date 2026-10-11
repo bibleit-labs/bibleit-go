@@ -1,33 +1,39 @@
 # Bibleit client contract: protocol v1
 
-## Latest fixed-endpoint compatibility snapshot — 11 October 2026
+## Latest canonical-domain compatibility snapshot — 11 October 2026
 
-Fresh isolated HTTP/SSH/import checks passed against clean server
-8923d8675b2e129bdd868e307dd89c599235f25a, which includes deployed code
-7442010eebcfb1a2a9105db312ebaeae5f789003. Native libbibleit remains
-f6fed37919c848b1aa0208900af992a5e8a507f2. The synchronized baseline records
-68 Erlang source, 70 test and 11 native build-input fingerprints. Native code is
-rebuilt from the frozen snapshot; concurrent copy-input changes are rejected.
+Fresh isolated HTTP/SSH/import checks passed against server
+0c0da9ff5f759a0998ac151818db27c70065810c plus assessment canonical-host
+working-tree changes. The synchronized baseline records 69 Erlang source,
+71 test and 11 native input fingerprints; native remains
+f6fed37919c848b1aa0208900af992a5e8a507f2. Recorded inputs match immediately
+after the run. This is a tested candidate, not a final committed/deployed release.
 
-The fixed HTTPS origin is https://bibleit-server.fly.dev; ordinary CLI SSH uses
-bibleit-server.fly.dev:22. Public constructors use the production URL unchanged.
-The disposable container has no external network route and maps the hostname
-exclusively to loopback. TLS verification uses a fixture CA only in the container;
-correct trust/name succeeds, while wrong name and untrusted CA fail. No host
-certificate installation, customer endpoint override or PROXY preamble is used.
+The fixed HTTPS/browser origin is https://bibleit.app; ordinary CLI SSH uses
+bibleit.app:22. The historical Fly name is solely an OpenSSH known_hosts alias,
+never the network destination, preserving existing verified host trust. A real
+OpenSSH regression replaces the saved key and confirms changed-key rejection.
+Clients expose no endpoint overrides and continue to reject HTTP redirects.
 
-Passing coverage: 34 decoder/18 encoder fixtures, seven server security cases,
-11 Go HTTP subtests, OpenSSH subscription/pause/reconnect/delete closure and
-single-credential JSON parity, 18 auth/key/protocol tests, and 26 import-access/
-publication cases (11 access, 15 publication). Approved import delivery is adapted
-only inside suite setup; URL policy, authorization, validation and publication
-remain real. Authorized unreviewed/private-source import rejection passes.
-The disposable database is removed; no production principal/data is modified.
+The disposable container has no external route and resolves the service name only
+to loopback. Public constructors retain the fixed URL and verify TLS with a fixture
+CA trusted only in the container. Correct name/trust succeeds; wrong hostname and
+untrusted CA fail. The server fixture configures the canonical public origin while
+exercising client paths and unsets it before other suite teardown. No PROXY preamble,
+host certificate installation or production principal/data mutation is involved.
 
-The assessment separately records 25/25 scoped packages complete and qualifies
-actual HTTPS/SSH/Fly routing. This isolated client check does not certify a new
-public-edge deployment, browser/provider login or bearer management WebSocket API.
-A released client version and standalone CLI candidate remain release gates.
+Passing coverage: 34 decoder/18 encoder fixtures, seven security cases, 11 Go HTTP
+subtests, real OpenSSH lifecycle/JSON parity and changed-key rejection, 18 auth/key/
+protocol tests, and 26 import-access/publication cases (11 access, 15 publication).
+Import delivery is adapted only inside suite setup; URL policy, authorization,
+validation and publication remain real. The unique disposable database is removed.
+
+The earlier assessment closed 25/25 packages for the Fly-hostname deployment.
+Actual custom-domain DNS/TLS/SSH, canonical-origin authentication and retained
+production host fingerprint qualification remain assessment/Fly-owned and pending.
+This check does not certify the new public route or browser/provider integrations.
+Final server freeze, released client version and standalone CLI candidate remain
+release gates. Earlier Fly-hostname native/candidate results are historical.
 
 ## Transport
 

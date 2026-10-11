@@ -18,7 +18,7 @@ func TestServerHTTPIntegration(t *testing.T) {
 	if os.Getenv("BIBLEIT_FIXED_ENDPOINT_FIXTURE") != "1" {
 		t.Fatal("production endpoint integration requires the isolated fixture gateway")
 	}
-	addresses, err := net.LookupIP("bibleit-server.fly.dev")
+	addresses, err := net.LookupIP("bibleit.app")
 	if err != nil || len(addresses) == 0 {
 		t.Fatal("fixture hostname resolution failed", err)
 	}

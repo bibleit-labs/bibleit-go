@@ -13,8 +13,9 @@ on the CLI or its credential configuration. Python, Ruby, and Rust clients have 
 Source pushes and private CI are authorized. Customer releases and tags remain
 paused; use the checkout for development. No release
 version is available yet. The project-managed service address is currently
-`https://bibleit-server.fly.dev`. HTTPS certificate verification is enabled.
+`https://bibleit.app`. HTTPS certificate verification is enabled.
 Applications cannot override it through configuration or environment variables.
+The custom-domain cutover is being qualified; customer release remains paused.
 
 ## Usage
 
@@ -70,7 +71,7 @@ do not log it indiscriminately.
   does not access CLI credentials, launch a browser, or load API tokens or service
   addresses from environment variables. HTTP transport/proxy behavior is owned by
   `net/http` or the supplied transport.
-- The fixed production HTTPS origin is `https://bibleit-server.fly.dev`.
+- The fixed production HTTPS origin is `https://bibleit.app`.
   Standard certificate verification is enabled; remote HTTP remains rejected.
 - The default HTTP timeout is 15 seconds. Use `NewClientWithHTTPClient` or
   `NewAuthClientWithHTTPClient` with a `*http.Client` to customize transport and
