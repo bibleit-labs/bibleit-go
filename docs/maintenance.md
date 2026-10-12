@@ -10,9 +10,8 @@ and shared fixtures synchronized with client behavior. SDK native CI covers Linu
 macOS and Windows; package installation checks are maintained by the CLI and tap.
 Passing protocol fixtures does not establish production or provider behavior.
 
-The CLI repository owns optional isolated integration for maintainers with access
-to private service inputs. Follow its [native validation guide](https://github.com/bibleit-labs/bibleit-cli/blob/main/docs/native-validation.md)
-for the explicit source path, disposable container and scoped baseline review.
+Local service integration procedures are maintained in private operations
+documentation and are not part of public contributor setup.
 [Historical compatibility records](maintenance/compatibility-history.md) preserve
 prior audit, integration and deployment narratives moved out of the contract README.
 Their commands and release gates describe past revisions and are not current instructions.
