@@ -10,17 +10,14 @@ on CLI configuration or credential storage.
 
 ## Installation
 
-The repository is currently private: configure Git access with an authorized
-GitHub account and mark the module private before downloading it.
+Install the public module using ordinary Go module proxy and checksum verification:
 
 ```sh
-export GOPRIVATE='github.com/bibleit-labs/*'
 go get github.com/bibleit-labs/bibleit-go
 ```
 
-`GOPRIVATE` controls module proxy/checksum lookup; it does not authenticate Git.
-A sibling CLI checkout or Go workspace is not required.
-After public access is enabled, ordinary `go get` can use the public module path.
+A sibling CLI checkout or Go workspace is not required. See
+[contributing](CONTRIBUTING.md) for standalone development.
 
 ## Quickstart
 
