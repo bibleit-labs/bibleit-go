@@ -4,8 +4,8 @@
   "server_source": "3359535ff92c7b8c56bce2d8f837cfbb52242438",
   "runtime_repair": "ef63e913ae4d7f3e28a2dc561e869976db667a20",
   "native_source": "d6e31dc8eb7c478e2f915e7bd156b047a2cb279e",
-  "image": "registry.fly.io/bibleit-server@sha256:0bbb44909ac0c171789bdf8522c3e941f753042389cbcd271070406e5b35df89",
-  "deployment_run": "https://github.com/bibleit-labs/bibleit-server/actions/runs/38163282528",
+  "image": "Private historical record retained locally.",
+  "deployment_run": "Private historical record retained locally.",
   "deployed_source_hashes_verified": 408,
   "actual_image_checks_passed": 20,
   "endpoints": {
@@ -15,7 +15,7 @@
   "dns": {
     "ipv4": "137.66.54.95",
     "ipv6": "2a09:8280:1::1b0:958e:0",
-    "www_cname": "mdonzjm.bibleit-server.fly.dev.",
+    "www_cname": "Private historical record retained locally.",
     "routing": "DNS-only",
     "verified_by": [
       "hope.ns.cloudflare.com",
@@ -47,7 +47,7 @@
     "GitHub": "confirmed by operator"
   },
   "certificates": {
-    "bibleit-server": [
+    "private-service": [
       "bibleit.app",
       "live.bibleit.app",
       "www.bibleit.app"
@@ -73,8 +73,8 @@
   },
   "previous_deployment": {
     "server_source": "c586107a6f5a7e3fd4d06bfccb13d0973252e98d",
-    "image": "registry.fly.io/bibleit-server@sha256:1140436c3d9e7de1b1f80e88aa208a0a6c06cff4b7ba371e0f5ddcbb5b6ace22",
-    "deployment_run": "https://github.com/bibleit-labs/bibleit-server/actions/runs/38129282912",
+    "image": "Private historical record retained locally.",
+    "deployment_run": "Private historical record retained locally.",
     "technical_checks": {
       "public-boundary-v4.json": {
         "checks_passed": 23,
@@ -180,7 +180,7 @@
   "newer_catalog_rollout": {
     "server_source": "6ba81e2d2ec7d4bfbe5bbf819e77438a0f205665",
     "native_source": "d6e31dc8eb7c478e2f915e7bd156b047a2cb279e",
-    "workflow": "https://github.com/bibleit-labs/bibleit-server/actions/runs/38144732991",
+    "workflow": "Private historical record retained locally.",
     "status": "independent deployed artifact/catalog/public technical qualification complete",
     "inherits_this_qualification": false
   },
@@ -189,8 +189,8 @@
   "previous_signup_repair_deployment": {
     "server_source": "34d80f811b3ac9179d6afe0966185e2b3517181e",
     "native_source": "f6fed37919c848b1aa0208900af992a5e8a507f2",
-    "image": "registry.fly.io/bibleit-server@sha256:33b4ca3c13829c1c25f0745037212cc0c14e5e7768c2f78e58206c461ef8d35d",
-    "deployment_run": "https://github.com/bibleit-labs/bibleit-server/actions/runs/38144206075",
+    "image": "Private historical record retained locally.",
+    "deployment_run": "Private historical record retained locally.",
     "technical_checks": {
       "signup-fix-boundary-v4.json": {
         "checks_passed": 23,
@@ -261,7 +261,7 @@
     },
     "client_decoder_relaxed": false,
     "native_changed_by_utf8_repair": false,
-    "deployed_image": "registry.fly.io/bibleit-server@sha256:46670b5fba63859a6892d64c1501122ecdddfd1edc1410555eba7c165143b5c1",
+    "deployed_image": "Private historical record retained locally.",
     "workflow_run": 38147193441,
     "production_read_only_acceptance": {
       "books": 66,
@@ -275,8 +275,8 @@
   "previous_catalog_deployment": {
     "server_source": "6ba81e2d2ec7d4bfbe5bbf819e77438a0f205665",
     "native_source": "d6e31dc8eb7c478e2f915e7bd156b047a2cb279e",
-    "image": "registry.fly.io/bibleit-server@sha256:7456bfec37b1d2285041387ef6135685dc707748ea82adbff60417e96c5fec47",
-    "deployment_run": "https://github.com/bibleit-labs/bibleit-server/actions/runs/38144732991",
+    "image": "Private historical record retained locally.",
+    "deployment_run": "Private historical record retained locally.",
     "deployed_source_hashes_verified": 405,
     "actual_image_checks_passed": 20,
     "technical_checks": {
@@ -330,8 +330,8 @@
   "latest_reported_deployment": {
     "server_source": "3359535ff92c7b8c56bce2d8f837cfbb52242438",
     "native_source": "d6e31dc8eb7c478e2f915e7bd156b047a2cb279e",
-    "image": "registry.fly.io/bibleit-server@sha256:0bbb44909ac0c171789bdf8522c3e941f753042389cbcd271070406e5b35df89",
-    "deployment_run": "https://github.com/bibleit-labs/bibleit-server/actions/runs/38163282528",
+    "image": "Private historical record retained locally.",
+    "deployment_run": "Private historical record retained locally.",
     "deployed_source_hashes_verified": 408,
     "artifact_cleanup_counts": [
       0,
@@ -391,7 +391,7 @@
       "repair_qualification_complete": true
     },
     "human_retest_source": "3359535ff92c7b8c56bce2d8f837cfbb52242438",
-    "human_retest_image": "registry.fly.io/bibleit-server@sha256:0bbb44909ac0c171789bdf8522c3e941f753042389cbcd271070406e5b35df89",
+    "human_retest_image": "Private historical record retained locally.",
     "human_retest_report_sha256": "05caf252cd1050fdb70a2c8429364495d153aa22f077f19a25b9c1396699a185",
     "human_retest_result": {
       "passed": true,
@@ -407,7 +407,7 @@
       "email_sent": false
     },
     "email_and_original_failure_source": "14628f3a738436dce771a05e3bad450dc01b89f0",
-    "email_and_original_failure_image": "registry.fly.io/bibleit-server@sha256:28fb9a0baa99d2bae3bbdc3a6f3247896fc67f2f2956a2a7ef322ea48a9660f9",
+    "email_and_original_failure_image": "Private historical record retained locally.",
     "historical_failed_results": "original_helper_result and improved_human_result predate the deployed repair; human_retest_result is the final acceptance"
   },
   "turnstile_replay_repair": {
@@ -439,7 +439,7 @@
     "qualification_owner": "assessment",
     "deployed": true,
     "genuine_provider_retest_passed": true,
-    "deployment_run": "https://github.com/bibleit-labs/bibleit-server/actions/runs/38162034582",
+    "deployment_run": "Private historical record retained locally.",
     "deployment_status": "workflow38162034582 failed before publish/deploy: migration008 missing from explicit release allowlist",
     "packaging_followup": {
       "cause": "SQL008 omitted by explicit release-resource allowlist",
@@ -456,17 +456,17 @@
       "candidate_excludes_reader": true,
       "branch_naming_exception": "assessment reports newer explicit human approval for exact server branch; client branch naming unchanged"
     },
-    "corrected_deployment_run": "https://github.com/bibleit-labs/bibleit-server/actions/runs/38163282528",
+    "corrected_deployment_run": "Private historical record retained locally.",
     "corrected_deployment_status": "qualified/published/running; exact3359535 native amd64 image",
-    "deployed_image": "registry.fly.io/bibleit-server@sha256:0bbb44909ac0c171789bdf8522c3e941f753042389cbcd271070406e5b35df89",
+    "deployed_image": "Private historical record retained locally.",
     "artifact_report_sha256": "d22383056954baa1537612dc987978032d5992f480981803af35c6e4e27f1a61",
     "validated_image_id": "sha256:89f329285fffa1e65872d64f31982ee055883560548180cf5c767b8f6af4ec34"
   },
   "previous_utf8_deployment": {
     "server_source": "4243c9a3c1b6e8f8b1f94b93f0880b3aa98464f6",
     "native_source": "d6e31dc8eb7c478e2f915e7bd156b047a2cb279e",
-    "image": "registry.fly.io/bibleit-server@sha256:46670b5fba63859a6892d64c1501122ecdddfd1edc1410555eba7c165143b5c1",
-    "deployment_run": "https://github.com/bibleit-labs/bibleit-server/actions/runs/38147193441",
+    "image": "Private historical record retained locally.",
+    "deployment_run": "Private historical record retained locally.",
     "deployed_source_hashes_verified": 406,
     "actual_image_checks_passed": 20,
     "technical_checks": {
@@ -517,7 +517,7 @@
   "previous_font_deployment": {
     "server_source": "14628f3a738436dce771a05e3bad450dc01b89f0",
     "native_source": "d6e31dc8eb7c478e2f915e7bd156b047a2cb279e",
-    "deployment_run": "https://github.com/bibleit-labs/bibleit-server/actions/runs/38157279015",
+    "deployment_run": "Private historical record retained locally.",
     "change": "font-only Georgia replacement; assessment reports auth/security/native unchanged",
     "evidence_owner": "Issues pos deployement chat 01a12b2a-9268-7c03-9142-629c3c035a6f",
     "reported_public_checks": [
@@ -527,7 +527,7 @@
     ],
     "qualification_scope": "exact source/native image build and startup workflow/artifact evidence plus narrow public font/signup/readiness report; full4243 client and public-boundary proof remains separately attributed",
     "exact_image_digest_recorded": true,
-    "image": "registry.fly.io/bibleit-server@sha256:28fb9a0baa99d2bae3bbdc3a6f3247896fc67f2f2956a2a7ef322ea48a9660f9",
+    "image": "Private historical record retained locally.",
     "validated_image_id": "sha256:392fc1869e8d2d74b38c77f733f0798764ff3e6e5b897ef5309578b4dbac08ba",
     "published_running_digest_match": true,
     "deployed_source_hashes_verified": 406,
@@ -553,5 +553,6 @@
     "redemption_table_exists": true,
     "token_rows_queried": false,
     "evidence_owner": "assessment/Fly readonly production metadata"
-  }
+  },
+  "private_reference_notice": "Private repository names, implementation locations and historical host/image/workflow references are withheld from this current public snapshot; originals retained privately."
 }

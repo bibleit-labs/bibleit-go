@@ -1,5 +1,7 @@
 # Customer operation and transport inventory
 
+> Public-copy update, 2026-10-12: private implementation references in these historical records are withheld; originals remain in private local storage. Current SSH verifies bibleit.app directly without a legacy host-key alias.
+
 Reviewed 2026-10-11 against the server working tree. See `server-baseline.json`
 for source fingerprints and `docs/status.md` for verification progress. Protocol
 availability is distinct from client implementation and integration coverage.
@@ -92,7 +94,7 @@ baseline records 63 source and 58 test fingerprints and UTC review date; it matc
 the assessment working tree at validation completion. The assessment subsequently confirmed its full `make test` on 2026-10-11:
 248 Common Test cases, 48 Erlang unit tests, 71 JavaScript tests and the native
 C test, with no skips. This server-owned evidence is recorded in
-`../bibleit-server/docs/developers/security-test-results.md`; it is separate
+`[private implementation reference withheld]`; it is separate
 from the client integration run and confirms the same protocol contract.
 
 The 2026-10-11 single-configuration CLI integration refresh passed the full tracked
@@ -104,8 +106,8 @@ a test is not a claim that the client harness executes every server test.
 
 ## Fixed production origin and final assessment compatibility — 11 October 2026
 
-ServerEndpoint is now https://bibleit-server.fly.dev. The CLI uses ordinary SSH
-at bibleit-server.fly.dev:22. Credential-only constructors and redirect blocking
+ServerEndpoint is now [historical HTTPS origin withheld]. The CLI uses ordinary SSH
+at [historical SSH address withheld]. Credential-only constructors and redirect blocking
 remain unchanged; default HTTPS certificate verification is enforced.
 Fresh integration at clean server 8923d86/native f6fed37 passes 34 decoder/18
 encoder fixtures, seven security cases, 11 HTTP subtests, real OpenSSH lifecycle

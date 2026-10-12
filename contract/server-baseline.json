@@ -152,7 +152,7 @@
     "request_decoder_cases": 34,
     "fixed_http_endpoint": "https://bibleit.app",
     "fixed_ssh_endpoint": "bibleit.app:22",
-    "ssh_host_key_alias": "bibleit-server.fly.dev",
+    "ssh_host_key_alias": "Private historical record retained locally.",
     "boot_configuration_cases": 1,
     "eunit_cases": 24,
     "tls_boundary_cases": 3,
@@ -176,5 +176,6 @@
       "src/example.c": "b416d9afd3398e8ce7ba1354e97c6cfc5768f13586309627149206f12152815c",
       "src/translation.c": "a6b7f494e5af5c2284e0dbcb9d4f1dfb0cc5e720c3fa87702aa295a290d8260d"
     }
-  }
+  },
+  "private_reference_notice": "Private repository names, implementation locations and historical host/image/workflow references are withheld from this current public snapshot; originals retained privately."
 }

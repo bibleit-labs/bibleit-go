@@ -1,5 +1,7 @@
 # Bibleit client contract: protocol v1
 
+> Public-copy update, 2026-10-12: private implementation references in these historical records are withheld; originals remain in private local storage. Current SSH verifies bibleit.app directly without a legacy host-key alias.
+
 ## Latest canonical-domain compatibility snapshot — 11 October 2026
 
 Fresh isolated HTTP/SSH/import and boot checks passed against assessment revision
@@ -92,7 +94,7 @@ remaining acceptance and standalone release gates close.
 Repair source 34d80f811b3ac9179d6afe0966185e2b3517181e/native f6fed37 is deployed
 and technically qualified on immutable image
 sha256:33b4ca3c13829c1c25f0745037212cc0c14e5e7768c2f78e58206c461ef8d35d,
-[run 38144206075](https://github.com/bibleit-labs/bibleit-server/actions/runs/38144206075).
+run 38144206075 (private record retained locally).
 403 source hashes and 20 actual-image checks match. Real production requestSubmit
 carries canonical Origin/Referer and passes CSRF before missing-token denial;
 ordinary HTML uses same-origin referrer policy. Token/callback/Live viewer/
@@ -116,7 +118,7 @@ The 34d80f8/f6fed37 evidence is point-in-time and does not qualify that later im
 
 Catalog source6ba81e2/native d6e31dc is independently operationally qualified on
 image sha256:7456bfec37b1d2285041387ef6135685dc707748ea82adbff60417e96c5fec47,
-[run38144732991](https://github.com/bibleit-labs/bibleit-server/actions/runs/38144732991):
+run38144732991 (private record retained locally):
 405 source hashes/eight build stages/20 actual-image checks, native amd64, matching
 published/running digest and clean fixture cleanup. Public boundary23/alias39
 checks pass per explicit address family, along with native browser admission.
@@ -227,7 +229,7 @@ Original logical records and unknown fields remain available in typed results.
 - `invalid: true`: malformed or incomplete data that must fail decoding.
 
 Go tests consume these fixtures now. The other language clients should reuse
-this file. Fixtures were derived from `bibleit-server/src/protocol/bibleit_protocol.erl`
+this file. Fixtures were derived from `[private implementation reference withheld]`
 and its protocol tests; 27 request fixtures and 18 response encodings are now verified against compiled
 server source with `python3 scripts/check_server.py`. Malformed and future-error
 response cases remain client-decoder robustness fixtures. Server code has not been modified by this extraction.
@@ -331,7 +333,7 @@ rejected. See the latest compatibility snapshot above.
 
 
 A later font-only deployment is independently recorded at source14628f3/native d6,
-workflow38157279015, image registry.fly.io/bibleit-server@sha256:28fb9a0baa99d2bae3bbdc3a6f3247896fc67f2f2956a2a7ef322ea48a9660f9.
+workflow38157279015, image [historical deployment image withheld].
 Its artifact verifies406 hashes/eight stages/native amd64/cleanup[0,0], with185
 APK comparisons and zero fixed alerts; published and running image match. Its
 owner confirms public CSS/signup/readiness. This separate proof does not silently
