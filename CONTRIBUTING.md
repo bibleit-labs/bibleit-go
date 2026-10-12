@@ -33,18 +33,15 @@ explicitly with the CLI. Authorized maintainers may use the CLI's isolated
 container harness for private server integration; see the CLI native-validation
 guide. Passing fixture tests does not establish production/provider behavior.
 
-## Commits and releases
+## Commits and reviews
 
 Use Conventional Commits, for example `fix(protocol): reject incomplete envelopes`
 or `docs: clarify typed results`. Use `!` or BREAKING CHANGE for incompatible
 changes, and branches without a codex prefix. Explain the resulting behavior and
 relevant validation in pull requests.
 
-SDK and CLI release versions are independent. The CLI pins a tagged SDK release. Consumers choose when to update; a branch
-push is not a stable release. Keep supported operations, Go version, tested server
-baseline and compatibility changes documented. Release tags and repository
-visibility changes require approval. CLI v0.0.2 installer checks do not change
-the SDK version; native installer evidence and SDK test results are independent.
+See the [maintainer guide](docs/maintenance.md) for independent SDK releases,
+private integration, audit records and historical compatibility evidence.
 
 Retain the MIT copyright/permission notice when redistributing SDK source.
 The software grant does not cover translations obtained through the service,
