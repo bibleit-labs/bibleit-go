@@ -1,8 +1,7 @@
 # Contributing to bibleit-go
 
-The SDK is MIT licensed and the repository currently remains private. Authorized
-contributors can open issues and focused pull requests; discuss larger API changes
-before implementation. Public contributions await approved launch. Report
+The SDK is MIT licensed. Open issues and focused pull requests for contributions;
+discuss larger API changes before implementation. Report
 vulnerabilities through [SECURITY.md](SECURITY.md), and redact credentials/account
 or private server data from issues, source, examples and fixtures.
 
@@ -41,8 +40,7 @@ or `docs: clarify typed results`. Use `!` or BREAKING CHANGE for incompatible
 changes, and branches without a codex prefix. Explain the resulting behavior and
 relevant validation in pull requests.
 
-SDK v0.0.1 is tagged privately and is the CLI's pinned dependency. SDK and CLI
-release versions are independent. Consumers choose when to update; a branch
+SDK and CLI release versions are independent. The CLI pins a tagged SDK release. Consumers choose when to update; a branch
 push is not a stable release. Keep supported operations, Go version, tested server
 baseline and compatibility changes documented. Release tags and repository
 visibility changes require approval. CLI v0.0.2 installer checks do not change
