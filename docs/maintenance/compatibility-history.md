@@ -1,9 +1,9 @@
 # Historical compatibility and deployment records
 
 This archive preserves the previously published contract README. Its dated
-status, release gates and integration commands describe their recorded revisions;
-they are not current publication or validation instructions. Historical harness
-commands refer to the CLI repository and require the appropriate private inputs.
+status and release gates describe their recorded revisions; they are not current
+publication or validation instructions. Local service reproduction commands are
+maintained privately.
 Use the [maintainer guide](../maintenance.md) for current checks and evidence, or
 [the protocol reference](../../contract/README.md) for the client contract.
 
@@ -67,11 +67,7 @@ unchanged. Unrelated frontend edits retain truthful dirty metadata. The original
 files are identical in the Go and CLI repositories. The full future integration
 runner now includes this direct boot EUnit case alongside the existing checks.
 
-Reproduce the focused qualification using the existing integration tools image:
-
-```sh
-python3 scripts/check_server_boot.py --revision ef63e913ae4d7f3e28a2dc561e869976db667a20 --report contract/server-boot-validation.json
-```
+Local service reproduction commands are maintained privately.
 
 The assessment reports its full suite green: 337 CT/63 EUnit/71 JavaScript/native
 65536/10 bootstrap cases. The subsequent actual public-domain technical
@@ -164,11 +160,7 @@ UTF-8 BOOK records and matching Gênesis. The five public report hashes are reco
 canonical-deployment-validation.json. Real Turnstile backend success/replay and actual
 email delivery/verification remain open. No customer tags/assets.
 
-Reproduce with the existing disposable fixture:
-
-```sh
-python3 scripts/check_server_container.py --catalog-only --revision 4243c9a3c1b6e8f8b1f94b93f0880b3aa98464f6 --baseline contract/server-catalog-validation.json
-```
+Local service reproduction commands are maintained privately.
 
 ## Transport
 
@@ -242,7 +234,7 @@ Original logical records and unknown fields remain available in typed results.
 Go tests consume these fixtures now. The other language clients should reuse
 this file. Fixtures were derived from `[private implementation reference withheld]`
 and its protocol tests; 27 request fixtures and 18 response encodings are now verified against compiled
-server source with `python3 scripts/check_server.py`. Malformed and future-error
+server source with the maintainer source-verification harness. Malformed and future-error
 response cases remain client-decoder robustness fixtures. Server code has not been modified by this extraction.
 
 ## Server review status (2026-10-10)
@@ -279,12 +271,7 @@ terms in `server_term`; those terms are parsed as data, not evaluated. Response
 fixtures with `server_response_term` are checked against the real server encoder.
 Source fingerprints are recorded in `server-baseline.json`.
 
-```sh
-python3 scripts/check_server.py
-python3 scripts/check_server.py --integration
-# Include latest assessment import-access/publication cases in the isolated runner:
-python3 scripts/check_server_container.py --imports --baseline contract/server-baseline.json
-```
+Local service reproduction commands are maintained privately.
 
 Identical repeated response fields are accepted for compatibility with older
 Live stats; conflicting repeated values are rejected.
@@ -331,16 +318,16 @@ bad-verifier consumption, logout and post-logout rejection.
 ## Historical fixed-service integration (2026-10-10)
 
 At that checkpoint the simple API-token constructors passed against a real server at the fixed
-`http://localhost:8080` endpoint. No client destination override is used. If host
-port 8080 is occupied, run `python3 scripts/check_server_container.py` to use an
-isolated container namespace and disposable database. The verified baseline
+`http://localhost:8080` endpoint. No client destination override was used.
+An isolated container namespace and disposable database avoided host-port conflicts.
+The verified baseline
 includes the fixed endpoint and current source fingerprints. The server checkout
 and developer service are not changed.
 
-The 2026-10-11 refresh supersedes the localhost fixture strategy: run
-`python3 scripts/check_server_container.py --imports` for the egress-disabled
-HTTPS/SSH fixture at the fixed production hostname. Direct host integration is
-rejected. See the latest compatibility snapshot above.
+The 2026-10-11 refresh superseded the localhost fixture strategy with an
+egress-disabled HTTPS/SSH fixture at the fixed production hostname. Direct host
+integration is rejected. Reproduction procedures are maintained privately.
+See the latest compatibility snapshot above.
 
 
 A later font-only deployment is independently recorded at source14628f3/native d6,
