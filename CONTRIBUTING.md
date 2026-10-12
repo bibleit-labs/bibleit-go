@@ -29,9 +29,8 @@ behavior, including malformed responses and unknown fields when applicable.
 
 [Contract coverage](contract/features.md) and [shared fixtures](contract/README.md)
 record supported behavior and tested baselines. Synchronize fixture changes
-explicitly with the CLI. Authorized maintainers may use the CLI's isolated
-container harness for private server integration; see the CLI native-validation
-guide. Passing fixture tests does not establish production/provider behavior.
+explicitly with the CLI. Passing fixture tests does not establish
+production/provider behavior.
 
 ## Commits and reviews
 
@@ -41,7 +40,7 @@ changes, and branches without a codex prefix. Explain the resulting behavior and
 relevant validation in pull requests.
 
 See the [maintainer guide](docs/maintenance.md) for independent SDK releases,
-private integration, audit records and historical compatibility evidence.
+audit records and historical compatibility evidence.
 
 Retain the MIT copyright/permission notice when redistributing SDK source.
 The software grant does not cover translations obtained through the service,
