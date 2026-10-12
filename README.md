@@ -194,8 +194,6 @@ GOWORK=off go vet ./...
 
 Unit tests use in-memory transports. Shared protocol fixtures live in
 `contract/fixtures/responses-v1.json`. Native CI covers Linux, macOS, and Windows.
-The CLI repository owns isolated real-server integration checks; the server
-repository is separate and private.
 
 See the [changelog](CHANGELOG.md) and [contributing guide](CONTRIBUTING.md).
 Contributions use Conventional Commits. Licensed under [MIT](LICENSE).
