@@ -1,10 +1,12 @@
 # Bibleit client contract: protocol v1
 
+> Public-copy update, 2026-10-12: private implementation references in these historical records are withheld; originals remain in private local storage. Current SSH verifies bibleit.app directly without a legacy host-key alias.
+
 ## Sparse native and localized finite-client qualification
 
 Catalog source[private revision withheld]/native [private revision withheld] is independently operationally qualified on
 image sha256:[private digest withheld],
-[run38144732991]([private service reference withheld]):
+run38144732991 (private record retained locally):
 405 source hashes/eight build stages/20 actual-image checks, native amd64, matching
 published/running digest and clean fixture cleanup. Public boundary23/alias39
 checks pass per explicit address family, along with native browser admission.
@@ -115,7 +117,7 @@ Original logical records and unknown fields remain available in typed results.
 - `invalid: true`: malformed or incomplete data that must fail decoding.
 
 Go tests consume these fixtures now. The other language clients should reuse
-this file. Fixtures were derived from `private-service/src/protocol/bibleit_protocol.erl`
+this file. Fixtures were derived from `[private implementation reference withheld]`
 and its protocol tests; 27 request fixtures and 18 response encodings are now verified against compiled
 server source with `python3 scripts/check_server.py`. Malformed and future-error
 response cases remain client-decoder robustness fixtures. Server code has not been modified by this extraction.
@@ -219,7 +221,7 @@ rejected. See the latest compatibility snapshot above.
 
 
 A later font-only deployment is independently recorded at source[private revision withheld]/native d6,
-workflow38157279015, image [private image withheld]
+workflow38157279015, image [historical deployment image withheld].
 Its artifact verifies406 hashes/eight stages/native amd64/cleanup[0,0], with185
 APK comparisons and zero fixed alerts; published and running image match. Its
 owner confirms public CSS/signup/readiness. This separate proof does not silently
