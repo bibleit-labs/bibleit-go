@@ -1,5 +1,11 @@
 # Changelog
 
+## v0.0.3 — 2026-10-13
+
+- Remove internal deployment and infrastructure records from public source and history.
+- Retract v0.0.1 and v0.0.2 because their cached module archives retain those records.
+- Retain the v0.0.2 public API and runtime behavior.
+
 ## v0.0.2 — 2026-10-13
 
 - Add read-only organization directory and application status command builders and typed results, pagination cursors, and organization HELP. Retain future states and terminal organization_deleted without an organization ID.
@@ -27,5 +33,4 @@ for the full behavior and current limits.
 Historical service deployment evidence is maintained privately. Public client
 compatibility fixtures remain in contract/.
 
-This release remains in a private repository. Fresh module retrieval requires
-authorized Git access and GOPRIVATE=github.com/bibleit-labs/bibleit-go.
+This historical release is retracted. Use v0.0.3 or newer from the public module proxy.
