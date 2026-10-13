@@ -1,5 +1,10 @@
 # Changelog
 
+## v0.0.2 — 2026-10-13
+
+- Add read-only organization directory and application status command builders and typed results, pagination cursors, and organization HELP. Retain future states and terminal organization_deleted without an organization ID.
+- Organization membership is invitation-only; verification requests remain browser-managed and approval remains in Bibleit admin.
+
 ## v0.0.1 — 2026-10-11
 
 Initial Go client release for Bibleit, requiring Go 1.27.1.

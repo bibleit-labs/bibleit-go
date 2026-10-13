@@ -201,3 +201,8 @@ Contributions use Conventional Commits. Licensed under [MIT](LICENSE).
 The MIT software license does not grant rights to Bible translations returned by
 the service, account access or quotas. Report vulnerabilities privately through
 [SECURITY.md](SECURITY.md).
+
+Organization verification reads use `ListOrganizations(ctx, cursor)` and
+`GetOrganizationApplicationStatus(ctx, id)`. Discover `organization_status` with
+`GetServerInfo` before using them against older servers. Applications grant no
+operating rights until Bibleit admin approval; membership is invitation-only.

@@ -168,5 +168,20 @@
     "name": "literal-backslash-sequences",
     "wire": "LIVE CREATE \"literal \\n \\t \\\\ path\"",
     "server_term": "{ok,{create_live,<<\"literal \\\\n \\\\t \\\\\\\\ path\">>}}"
+  },
+  {
+    "name": "organization-directory",
+    "wire": "ORGANIZATION LIST",
+    "server_term": "{ok,organization_list}"
+  },
+  {
+    "name": "organization-application-status",
+    "wire": "ORGANIZATION APPLICATION application-fixture STATUS",
+    "server_term": "{ok,{organization_application_status,<<\"application-fixture\">>}}"
+  },
+  {
+    "name": "organization-directory-cursor",
+    "wire": "ORGANIZATION LIST a:00000000-0000-0000-0000-000000000050",
+    "server_term": "{ok,{organization_list,<<\"a:00000000-0000-0000-0000-000000000050\">>}}"
   }
 ]
