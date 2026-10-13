@@ -459,5 +459,191 @@
       }
     ],
     "server_response_term": "{ok,{tokens,<<\"user\">>,[#{id=><<\"test\">>,scopes=>[{token,get},{live,get}]}]}}"
+  },
+  {
+    "name": "organization-directory-mixed",
+    "wire": "OK count=2\nORGANIZATION id=\"organization-fixture\" handle=\"example-church\" name=\"Example Church\" role=\"owner\" verification=\"approved\" status=\"active\"\nAPPLICATION application_id=\"application-fixture\" name=\"Example Community\" domain=\"community.example\" state=\"pending_review\" next_action=\"await_admin_review\" verification_url=\"/organizations/applications/application-fixture\"\nEND\n",
+    "records": [
+      {
+        "type": "ok",
+        "fields": {
+          "count": "2"
+        }
+      },
+      {
+        "type": "organization",
+        "fields": {
+          "id": "organization-fixture",
+          "handle": "example-church",
+          "name": "Example Church",
+          "role": "owner",
+          "verification": "approved",
+          "status": "active"
+        }
+      },
+      {
+        "type": "application",
+        "fields": {
+          "application_id": "application-fixture",
+          "name": "Example Community",
+          "domain": "community.example",
+          "state": "pending_review",
+          "next_action": "await_admin_review",
+          "verification_url": "/organizations/applications/application-fixture"
+        }
+      }
+    ]
+  },
+  {
+    "name": "organization-directory-empty",
+    "wire": "OK count=0\nEND\n",
+    "records": [
+      {
+        "type": "ok",
+        "fields": {
+          "count": "0"
+        }
+      }
+    ]
+  },
+  {
+    "name": "organization-application-pending-status",
+    "wire": "OK application_id=\"application-fixture\" name=\"Example Community\" domain=\"community.example\" state=\"pending_review\" next_action=\"await_admin_review\" verification_url=\"/organizations/applications/application-fixture\"\n",
+    "records": [
+      {
+        "type": "ok",
+        "fields": {
+          "application_id": "application-fixture",
+          "name": "Example Community",
+          "domain": "community.example",
+          "state": "pending_review",
+          "next_action": "await_admin_review",
+          "verification_url": "/organizations/applications/application-fixture"
+        }
+      }
+    ]
+  },
+  {
+    "name": "organization-application-approved-status",
+    "wire": "OK application_id=\"application-fixture\" name=\"Example Community\" domain=\"community.example\" state=\"approved\" next_action=\"open_organization\" verification_url=\"/organizations/applications/application-fixture\" organization_id=\"approved-organization-fixture\"\n",
+    "records": [
+      {
+        "type": "ok",
+        "fields": {
+          "application_id": "application-fixture",
+          "name": "Example Community",
+          "domain": "community.example",
+          "state": "approved",
+          "next_action": "open_organization",
+          "verification_url": "/organizations/applications/application-fixture",
+          "organization_id": "approved-organization-fixture"
+        }
+      }
+    ]
+  },
+  {
+    "name": "organization-directory-truncated",
+    "wire": "OK count=1\nAPPLICATION application_id=\"application-fixture\" name=\"Example Community\" domain=\"community.example\" state=\"pending_review\" next_action=\"await_admin_review\" verification_url=\"/organizations/applications/application-fixture\"\n",
+    "invalid": true
+  },
+  {
+    "name": "organization-application-not-found",
+    "wire": "ERR not_found\n",
+    "error_code": "not_found",
+    "error_fields": {}
+  },
+  {
+    "name": "organization-read-unauthorized",
+    "wire": "ERR unauthorized\n",
+    "error_code": "unauthorized",
+    "error_fields": {}
+  },
+  {
+    "name": "organization-read-forbidden",
+    "wire": "ERR forbidden\n",
+    "error_code": "forbidden",
+    "error_fields": {}
+  },
+  {
+    "name": "organization-directory-unverified",
+    "wire": "OK count=1\nORGANIZATION id=\"unverified-organization-fixture\" handle=\"unverified-church\" name=\"Unverified Church\" role=\"owner\" verification=\"unverified\" status=\"active\"\nEND\n",
+    "records": [
+      {
+        "type": "ok",
+        "fields": {
+          "count": "1"
+        }
+      },
+      {
+        "type": "organization",
+        "fields": {
+          "id": "unverified-organization-fixture",
+          "handle": "unverified-church",
+          "name": "Unverified Church",
+          "role": "owner",
+          "verification": "unverified",
+          "status": "active"
+        }
+      }
+    ]
+  },
+  {
+    "name": "organization-directory-pagination-decoding",
+    "wire": "OK count=1 next=\"o:00000000-0000-0000-0000-000000000050\"\nORGANIZATION id=\"unverified-organization-fixture\" handle=\"unverified-church\" name=\"Unverified Church\" role=\"owner\" verification=\"unverified\" status=\"active\"\nEND\n",
+    "records": [
+      {
+        "type": "ok",
+        "fields": {
+          "count": "1",
+          "next": "o:00000000-0000-0000-0000-000000000050"
+        }
+      },
+      {
+        "type": "organization",
+        "fields": {
+          "id": "unverified-organization-fixture",
+          "handle": "unverified-church",
+          "name": "Unverified Church",
+          "role": "owner",
+          "verification": "unverified",
+          "status": "active"
+        }
+      }
+    ]
+  },
+  {
+    "name": "organization-operation-pending-denial",
+    "wire": "ERR organization_pending_verification\n",
+    "error_code": "organization_pending_verification",
+    "error_fields": {}
+  },
+  {
+    "name": "organization-operation-suspended-denial",
+    "wire": "ERR organization_suspended\n",
+    "error_code": "organization_suspended",
+    "error_fields": {}
+  },
+  {
+    "name": "organization-directory-invalid-cursor",
+    "wire": "ERR invalid_cursor\n",
+    "error_code": "invalid_cursor",
+    "error_fields": {}
+  },
+  {
+    "name": "organization-application-deleted-status",
+    "wire": "OK application_id=\"application-fixture\" name=\"Example Community\" domain=\"community.example\" state=\"organization_deleted\" next_action=\"none\" verification_url=\"/organizations/applications/application-fixture\"\n",
+    "records": [
+      {
+        "type": "ok",
+        "fields": {
+          "application_id": "application-fixture",
+          "name": "Example Community",
+          "domain": "community.example",
+          "state": "organization_deleted",
+          "next_action": "none",
+          "verification_url": "/organizations/applications/application-fixture"
+        }
+      }
+    ]
   }
 ]
