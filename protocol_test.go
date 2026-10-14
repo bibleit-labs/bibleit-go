@@ -112,6 +112,9 @@ func TestOpaqueCompoundResponseFields(t *testing.T) {
 			t.Fatal("accepted malformed compound value")
 		}
 	}
+	if _, err := ParseRecord("OK notifications=#{enabled => true"); !errors.Is(err, ErrIncompleteTerm) {
+		t.Fatalf("incomplete compound did not expose retryable error: %v", err)
+	}
 }
 
 func TestMultilineOpaqueAccountField(t *testing.T) {
