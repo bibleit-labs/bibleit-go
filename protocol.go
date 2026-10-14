@@ -40,7 +40,9 @@ func (e *ServerError) RetryAfter() time.Duration {
 	return time.Duration(ms) * time.Millisecond
 }
 
-var errIncompleteTerm = errors.New("unterminated protocol term")
+// ErrIncompleteTerm means an opaque compound field needs another input line.
+// Stream readers may append the next line and retry ParseRecord.
+var ErrIncompleteTerm = errors.New("unterminated protocol term")
 
 // ParseRecord decodes response quoting and escaping, rejecting truncated strings.
 func ParseRecord(line string) (Record, error) {
@@ -156,7 +158,7 @@ func ParseRecord(line string) (Record, error) {
 		}
 	}
 	if len(compound) > 0 {
-		return Record{}, errIncompleteTerm
+		return Record{}, ErrIncompleteTerm
 	}
 	if quoted || escaped || unicodeRemaining > 0 {
 		return Record{}, errors.New("unterminated protocol string")
@@ -244,7 +246,7 @@ func decodeResponse(reader io.Reader, singleRecord bool) (Response, error) {
 			line = pending + "\n" + line
 		}
 		record, err := ParseRecord(line)
-		if errors.Is(err, errIncompleteTerm) {
+		if errors.Is(err, ErrIncompleteTerm) {
 			pending = line
 			continue
 		}

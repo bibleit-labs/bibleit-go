@@ -1,5 +1,11 @@
 # Changelog
 
+## v0.0.4 — 2026-10-14
+
+- Export `ErrIncompleteTerm` so streaming clients can buffer a multiline Live
+  presentation field and retry `ParseRecord` without mistaking it for a failed
+  subscription. Existing finite-response decoding remains unchanged.
+
 ## v0.0.3 — 2026-10-13
 
 - Remove internal deployment and infrastructure records from public source and history.
