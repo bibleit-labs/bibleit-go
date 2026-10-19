@@ -5,15 +5,10 @@ This reference describes the client wire format and shared fixtures. See
 
 ## Transport
 
-`POST /api/cli/command` takes `Authorization: Bearer <token>` and a JSON body
-of the form `{"command":"PING"}`. Responses use the same UTF-8, newline-delimited
-text records as SSH exec. Domain errors can arrive with HTTP 200; inspect the
-protocol envelope, not only the HTTP status.
-
-HTTP supports finite command replies. `LIVE <id> SUBSCRIBE` is SSH-only.
-V1 interactive SSH has FIFO replies without request IDs, with EVENT records
-between envelopes. The Go decoder is for finite HTTP/SSH-exec replies,
-not multiplexed interactive channels.
+SSH exec returns UTF-8, newline-delimited text records. Domain errors are
+reported by the protocol envelope. Interactive SSH uses FIFO replies with EVENT
+records between envelopes; finite decoders do not multiplex interactive streams.
+HTTP resource requests use the separate REST client and structured JSON.
 
 ## Commands and quoting
 
@@ -50,8 +45,7 @@ Current multi-record headers use `count`, `verses`, `results`, `books`,
 `commands`, or `connections`. Live push responses use `event=verse` and a numeric
 `translations` field. Ordinary translation lists also use `translations`, but
 as a comma-separated string in a single-record response. Account translation
-list/add/remove also include `count` without an END marker. HTTP and CLI SSH exec
-use `DecodeCommandResponse` to apply that command-specific framing rule. Generic
+list/add/remove also include `count` without an END marker. SSH exec uses `DecodeCommandResponse` to apply that command-specific framing rule. Generic
 `DecodeResponse` cannot disambiguate count-only headers. Never use a field
 alone to infer framing.
 

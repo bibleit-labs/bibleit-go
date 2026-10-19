@@ -2,27 +2,26 @@ package bibleit
 
 import (
 	"context"
-	"encoding/json"
 	"errors"
-	"net/http"
 	"strings"
 	"testing"
 )
 
 func discoveryClient(t *testing.T, responses map[string]string) *Client {
 	t.Helper()
-	return testClient(t, func(request *http.Request) (*http.Response, error) {
-		var body map[string]string
-		if err := json.NewDecoder(request.Body).Decode(&body); err != nil {
-			t.Fatal(err)
-		}
-		wire, ok := responses[body["command"]]
+	c, err := NewSSHClient(func(ctx context.Context, cmd Command) (Response, error) {
+		wire, ok := responses[cmd.String()]
 		if !ok {
-			t.Fatalf("unexpected command %q", body["command"])
+			t.Fatalf("unexpected SSH command %q", cmd.String())
 		}
-		return reply(200, wire), nil
+		return DecodeCommandResponse(cmd, strings.NewReader(wire))
 	})
+	if err != nil {
+		t.Fatal(err)
+	}
+	return c
 }
+
 func TestTypedDiscoveryPreservesFutureFields(t *testing.T) {
 	client := discoveryClient(t, map[string]string{
 		"SERVER INFO":        "OK protocol_version=1 version=\"0.1\" capabilities=\"read,future\" future=enabled\n",

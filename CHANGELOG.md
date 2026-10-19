@@ -1,5 +1,17 @@
 # Changelog
 
+## v0.1.0 — 2026-10-19
+
+- Add the versioned `rest` package with 66 REST bindings, 83 schema models,
+  the pinned canonical contract and a reproducible dependency-free generator.
+- Preserve Problem Details and response metadata, stream binary transfers,
+  forward ETags/idempotency keys, and decode bounded versioned Live event polls.
+- Add a separate registered OAuth client for S256 consent URLs, metadata, code
+  exchange, refresh rotation and revocation on the website origin.
+- Remove the command-style HTTP transport. Command helpers require an explicit
+  SSH executor; bearer credential clients only support CLI token revocation.
+- Migrate examples and integration tests to REST; retain SSH decoding coverage.
+
 ## v0.0.4 — 2026-10-14
 
 - Export `ErrIncompleteTerm` so streaming clients can buffer a multiline Live
