@@ -19,7 +19,7 @@ go get github.com/bibleit-labs/bibleit-go
 
 Import `github.com/bibleit-labs/bibleit-go/rest`. The client includes all 88 REST
 operations, generated schemas, response metadata, conditional writes, binary
-streams and versioned Live event polling. See [REST usage](rest/README.md) and
+streams, versioned Live event polling and lazy whole-book page iterators. See [REST usage](rest/README.md) and
 the [runnable reading example](examples/read/main.go).
 
 ```go

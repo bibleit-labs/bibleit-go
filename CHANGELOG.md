@@ -4,6 +4,10 @@
 
 ## v0.2.0 — 2026-10-20
 
+- Add bounded whole-book cursor pagination (default 100, maximum 500) and lazy
+  personal/organization Go page iterators for complete-book traversal.
+  Detect unsafe traversal and preserve typed invalid, mismatched and stale cursor errors.
+
 - Add personal quota/token metadata, organization directory/application status,
   personal library writes, whole-book reads and installed catalogue resources.
 - Add conditional Live settings, statistics, retained-stack and audience-secret

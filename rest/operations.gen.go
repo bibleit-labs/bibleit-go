@@ -33,7 +33,7 @@ var operations = map[string]Operation{
 
 	"enablePersonalTranslation": {Method: "PUT", Path: "/accounts/{account_id}/translations/{slug}", Summary: "Enable an installed personal translation"},
 
-	"readPersonalBook": {Method: "GET", Path: "/accounts/{account_id}/translations/{slug}/books/{book_id}", Summary: "Read a complete book with source verse identifiers"},
+	"readPersonalBook": {Method: "GET", Path: "/accounts/{account_id}/translations/{slug}/books/{book_id}", Summary: "Read a book page with source verse identifiers"},
 
 	"readPersonalChapter": {Method: "GET", Path: "/accounts/{account_id}/translations/{slug}/books/{book_id}/chapters/{chapter}", Summary: "Read a chapter"},
 
@@ -153,7 +153,7 @@ var operations = map[string]Operation{
 
 	"enableOrganizationTranslation": {Method: "PUT", Path: "/organizations/{organization_id}/translations/{slug}", Summary: "Enable an installed translation in the organization library"},
 
-	"readBook": {Method: "GET", Path: "/organizations/{organization_id}/translations/{slug}/books/{book_id}", Summary: "Read a complete book with source verse identifiers"},
+	"readBook": {Method: "GET", Path: "/organizations/{organization_id}/translations/{slug}/books/{book_id}", Summary: "Read a book page with source verse identifiers"},
 
 	"readChapter": {Method: "GET", Path: "/organizations/{organization_id}/translations/{slug}/books/{book_id}/chapters/{chapter}", Summary: "Read a chapter"},
 
@@ -243,7 +243,7 @@ func (c *Client) EnablePersonalTranslation(ctx context.Context, account_id strin
 	return c.Call(ctx, "enablePersonalTranslation", map[string]string{"account_id": account_id, "slug": slug}, options)
 }
 
-// ReadPersonalBook Read a complete book with source verse identifiers.
+// ReadPersonalBook Read a book page with source verse identifiers.
 func (c *Client) ReadPersonalBook(ctx context.Context, account_id string, slug string, book_id string, options *Options) (*Response, error) {
 	return c.Call(ctx, "readPersonalBook", map[string]string{"account_id": account_id, "slug": slug, "book_id": book_id}, options)
 }
@@ -543,7 +543,7 @@ func (c *Client) EnableOrganizationTranslation(ctx context.Context, organization
 	return c.Call(ctx, "enableOrganizationTranslation", map[string]string{"organization_id": organization_id, "slug": slug}, options)
 }
 
-// ReadBook Read a complete book with source verse identifiers.
+// ReadBook Read a book page with source verse identifiers.
 func (c *Client) ReadBook(ctx context.Context, organization_id string, slug string, book_id string, options *Options) (*Response, error) {
 	return c.Call(ctx, "readBook", map[string]string{"organization_id": organization_id, "slug": slug, "book_id": book_id}, options)
 }

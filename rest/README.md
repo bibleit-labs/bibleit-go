@@ -2,7 +2,7 @@
 
 Use `github.com/bibleit-labs/bibleit-go/rest` for new integrations. It pins
 `https://api.bibleit.app/v1`, uses the pinned oapi-codegen runtime, and includes all
-88 REST operation bindings and 104 schema models from the canonical OpenAPI
+88 REST operation bindings and 105 schema models from the canonical OpenAPI
 contract. Browser/consent and OAuth protocol endpoints remain outside this
 bearer REST client. Parent-package command helpers require an explicit SSH executor.
 
@@ -50,8 +50,9 @@ exact `IfMatch` validators. `IdempotencyKey` is opt-in for supported creations;
 retain it across manual retries. `DestinationToken` sends the additional secret
 in `X-Destination-Service-Token` for workspace moves. Never put secrets in queries.
 
-`ProblemError` preserves HTTP status, stable code, request ID and response
-headers, with a seconds-based `RetryAfter` helper. All HTTP redirects are blocked,
+`ProblemError` preserves HTTP status, stable code, request ID, optional server
+`Detail` and response headers, with a seconds-based `RetryAfter` helper. Its `Error()`
+text omits untrusted server detail; applications choose how to present it. All HTTP redirects are blocked,
 cookie jars are disabled, and no operation is automatically retried. Transport
 injection retains the fixed host. The default timeout is 40 seconds; supplied
 clients retain their own timeout and must allow the 25-second long-poll wait plus
@@ -63,6 +64,53 @@ with a limit of 1–100 until nil; search instead uses `HasMore` without cursors
 event schema versions. Snapshot cursors are opaque and are never ETags. Poll
 again with the returned cursor; reconnect without one to resynchronize. Events
 are current snapshots, not a durable or exactly-once event log.
+
+## Whole-book pagination
+
+`ReadPersonalBook` and `ReadBook` make one request and always return a bounded
+page: 100 verses by default, or a `limit` of 1–500. Every book response includes
+`next_cursor`, an opaque string or `null` on the final page. Pass the returned
+cursor as `after` to continue. Keep the same account, translation and book;
+page size may change. The server also caps serialized pages at 3 MiB, so a page
+may contain fewer verses than its item limit. There is no unbounded whole-book
+API response.
+
+```go
+response, err := client.ReadPersonalBook(ctx, accountID, "web", "19", &rest.Options{
+    Query: url.Values{"limit": {"100"}},
+})
+if err != nil { return err }
+defer response.Body.Close()
+var page rest.ScriptureBookRead
+if err := response.Decode(&page); err != nil { return err }
+// Use page.NextCursor as Query["after"] for the next request.
+```
+
+Use the lazy Go iterators to traverse pages without managing response bodies:
+
+```go
+for page, err := range client.ReadPersonalBookPages(ctx, accountID, "web", "19", nil) {
+    if err != nil { return err }
+    for _, verse := range page.Verses {
+        fmt.Println(verse.Chapter, verse.Verse, verse.Text)
+    }
+}
+```
+
+`ReadBookPages` is the organization-scoped counterpart. Both iterators default
+to 100 verses per page, copy their options, close bodies before yielding, and
+stop when the caller breaks or cancels the context. They reject cursor loops,
+unordered or duplicate verse coordinates, and inconsistent translation metadata
+with `ErrInvalidBookPage`. An iterator error means the traversal is incomplete;
+discard accumulated verses if you need an atomic complete-book result.
+
+Every page is authorized independently. A changed edition returns HTTP 409
+`stale_cursor`; restart the read to avoid combining editions. Invalid cursors
+return HTTP 422 `invalid_cursor`; cursors for a different account, translation or
+book return `cursor_mismatch`. Errors are returned without automatic retries or
+silently restarting the traversal. A single source verse that cannot fit returns
+HTTP 413 `verse_too_large`, without silently skipping it. These cursors are
+unrelated to Live event cursors and ETags.
 
 REST operations accept resource identifiers and structured bodies directly;
 this package does not translate commands or produce command-protocol responses.
