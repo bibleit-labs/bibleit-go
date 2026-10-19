@@ -13,12 +13,18 @@ type IdentityInfo struct {
 	Raw                                                            Response
 }
 type VerseText struct {
-	Text   string
-	Fields map[string]string
+	// Text retains the historical wire text, including any reference prefix.
+	Text string
+	// Structured source metadata is optional on older SSH servers.
+	Content                          *string
+	Translation, BookName, Reference string
+	BookID, Chapter, Verse           *int64
+	Fields                           map[string]string
 }
 type Reading struct {
 	Translation string
-	// Multi-verse/search replies do not supply per-verse coordinates.
+	// Header coordinates describe the requested range; per-verse source metadata
+	// is available in Verses when supplied by the server.
 	Book, Chapter, Verse *int64
 	Verses               []VerseText
 	Raw                  Response
@@ -138,11 +144,11 @@ func reading(result Response, search bool) (Reading, error) {
 		if err != nil {
 			return Reading{}, err
 		}
-		text, err := present(fields, "text")
+		verse, err := verseText(fields)
 		if err != nil {
 			return Reading{}, err
 		}
-		value.Verses = append(value.Verses, VerseText{Text: text, Fields: fields})
+		value.Verses = append(value.Verses, verse)
 		return value, nil
 	}
 	countKey := "verses"
@@ -154,11 +160,36 @@ func reading(result Response, search bool) (Reading, error) {
 		return Reading{}, err
 	}
 	for _, record := range result.Records[1:] {
-		text, err := present(record.Fields, "text")
+		verse, err := verseText(record.Fields)
 		if err != nil {
 			return Reading{}, err
 		}
-		value.Verses = append(value.Verses, VerseText{Text: text, Fields: record.Fields})
+		value.Verses = append(value.Verses, verse)
+	}
+	return value, nil
+}
+
+// verseText decodes only explicit metadata. Historical display text cannot be
+// parsed reliably into verse coordinates across translations and locales.
+func verseText(fields map[string]string) (VerseText, error) {
+	text, err := present(fields, "text")
+	if err != nil {
+		return VerseText{}, err
+	}
+	value := VerseText{Text: text, Fields: fields, Content: optionalString(fields, "content"), Translation: fields["translation"], BookName: fields["book_name"], Reference: fields["reference"]}
+	coordinates := 0
+	for key, target := range map[string]**int64{"book": &value.BookID, "chapter": &value.Chapter, "verse": &value.Verse} {
+		if _, ok := fields[key]; ok {
+			n, err := positive(fields, key)
+			if err != nil {
+				return VerseText{}, err
+			}
+			*target = &n
+			coordinates++
+		}
+	}
+	if coordinates != 0 && coordinates != 3 {
+		return VerseText{}, fmt.Errorf("incomplete verse coordinates")
 	}
 	return value, nil
 }

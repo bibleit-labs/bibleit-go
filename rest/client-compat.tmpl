@@ -1,0 +1,13 @@
+// The generated operation directory is consumed by the policy-preserving Client.
+// Schema conversion, enums, nullability and unions belong to oapi-codegen.
+var operations = map[string]Operation{
+{{range .}}{{if eq (index .Spec.Extensions "x-fern-server-name") "rest"}}
+ {{printf "%q" .SpecOperationId}}: {Method: {{printf "%q" .Method}}, Path: {{printf "%q" .Path}}, Summary: {{printf "%q" .Summary}}},
+{{end}}{{end}}
+}
+{{range .}}{{if eq (index .Spec.Extensions "x-fern-server-name") "rest"}}
+// {{.OperationId}} {{.Summary}}.
+func(c *Client) {{.OperationId}}(ctx context.Context, {{range .PathParams}}{{.ParamName}} string, {{end}}options *Options)(*Response,error){
+ return c.Call(ctx,{{printf "%q" .SpecOperationId}},map[string]string{ {{range .PathParams}}{{printf "%q" .ParamName}}:{{.ParamName}},{{end}} },options)
+}
+{{end}}{{end}}

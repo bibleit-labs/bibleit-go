@@ -112,6 +112,55 @@ func TestServerHTTPIntegration(t *testing.T) {
 		}
 		r.Body.Close()
 	})
+	t.Run("personal quotas and safe credential metadata", func(t *testing.T) {
+		r, err := c.GetPersonalQuotas(ctx, identity.PersonalAccountID, nil)
+		if err != nil {
+			t.Fatal(err)
+		}
+		var quotas rest.AccountQuotaCollection
+		err = r.Decode(&quotas)
+		r.Body.Close()
+		if err != nil || len(quotas.Data) == 0 {
+			t.Fatal("quota resources missing", err)
+		}
+		r, err = c.ListPersonalTokens(ctx, identity.PersonalAccountID, nil)
+		if err != nil {
+			t.Fatal(err)
+		}
+		var tokens rest.PersonalTokenCollection
+		err = r.Decode(&tokens)
+		r.Body.Close()
+		if err != nil || len(tokens.Data) == 0 {
+			t.Fatal("credential metadata missing", err)
+		}
+		for _, token := range tokens.Data {
+			if token.ID == "" || token.IssuedAt <= 0 {
+				t.Fatal("invalid credential metadata")
+			}
+		}
+	})
+	t.Run("book and native catalogue resources", func(t *testing.T) {
+		r, err := c.ReadPersonalBook(ctx, identity.PersonalAccountID, "web", "19", nil)
+		if err != nil {
+			t.Fatal(err)
+		}
+		var book rest.ScriptureRead
+		err = r.Decode(&book)
+		r.Body.Close()
+		if err != nil || len(book.Verses) < 2 || book.Verses[0].BookID != 19 {
+			t.Fatal("book contents differ", err)
+		}
+		r, err = c.GetTranslationCatalogueDetails(ctx, "web", nil)
+		if err != nil {
+			t.Fatal(err)
+		}
+		var catalogue rest.TranslationCatalogueDetails
+		err = r.Decode(&catalogue)
+		r.Body.Close()
+		if err != nil || len(catalogue.Data) == 0 {
+			t.Fatal("native catalogue missing", err)
+		}
+	})
 	t.Run("scope and expiry enforcement", func(t *testing.T) {
 		scoped, _ := rest.NewClient(os.Getenv("BIBLEIT_SCOPED_TOKEN"), nil)
 		_, err := scoped.ListPersonalLives(ctx, identity.PersonalAccountID, nil)

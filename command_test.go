@@ -65,3 +65,17 @@ func TestCommandPreservesLiteralBackslashes(t *testing.T) {
 		}
 	}
 }
+
+func TestPopLiveCountBounds(t *testing.T) {
+	for _, count := range []int{-1, -2147483648} {
+		if _, err := PopLiveCommand("live", count); err == nil {
+			t.Fatalf("accepted negative count %d", count)
+		}
+	}
+	for count, wire := range map[int]string{0: "LIVE live STACK POP", 1: "LIVE live STACK POP 1", 2147483647: "LIVE live STACK POP 2147483647"} {
+		command, err := PopLiveCommand("live", count)
+		if err != nil || command.String() != wire {
+			t.Fatalf("count %d: %s %v", count, command.String(), err)
+		}
+	}
+}

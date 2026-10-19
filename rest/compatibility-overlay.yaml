@@ -1,0 +1,37 @@
+overlay: 1.0.0
+info:
+  title: Go SDK source compatibility
+  version: 1.0.0
+actions:
+  - target: $..[?(@.format == 'uuid')]
+    update:
+      x-go-type: string
+  - target: $..[?(@.type == 'integer')]
+    update:
+      format: int64
+  - target: $..[?(@.type[0] == 'integer')]
+    update:
+      format: int64
+  - target: $.components.schemas.CreateLive.properties.name
+    update:
+      x-go-type-skip-optional-pointer: true
+  - target: $.components.schemas.CreateServiceToken.properties.expires_at
+    update:
+      x-go-type: json.RawMessage
+      x-go-type-skip-optional-pointer: true
+  - target: $.components.schemas.PatchServiceToken.properties.expires_at
+    update:
+      x-go-type: json.RawMessage
+      x-go-type-skip-optional-pointer: true
+  - target: $.components.schemas.CreateLiveQueueItem.properties.before_item_id
+    update:
+      x-go-type: json.RawMessage
+      x-go-type-skip-optional-pointer: true
+  - target: $.components.schemas.PersonalDirectoryEntry.properties.handle
+    update:
+      x-go-type: json.RawMessage
+      x-go-type-skip-optional-pointer: true
+  - target: $.components.schemas.PersonalDirectoryEntry.properties.organization_id
+    update:
+      x-go-type: json.RawMessage
+      x-go-type-skip-optional-pointer: true

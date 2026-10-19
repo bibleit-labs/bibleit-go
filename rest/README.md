@@ -1,8 +1,8 @@
 # Versioned REST client
 
 Use `github.com/bibleit-labs/bibleit-go/rest` for new integrations. It pins
-`https://api.bibleit.app/v1`, has no third-party dependencies, and includes all
-66 REST operation bindings and 83 schema models from the canonical OpenAPI
+`https://api.bibleit.app/v1`, uses the pinned oapi-codegen runtime, and includes all
+88 REST operation bindings and 104 schema models from the canonical OpenAPI
 contract. Browser/consent and OAuth protocol endpoints remain outside this
 bearer REST client. Parent-package command helpers require an explicit SSH executor.
 
@@ -25,8 +25,8 @@ browsers or persist tokens. An empty token permits public OpenAPI discovery.
 Every generated method accepts explicit path identifiers and `*rest.Options`.
 JSON bodies can use generated schema models or ordinary Go values. Optional
 nullable request fields use `json.RawMessage` to distinguish omitted (`nil`),
-explicit null (`json.RawMessage("null")`) and zero. Union schemas are raw JSON;
-decode their concrete variants according to the discriminator.
+explicit null (`json.RawMessage("null")`) and zero. Union schemas expose generated `As...`, `From...` and `Merge...` helpers;
+choose the concrete variant using the contract discriminator.
 
 ```go
 read, err := client.GetLive(ctx, liveID, nil)
@@ -86,8 +86,8 @@ Copy the reviewed `priv/openapi/bibleit-v1.json` from bibleit-server to
 `rest/openapi.json`, then run from the module root:
 
 ```sh
-python3 scripts/generate-rest.py
-python3 scripts/generate-rest.py --check
+go generate ./rest
+git diff --exit-code -- rest/models.gen.go rest/operations.gen.go
 go test -race ./...
 go vet ./...
 ```
@@ -97,3 +97,17 @@ operations remain on the main website and are deliberately excluded. Generated
 operation coverage is checked against the pinned contract in tests. Schema
 constraints and authorization are enforced by the server; generated Go structs
 do not replace server validation.
+
+Generation uses `oapi-codegen` **v2.8.0** through a pinned Go `tool` dependency in
+`tools/go.mod`. The tool supports the canonical OpenAPI 3.1 document directly;
+no downgrade or Python generator is used. Consumers compile the checked-in Go
+files and do not need the tool module. Run generation twice to verify determinism.
+
+The models use the standard generator, including nullable fields, enums and union
+helpers. A small supported client template retains the public `*Client` methods
+and operation directory; the handwritten transport still enforces fixed hosts,
+blocked redirects/cookies, bounded decoding and no automatic retries. A separate
+OpenAPI Overlay preserves string UUID identifiers, int64 coordinates/timestamps,
+optional/null `RawMessage` fields and the optional string Live name. This changes
+Go representation only, not the canonical server wire schema. `GetOpenApi` is a
+compatibility alias for the generated Go-initialism spelling `GetOpenAPI`.

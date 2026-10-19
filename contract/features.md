@@ -2,7 +2,7 @@
 
 | Surface | Client support |
 | --- | --- |
-| REST v1 | `rest` package: all 66 resource operations and generated schema models |
+| REST v1 | `rest` package: all 88 resource operations and generated schema models |
 | Personal resources | Finite personal/delegated tokens, identity, account, library, reading/search and Lives |
 | Organization resources | Scoped service tokens, membership, translations, Lives, Studio, presentations, assets and exports |
 | Conditional writes | Exact ETags and explicit caller-supplied idempotency keys; no automatic retries |

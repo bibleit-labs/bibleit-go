@@ -1,0 +1,11 @@
+package: rest
+output: ../rest/models.gen.go
+generate:
+  models: true
+output-options:
+  skip-prune: true
+  name-normalizer: ToCamelCaseWithInitialisms
+  prefer-skip-optional-pointer-on-container-types: true
+  overlay:
+    path: ../rest/compatibility-overlay.yaml
+    strict: false
