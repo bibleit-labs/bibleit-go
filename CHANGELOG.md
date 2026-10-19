@@ -4,7 +4,7 @@
 
 ## v0.2.0 — 2026-10-20
 
-- Add bounded whole-book cursor pagination (default 100, maximum 500) and lazy
+- Add bounded whole-book cursor pagination (default 50, maximum 500) and lazy
   personal/organization Go page iterators for complete-book traversal.
   Detect unsafe traversal and preserve typed invalid, mismatched and stale cursor errors.
 

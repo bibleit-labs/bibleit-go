@@ -14,13 +14,13 @@ import (
 // Callers should discard partial results rather than treat them as a full book.
 var ErrInvalidBookPage = errors.New("invalid REST book page")
 
-// ReadPersonalBookPages lazily reads a personal book in bounded pages. It opts
-// into cursor pagination with limit=100 unless Options.Query specifies a limit
+// ReadPersonalBookPages lazily reads a personal book in bounded pages. It fetches
+// cursor pages with limit=50 unless Options.Query specifies a limit
 // (1..500). Query.after can resume a previous traversal. Options are copied;
 // caller query values are never changed. Each iteration starts a new traversal.
 // Stop iteration or cancel ctx to stop fetching. Errors are yielded once, with
 // a zero page, and are never retried. Every response body is closed before yield.
-// ReadPersonalBook remains a single request and returns one page (100 verses
+// ReadPersonalBook remains a single request and returns one page (50 verses
 // by default). Use this iterator to read the complete book.
 func (c *Client) ReadPersonalBookPages(ctx context.Context, accountID, slug, bookID string, options *Options) iter.Seq2[ScriptureBookRead, error] {
 	return c.bookPages(ctx, "readPersonalBook", map[string]string{"account_id": accountID, "slug": slug, "book_id": bookID}, options)
@@ -40,7 +40,7 @@ func (c *Client) bookPages(ctx context.Context, operation string, params map[str
 	}
 	snapshot.Query = cloneBookQuery(snapshot.Query)
 	if !snapshot.Query.Has("limit") {
-		snapshot.Query.Set("limit", "100")
+		snapshot.Query.Set("limit", "50")
 	}
 	return func(yield func(ScriptureBookRead, error) bool) {
 		fail := func(err error) { yield(ScriptureBookRead{}, err) }

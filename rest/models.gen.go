@@ -2081,7 +2081,7 @@ type ReplaceDisplay1 struct {
 // Scope defines model for Scope.
 type Scope string
 
-// ScriptureBookRead One bounded book page, always paginated: default 100, maximum 500 verses, and at most 3MiB serialized JSON including metadata. The byte budget can return fewer verses with nonnull next_cursor. Stable chapter/verse order; no totals or unbounded mode.
+// ScriptureBookRead One bounded book page, always paginated: default 50, maximum 500 verses, and at most 3MiB serialized JSON including metadata. The byte budget can return fewer verses with nonnull next_cursor. Stable chapter/verse order; no totals or unbounded mode.
 type ScriptureBookRead struct {
 	// NextCursor Required opaque continuation cursor. Null only on the last page; otherwise pass unchanged as after. Carries no authority.
 	NextCursor  *string           `json:"next_cursor"`
@@ -2258,7 +2258,7 @@ type ListPersonalTranslationsParams struct {
 
 // ReadPersonalBookParams defines parameters for ReadPersonalBook.
 type ReadPersonalBookParams struct {
-	// Limit Maximum verses per page, 1–500; default 100 even when no query parameters are supplied. A 3MiB serialized response cap may produce fewer items. Follow next_cursor until null.
+	// Limit Maximum verses per page, 1–500; default 50 even when no query parameters are supplied. A 3MiB serialized response cap may produce fewer items. Follow next_cursor until null.
 	Limit *int64 `form:"limit,omitempty" json:"limit,omitempty"`
 
 	// After Opaque next_cursor from the preceding page; omit for the first page. Bound to account, normalized translation, canonical book and installed edition revision; limit may change. Invalid/tampered: 422 invalid_cursor. Different resource: 422 cursor_mismatch. Changed edition: 409 stale_cursor. Restart without after after edition/key changes.
@@ -2587,7 +2587,7 @@ type ListOrganizationTranslationsParams struct {
 
 // ReadBookParams defines parameters for ReadBook.
 type ReadBookParams struct {
-	// Limit Maximum verses per page, 1–500; default 100 even when no query parameters are supplied. A 3MiB serialized response cap may produce fewer items. Follow next_cursor until null.
+	// Limit Maximum verses per page, 1–500; default 50 even when no query parameters are supplied. A 3MiB serialized response cap may produce fewer items. Follow next_cursor until null.
 	Limit *int64 `form:"limit,omitempty" json:"limit,omitempty"`
 
 	// After Opaque next_cursor from the preceding page; omit for the first page. Bound to account, normalized translation, canonical book and installed edition revision; limit may change. Invalid/tampered: 422 invalid_cursor. Different resource: 422 cursor_mismatch. Changed edition: 409 stale_cursor. Restart without after after edition/key changes.

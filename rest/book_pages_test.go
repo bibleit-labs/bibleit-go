@@ -74,7 +74,7 @@ func TestBookPagesStopCancelAndNoRetry(t *testing.T) {
 		calls := 0
 		client, _ := NewClient("bt_fixture", &http.Client{Transport: trip(func(r *http.Request) (*http.Response, error) {
 			calls++
-			if r.URL.Query().Get("limit") != "100" {
+			if r.URL.Query().Get("limit") != "50" {
 				t.Fatal(r.URL)
 			}
 			return response(200, bookPageFixture(1, `"next"`)), nil

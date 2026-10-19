@@ -68,7 +68,7 @@ are current snapshots, not a durable or exactly-once event log.
 ## Whole-book pagination
 
 `ReadPersonalBook` and `ReadBook` make one request and always return a bounded
-page: 100 verses by default, or a `limit` of 1–500. Every book response includes
+page: 50 verses by default, or a `limit` of 1–500. Every book response includes
 `next_cursor`, an opaque string or `null` on the final page. Pass the returned
 cursor as `after` to continue. Keep the same account, translation and book;
 page size may change. The server also caps serialized pages at 3 MiB, so a page
@@ -98,7 +98,7 @@ for page, err := range client.ReadPersonalBookPages(ctx, accountID, "web", "19",
 ```
 
 `ReadBookPages` is the organization-scoped counterpart. Both iterators default
-to 100 verses per page, copy their options, close bodies before yielding, and
+to 50 verses per page, copy their options, close bodies before yielding, and
 stop when the caller breaks or cancels the context. They reject cursor loops,
 unordered or duplicate verse coordinates, and inconsistent translation metadata
 with `ErrInvalidBookPage`. An iterator error means the traversal is incomplete;

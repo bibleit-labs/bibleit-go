@@ -7008,7 +7008,7 @@
         "tags": [
           "Personal accounts"
         ],
-        "description": "Read one bounded page of a book from the authenticated owner's enabled personal library, with rights and attribution. Finite personal and explicitly scoped delegated OAuth credentials are accepted. Canonical book IDs and sparse source chapter/verse IDs are preserved. Reads never install or enable an edition.\n\n**Required scopes:** `translation.read`. Scopes intersect current authority; browser cookies never authenticate REST.\n\nAlways paginated, including no-query requests: default 100 and maximum 500 verses, with a 3MiB serialized JSON budget that may shorten a page. Every successful response includes next_cursor; follow it as after until null to read the complete book. Nonterminal pages are never empty. Stable canonical chapter/verse order preserves sparse numbering. Every page rechecks authentication, scopes and enabled-library access; cursors do not grant access. Cursors bind account, normalized translation, book and installed edition revision. Page size may change. Shared deployment keys preserve cursors across routing/restarts. Edition changes return 409 stale_cursor; key rotation returns 422 invalid_cursor. Restart traversal after either error. Different resources return 422 cursor_mismatch. A single verse too large for the byte budget returns 413 verse_too_large, without skipping it. Errors include safe detail text. No unbounded mode, total count or page numbers.",
+        "description": "Read one bounded page of a book from the authenticated owner's enabled personal library, with rights and attribution. Finite personal and explicitly scoped delegated OAuth credentials are accepted. Canonical book IDs and sparse source chapter/verse IDs are preserved. Reads never install or enable an edition.\n\n**Required scopes:** `translation.read`. Scopes intersect current authority; browser cookies never authenticate REST.\n\nAlways paginated, including no-query requests: default 50 and maximum 500 verses, with a 3MiB serialized JSON budget that may shorten a page. Every successful response includes next_cursor; follow it as after until null to read the complete book. Nonterminal pages are never empty. Stable canonical chapter/verse order preserves sparse numbering. Every page rechecks authentication, scopes and enabled-library access; cursors do not grant access. Cursors bind account, normalized translation, book and installed edition revision. Page size may change. Shared deployment keys preserve cursors across routing/restarts. Edition changes return 409 stale_cursor; key rotation returns 422 invalid_cursor. Restart traversal after either error. Different resources return 422 cursor_mismatch. A single verse too large for the byte budget returns 413 verse_too_large, without skipping it. Errors include safe detail text. No unbounded mode, total count or page numbers.",
         "x-required-scopes": [
           "translation.read"
         ],
@@ -7047,9 +7047,9 @@
               "type": "integer",
               "minimum": 1,
               "maximum": 500,
-              "default": 100
+              "default": 50
             },
-            "description": "Maximum verses per page, 1–500; default 100 even when no query parameters are supplied. A 3MiB serialized response cap may produce fewer items. Follow next_cursor until null."
+            "description": "Maximum verses per page, 1–500; default 50 even when no query parameters are supplied. A 3MiB serialized response cap may produce fewer items. Follow next_cursor until null."
           },
           {
             "name": "after",
@@ -7101,7 +7101,7 @@
         "tags": [
           "Organizations"
         ],
-        "description": "Read one bounded page of a book from the service token's organization library, with rights and attribution. Canonical book IDs and sparse source chapter/verse IDs are preserved. Unknown book/translation returns 404; unavailable library access returns 403. No translation is installed or enabled by reading.\n\n**Required scopes:** `translation.read`. Scopes intersect current authority; browser cookies never authenticate REST.\n\nAlways paginated, including no-query requests: default 100 and maximum 500 verses, with a 3MiB serialized JSON budget that may shorten a page. Every successful response includes next_cursor; follow it as after until null to read the complete book. Nonterminal pages are never empty. Stable canonical chapter/verse order preserves sparse numbering. Every page rechecks authentication, scopes and enabled-library access; cursors do not grant access. Cursors bind account, normalized translation, book and installed edition revision. Page size may change. Shared deployment keys preserve cursors across routing/restarts. Edition changes return 409 stale_cursor; key rotation returns 422 invalid_cursor. Restart traversal after either error. Different resources return 422 cursor_mismatch. A single verse too large for the byte budget returns 413 verse_too_large, without skipping it. Errors include safe detail text. No unbounded mode, total count or page numbers.",
+        "description": "Read one bounded page of a book from the service token's organization library, with rights and attribution. Canonical book IDs and sparse source chapter/verse IDs are preserved. Unknown book/translation returns 404; unavailable library access returns 403. No translation is installed or enabled by reading.\n\n**Required scopes:** `translation.read`. Scopes intersect current authority; browser cookies never authenticate REST.\n\nAlways paginated, including no-query requests: default 50 and maximum 500 verses, with a 3MiB serialized JSON budget that may shorten a page. Every successful response includes next_cursor; follow it as after until null to read the complete book. Nonterminal pages are never empty. Stable canonical chapter/verse order preserves sparse numbering. Every page rechecks authentication, scopes and enabled-library access; cursors do not grant access. Cursors bind account, normalized translation, book and installed edition revision. Page size may change. Shared deployment keys preserve cursors across routing/restarts. Edition changes return 409 stale_cursor; key rotation returns 422 invalid_cursor. Restart traversal after either error. Different resources return 422 cursor_mismatch. A single verse too large for the byte budget returns 413 verse_too_large, without skipping it. Errors include safe detail text. No unbounded mode, total count or page numbers.",
         "x-required-scopes": [
           "translation.read"
         ],
@@ -7140,9 +7140,9 @@
               "type": "integer",
               "minimum": 1,
               "maximum": 500,
-              "default": 100
+              "default": 50
             },
-            "description": "Maximum verses per page, 1–500; default 100 even when no query parameters are supplied. A 3MiB serialized response cap may produce fewer items. Follow next_cursor until null."
+            "description": "Maximum verses per page, 1–500; default 50 even when no query parameters are supplied. A 3MiB serialized response cap may produce fewer items. Follow next_cursor until null."
           },
           {
             "name": "after",
@@ -12576,7 +12576,7 @@
           "next_cursor"
         ],
         "additionalProperties": false,
-        "description": "One bounded book page, always paginated: default 100, maximum 500 verses, and at most 3MiB serialized JSON including metadata. The byte budget can return fewer verses with nonnull next_cursor. Stable chapter/verse order; no totals or unbounded mode."
+        "description": "One bounded book page, always paginated: default 50, maximum 500 verses, and at most 3MiB serialized JSON including metadata. The byte budget can return fewer verses with nonnull next_cursor. Stable chapter/verse order; no totals or unbounded mode."
       }
     },
     "responses": {

@@ -147,7 +147,7 @@ func TestServerHTTPIntegration(t *testing.T) {
 		var book rest.ScriptureBookRead
 		err = r.Decode(&book)
 		r.Body.Close()
-		if err != nil || len(book.Verses) != 100 || book.NextCursor == nil || book.Verses[0].BookID != 19 {
+		if err != nil || len(book.Verses) != 50 || book.NextCursor == nil || book.Verses[0].BookID != 19 {
 			t.Fatal("book contents differ", err)
 		}
 		r, err = c.GetTranslationCatalogueDetails(ctx, "web", nil)
