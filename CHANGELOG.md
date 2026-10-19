@@ -1,5 +1,29 @@
 # Changelog
 
+## Unreleased
+
+## v0.2.0 — 2026-10-20
+
+- Add bounded whole-book cursor pagination (default 50, maximum 500) and lazy
+  personal/organization Go page iterators for complete-book traversal.
+  Detect unsafe traversal and preserve typed invalid, mismatched and stale cursor errors.
+
+- Add personal quota/token metadata, organization directory/application status,
+  personal library writes, whole-book reads and installed catalogue resources.
+- Add conditional Live settings, statistics, retained-stack and audience-secret
+  resource operations and atomic workspace bulk deletion.
+- Keep `CreateLive.Name` source-compatible while allowing an omitted name.
+- Preserve explicit credential scopes, ETags, native JSON and no mutation retries.
+- Replace the Python REST generator with pinned `oapi-codegen` v2.8.0; generate
+  OpenAPI 3.1 models and 88 resource-operation bindings from the finalized contract.
+- Expose generated enum and union helpers, including typed Live event snapshots.
+  Callers accessing former raw union fields should use the generated helpers.
+- Preserve legacy SSH Scripture text while exposing optional localized content,
+  references and complete source coordinates; reject partial coordinate metadata.
+- Reject negative and overflowing retained-stack pop counts; preserve zero as
+  the SDK's existing default-count shorthand.
+
+
 ## v0.1.0 — 2026-10-19
 
 - Add the versioned `rest` package with 66 REST bindings, 83 schema models,

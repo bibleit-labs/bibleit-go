@@ -210,6 +210,9 @@ func PopLiveCommand(id string, count int) (Command, error) {
 	if err != nil {
 		return Command{}, err
 	}
+	if count < 0 || int64(count) > 2147483647 {
+		return Command{}, errors.New("pop count must be positive and at most 2147483647")
+	}
 	if count == 0 {
 		return command(c.wire + " STACK POP")
 	}

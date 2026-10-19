@@ -65,9 +65,9 @@
     "server_term": "{ok,{rotate_live_secret,<<\"abc\">>}}"
   },
   {
-    "name": "stack-negative-pop",
-    "wire": "LIVE abc STACK POP -1",
-    "server_term": "{ok,{pop_live,<<\"abc\">>,-1}}"
+    "name": "stack-positive-pop",
+    "wire": "LIVE abc STACK POP 2",
+    "server_term": "{ok,{pop_live,<<\"abc\">>,2}}"
   },
   {
     "name": "stack-zero-pop",
@@ -183,5 +183,10 @@
     "name": "organization-directory-cursor",
     "wire": "ORGANIZATION LIST a:00000000-0000-0000-0000-000000000050",
     "server_term": "{ok,{organization_list,<<\"a:00000000-0000-0000-0000-000000000050\">>}}"
+  },
+  {
+    "name": "stack-negative-pop-invalid",
+    "wire": "LIVE abc STACK POP -1",
+    "server_term": "{error,bad_command}"
   }
 ]

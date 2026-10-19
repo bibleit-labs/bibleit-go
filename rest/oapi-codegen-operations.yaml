@@ -1,0 +1,9 @@
+package: rest
+output: ../rest/operations.gen.go
+generate:
+  client: true
+output-options:
+  name-normalizer: ToCamelCaseWithInitialisms
+  user-templates:
+    client.tmpl: ../rest/client-compat.tmpl
+    client-with-responses.tmpl: ../rest/no-client-responses.tmpl

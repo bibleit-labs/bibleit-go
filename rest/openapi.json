@@ -2,8 +2,8 @@
   "openapi": "3.1.1",
   "info": {
     "title": "Bibleit REST API",
-    "version": "1.0.0-alpha.15",
-    "description": "Versioned REST surface with distinct organization service-token and personal bearer authentication. Organization routes require Authorization: Bearer svc_<secret>. Personal routes require existing finite bt_ API/CLI tokens; browser sessions are not accepted. Organization ownership, current status, scopes, processing rules and quotas apply. JSON bodies are bounded to 16 KiB except full presentation PUT, whose transport limit is 2,016,384 bytes and whose document limit is 2,000,000 encoded JSON bytes. Unknown body fields and unknown query fields are rejected. All responses are no-store. Rate limiting is node-local (120 requests/minute per authenticated principal plus existing peer/global admission). Duplicate-sensitive creation POSTs support optional Idempotency-Key with a 24-hour atomic replay contract. Unsupported REST operations reject the header with 422. Credential issuance/rotation and one-use downloads never replay secrets or streams. Service-token PATCH and rotation require strong configuration validators. Catalogue discovery is distinct from enabled libraries. Library PUT accepts an empty JSON object and never downloads content. Organization identity and active memberships require explicit organization.get and membership scopes. Live metadata PATCH edits the name. Live workspace PUT requires a source live.move token and a destination live.create token in X-Destination-Service-Token. Both mutations require the latest Live If-Match validator. Live scripture queue items have stable persisted IDs and zero-based positions. Queue writes use the shared Live If-Match validator. Ordered pagination rejects cursor use after a sequence change. Organization Live Studio GET/PUT use explicit live_studio.get/update scopes and strong settings ETags. PUT preserves the existing complete-settings validation and revision increments; saves notify Lives after commit. Organization presentations support paginated CRUD with strong document ETags. Presentation display PUT requires presentation.present, an explicit current saved revision and the Live If-Match validator; draft saves never publish. Raw binary asset uploads and portable ZIP imports are exceptions to JSON transport limits; require Content-Length, identity encoding and scoped authorization. Assets remain bearer-protected and support single byte ranges. Imports create a new unpublished presentation atomically. Presentation exports are asynchronous requester-private saved-revision jobs. POST their downloads collection with an empty JSON object to consume and stream a completed file once; GET never consumes exports. No ranges or automatic retries for export downloads. Personal /me and /accounts expose only the caller\u2019s personal identity/account. Personal library, scripture and Live routes bind that account explicitly. Personal tokens cannot authenticate organization management, presentations, Studio or workspace moves. Shared Live/control routes select credential type and enforce account ownership. Personal Live DELETE requires If-Match. Tokens are checked freshly after queue/lock waits and at final commits; existing personal scope inheritance and fifteen-minute rotation overlap remain unchanged. No delegated OAuth is implied. Registered public clients can now use Authorization Code with S256 PKCE and explicit browser consent for personal access. Metadata is /.well-known/oauth-authorization-server; OAuth protocol routes stay on https://bibleit.app/oauth, outside the API origin. Opaque oa_ access tokens last at most 15 minutes; optional offline_access enables single-use rotating refresh tokens within a fixed 30-day grant. Code or refresh replay revokes the grant. Existing bt_ and svc_ rules are unchanged. Versioned operator realtime delivery is GET /lives/{live_id}/events with optional opaque after cursor and wait=0..25 seconds. It returns current snapshots or a heartbeat, never a durable event log. Current bearer secret identity, scopes, account ownership and processing policy are checked before delayed delivery. Operator watches do not consume audience seats. The Fern reference is configured for the bibleit organization. SDK generation is maintained separately in bibleit-go. Browser API Explorer execution is disabled: the current API has no cross-origin browser contract or documentation credential proxy. Copy the HTTP examples into a backend or CLI client. The API origin serves the latest major version without a prefix (currently v1), while /v1 stays pinned. Production integrations should use the explicit major version. The existing https://bibleit.app/api/v1 URL remains supported. API-host resource links pin /v1, including links returned through the latest alias. Documentation is hosted at https://docs.bibleit.dev; https://api.bibleit.app/docs redirects there."
+    "version": "1.0.0-alpha.16",
+    "description": "Versioned REST surface with distinct organization service-token and personal bearer authentication. Organization routes require Authorization: Bearer svc_<secret>. Personal routes require existing finite bt_ API/CLI tokens; browser sessions are not accepted. Organization ownership, current status, scopes, processing rules and quotas apply. JSON bodies are bounded to 16 KiB except full presentation PUT, whose transport limit is 2,016,384 bytes and whose document limit is 2,000,000 encoded JSON bytes. Unknown body fields and unknown query fields are rejected. All responses are no-store. Rate limiting is node-local (120 requests/minute per authenticated principal plus existing peer/global admission). Duplicate-sensitive creation POSTs support optional Idempotency-Key with a 24-hour atomic replay contract. Unsupported REST operations reject the header with 422. Credential issuance/rotation and one-use downloads never replay secrets or streams. Service-token PATCH and rotation require strong configuration validators. Catalogue discovery is distinct from enabled libraries. Library PUT accepts an empty JSON object and never downloads content. Organization identity and active memberships require explicit organization.get and membership scopes. Live metadata PATCH edits the name. Live workspace PUT requires a source live.move token and a destination live.create token in X-Destination-Service-Token. Both mutations require the latest Live If-Match validator. Live scripture queue items have stable persisted IDs and zero-based positions. Queue writes use the shared Live If-Match validator. Ordered pagination rejects cursor use after a sequence change. Organization Live Studio GET/PUT use explicit live_studio.get/update scopes and strong settings ETags. PUT preserves the existing complete-settings validation and revision increments; saves notify Lives after commit. Organization presentations support paginated CRUD with strong document ETags. Presentation display PUT requires presentation.present, an explicit current saved revision and the Live If-Match validator; draft saves never publish. Raw binary asset uploads and portable ZIP imports are exceptions to JSON transport limits; require Content-Length, identity encoding and scoped authorization. Assets remain bearer-protected and support single byte ranges. Imports create a new unpublished presentation atomically. Presentation exports are asynchronous requester-private saved-revision jobs. POST their downloads collection with an empty JSON object to consume and stream a completed file once; GET never consumes exports. No ranges or automatic retries for export downloads. Personal /me and /accounts expose only the caller’s personal identity/account. Personal library, scripture and Live routes bind that account explicitly. Personal tokens cannot authenticate organization management, presentations, Studio or workspace moves. Shared Live/control routes select credential type and enforce account ownership. Personal Live DELETE requires If-Match. Tokens are checked freshly after queue/lock waits and at final commits; existing personal scope inheritance and fifteen-minute rotation overlap remain unchanged. No delegated OAuth is implied. Registered public clients can now use Authorization Code with S256 PKCE and explicit browser consent for personal access. Metadata is /.well-known/oauth-authorization-server; OAuth protocol routes stay on https://bibleit.app/oauth, outside the API origin. Opaque oa_ access tokens last at most 15 minutes; optional offline_access enables single-use rotating refresh tokens within a fixed 30-day grant. Code or refresh replay revokes the grant. Existing bt_ and svc_ rules are unchanged. Versioned operator realtime delivery is GET /lives/{live_id}/events with optional opaque after cursor and wait=0..25 seconds. It returns current snapshots or a heartbeat, never a durable event log. Current bearer secret identity, scopes, account ownership and processing policy are checked before delayed delivery. Operator watches do not consume audience seats. The Fern reference is configured for the bibleit organization. SDK generation is maintained separately in bibleit-go. Browser API Explorer execution is disabled: the current API has no cross-origin browser contract or documentation credential proxy. Copy the HTTP examples into a backend or CLI client. The API origin serves the latest major version without a prefix (currently v1), while /v1 stays pinned. Production integrations should use the explicit major version. The existing https://bibleit.app/api/v1 URL remains supported. API-host resource links pin /v1, including links returned through the latest alias. Documentation is hosted at https://docs.bibleit.dev; https://api.bibleit.app/docs redirects there."
   },
   "servers": [
     {
@@ -387,7 +387,6 @@
           "name": "organization_id",
           "in": "path",
           "required": true,
-          "description": "Immutable organization UUID bound to the service token.",
           "schema": {
             "type": "string",
             "format": "uuid"
@@ -557,6 +556,39 @@
         ],
         "x-fern-server-name": "rest",
         "x-fern-explorer": false
+      },
+      "delete": {
+        "operationId": "deleteOrganizationLives",
+        "summary": "Atomically delete all Lives in this workspace",
+        "tags": [
+          "Organizations"
+        ],
+        "description": "Delete all Lives in the service token's organization in one account-locked transaction. Current authority is rechecked after lock acquisition; foreign organizations return 404. Returns 200 with the actual `deleted` count, including zero. No per-Live `If-Match` is used. Concurrent creation serializes on the account lock; session shutdown follows committed deletion. `Idempotency-Key` is unsupported. Inspect the collection after an ambiguous response instead of blindly retrying, since a later retry could delete newly created Lives.\n\n**Required scopes:** `live.delete`. Scopes intersect current authority; browser cookies never authenticate REST.",
+        "x-required-scopes": [
+          "live.delete"
+        ],
+        "security": [
+          {
+            "serviceToken": []
+          }
+        ],
+        "x-fern-server-name": "rest",
+        "x-fern-explorer": false,
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LiveBulkDeletion"
+                }
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/components/responses/Problem"
+          }
+        }
       }
     },
     "/lives/{live_id}": {
@@ -574,7 +606,7 @@
       "get": {
         "operationId": "getLive",
         "summary": "Read Live state",
-        "description": "**Required scopes:** `live.get`.\n\nReturns a typed state summary, not the presentation document or audience payload. Foreign organization resources return 404. Supplies the current ETag for metadata and workspace changes. Also accepts finite personal bearer tokens for resources owned by the caller\u2019s personal account. Personal tokens cannot operate organization Lives, use collaborators\u2019/children\u2019s authority, or publish presentations. Current personal token scopes and user permissions are rechecked after waits. Registered delegated OAuth access tokens are accepted within these personal boundaries; /me and account metadata additionally require identity.read.\n\n**Response headers:**\n\n- `ETag` (200): Shared Live sequence validator. Any relevant metadata, display, playback or workspace change invalidates it.",
+        "description": "**Required scopes:** `live.get`.\n\nReturns a typed state summary, not the presentation document or audience payload. Foreign organization resources return 404. Supplies the current ETag for metadata and workspace changes. Also accepts finite personal bearer tokens for resources owned by the caller’s personal account. Personal tokens cannot operate organization Lives, use collaborators’/children’s authority, or publish presentations. Current personal token scopes and user permissions are rechecked after waits. Registered delegated OAuth access tokens are accepted within these personal boundaries; /me and account metadata additionally require identity.read.\n\n**Response headers:**\n\n- `ETag` (200): Shared Live sequence validator. Any relevant metadata, display, playback or workspace change invalidates it.",
         "tags": [
           "Lives"
         ],
@@ -652,7 +684,7 @@
       "delete": {
         "operationId": "deleteLive",
         "summary": "Delete a Live",
-        "description": "**Required scopes:** `live.delete`.\n\nDeletes through the existing Live registry and domain authorization. Foreign or missing resources return 404. Also accepts finite personal bearer tokens for resources owned by the caller\u2019s personal account. Personal tokens cannot operate organization Lives, use collaborators\u2019/children\u2019s authority, or publish presentations. Current personal token scopes and user permissions are rechecked after waits. Personal deletion requires the current strong Live If-Match; missing/stale return 428/412. Service-token deletion retains its current contract. Registered delegated OAuth access tokens are accepted within these personal boundaries; /me and account metadata additionally require identity.read.",
+        "description": "**Required scopes:** `live.delete`.\n\nDeletes through the existing Live registry and domain authorization. Foreign or missing resources return 404. Also accepts finite personal bearer tokens for resources owned by the caller’s personal account. Personal tokens cannot operate organization Lives, use collaborators’/children’s authority, or publish presentations. Current personal token scopes and user permissions are rechecked after waits. Personal deletion requires the current strong Live If-Match; missing/stale return 428/412. Service-token deletion retains its current contract. Registered delegated OAuth access tokens are accepted within these personal boundaries; /me and account metadata additionally require identity.read.",
         "tags": [
           "Lives"
         ],
@@ -721,7 +753,7 @@
       "patch": {
         "operationId": "updateLiveMetadata",
         "summary": "Edit Live metadata",
-        "description": "**Required scopes:** `live.update`.\n\nEdits the name only. Omitted fields are preserved; unknown fields are rejected. No-op edits preserve ETag. Current scope, workspace and persisted sequence are rechecked under the workspace lock before an atomic save. Browser/command metadata edits also invalidate REST validators. Does not change display selection or playback state. Also accepts finite personal bearer tokens for resources owned by the caller\u2019s personal account. Personal tokens cannot operate organization Lives, use collaborators\u2019/children\u2019s authority, or publish presentations. Current personal token scopes and user permissions are rechecked after waits. Registered delegated OAuth access tokens are accepted within these personal boundaries; /me and account metadata additionally require identity.read.\n\n**Response headers:**\n\n- `ETag` (200): Shared Live sequence validator. Any relevant metadata, display, playback or workspace change invalidates it.",
+        "description": "**Required scopes:** `live.update`.\n\nEdits the name only. Omitted fields are preserved; unknown fields are rejected. No-op edits preserve ETag. Current scope, workspace and persisted sequence are rechecked under the workspace lock before an atomic save. Browser/command metadata edits also invalidate REST validators. Does not change display selection or playback state. Also accepts finite personal bearer tokens for resources owned by the caller’s personal account. Personal tokens cannot operate organization Lives, use collaborators’/children’s authority, or publish presentations. Current personal token scopes and user permissions are rechecked after waits. Registered delegated OAuth access tokens are accepted within these personal boundaries; /me and account metadata additionally require identity.read.\n\n**Response headers:**\n\n- `ETag` (200): Shared Live sequence validator. Any relevant metadata, display, playback or workspace change invalidates it.",
         "tags": [
           "Lives"
         ],
@@ -1073,7 +1105,7 @@
         "x-required-scopes": [
           "translation.search"
         ],
-        "description": "**Required scopes:** `translation.search`.\n\nRequires an enabled organization translation. Results follow native source order, without relevance ranking or cursor pagination. has_more indicates truncation; raise limit up to 100 to see additional matches. Searches share the existing ssh_search allowance (20/minute per principal by default) in addition to REST admission. Query is 1\u2013256 UTF-8 bytes. Unknown or duplicate query parameters are rejected.",
+        "description": "**Required scopes:** `translation.search`.\n\nRequires an enabled organization translation. Results follow native source order, without relevance ranking or cursor pagination. has_more indicates truncation; raise limit up to 100 to see additional matches. Searches share the existing ssh_search allowance (20/minute per principal by default) in addition to REST admission. Query is 1–256 UTF-8 bytes. Unknown or duplicate query parameters are rejected.",
         "responses": {
           "200": {
             "description": "Successful operation",
@@ -1157,7 +1189,7 @@
         "x-required-scopes": [
           "live.get"
         ],
-        "description": "**Required scopes:** `live.get`.\n\nService ownership, current scopes and processing policy are checked inside the serialized Live actor. Updates persist before broadcasting. Sequence changes invalidate display and playback validators together; viewer counts do not. Presentation snapshot metadata is read-only in this slice; editing drafts does not publish them. Also accepts finite personal bearer tokens for resources owned by the caller\u2019s personal account. Personal tokens cannot operate organization Lives, use collaborators\u2019/children\u2019s authority, or publish presentations. Current personal token scopes and user permissions are rechecked after waits. Registered delegated OAuth access tokens are accepted within these personal boundaries; /me and account metadata additionally require identity.read.\n\n**Response headers:**\n\n- `ETag` (200): Strong Live state validator; send unchanged in If-Match for display/playback writes.",
+        "description": "**Required scopes:** `live.get`.\n\nService ownership, current scopes and processing policy are checked inside the serialized Live actor. Updates persist before broadcasting. Sequence changes invalidate display and playback validators together; viewer counts do not. Presentation snapshot metadata is read-only in this slice; editing drafts does not publish them. Also accepts finite personal bearer tokens for resources owned by the caller’s personal account. Personal tokens cannot operate organization Lives, use collaborators’/children’s authority, or publish presentations. Current personal token scopes and user permissions are rechecked after waits. Registered delegated OAuth access tokens are accepted within these personal boundaries; /me and account metadata additionally require identity.read.\n\n**Response headers:**\n\n- `ETag` (200): Strong Live state validator; send unchanged in If-Match for display/playback writes.",
         "responses": {
           "200": {
             "description": "Successful operation",
@@ -1233,7 +1265,7 @@
         "x-required-scopes": [
           "live.update"
         ],
-        "description": "**Required scopes:** `live.update`.\n\nService ownership, current explicit scopes and processing policy are checked inside the serialized Live actor. Requires live.update plus translation.read for scripture or presentation.present for saved-deck publication. Updates persist before broadcasting. Shared Live sequence validators protect display/playback/metadata/queue changes; viewer counts do not. Presentation publication requires presentation_id and explicit current saved revision. Foreign decks return 404, changed/missing requested revision returns 409 presentation_revision_conflict (no historical revision archive), empty decks/stopped Lives return 409. A fresh immutable snapshot is captured, and the deck revision is rechecked under the same workspace lock as final Live save/media pins, so a concurrent deck change cannot silently publish newer content. Optional slide_id selects a stable slide. When updating the same deck already in Presentation mode, omitted slide_id preserves the selected stable ID when present (otherwise clamps the prior index), and blank/paused state are retained. A new presentation starts at slide zero unless selected explicitly. Saving drafts never publishes; source deletion leaves existing snapshots intact. Empty display clears scripture and switches to Reader without deleting a retained presentation snapshot. Also accepts finite personal bearer tokens for resources owned by the caller\u2019s personal account. Personal tokens cannot operate organization Lives, use collaborators\u2019/children\u2019s authority, or publish presentations. Current personal token scopes and user permissions are rechecked after waits. Registered delegated OAuth access tokens are accepted within these personal boundaries; /me and account metadata additionally require identity.read.\n\n**Response headers:**\n\n- `ETag` (200): Strong Live state validator; send unchanged in If-Match for display/playback writes.",
+        "description": "**Required scopes:** `live.update`.\n\nService ownership, current explicit scopes and processing policy are checked inside the serialized Live actor. Requires live.update plus translation.read for scripture or presentation.present for saved-deck publication. Updates persist before broadcasting. Shared Live sequence validators protect display/playback/metadata/queue changes; viewer counts do not. Presentation publication requires presentation_id and explicit current saved revision. Foreign decks return 404, changed/missing requested revision returns 409 presentation_revision_conflict (no historical revision archive), empty decks/stopped Lives return 409. A fresh immutable snapshot is captured, and the deck revision is rechecked under the same workspace lock as final Live save/media pins, so a concurrent deck change cannot silently publish newer content. Optional slide_id selects a stable slide. When updating the same deck already in Presentation mode, omitted slide_id preserves the selected stable ID when present (otherwise clamps the prior index), and blank/paused state are retained. A new presentation starts at slide zero unless selected explicitly. Saving drafts never publishes; source deletion leaves existing snapshots intact. Empty display clears scripture and switches to Reader without deleting a retained presentation snapshot. Also accepts finite personal bearer tokens for resources owned by the caller’s personal account. Personal tokens cannot operate organization Lives, use collaborators’/children’s authority, or publish presentations. Current personal token scopes and user permissions are rechecked after waits. Registered delegated OAuth access tokens are accepted within these personal boundaries; /me and account metadata additionally require identity.read.\n\n**Response headers:**\n\n- `ETag` (200): Strong Live state validator; send unchanged in If-Match for display/playback writes.",
         "responses": {
           "200": {
             "description": "Successful operation",
@@ -1351,7 +1383,7 @@
         "x-required-scopes": [
           "live.get"
         ],
-        "description": "**Required scopes:** `live.get`.\n\nService ownership, current scopes and processing policy are checked inside the serialized Live actor. Updates persist before broadcasting. Sequence changes invalidate display and playback validators together; viewer counts do not. Presentation snapshot metadata is read-only in this slice; editing drafts does not publish them. Also accepts finite personal bearer tokens for resources owned by the caller\u2019s personal account. Personal tokens cannot operate organization Lives, use collaborators\u2019/children\u2019s authority, or publish presentations. Current personal token scopes and user permissions are rechecked after waits. Registered delegated OAuth access tokens are accepted within these personal boundaries; /me and account metadata additionally require identity.read.\n\n**Response headers:**\n\n- `ETag` (200): Strong Live state validator; send unchanged in If-Match for display/playback writes.",
+        "description": "**Required scopes:** `live.get`.\n\nService ownership, current scopes and processing policy are checked inside the serialized Live actor. Updates persist before broadcasting. Sequence changes invalidate display and playback validators together; viewer counts do not. Presentation snapshot metadata is read-only in this slice; editing drafts does not publish them. Also accepts finite personal bearer tokens for resources owned by the caller’s personal account. Personal tokens cannot operate organization Lives, use collaborators’/children’s authority, or publish presentations. Current personal token scopes and user permissions are rechecked after waits. Registered delegated OAuth access tokens are accepted within these personal boundaries; /me and account metadata additionally require identity.read.\n\n**Response headers:**\n\n- `ETag` (200): Strong Live state validator; send unchanged in If-Match for display/playback writes.",
         "responses": {
           "200": {
             "description": "Successful operation",
@@ -1420,7 +1452,7 @@
         "x-required-scopes": [
           "live.update"
         ],
-        "description": "**Required scopes:** `live.update`.\n\nService ownership, current scopes and processing policy are checked inside the serialized Live actor. Updates persist before broadcasting. Sequence changes invalidate display and playback validators together; viewer counts do not. Presentation snapshot metadata is read-only in this slice; editing drafts does not publish them. Also accepts finite personal bearer tokens for resources owned by the caller\u2019s personal account. Personal tokens cannot operate organization Lives, use collaborators\u2019/children\u2019s authority, or publish presentations. Current personal token scopes and user permissions are rechecked after waits. Registered delegated OAuth access tokens are accepted within these personal boundaries; /me and account metadata additionally require identity.read.\n\n**Response headers:**\n\n- `ETag` (200): Strong Live state validator; send unchanged in If-Match for display/playback writes.",
+        "description": "**Required scopes:** `live.update`.\n\nService ownership, current scopes and processing policy are checked inside the serialized Live actor. Updates persist before broadcasting. Sequence changes invalidate display and playback validators together; viewer counts do not. Presentation snapshot metadata is read-only in this slice; editing drafts does not publish them. Also accepts finite personal bearer tokens for resources owned by the caller’s personal account. Personal tokens cannot operate organization Lives, use collaborators’/children’s authority, or publish presentations. Current personal token scopes and user permissions are rechecked after waits. Registered delegated OAuth access tokens are accepted within these personal boundaries; /me and account metadata additionally require identity.read.\n\n**Response headers:**\n\n- `ETag` (200): Strong Live state validator; send unchanged in If-Match for display/playback writes.",
         "responses": {
           "200": {
             "description": "Successful operation",
@@ -1613,7 +1645,7 @@
         "x-required-scopes": [
           "translation.list"
         ],
-        "description": "**Required scopes:** `translation.list`.\n\nMetadata discovery only. Includes install availability and reviewed rights/provenance. Does not fetch, install, enable translations, or grant scripture access. Entries use lowercase slugs in ascending order. Also accepts finite personal bearer tokens for resources owned by the caller\u2019s personal account. Personal tokens cannot operate organization Lives, use collaborators\u2019/children\u2019s authority, or publish presentations. Current personal token scopes and user permissions are rechecked after waits. Registered delegated OAuth access tokens are accepted within these personal boundaries; /me and account metadata additionally require identity.read.",
+        "description": "**Required scopes:** `translation.list`.\n\nMetadata discovery only. Includes install availability and reviewed rights/provenance. Does not fetch, install, enable translations, or grant scripture access. Entries use lowercase slugs in ascending order. Also accepts finite personal bearer tokens for resources owned by the caller’s personal account. Personal tokens cannot operate organization Lives, use collaborators’/children’s authority, or publish presentations. Current personal token scopes and user permissions are rechecked after waits. Registered delegated OAuth access tokens are accepted within these personal boundaries; /me and account metadata additionally require identity.read.",
         "responses": {
           "200": {
             "description": "Successful operation",
@@ -1711,7 +1743,7 @@
         "x-required-scopes": [
           "translation.get"
         ],
-        "description": "**Required scopes:** `translation.get`.\n\nReturns reviewed metadata, canonical book coverage, install availability, rights and provenance. Internal reviewer identity and import configuration are omitted. Unknown editions return 404; uninstalled editions remain discoverable. Also accepts finite personal bearer tokens for resources owned by the caller\u2019s personal account. Personal tokens cannot operate organization Lives, use collaborators\u2019/children\u2019s authority, or publish presentations. Current personal token scopes and user permissions are rechecked after waits. Registered delegated OAuth access tokens are accepted within these personal boundaries; /me and account metadata additionally require identity.read.",
+        "description": "**Required scopes:** `translation.get`.\n\nReturns reviewed metadata, canonical book coverage, install availability, rights and provenance. Internal reviewer identity and import configuration are omitted. Unknown editions return 404; uninstalled editions remain discoverable. Also accepts finite personal bearer tokens for resources owned by the caller’s personal account. Personal tokens cannot operate organization Lives, use collaborators’/children’s authority, or publish presentations. Current personal token scopes and user permissions are rechecked after waits. Registered delegated OAuth access tokens are accepted within these personal boundaries; /me and account metadata additionally require identity.read.",
         "responses": {
           "200": {
             "description": "Successful operation",
@@ -1776,7 +1808,7 @@
         "x-required-scopes": [
           "translation.list"
         ],
-        "description": "**Required scopes:** `translation.list`.\n\nTranslation-independent dictionary with stable numeric IDs, three-letter codes, aliases and localized names. Numeric ID order; no scripture access is granted. Also accepts finite personal bearer tokens for resources owned by the caller\u2019s personal account. Personal tokens cannot operate organization Lives, use collaborators\u2019/children\u2019s authority, or publish presentations. Current personal token scopes and user permissions are rechecked after waits. Registered delegated OAuth access tokens are accepted within these personal boundaries; /me and account metadata additionally require identity.read.",
+        "description": "**Required scopes:** `translation.list`.\n\nTranslation-independent dictionary with stable numeric IDs, three-letter codes, aliases and localized names. Numeric ID order; no scripture access is granted. Also accepts finite personal bearer tokens for resources owned by the caller’s personal account. Personal tokens cannot operate organization Lives, use collaborators’/children’s authority, or publish presentations. Current personal token scopes and user permissions are rechecked after waits. Registered delegated OAuth access tokens are accepted within these personal boundaries; /me and account metadata additionally require identity.read.",
         "responses": {
           "200": {
             "description": "Successful operation",
@@ -1874,7 +1906,7 @@
         "x-required-scopes": [
           "translation.get"
         ],
-        "description": "**Required scopes:** `translation.get`.\n\nReviewed catalogue coverage, even if uninstalled or not enabled. Canonical IDs are preserved for partial or New Testament-only editions. This is metadata, not an installed chapter/verse index. Also accepts finite personal bearer tokens for resources owned by the caller\u2019s personal account. Personal tokens cannot operate organization Lives, use collaborators\u2019/children\u2019s authority, or publish presentations. Current personal token scopes and user permissions are rechecked after waits. Registered delegated OAuth access tokens are accepted within these personal boundaries; /me and account metadata additionally require identity.read.",
+        "description": "**Required scopes:** `translation.get`.\n\nReviewed catalogue coverage, even if uninstalled or not enabled. Canonical IDs are preserved for partial or New Testament-only editions. This is metadata, not an installed chapter/verse index. Also accepts finite personal bearer tokens for resources owned by the caller’s personal account. Personal tokens cannot operate organization Lives, use collaborators’/children’s authority, or publish presentations. Current personal token scopes and user permissions are rechecked after waits. Registered delegated OAuth access tokens are accepted within these personal boundaries; /me and account metadata additionally require identity.read.",
         "responses": {
           "200": {
             "description": "Successful operation",
@@ -2777,7 +2809,7 @@
         "x-required-scopes": [
           "live.get"
         ],
-        "description": "**Required scopes:** `live.get`.\n\nThese resources represent the existing scripture stack published to the Live, not a separate draft playlist. Items are one canonical verse in one translation. IDs are scoped by Live, opaque, stable through reorder/metadata changes/restart, and change when a deleted item is recreated. Presentation mode returns 409 for queue reads/writes. Read current items in queue order, including scripture rights and attribution. limit defaults to 50 (1..100). after must be a cursor from this snapshot. Any intervening Live sequence change returns 409 queue_changed; restart traversal. Reads are allowed while stopped. Existing stacks may exceed the REST insertion limit; pagination still returns all items. Also accepts finite personal bearer tokens for resources owned by the caller\u2019s personal account. Personal tokens cannot operate organization Lives, use collaborators\u2019/children\u2019s authority, or publish presentations. Current personal token scopes and user permissions are rechecked after waits. Registered delegated OAuth access tokens are accepted within these personal boundaries; /me and account metadata additionally require identity.read.\n\n**Response headers:**\n\n- `ETag` (200): Shared Live sequence validator. Any relevant metadata, display, playback or workspace change invalidates it.",
+        "description": "**Required scopes:** `live.get`.\n\nThese resources represent the existing scripture stack published to the Live, not a separate draft playlist. Items are one canonical verse in one translation. IDs are scoped by Live, opaque, stable through reorder/metadata changes/restart, and change when a deleted item is recreated. Presentation mode returns 409 for queue reads/writes. Read current items in queue order, including scripture rights and attribution. limit defaults to 50 (1..100). after must be a cursor from this snapshot. Any intervening Live sequence change returns 409 queue_changed; restart traversal. Reads are allowed while stopped. Existing stacks may exceed the REST insertion limit; pagination still returns all items. Also accepts finite personal bearer tokens for resources owned by the caller’s personal account. Personal tokens cannot operate organization Lives, use collaborators’/children’s authority, or publish presentations. Current personal token scopes and user permissions are rechecked after waits. Registered delegated OAuth access tokens are accepted within these personal boundaries; /me and account metadata additionally require identity.read.\n\n**Response headers:**\n\n- `ETag` (200): Shared Live sequence validator. Any relevant metadata, display, playback or workspace change invalidates it.",
         "responses": {
           "200": {
             "description": "Successful operation",
@@ -2876,7 +2908,7 @@
           "live.update",
           "translation.read"
         ],
-        "description": "**Required scopes:** `live.update`, `translation.read`.\n\nThese resources represent the existing scripture stack published to the Live, not a separate draft playlist. Items are one canonical verse in one translation. IDs are scoped by Live, opaque, stable through reorder/metadata changes/restart, and change when a deleted item is recreated. Presentation mode returns 409 for queue reads/writes. Requires current If-Match; missing:428, stale:412, invalid:422. Current service scopes, organization ownership/status/processing and persisted sequence are rechecked before saving. Stopped Lives return 409. Changes persist before audience publication, switch/retain Reader mode, show remaining verses and resume a paused Live; deleting the last item clears the display. Reads a single enabled/installed verse under the organization library boundary. Inserts before an existing item ID or appends. Duplicate canonical verse/translation returns 409 queue_item_exists. At 100 items insertion returns 409 queue_full. A new item returns 201 with Location. Also accepts finite personal bearer tokens for resources owned by the caller\u2019s personal account. Personal tokens cannot operate organization Lives, use collaborators\u2019/children\u2019s authority, or publish presentations. Current personal token scopes and user permissions are rechecked after waits. Registered delegated OAuth access tokens are accepted within these personal boundaries; /me and account metadata additionally require identity.read. Optional Idempotency-Key atomically records a successful creation for 24-hour replay; current authorization is rechecked. Changed payload or original If-Match returns 409 idempotency_conflict. Replay precedes stale-version and quota evaluation.\n\n**Response headers:**\n\n- `ETag` (201): Shared Live sequence validator. Any relevant metadata, display, playback or workspace change invalidates it.\n- `Location` (201): Relative URL of the created queue item.",
+        "description": "**Required scopes:** `live.update`, `translation.read`.\n\nThese resources represent the existing scripture stack published to the Live, not a separate draft playlist. Items are one canonical verse in one translation. IDs are scoped by Live, opaque, stable through reorder/metadata changes/restart, and change when a deleted item is recreated. Presentation mode returns 409 for queue reads/writes. Requires current If-Match; missing:428, stale:412, invalid:422. Current service scopes, organization ownership/status/processing and persisted sequence are rechecked before saving. Stopped Lives return 409. Changes persist before audience publication, switch/retain Reader mode, show remaining verses and resume a paused Live; deleting the last item clears the display. Reads a single enabled/installed verse under the organization library boundary. Inserts before an existing item ID or appends. Duplicate canonical verse/translation returns 409 queue_item_exists. At 100 items insertion returns 409 queue_full. A new item returns 201 with Location. Also accepts finite personal bearer tokens for resources owned by the caller’s personal account. Personal tokens cannot operate organization Lives, use collaborators’/children’s authority, or publish presentations. Current personal token scopes and user permissions are rechecked after waits. Registered delegated OAuth access tokens are accepted within these personal boundaries; /me and account metadata additionally require identity.read. Optional Idempotency-Key atomically records a successful creation for 24-hour replay; current authorization is rechecked. Changed payload or original If-Match returns 409 idempotency_conflict. Replay precedes stale-version and quota evaluation.\n\n**Response headers:**\n\n- `ETag` (201): Shared Live sequence validator. Any relevant metadata, display, playback or workspace change invalidates it.\n- `Location` (201): Relative URL of the created queue item.",
         "responses": {
           "201": {
             "description": "Successful operation",
@@ -3021,7 +3053,7 @@
         "x-required-scopes": [
           "live.get"
         ],
-        "description": "**Required scopes:** `live.get`.\n\nThese resources represent the existing scripture stack published to the Live, not a separate draft playlist. Items are one canonical verse in one translation. IDs are scoped by Live, opaque, stable through reorder/metadata changes/restart, and change when a deleted item is recreated. Presentation mode returns 409 for queue reads/writes. Returns the current position and credited verse. Missing or foreign item IDs return 404. A later reorder can change position while preserving ID. Also accepts finite personal bearer tokens for resources owned by the caller\u2019s personal account. Personal tokens cannot operate organization Lives, use collaborators\u2019/children\u2019s authority, or publish presentations. Current personal token scopes and user permissions are rechecked after waits. Registered delegated OAuth access tokens are accepted within these personal boundaries; /me and account metadata additionally require identity.read.\n\n**Response headers:**\n\n- `ETag` (200): Shared Live sequence validator. Any relevant metadata, display, playback or workspace change invalidates it.",
+        "description": "**Required scopes:** `live.get`.\n\nThese resources represent the existing scripture stack published to the Live, not a separate draft playlist. Items are one canonical verse in one translation. IDs are scoped by Live, opaque, stable through reorder/metadata changes/restart, and change when a deleted item is recreated. Presentation mode returns 409 for queue reads/writes. Returns the current position and credited verse. Missing or foreign item IDs return 404. A later reorder can change position while preserving ID. Also accepts finite personal bearer tokens for resources owned by the caller’s personal account. Personal tokens cannot operate organization Lives, use collaborators’/children’s authority, or publish presentations. Current personal token scopes and user permissions are rechecked after waits. Registered delegated OAuth access tokens are accepted within these personal boundaries; /me and account metadata additionally require identity.read.\n\n**Response headers:**\n\n- `ETag` (200): Shared Live sequence validator. Any relevant metadata, display, playback or workspace change invalidates it.",
         "responses": {
           "200": {
             "description": "Successful operation",
@@ -3091,7 +3123,7 @@
         "x-required-scopes": [
           "live.update"
         ],
-        "description": "**Required scopes:** `live.update`.\n\nThese resources represent the existing scripture stack published to the Live, not a separate draft playlist. Items are one canonical verse in one translation. IDs are scoped by Live, opaque, stable through reorder/metadata changes/restart, and change when a deleted item is recreated. Presentation mode returns 409 for queue reads/writes. Requires current If-Match; missing:428, stale:412, invalid:422. Current service scopes, organization ownership/status/processing and persisted sequence are rechecked before saving. Stopped Lives return 409. Changes persist before audience publication, switch/retain Reader mode, show remaining verses and resume a paused Live; deleting the last item clears the display. Removes this item without renumbering item IDs; remaining positions close the gap. Missing or already removed items return 404. Returns the new shared Live ETag in the 204 response. Also accepts finite personal bearer tokens for resources owned by the caller\u2019s personal account. Personal tokens cannot operate organization Lives, use collaborators\u2019/children\u2019s authority, or publish presentations. Current personal token scopes and user permissions are rechecked after waits. Registered delegated OAuth access tokens are accepted within these personal boundaries; /me and account metadata additionally require identity.read.\n\n**Response headers:**\n\n- `ETag` (204): Shared Live sequence validator. Any relevant metadata, display, playback or workspace change invalidates it.",
+        "description": "**Required scopes:** `live.update`.\n\nThese resources represent the existing scripture stack published to the Live, not a separate draft playlist. Items are one canonical verse in one translation. IDs are scoped by Live, opaque, stable through reorder/metadata changes/restart, and change when a deleted item is recreated. Presentation mode returns 409 for queue reads/writes. Requires current If-Match; missing:428, stale:412, invalid:422. Current service scopes, organization ownership/status/processing and persisted sequence are rechecked before saving. Stopped Lives return 409. Changes persist before audience publication, switch/retain Reader mode, show remaining verses and resume a paused Live; deleting the last item clears the display. Removes this item without renumbering item IDs; remaining positions close the gap. Missing or already removed items return 404. Returns the new shared Live ETag in the 204 response. Also accepts finite personal bearer tokens for resources owned by the caller’s personal account. Personal tokens cannot operate organization Lives, use collaborators’/children’s authority, or publish presentations. Current personal token scopes and user permissions are rechecked after waits. Registered delegated OAuth access tokens are accepted within these personal boundaries; /me and account metadata additionally require identity.read.\n\n**Response headers:**\n\n- `ETag` (204): Shared Live sequence validator. Any relevant metadata, display, playback or workspace change invalidates it.",
         "responses": {
           "204": {
             "description": "Successful operation",
@@ -3179,7 +3211,7 @@
         "x-required-scopes": [
           "live.update"
         ],
-        "description": "**Required scopes:** `live.update`.\n\nThese resources represent the existing scripture stack published to the Live, not a separate draft playlist. Items are one canonical verse in one translation. IDs are scoped by Live, opaque, stable through reorder/metadata changes/restart, and change when a deleted item is recreated. Presentation mode returns 409 for queue reads/writes. Requires current If-Match; missing:428, stale:412, invalid:422. Current service scopes, organization ownership/status/processing and persisted sequence are rechecked before saving. Stopped Lives return 409. Changes persist before audience publication, switch/retain Reader mode, show remaining verses and resume a paused Live; deleting the last item clears the display. Accepts the complete current set of stable item IDs exactly once, in desired order. Unknown, duplicate, extra or omitted IDs return 422 invalid_queue_order. An identical order is a no-op preserving ETag and playback/visibility. Maximum 100 IDs; legacy larger stacks remain readable/removable until reduced below that limit. Returns the ordered snapshot. Also accepts finite personal bearer tokens for resources owned by the caller\u2019s personal account. Personal tokens cannot operate organization Lives, use collaborators\u2019/children\u2019s authority, or publish presentations. Current personal token scopes and user permissions are rechecked after waits. Registered delegated OAuth access tokens are accepted within these personal boundaries; /me and account metadata additionally require identity.read.\n\n**Response headers:**\n\n- `ETag` (200): Shared Live sequence validator. Any relevant metadata, display, playback or workspace change invalidates it.",
+        "description": "**Required scopes:** `live.update`.\n\nThese resources represent the existing scripture stack published to the Live, not a separate draft playlist. Items are one canonical verse in one translation. IDs are scoped by Live, opaque, stable through reorder/metadata changes/restart, and change when a deleted item is recreated. Presentation mode returns 409 for queue reads/writes. Requires current If-Match; missing:428, stale:412, invalid:422. Current service scopes, organization ownership/status/processing and persisted sequence are rechecked before saving. Stopped Lives return 409. Changes persist before audience publication, switch/retain Reader mode, show remaining verses and resume a paused Live; deleting the last item clears the display. Accepts the complete current set of stable item IDs exactly once, in desired order. Unknown, duplicate, extra or omitted IDs return 422 invalid_queue_order. An identical order is a no-op preserving ETag and playback/visibility. Maximum 100 IDs; legacy larger stacks remain readable/removable until reduced below that limit. Returns the ordered snapshot. Also accepts finite personal bearer tokens for resources owned by the caller’s personal account. Personal tokens cannot operate organization Lives, use collaborators’/children’s authority, or publish presentations. Current personal token scopes and user permissions are rechecked after waits. Registered delegated OAuth access tokens are accepted within these personal boundaries; /me and account metadata additionally require identity.read.\n\n**Response headers:**\n\n- `ETag` (200): Shared Live sequence validator. Any relevant metadata, display, playback or workspace change invalidates it.",
         "responses": {
           "200": {
             "description": "Successful operation",
@@ -4443,7 +4475,7 @@
       },
       "get": {
         "operationId": "listPresentationExports",
-        "summary": "List the requesting service credential\u2019s export jobs",
+        "summary": "List the requesting service credential’s export jobs",
         "description": "**Required scopes:** `presentation.export`.\n\nPaginated unexpired jobs for this presentation and requesting service credential, ordered by opaque ID. Other tokens in the same organization cannot enumerate these jobs. Secret rotation preserves credential identity and access. Current scope, organization status and processing restrictions are checked under the account lock. Downloaded/expired jobs disappear.\n\n**Response headers:**\n\n- `Cache-Control` (200).",
         "tags": [
           "Presentation exports"
@@ -4759,7 +4791,7 @@
       "get": {
         "operationId": "getPersonalIdentity",
         "summary": "Read your personal identity",
-        "description": "Authentication only. Returns the caller\u2019s safe identity and immutable personal account UUID. Service tokens and browser cookies cannot authenticate. No user-selecting query is accepted. Registered delegated OAuth access tokens are accepted within these personal boundaries; /me and account metadata additionally require identity.read.",
+        "description": "Authentication only. Returns the caller’s safe identity and immutable personal account UUID. Service tokens and browser cookies cannot authenticate. No user-selecting query is accepted. Registered delegated OAuth access tokens are accepted within these personal boundaries; /me and account metadata additionally require identity.read.",
         "tags": [
           "Personal accounts"
         ],
@@ -4812,7 +4844,7 @@
       "get": {
         "operationId": "listPersonalAccounts",
         "summary": "List your personal account",
-        "description": "Authentication only. Lists the caller\u2019s single active personal account, not an organization/global directory. Supports normal limit/after pagination; the bounded collection has next_cursor null. Organization resources remain separate service-token routes. Registered delegated OAuth access tokens are accepted within these personal boundaries; /me and account metadata additionally require identity.read.",
+        "description": "Authentication only. Lists the caller’s single active personal account, not an organization/global directory. Supports normal limit/after pagination; the bounded collection has next_cursor null. Organization resources remain separate service-token routes. Registered delegated OAuth access tokens are accepted within these personal boundaries; /me and account metadata additionally require identity.read.",
         "tags": [
           "Personal accounts"
         ],
@@ -4895,7 +4927,7 @@
             "type": "string",
             "format": "uuid"
           },
-          "description": "Caller\u2019s own immutable personal account UUID; other personal or organization accounts return 404."
+          "description": "Caller’s own immutable personal account UUID; other personal or organization accounts return 404."
         }
       ],
       "get": {
@@ -4960,7 +4992,7 @@
             "type": "string",
             "format": "uuid"
           },
-          "description": "Caller\u2019s own immutable personal account UUID; other personal or organization accounts return 404."
+          "description": "Caller’s own immutable personal account UUID; other personal or organization accounts return 404."
         }
       ],
       "get": {
@@ -5054,17 +5086,14 @@
           "schema": {
             "type": "string",
             "format": "uuid"
-          },
-          "description": "Caller\u2019s own immutable personal account UUID; other personal or organization accounts return 404."
+          }
         },
         {
           "name": "slug",
           "in": "path",
           "required": true,
           "schema": {
-            "type": "string",
-            "minLength": 1,
-            "maxLength": 100
+            "type": "string"
           }
         }
       ],
@@ -5127,6 +5156,75 @@
         ],
         "x-fern-server-name": "rest",
         "x-fern-explorer": false
+      },
+      "put": {
+        "operationId": "enablePersonalTranslation",
+        "summary": "Enable an installed personal translation",
+        "tags": [
+          "Personal accounts"
+        ],
+        "description": "Enable an already installed, reviewed translation in the caller's personal library using a finite personal `bt_` credential. Delegated OAuth library writes are forbidden even with `translation.list`. Send `{}` with Content-Type `application/json`. Both first enable and repeat enable return 200. Repeats do not consume another slot; quota exhaustion or uninstalled editions return 409. This does not install translation files.\n\n**Required scopes:** `translation.list`. Scopes intersect current authority; browser cookies never authenticate REST.",
+        "x-required-scopes": [
+          "translation.list"
+        ],
+        "security": [
+          {
+            "personalToken": []
+          }
+        ],
+        "x-fern-server-name": "rest",
+        "x-fern-explorer": false,
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CatalogueTranslation"
+                }
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/components/responses/Problem"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EmptyObject"
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "operationId": "disablePersonalTranslation",
+        "summary": "Disable a personal translation",
+        "tags": [
+          "Personal accounts"
+        ],
+        "description": "Remove a translation from the caller's personal library using a finite personal `bt_` credential. Delegated OAuth library writes are forbidden even with `translation.list`. Returns 204, including when the entry is already absent. Installed files and other accounts' libraries remain available to their authorized users.\n\n**Required scopes:** `translation.list`. Scopes intersect current authority; browser cookies never authenticate REST.",
+        "x-required-scopes": [
+          "translation.list"
+        ],
+        "security": [
+          {
+            "personalToken": []
+          }
+        ],
+        "x-fern-server-name": "rest",
+        "x-fern-explorer": false,
+        "responses": {
+          "default": {
+            "$ref": "#/components/responses/Problem"
+          },
+          "204": {
+            "description": "Resource removed"
+          }
+        }
       }
     },
     "/accounts/{account_id}/translations/{slug}/books/{book_id}/chapters/{chapter}": {
@@ -5139,7 +5237,7 @@
             "type": "string",
             "format": "uuid"
           },
-          "description": "Caller\u2019s own immutable personal account UUID; other personal or organization accounts return 404."
+          "description": "Caller’s own immutable personal account UUID; other personal or organization accounts return 404."
         },
         {
           "name": "slug",
@@ -5243,7 +5341,7 @@
             "type": "string",
             "format": "uuid"
           },
-          "description": "Caller\u2019s own immutable personal account UUID; other personal or organization accounts return 404."
+          "description": "Caller’s own immutable personal account UUID; other personal or organization accounts return 404."
         },
         {
           "name": "slug",
@@ -5357,7 +5455,7 @@
             "type": "string",
             "format": "uuid"
           },
-          "description": "Caller\u2019s own immutable personal account UUID; other personal or organization accounts return 404."
+          "description": "Caller’s own immutable personal account UUID; other personal or organization accounts return 404."
         },
         {
           "name": "slug",
@@ -5459,7 +5557,6 @@
           "name": "account_id",
           "in": "path",
           "required": true,
-          "description": "Caller\u2019s own immutable personal account UUID; other personal or organization accounts return 404.",
           "schema": {
             "type": "string",
             "format": "uuid"
@@ -5649,6 +5746,39 @@
         ],
         "x-fern-server-name": "rest",
         "x-fern-explorer": false
+      },
+      "delete": {
+        "operationId": "deletePersonalLives",
+        "summary": "Atomically delete all Lives in this workspace",
+        "tags": [
+          "Personal accounts"
+        ],
+        "description": "Delete all Lives owned by the authenticated personal workspace in one account-locked transaction. Current `live.delete` authority is rechecked after lock acquisition; foreign account IDs return 404. Returns 200 with the actual `deleted` count, including zero. No per-Live `If-Match` is used. Concurrent creation serializes on the same account lock; session shutdown follows committed deletion. `Idempotency-Key` is unsupported. Inspect the collection after an ambiguous response instead of blindly retrying, since a later retry could delete newly created Lives.\n\n**Required scopes:** `live.delete`. Scopes intersect current authority; browser cookies never authenticate REST.",
+        "x-required-scopes": [
+          "live.delete"
+        ],
+        "security": [
+          {
+            "personalToken": []
+          }
+        ],
+        "x-fern-server-name": "rest",
+        "x-fern-explorer": false,
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LiveBulkDeletion"
+                }
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/components/responses/Problem"
+          }
+        }
       }
     },
     "/.well-known/oauth-authorization-server": {
@@ -5716,7 +5846,7 @@
       "get": {
         "operationId": "authorizeOAuth",
         "summary": "Start registered-client authorization",
-        "description": "Validate exact registered redirect URI and explicit allowlisted scopes before any redirect. Require response_type=code, high-entropy state (16\u2013512 bytes), S256 and a 43-character base64url challenge. Unauthenticated users continue through existing login/onboarding using a five-minute opaque request bound to the eventual browser session. GET always requires explicit consent; no automatic approval. Return errors locally for unknown/untrusted callbacks. Clients must verify state and response iss. A resumed request uses only request, with no other query parameters.\n\n**Response headers:**\n\n- `Cache-Control` (200).\n- `Referrer-Policy` (200): Native consent form Origin proof; never sends referrers cross-origin.\n- `Pragma` (200).",
+        "description": "Validate exact registered redirect URI and explicit allowlisted scopes before any redirect. Require response_type=code, high-entropy state (16–512 bytes), S256 and a 43-character base64url challenge. Unauthenticated users continue through existing login/onboarding using a five-minute opaque request bound to the eventual browser session. GET always requires explicit consent; no automatic approval. Return errors locally for unknown/untrusted callbacks. Clients must verify state and response iss. A resumed request uses only request, with no other query parameters.\n\n**Response headers:**\n\n- `Cache-Control` (200).\n- `Referrer-Policy` (200): Native consent form Origin proof; never sends referrers cross-origin.\n- `Pragma` (200).",
         "tags": [
           "OAuth"
         ],
@@ -5992,7 +6122,7 @@
       "post": {
         "operationId": "exchangeOAuthToken",
         "summary": "Exchange a code or rotate a refresh token",
-        "description": "Public clients send client_id in form; Authorization headers are rejected. Authorization code binds client_id, exact redirect_uri and S256 verifier (43\u2013128 unreserved ASCII characters), expires in 60 seconds, and is single-use. Refresh tokens require offline_access, rotate on every use, and retain the fixed 30-day grant deadline. Reusing a successfully exchanged code or used refresh token revokes the entire grant, including outstanding access/refresh tokens; no retry grace. Wrong client, redirect or verifier cannot exchange the code. Optional refresh scope permanently narrows the grant; it cannot widen. Current user permissions and client enabled status apply. Organization/service/PAT secrets are never issued. No implicit, password or client_credentials grant.\n\n**Response headers:**\n\n- `Cache-Control` (200).\n- `Referrer-Policy` (200).\n- `Pragma` (200).",
+        "description": "Public clients send client_id in form; Authorization headers are rejected. Authorization code binds client_id, exact redirect_uri and S256 verifier (43–128 unreserved ASCII characters), expires in 60 seconds, and is single-use. Refresh tokens require offline_access, rotate on every use, and retain the fixed 30-day grant deadline. Reusing a successfully exchanged code or used refresh token revokes the entire grant, including outstanding access/refresh tokens; no retry grace. Wrong client, redirect or verifier cannot exchange the code. Optional refresh scope permanently narrows the grant; it cannot widen. Current user permissions and client enabled status apply. Organization/service/PAT secrets are never issued. No implicit, password or client_credentials grant.\n\n**Response headers:**\n\n- `Cache-Control` (200).\n- `Referrer-Policy` (200).\n- `Pragma` (200).",
         "tags": [
           "OAuth"
         ],
@@ -6202,7 +6332,7 @@
       "get": {
         "operationId": "getConnectedAppsPage",
         "summary": "View connected applications",
-        "description": "Existing browser session; unauthenticated users are redirected to login. Lists only this user\u2019s unexpired grants, with disconnect forms. No token hashes or secrets.\n\n**Response headers:**\n\n- `Cache-Control` (200).\n- `Referrer-Policy` (200): Native consent form Origin proof; never sends referrers cross-origin.\n- `Pragma` (200).",
+        "description": "Existing browser session; unauthenticated users are redirected to login. Lists only this user’s unexpired grants, with disconnect forms. No token hashes or secrets.\n\n**Response headers:**\n\n- `Cache-Control` (200).\n- `Referrer-Policy` (200): Native consent form Origin proof; never sends referrers cross-origin.\n- `Pragma` (200).",
         "tags": [
           "OAuth"
         ],
@@ -6591,6 +6721,1142 @@
         "x-fern-server-name": "rest",
         "x-fern-explorer": false
       }
+    },
+    "/accounts/{account_id}/quotas": {
+      "parameters": [
+        {
+          "name": "account_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "format": "uuid"
+          }
+        }
+      ],
+      "get": {
+        "operationId": "getPersonalQuotas",
+        "summary": "Read your effective personal quotas and current usage",
+        "tags": [
+          "Personal accounts"
+        ],
+        "description": "Read the authenticated owner's personal plan limits and current usage. Requires a finite personal `bt_` credential; delegated `oa_` and organization `svc_` credentials cannot use this resource. Limits and usage use the same account domain as SSH. Other account IDs return 404.\n\n**Required scopes:** `server.get`. Scopes intersect current authority; browser cookies never authenticate REST.",
+        "x-required-scopes": [
+          "server.get"
+        ],
+        "security": [
+          {
+            "personalToken": []
+          }
+        ],
+        "x-fern-server-name": "rest",
+        "x-fern-explorer": false,
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AccountQuotaCollection"
+                }
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/components/responses/Problem"
+          }
+        }
+      }
+    },
+    "/accounts/{account_id}/tokens": {
+      "parameters": [
+        {
+          "name": "account_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "format": "uuid"
+          }
+        }
+      ],
+      "get": {
+        "operationId": "listPersonalTokens",
+        "summary": "List personal credential metadata",
+        "tags": [
+          "Personal accounts"
+        ],
+        "description": "List the owner's active personal API/CLI/manual token metadata using a finite personal `bt_` credential. Delegated OAuth and organization service tokens cannot inspect personal credentials. Results include retiring tokens during the rotation overlap but omit revoked, expired and completed rotations. Secrets, hashes and issuer principal keys are never returned. An empty scopes array means inherited current user authority. Use `limit` and `after` to paginate.\n\n**Required scopes:** `token.get`. Scopes intersect current authority; browser cookies never authenticate REST.",
+        "x-required-scopes": [
+          "token.get"
+        ],
+        "security": [
+          {
+            "personalToken": []
+          }
+        ],
+        "x-fern-server-name": "rest",
+        "x-fern-explorer": false,
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PersonalTokenCollection"
+                }
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/components/responses/Problem"
+          }
+        },
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 50
+            }
+          },
+          {
+            "name": "after",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "maxLength": 128
+            },
+            "description": "Cursor returned by this collection; book collections use the canonical numeric ID. Translation collections use lowercase slugs."
+          }
+        ]
+      }
+    },
+    "/organizations/{organization_id}/quotas": {
+      "parameters": [
+        {
+          "name": "organization_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "format": "uuid"
+          }
+        }
+      ],
+      "get": {
+        "operationId": "getOrganizationQuotas",
+        "summary": "Read organization limits and usage",
+        "tags": [
+          "Organizations"
+        ],
+        "description": "Read the service token's organization limits and usage. The immutable organization UUID must match the token's organization; other organizations return 404. This resource does not expose or change a human member's personal quotas.\n\n**Required scopes:** `organization.get`. Scopes intersect current authority; browser cookies never authenticate REST.",
+        "x-required-scopes": [
+          "organization.get"
+        ],
+        "security": [
+          {
+            "serviceToken": []
+          }
+        ],
+        "x-fern-server-name": "rest",
+        "x-fern-explorer": false,
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AccountQuotaCollection"
+                }
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/components/responses/Problem"
+          }
+        }
+      }
+    },
+    "/me/organizations": {
+      "get": {
+        "operationId": "listPersonalOrganizations",
+        "summary": "List your memberships and applications",
+        "tags": [
+          "Organizations"
+        ],
+        "description": "List the caller's organization directory with a finite personal `bt_` credential. Service tokens cannot use this personal resource; delegated OAuth cannot grant `server.get`. The directory can include current memberships and the caller's pending applications, without granting organization management access. Follow `next_cursor` using `after`; this directory does not accept a `limit` parameter.\n\n**Required scopes:** `server.get`. Scopes intersect current authority; browser cookies never authenticate REST.",
+        "x-required-scopes": [
+          "server.get"
+        ],
+        "security": [
+          {
+            "personalToken": []
+          }
+        ],
+        "x-fern-server-name": "rest",
+        "x-fern-explorer": false,
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PersonalDirectory"
+                }
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/components/responses/Problem"
+          }
+        },
+        "parameters": [
+          {
+            "name": "after",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "maxLength": 80
+            }
+          }
+        ]
+      }
+    },
+    "/me/organization-applications/{application_id}": {
+      "parameters": [
+        {
+          "name": "application_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "format": "uuid"
+          }
+        }
+      ],
+      "get": {
+        "operationId": "getPersonalOrganizationApplication",
+        "summary": "Read your organization application status",
+        "tags": [
+          "Organizations"
+        ],
+        "description": "Read an organization application owned by the authenticated personal user. Requires a finite personal `bt_` credential; delegated OAuth cannot grant `server.get`. Foreign or unknown applications return 404. The projection contains application status and next actions, not DNS challenge secrets or internal review details.\n\n**Required scopes:** `server.get`. Scopes intersect current authority; browser cookies never authenticate REST.",
+        "x-required-scopes": [
+          "server.get"
+        ],
+        "security": [
+          {
+            "personalToken": []
+          }
+        ],
+        "x-fern-server-name": "rest",
+        "x-fern-explorer": false,
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PersonalOrganizationApplication"
+                }
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/components/responses/Problem"
+          }
+        }
+      }
+    },
+    "/accounts/{account_id}/translations/{slug}/books/{book_id}": {
+      "parameters": [
+        {
+          "name": "account_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "format": "uuid"
+          }
+        },
+        {
+          "name": "slug",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "name": "book_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 255
+          }
+        }
+      ],
+      "get": {
+        "operationId": "readPersonalBook",
+        "summary": "Read a book page with source verse identifiers",
+        "tags": [
+          "Personal accounts"
+        ],
+        "description": "Read one bounded page of a book from the authenticated owner's enabled personal library, with rights and attribution. Finite personal and explicitly scoped delegated OAuth credentials are accepted. Canonical book IDs and sparse source chapter/verse IDs are preserved. Reads never install or enable an edition.\n\n**Required scopes:** `translation.read`. Scopes intersect current authority; browser cookies never authenticate REST.\n\nAlways paginated, including no-query requests: default 50 and maximum 500 verses, with a 3MiB serialized JSON budget that may shorten a page. Every successful response includes next_cursor; follow it as after until null to read the complete book. Nonterminal pages are never empty. Stable canonical chapter/verse order preserves sparse numbering. Every page rechecks authentication, scopes and enabled-library access; cursors do not grant access. Cursors bind account, normalized translation, book and installed edition revision. Page size may change. Shared deployment keys preserve cursors across routing/restarts. Edition changes return 409 stale_cursor; key rotation returns 422 invalid_cursor. Restart traversal after either error. Different resources return 422 cursor_mismatch. A single verse too large for the byte budget returns 413 verse_too_large, without skipping it. Errors include safe detail text. No unbounded mode, total count or page numbers.",
+        "x-required-scopes": [
+          "translation.read"
+        ],
+        "security": [
+          {
+            "personalToken": []
+          }
+        ],
+        "x-fern-server-name": "rest",
+        "x-fern-explorer": false,
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ScriptureBookRead"
+                }
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/components/responses/Problem"
+          },
+          "413": {
+            "$ref": "#/components/responses/Problem",
+            "description": "One verse exceeds the 3MiB page budget (verse_too_large); no verse was skipped."
+          }
+        },
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 500,
+              "default": 50
+            },
+            "description": "Maximum verses per page, 1–500; default 50 even when no query parameters are supplied. A 3MiB serialized response cap may produce fewer items. Follow next_cursor until null."
+          },
+          {
+            "name": "after",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 1024
+            },
+            "description": "Opaque next_cursor from the preceding page; omit for the first page. Bound to account, normalized translation, canonical book and installed edition revision; limit may change. Invalid/tampered: 422 invalid_cursor. Different resource: 422 cursor_mismatch. Changed edition: 409 stale_cursor. Restart without after after edition/key changes."
+          }
+        ]
+      }
+    },
+    "/organizations/{organization_id}/translations/{slug}/books/{book_id}": {
+      "parameters": [
+        {
+          "name": "organization_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "format": "uuid"
+          }
+        },
+        {
+          "name": "slug",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "name": "book_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 255
+          }
+        }
+      ],
+      "get": {
+        "operationId": "readBook",
+        "summary": "Read a book page with source verse identifiers",
+        "tags": [
+          "Organizations"
+        ],
+        "description": "Read one bounded page of a book from the service token's organization library, with rights and attribution. Canonical book IDs and sparse source chapter/verse IDs are preserved. Unknown book/translation returns 404; unavailable library access returns 403. No translation is installed or enabled by reading.\n\n**Required scopes:** `translation.read`. Scopes intersect current authority; browser cookies never authenticate REST.\n\nAlways paginated, including no-query requests: default 50 and maximum 500 verses, with a 3MiB serialized JSON budget that may shorten a page. Every successful response includes next_cursor; follow it as after until null to read the complete book. Nonterminal pages are never empty. Stable canonical chapter/verse order preserves sparse numbering. Every page rechecks authentication, scopes and enabled-library access; cursors do not grant access. Cursors bind account, normalized translation, book and installed edition revision. Page size may change. Shared deployment keys preserve cursors across routing/restarts. Edition changes return 409 stale_cursor; key rotation returns 422 invalid_cursor. Restart traversal after either error. Different resources return 422 cursor_mismatch. A single verse too large for the byte budget returns 413 verse_too_large, without skipping it. Errors include safe detail text. No unbounded mode, total count or page numbers.",
+        "x-required-scopes": [
+          "translation.read"
+        ],
+        "security": [
+          {
+            "serviceToken": []
+          }
+        ],
+        "x-fern-server-name": "rest",
+        "x-fern-explorer": false,
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ScriptureBookRead"
+                }
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/components/responses/Problem"
+          },
+          "413": {
+            "$ref": "#/components/responses/Problem",
+            "description": "One verse exceeds the 3MiB page budget (verse_too_large); no verse was skipped."
+          }
+        },
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 500,
+              "default": 50
+            },
+            "description": "Maximum verses per page, 1–500; default 50 even when no query parameters are supplied. A 3MiB serialized response cap may produce fewer items. Follow next_cursor until null."
+          },
+          {
+            "name": "after",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 1024
+            },
+            "description": "Opaque next_cursor from the preceding page; omit for the first page. Bound to account, normalized translation, canonical book and installed edition revision; limit may change. Invalid/tampered: 422 invalid_cursor. Different resource: 422 cursor_mismatch. Changed edition: 409 stale_cursor. Restart without after after edition/key changes."
+          }
+        ]
+      }
+    },
+    "/translations/{slug}/catalogue": {
+      "parameters": [
+        {
+          "name": "slug",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "get": {
+        "operationId": "getTranslationCatalogueDetails",
+        "summary": "Read installed chapter and verse catalogue",
+        "tags": [
+          "Translations"
+        ],
+        "description": "Read installed chapter/verse counts mapped to canonical book IDs and localized names. Counts describe installed data and must not be used to infer contiguous verse identifiers. This installed catalogue differs from GET `/translations/{slug}/books`, which returns reviewed edition coverage even before installation. It does not grant scripture or library access.\n\n**Required scopes:** `translation.get`. Scopes intersect current authority; browser cookies never authenticate REST.",
+        "x-required-scopes": [
+          "translation.get"
+        ],
+        "security": [
+          {
+            "personalToken": []
+          },
+          {
+            "serviceToken": []
+          },
+          {
+            "delegatedOAuth": [
+              "translation.get"
+            ]
+          }
+        ],
+        "x-fern-server-name": "rest",
+        "x-fern-explorer": false,
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TranslationCatalogueDetails"
+                }
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/components/responses/Problem"
+          }
+        }
+      }
+    },
+    "/lives/{live_id}/statistics": {
+      "parameters": [
+        {
+          "name": "live_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "get": {
+        "operationId": "getLiveStatistics",
+        "summary": "Read Live connection and retained-stack statistics",
+        "tags": [
+          "Live controls"
+        ],
+        "description": "Read current statistics for an owned Live using its owner-bound personal/delegated credential or organization service token. The response includes current connections, subscriber information and stack entry count. User-related fields use `user` terminology. A foreign or inaccessible Live returns 404.\n\n**Required scopes:** `live.get`. Scopes intersect current authority; browser cookies never authenticate REST.",
+        "x-required-scopes": [
+          "live.get"
+        ],
+        "security": [
+          {
+            "personalToken": []
+          },
+          {
+            "serviceToken": []
+          },
+          {
+            "delegatedOAuth": [
+              "live.get"
+            ]
+          }
+        ],
+        "x-fern-server-name": "rest",
+        "x-fern-explorer": false,
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LiveStatistics"
+                }
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/components/responses/Problem"
+          }
+        }
+      }
+    },
+    "/lives/{live_id}/settings": {
+      "parameters": [
+        {
+          "name": "live_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "get": {
+        "operationId": "getLiveSettings",
+        "summary": "Read retained reference and selected translations",
+        "tags": [
+          "Live controls"
+        ],
+        "description": "Read the owned Live's selected reference and translation slugs with its sequence. Personal and delegated credentials access only their own personal Lives; service tokens access only their organization's Lives. Use the returned `ETag` as `If-Match` when updating settings.\n\n**Required scopes:** `live.get`. Scopes intersect current authority; browser cookies never authenticate REST.",
+        "x-required-scopes": [
+          "live.get"
+        ],
+        "security": [
+          {
+            "personalToken": []
+          },
+          {
+            "serviceToken": []
+          },
+          {
+            "delegatedOAuth": [
+              "live.get"
+            ]
+          }
+        ],
+        "x-fern-server-name": "rest",
+        "x-fern-explorer": false,
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LiveSettings"
+                }
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/components/responses/Problem"
+          }
+        }
+      },
+      "patch": {
+        "operationId": "updateLiveSettings",
+        "summary": "Update retained reference and translations",
+        "tags": [
+          "Live controls"
+        ],
+        "description": "Partially update the owned Live's reference and/or selected translations. At least one field is required. Current library access and selection quotas apply; this does not install or enable editions. Requires the current Live `ETag` in `If-Match`: missing conditions return 428, stale conditions 412 and invalid input 422. The response includes the updated settings and `ETag`. No automatic replay or retry is provided.\n\n**Required scopes:** `live.update`. Scopes intersect current authority; browser cookies never authenticate REST.",
+        "x-required-scopes": [
+          "live.update"
+        ],
+        "security": [
+          {
+            "personalToken": []
+          },
+          {
+            "serviceToken": []
+          },
+          {
+            "delegatedOAuth": [
+              "live.update"
+            ]
+          }
+        ],
+        "x-fern-server-name": "rest",
+        "x-fern-explorer": false,
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LiveSettings"
+                }
+              }
+            },
+            "headers": {
+              "ETag": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/components/responses/Problem"
+          }
+        },
+        "parameters": [
+          {
+            "name": "If-Match",
+            "in": "header",
+            "required": true,
+            "description": "Current strong Live ETag. Missing:428; stale:412. No automatic retry.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LiveSettingsPatch"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/lives/{live_id}/stack": {
+      "parameters": [
+        {
+          "name": "live_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "get": {
+        "operationId": "getLiveStack",
+        "summary": "Read retained scripture stack",
+        "tags": [
+          "Live controls"
+        ],
+        "description": "Read the current scripture stack as ordered verse entries with one-based `position`, Live sequence and `affected`. This is the same scripture state exposed through stable queue items; positions are not durable item IDs. Use `/queue-items` for stable IDs and cursor pagination. This response returns the current stack directly. Personal/delegated and service ownership rules apply.\n\n**Required scopes:** `live.get`. Scopes intersect current authority; browser cookies never authenticate REST.",
+        "x-required-scopes": [
+          "live.get"
+        ],
+        "security": [
+          {
+            "personalToken": []
+          },
+          {
+            "serviceToken": []
+          },
+          {
+            "delegatedOAuth": [
+              "live.get"
+            ]
+          }
+        ],
+        "x-fern-server-name": "rest",
+        "x-fern-explorer": false,
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LiveStack"
+                }
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/components/responses/Problem"
+          }
+        }
+      },
+      "post": {
+        "operationId": "pushLiveStack",
+        "summary": "Push retained scripture with optional selected translations",
+        "tags": [
+          "Live controls"
+        ],
+        "description": "Append the requested scripture reference to the owned Live's scripture stack. The reference requires `book_id`; omit `chapter` for a whole book, include `chapter` for a chapter, and add `verse` for a single verse. A verse requires a chapter. Omit `translation` to use the Live's configured translations; missing configuration returns 409 `translations_not_configured`. Current enabled-library access is required. Returns the updated stack, `affected` count, sequence and `ETag`. Requires the current Live `ETag` in `If-Match`; missing/stale conditions return 428/412. Invalid references return 422, denied access 403, and domain state conflicts 409. `Idempotency-Key` is unsupported; never automatically replay an ambiguous push.\n\n**Required scopes:** `live.update`, `translation.read`. Scopes intersect current authority; browser cookies never authenticate REST.",
+        "x-required-scopes": [
+          "live.update",
+          "translation.read"
+        ],
+        "security": [
+          {
+            "personalToken": []
+          },
+          {
+            "serviceToken": []
+          },
+          {
+            "delegatedOAuth": [
+              "live.update"
+            ]
+          }
+        ],
+        "x-fern-server-name": "rest",
+        "x-fern-explorer": false,
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LiveStack"
+                }
+              }
+            },
+            "headers": {
+              "ETag": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/components/responses/Problem"
+          }
+        },
+        "parameters": [
+          {
+            "name": "If-Match",
+            "in": "header",
+            "required": true,
+            "description": "Current strong Live ETag. Missing:428; stale:412. No automatic retry.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LiveStackPush"
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "operationId": "clearLiveStack",
+        "summary": "Clear the retained scripture stack",
+        "tags": [
+          "Live controls"
+        ],
+        "description": "Clear the owned Live's scripture stack and return its actual `affected` count, empty data and new `ETag`. The Live returns to hidden Reader state with pause off. Requires the current Live `ETag` in `If-Match`; missing/stale conditions return 428/412. This is separate from deleting the Live. `Idempotency-Key` is unsupported.\n\n**Required scopes:** `live.update`. Scopes intersect current authority; browser cookies never authenticate REST.",
+        "x-required-scopes": [
+          "live.update"
+        ],
+        "security": [
+          {
+            "personalToken": []
+          },
+          {
+            "serviceToken": []
+          },
+          {
+            "delegatedOAuth": [
+              "live.update"
+            ]
+          }
+        ],
+        "x-fern-server-name": "rest",
+        "x-fern-explorer": false,
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LiveStack"
+                }
+              }
+            },
+            "headers": {
+              "ETag": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/components/responses/Problem"
+          }
+        },
+        "parameters": [
+          {
+            "name": "If-Match",
+            "in": "header",
+            "required": true,
+            "description": "Current strong Live ETag. Missing:428; stale:412. No automatic retry.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
+    "/lives/{live_id}/stack/removals": {
+      "parameters": [
+        {
+          "name": "live_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "post": {
+        "operationId": "popLiveStack",
+        "summary": "Remove a positive count from the retained stack tail",
+        "tags": [
+          "Live controls"
+        ],
+        "description": "Remove up to `count` entries from the owned Live's scripture stack; omitted count defaults to 1. A count larger than the stack removes all remaining entries. Returns the actual `affected` count and updated stack with `ETag`. Empty stacks return 409 `stack_empty`. Requires the current Live `ETag` in `If-Match`; missing/stale conditions return 428/412. `Idempotency-Key` is unsupported; do not automatically retry an ambiguous removal.\n\n**Required scopes:** `live.update`. Scopes intersect current authority; browser cookies never authenticate REST.",
+        "x-required-scopes": [
+          "live.update"
+        ],
+        "security": [
+          {
+            "personalToken": []
+          },
+          {
+            "serviceToken": []
+          },
+          {
+            "delegatedOAuth": [
+              "live.update"
+            ]
+          }
+        ],
+        "x-fern-server-name": "rest",
+        "x-fern-explorer": false,
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LiveStack"
+                }
+              }
+            },
+            "headers": {
+              "ETag": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/components/responses/Problem"
+          }
+        },
+        "parameters": [
+          {
+            "name": "If-Match",
+            "in": "header",
+            "required": true,
+            "description": "Current strong Live ETag. Missing:428; stale:412. No automatic retry.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LiveStackRemoval"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/lives/{live_id}/audience-secret": {
+      "parameters": [
+        {
+          "name": "live_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "post": {
+        "operationId": "createLiveAudienceSecret",
+        "summary": "Create a one-time audience secret",
+        "tags": [
+          "Live controls"
+        ],
+        "description": "Protect the owned Live with a server-generated audience secret. Send `{}` as JSON. Returns the newly issued `secret` only in this response, together with protection state, sequence and `ETag`; do not log it. Already-protected Lives return 409 `already_protected`. Requires the current Live `ETag` in `If-Match` (428 if missing, 412 if stale). Audience secrets authenticate viewers, not REST operators. `Idempotency-Key` is unsupported; a lost secret cannot be retrieved by GET.\n\n**Required scopes:** `live.update`. Scopes intersect current authority; browser cookies never authenticate REST.",
+        "x-required-scopes": [
+          "live.update"
+        ],
+        "security": [
+          {
+            "personalToken": []
+          },
+          {
+            "serviceToken": []
+          },
+          {
+            "delegatedOAuth": [
+              "live.update"
+            ]
+          }
+        ],
+        "x-fern-server-name": "rest",
+        "x-fern-explorer": false,
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LiveAudienceSecret"
+                }
+              }
+            },
+            "headers": {
+              "ETag": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/components/responses/Problem"
+          }
+        },
+        "parameters": [
+          {
+            "name": "If-Match",
+            "in": "header",
+            "required": true,
+            "description": "Current strong Live ETag. Missing:428; stale:412. No automatic retry.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EmptyObject"
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "operationId": "rotateLiveAudienceSecret",
+        "summary": "Rotate a one-time audience secret",
+        "tags": [
+          "Live controls"
+        ],
+        "description": "Replace the owned Live's audience secret with a newly generated secret, disclosed only in this response with sequence and `ETag`. Send `{}` as JSON. An unprotected Live returns 409 `not_protected`; the previous secret no longer authenticates new audience access. Requires the current Live `ETag` in `If-Match` (428 if missing, 412 if stale). This does not rotate an API service token. `Idempotency-Key` is unsupported; never automatically replay an ambiguous rotation.\n\n**Required scopes:** `live.update`. Scopes intersect current authority; browser cookies never authenticate REST.",
+        "x-required-scopes": [
+          "live.update"
+        ],
+        "security": [
+          {
+            "personalToken": []
+          },
+          {
+            "serviceToken": []
+          },
+          {
+            "delegatedOAuth": [
+              "live.update"
+            ]
+          }
+        ],
+        "x-fern-server-name": "rest",
+        "x-fern-explorer": false,
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LiveAudienceSecret"
+                }
+              }
+            },
+            "headers": {
+              "ETag": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/components/responses/Problem"
+          }
+        },
+        "parameters": [
+          {
+            "name": "If-Match",
+            "in": "header",
+            "required": true,
+            "description": "Current strong Live ETag. Missing:428; stale:412. No automatic retry.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EmptyObject"
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "operationId": "deleteLiveAudienceSecret",
+        "summary": "Remove audience-secret protection",
+        "tags": [
+          "Live controls"
+        ],
+        "description": "Remove audience-secret protection from the owned Live. Returns protection state, sequence and `ETag`, without a secret. Requires the current Live `ETag` in `If-Match` (428 if missing, 412 if stale). This changes viewer protection, not the REST bearer credential or Live ownership. `Idempotency-Key` is unsupported.\n\n**Required scopes:** `live.update`. Scopes intersect current authority; browser cookies never authenticate REST.",
+        "x-required-scopes": [
+          "live.update"
+        ],
+        "security": [
+          {
+            "personalToken": []
+          },
+          {
+            "serviceToken": []
+          },
+          {
+            "delegatedOAuth": [
+              "live.update"
+            ]
+          }
+        ],
+        "x-fern-server-name": "rest",
+        "x-fern-explorer": false,
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LiveAudienceSecret"
+                }
+              }
+            },
+            "headers": {
+              "ETag": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/components/responses/Problem"
+          }
+        },
+        "parameters": [
+          {
+            "name": "If-Match",
+            "in": "header",
+            "required": true,
+            "description": "Current strong Live ETag. Missing:428; stale:412. No automatic retry.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
     }
   },
   "components": {
@@ -6666,6 +7932,10 @@
           "request_id": {
             "type": "string",
             "pattern": "^[a-f0-9]{24}$"
+          },
+          "detail": {
+            "type": "string",
+            "description": "Safe explanation and recovery guidance, including invalid, mismatched and stale Scripture cursors."
           }
         },
         "required": [
@@ -6881,14 +8151,12 @@
         "properties": {
           "name": {
             "type": "string",
-            "minLength": 1,
+            "minLength": 0,
             "maxLength": 128,
             "description": "At most 128 UTF-8 bytes."
           }
         },
-        "required": [
-          "name"
-        ],
+        "required": [],
         "additionalProperties": false,
         "examples": [
           {
@@ -9829,7 +11097,7 @@
           "download_url"
         ],
         "additionalProperties": false,
-        "description": "Safe requester-private job projection. Timestamps are Unix seconds. Jobs snapshot the saved revision at creation; later saves never alter the captured document. Expiry is initially ten minutes and resets to ten minutes on completion/failure. Jobs disappear on expiry, presentation deletion or successful download consumption. Starting a new export removes this requester\u2019s failed jobs."
+        "description": "Safe requester-private job projection. Timestamps are Unix seconds. Jobs snapshot the saved revision at creation; later saves never alter the captured document. Expiry is initially ten minutes and resets to ten minutes on completion/failure. Jobs disappear on expiry, presentation deletion or successful download consumption. Starting a new export removes this requester’s failed jobs."
       },
       "PresentationExportList": {
         "type": "object",
@@ -10670,6 +11938,645 @@
           }
         ],
         "description": "Event schema major version 1. Snapshot on connection/reconnection; changed snapshot when comparison differs; null-data heartbeat at wait expiry. Notifications may coalesce, repeat or be missed. Not exactly-once and no historical replay."
+      },
+      "AccountQuota": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "resource": {
+            "type": "string"
+          },
+          "action": {
+            "type": "string"
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "used": {
+            "type": "integer",
+            "minimum": 0
+          }
+        },
+        "required": [
+          "resource",
+          "action",
+          "limit",
+          "used"
+        ]
+      },
+      "AccountQuotaCollection": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AccountQuota"
+            }
+          }
+        },
+        "required": [
+          "data"
+        ]
+      },
+      "PersonalTokenMetadata": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "label": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "source": {
+            "type": "string",
+            "enum": [
+              "manual",
+              "api",
+              "cli"
+            ]
+          },
+          "scopes": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "pattern": "^[a-z_]+[.][a-z_]+$"
+            }
+          },
+          "issued_at": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "expires_at": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "minimum": 0
+          },
+          "last_used_at": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "minimum": 0
+          },
+          "retiring": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "id",
+          "label",
+          "source",
+          "scopes",
+          "issued_at",
+          "expires_at",
+          "last_used_at",
+          "retiring"
+        ]
+      },
+      "PersonalTokenCollection": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PersonalTokenMetadata"
+            }
+          },
+          "next_cursor": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        },
+        "required": [
+          "data",
+          "next_cursor"
+        ]
+      },
+      "PersonalDirectoryEntry": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "record": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "handle": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "role": {
+            "type": "string"
+          },
+          "verification": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          },
+          "application_id": {
+            "type": "string"
+          },
+          "domain": {
+            "type": "string"
+          },
+          "state": {
+            "type": "string"
+          },
+          "organization_id": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "verification_url": {
+            "type": "string"
+          },
+          "next_action": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "record",
+          "name"
+        ]
+      },
+      "PersonalDirectory": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PersonalDirectoryEntry"
+            }
+          },
+          "next_cursor": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        },
+        "required": [
+          "data",
+          "next_cursor"
+        ]
+      },
+      "PersonalOrganizationApplication": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "application_id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "domain": {
+            "type": "string"
+          },
+          "state": {
+            "type": "string"
+          },
+          "organization_id": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "verification_url": {
+            "type": "string"
+          },
+          "next_action": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "application_id",
+          "name",
+          "domain",
+          "state",
+          "organization_id",
+          "verification_url",
+          "next_action"
+        ]
+      },
+      "TranslationChapterMetadata": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "chapter": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "verses": {
+            "type": "integer",
+            "minimum": 0
+          }
+        },
+        "required": [
+          "chapter",
+          "verses"
+        ]
+      },
+      "TranslationBookMetadata": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "book": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "name": {
+            "type": "string"
+          },
+          "chapters": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TranslationChapterMetadata"
+            }
+          }
+        },
+        "required": [
+          "book",
+          "name",
+          "chapters"
+        ]
+      },
+      "TranslationCatalogueDetails": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "translation": {
+            "type": "string"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TranslationBookMetadata"
+            }
+          }
+        },
+        "required": [
+          "translation",
+          "data"
+        ]
+      },
+      "LiveStackReference": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "translation": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128
+          },
+          "book_id": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 255
+          },
+          "chapter": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 152
+          },
+          "verse": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 255
+          }
+        },
+        "required": [
+          "book_id"
+        ]
+      },
+      "LiveStackPush": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "reference": {
+            "$ref": "#/components/schemas/LiveStackReference"
+          }
+        },
+        "required": [
+          "reference"
+        ]
+      },
+      "LiveStackRemoval": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "count": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 2147483647,
+            "default": 1
+          }
+        },
+        "required": []
+      },
+      "LiveStackVerse": {
+        "type": "object",
+        "properties": {
+          "book_id": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 255
+          },
+          "book": {
+            "type": "string"
+          },
+          "chapter": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 152
+          },
+          "verse": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 255
+          },
+          "text": {
+            "type": "string"
+          },
+          "translation": {
+            "type": "string"
+          },
+          "rights": {
+            "$ref": "#/components/schemas/TranslationRights"
+          },
+          "attribution": {
+            "type": "string"
+          },
+          "position": {
+            "type": "integer",
+            "minimum": 1
+          }
+        },
+        "required": [
+          "book_id",
+          "book",
+          "chapter",
+          "verse",
+          "text",
+          "translation",
+          "rights",
+          "attribution",
+          "position"
+        ],
+        "additionalProperties": false
+      },
+      "LiveStack": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "live_id": {
+            "type": "string"
+          },
+          "sequence": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "affected": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/LiveStackVerse"
+            }
+          }
+        },
+        "required": [
+          "live_id",
+          "sequence",
+          "affected",
+          "data"
+        ]
+      },
+      "LiveSettings": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "live_id": {
+            "type": "string"
+          },
+          "sequence": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "reference": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "translations": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": [
+          "live_id",
+          "sequence",
+          "reference",
+          "translations"
+        ]
+      },
+      "LiveSettingsPatch": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "reference": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256
+          },
+          "translations": {
+            "type": "array",
+            "maxItems": 100,
+            "items": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128
+            }
+          }
+        },
+        "required": [],
+        "minProperties": 1
+      },
+      "LiveSubscriber": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "user": {
+            "type": "string"
+          },
+          "access": {
+            "type": "string",
+            "enum": [
+              "actor",
+              "secret",
+              "open"
+            ]
+          },
+          "connected_at": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "connected_for_seconds": {
+            "type": "integer",
+            "minimum": 0
+          }
+        },
+        "required": [
+          "user",
+          "access",
+          "connected_at",
+          "connected_for_seconds"
+        ]
+      },
+      "LiveStatistics": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "sequence": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "running_for_seconds": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "stack_entries": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "connections": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "user_connections": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "anonymous_connections": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "subscribers": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/LiveSubscriber"
+            }
+          }
+        },
+        "required": [
+          "id",
+          "sequence",
+          "running_for_seconds",
+          "stack_entries",
+          "connections",
+          "user_connections",
+          "anonymous_connections",
+          "subscribers"
+        ]
+      },
+      "LiveAudienceSecret": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "live_id": {
+            "type": "string"
+          },
+          "sequence": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "protected": {
+            "type": "boolean"
+          },
+          "secret": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "live_id",
+          "sequence",
+          "protected"
+        ]
+      },
+      "LiveBulkDeletion": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "deleted": {
+            "type": "integer",
+            "minimum": 0
+          }
+        },
+        "required": [
+          "deleted"
+        ]
+      },
+      "ScriptureBookRead": {
+        "type": "object",
+        "properties": {
+          "translation": {
+            "type": "string"
+          },
+          "rights": {
+            "$ref": "#/components/schemas/TranslationRights"
+          },
+          "verses": {
+            "type": "array",
+            "maxItems": 500,
+            "items": {
+              "$ref": "#/components/schemas/Verse"
+            }
+          },
+          "next_cursor": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "maxLength": 1024,
+            "description": "Required opaque continuation cursor. Null only on the last page; otherwise pass unchanged as after. Carries no authority."
+          }
+        },
+        "required": [
+          "translation",
+          "rights",
+          "verses",
+          "next_cursor"
+        ],
+        "additionalProperties": false,
+        "description": "One bounded book page, always paginated: default 50, maximum 500 verses, and at most 3MiB serialized JSON including metadata. The byte budget can return fewer verses with nonnull next_cursor. Stable chapter/verse order; no totals or unbounded mode."
       }
     },
     "responses": {

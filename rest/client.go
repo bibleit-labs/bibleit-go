@@ -87,8 +87,10 @@ func (r *Response) Decode(target any) error {
 }
 
 type ProblemError struct {
-	Type      string      `json:"type"`
-	Title     string      `json:"title"`
+	Type  string `json:"type"`
+	Title string `json:"title"`
+	// Detail is server-supplied guidance. Error() intentionally omits it.
+	Detail    string      `json:"detail,omitempty"`
 	Status    int         `json:"status"`
 	Code      string      `json:"code"`
 	RequestID string      `json:"request_id"`

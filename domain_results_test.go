@@ -142,3 +142,47 @@ func TestTypedLiveMutationsAndErrors(t *testing.T) {
 		t.Fatal("accepted streaming control action")
 	}
 }
+
+func TestStructuredReadingsPreserveLegacyTextAndSourceMetadata(t *testing.T) {
+	client := discoveryClient(t, map[string]string{
+		"READ web 19 23 1": "OK translation=web book=19 chapter=23 verse=1 text=\"Psalms 23:1 First\" content=First book_name=Psalms reference=\"Psalms 23:1\"\n",
+		"SEARCH web First": "OK translation=web results=1\nVERSE text=\"Psalms 23:1 First\" content=First translation=web book=19 chapter=23 verse=1 book_name=Psalms reference=\"Psalms 23:1\"\nEND\n",
+		"READ web 19 23":   "OK translation=web book=19 chapter=23 verses=1\nVERSE text=\"Psalms 23:1 First\"\nEND\n",
+	})
+	for _, search := range []bool{false, true} {
+		var result Reading
+		var err error
+		if search {
+			result, err = client.SearchVerses(context.Background(), "web", "First")
+		} else {
+			result, err = client.ReadVerses(context.Background(), Reference{Translation: "web", Book: "19", Chapter: 23, Verse: 1})
+		}
+		if err != nil {
+			t.Fatal(err)
+		}
+		verse := result.Verses[0]
+		if verse.Text != "Psalms 23:1 First" || verse.Content == nil || *verse.Content != "First" || verse.Reference != "Psalms 23:1" || verse.BookID == nil || *verse.BookID != 19 || verse.Chapter == nil || *verse.Chapter != 23 || verse.Verse == nil || *verse.Verse != 1 {
+			t.Fatalf("unexpected structured verse: %+v", verse)
+		}
+	}
+	legacy, err := client.ReadVerses(context.Background(), Reference{Translation: "web", Book: "19", Chapter: 23})
+	if err != nil {
+		t.Fatal(err)
+	}
+	verse := legacy.Verses[0]
+	if verse.Content != nil || verse.BookID != nil || verse.Reference != "" || verse.Text != "Psalms 23:1 First" {
+		t.Fatalf("invented metadata for legacy reply: %+v", verse)
+	}
+}
+
+func TestStructuredReadingsRejectMalformedCoordinates(t *testing.T) {
+	for _, fields := range []string{"book=19", "book=19 chapter=23", "book=0 chapter=23 verse=1", "book=19 chapter=23 verse=-1", "book=19 chapter=abc verse=1"} {
+		response, err := DecodeResponse(strings.NewReader("OK translation=web results=1\nVERSE text=x " + fields + "\nEND\n"))
+		if err != nil {
+			t.Fatal(err)
+		}
+		if _, err := reading(response, true); err == nil {
+			t.Fatalf("accepted malformed coordinates %q", fields)
+		}
+	}
+}

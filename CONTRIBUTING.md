@@ -7,8 +7,9 @@ or private server data from issues, source, examples and fixtures.
 
 ## Development
 
-Use Go **1.27.1**. The module is github.com/bibleit-labs/bibleit-go and has no
-external Go module dependencies. A CLI/server checkout is not required:
+Use Go **1.27.1**. The module is github.com/bibleit-labs/bibleit-go and uses
+a pinned oapi-codegen runtime dependency; generation tooling is isolated in
+`tools/go.mod`. A CLI/server checkout is not required:
 
 ```sh
 GOWORK=off go test -race -count=1 ./...
@@ -42,7 +43,8 @@ relevant validation in pull requests.
 See the [maintainer guide](docs/maintenance.md) for independent SDK releases,
 audit records and historical compatibility evidence.
 
-Retain the MIT copyright/permission notice when redistributing SDK source.
+Retain the MIT copyright/permission notice and applicable THIRD_PARTY_NOTICES
+when redistributing SDK source or compiled applications.
 The software grant does not cover translations obtained through the service,
 account access or service quotas. Applications distributing compiled binaries
 must also retain applicable Go/dependency notices.

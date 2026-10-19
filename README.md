@@ -1,6 +1,6 @@
 # Bibleit Go client
 
-A dependency-free Go SDK for Bibleit REST resources, registered OAuth clients,
+A Go SDK for Bibleit REST resources, registered OAuth clients,
 and SSH command construction/decoding. HTTP resources use the pinned
 `https://api.bibleit.app/v1` service. Browser authentication uses
 `https://bibleit.app`. There is no command-style HTTP transport.
@@ -17,9 +17,9 @@ go get github.com/bibleit-labs/bibleit-go
 
 ## REST resources
 
-Import `github.com/bibleit-labs/bibleit-go/rest`. The client includes all 66 REST
+Import `github.com/bibleit-labs/bibleit-go/rest`. The client includes all 88 REST
 operations, generated schemas, response metadata, conditional writes, binary
-streams and versioned Live event polling. See [REST usage](rest/README.md) and
+streams, versioned Live event polling and lazy whole-book page iterators. See [REST usage](rest/README.md) and
 the [runnable reading example](examples/read/main.go).
 
 ```go
@@ -84,3 +84,6 @@ GOWORK=off go vet ./...
 ```
 
 Licensed under [MIT](LICENSE).
+
+Generated-code and dependency redistribution notices are retained in
+[THIRD_PARTY_NOTICES](THIRD_PARTY_NOTICES), alongside the project MIT license.
