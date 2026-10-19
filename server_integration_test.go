@@ -4,349 +4,212 @@ import (
 	"context"
 	"errors"
 	"net"
+	"net/url"
 	"os"
 	"strings"
 	"testing"
 	"time"
+
+	"github.com/bibleit-labs/bibleit-go/rest"
 )
 
-// Enabled only by scripts/check_server.py's isolated fixture harness.
-func TestServerHTTPIntegration(t *testing.T) {
+func integrationREST(t *testing.T) (context.Context, *rest.Client, rest.PersonalIdentity) {
+	t.Helper()
 	if os.Getenv("BIBLEIT_CLIENT_TEST_DISPOSABLE") != "1" {
-		t.Skip("run python3 scripts/check_server_container.py --imports from bibleit-cli")
+		t.Skip("run the isolated server harness")
 	}
 	if os.Getenv("BIBLEIT_FIXED_ENDPOINT_FIXTURE") != "1" {
-		t.Fatal("production endpoint integration requires the isolated fixture gateway")
+		t.Fatal("REST integration requires the isolated TLS fixture")
 	}
-	addresses, err := net.LookupIP("bibleit.app")
+	addresses, err := net.LookupIP("api.bibleit.app")
 	if err != nil || len(addresses) == 0 {
-		t.Fatal("fixture hostname resolution failed", err)
+		t.Fatal("fixture resolution failed", err)
 	}
 	for _, address := range addresses {
 		if !address.IsLoopback() {
 			t.Fatal("fixture resolved outside loopback")
 		}
 	}
-	c, err := NewClient(os.Getenv("BIBLEIT_INTEGRATION_TOKEN"))
+	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
+	t.Cleanup(cancel)
+	c, err := rest.NewClient(os.Getenv("BIBLEIT_INTEGRATION_TOKEN"), nil)
 	if err != nil {
 		t.Fatal(err)
 	}
-	if c.endpoint != ServerEndpoint {
-		t.Fatal("integration client changed the fixed service endpoint")
+	var identity rest.PersonalIdentity
+	decodeREST(t, c.GetPersonalIdentity, ctx, &identity)
+	if identity.ID == "" || identity.PersonalAccountID == "" {
+		t.Fatal("missing personal identity")
 	}
-	ctx, cancel := context.WithTimeout(context.Background(), 15*time.Second)
-	defer cancel()
-	result, err := c.Ping(ctx)
-	if err != nil || result.Records[0].Fields["pong"] != "true" {
-		t.Fatalf("ping: %v", err)
+	return ctx, c, identity
+}
+func decodeREST(t *testing.T, call func(context.Context, *rest.Options) (*rest.Response, error), ctx context.Context, target any) {
+	t.Helper()
+	r, err := call(ctx, nil)
+	if err != nil {
+		t.Fatal(err)
 	}
-	result, err = c.Identity(ctx)
-	if err != nil || result.Records[0].Fields["actor"] != "security-owner" {
-		t.Fatalf("identity: %v", err)
+	defer r.Body.Close()
+	if err = r.Decode(target); err != nil {
+		t.Fatal(err)
 	}
+}
+func restStatus(t *testing.T, err error, status int) {
+	t.Helper()
+	var p *rest.ProblemError
+	if !errors.As(err, &p) || p.Status != status {
+		t.Fatalf("expected HTTP %d: %v", status, err)
+	}
+}
 
-	t.Run("typed token metadata", func(t *testing.T) {
-		value, err := c.ListTokens(ctx)
+// Exercises current REST resources in the disposable real-server fixture.
+func TestServerHTTPIntegration(t *testing.T) {
+	ctx, c, identity := integrationREST(t)
+	t.Run("reading search catalogue and rights", func(t *testing.T) {
+		r, err := c.ReadPersonalVerse(ctx, identity.PersonalAccountID, "web", "19", "23", "1", nil)
 		if err != nil {
 			t.Fatal(err)
 		}
-		if value.Actor != "security-owner" || len(value.Tokens) != 3 {
-			t.Fatalf("actor=%s tokens=%d", value.Actor, len(value.Tokens))
+		var verse rest.ScriptureRead
+		err = r.Decode(&verse)
+		r.Body.Close()
+		if err != nil || len(verse.Verses) != 1 || verse.Verses[0].BookID != 19 || !strings.Contains(verse.Verses[0].Text, "shepherd") {
+			t.Fatal(verse, err)
 		}
-		foundManual, foundScoped := false, false
-		for _, token := range value.Tokens {
-			if token.IssuedAt <= 0 || token.IssuedBy == nil || *token.IssuedBy != "security-owner" || token.Retiring == nil || *token.Retiring {
-				t.Fatal("invalid issuer/timestamp/retirement metadata")
-			}
-			for _, secret := range []string{os.Getenv("BIBLEIT_INTEGRATION_TOKEN"), os.Getenv("BIBLEIT_SCOPED_TOKEN"), os.Getenv("BIBLEIT_DENIED_TOKEN"), os.Getenv("BIBLEIT_EXPIRED_TOKEN")} {
-				if strings.Contains(strings.Join(value.Raw.Lines, "\n"), secret) {
-					t.Fatal("token list exposed a bearer value")
-				}
-			}
-			if token.ID == os.Getenv("BIBLEIT_MANUAL_TOKEN_ID") {
-				foundManual = token.Source == "manual" && token.Scopes != nil && len(token.Scopes) == 0 && token.ExpiresAt == nil && token.LastUsedAt != nil
-			}
-			if token.ID == os.Getenv("BIBLEIT_SCOPED_TOKEN_ID") {
-				foundScoped = token.Source == "cli" && len(token.Scopes) == 1 && token.Scopes[0] == "token.get" && token.ExpiresAt != nil && token.Label != nil && *token.Label == "Scoped fixture\nlabel"
-			}
-		}
-		if !foundManual || !foundScoped {
-			t.Fatal("missing manual/scoped metadata")
-		}
-		scoped, err := NewClient(os.Getenv("BIBLEIT_SCOPED_TOKEN"))
+		r, err = c.ReadPersonalChapter(ctx, identity.PersonalAccountID, "web", "19", "23", nil)
 		if err != nil {
 			t.Fatal(err)
 		}
-		if _, err = scoped.ListTokens(ctx); err != nil {
-			t.Fatal(err)
+		var chapter rest.ScriptureRead
+		err = r.Decode(&chapter)
+		r.Body.Close()
+		if err != nil || len(chapter.Verses) != 2 {
+			t.Fatal(chapter, err)
 		}
-		denied, err := NewClient(os.Getenv("BIBLEIT_DENIED_TOKEN"))
+		r, err = c.SearchPersonalScripture(ctx, identity.PersonalAccountID, "web", &rest.Options{Query: url.Values{"q": {"shepherd"}, "limit": {"100"}}})
 		if err != nil {
 			t.Fatal(err)
 		}
-		_, err = denied.ListTokens(ctx)
-		var serverErr *ServerError
-		if !errors.As(err, &serverErr) || serverErr.Code != "forbidden" {
-			t.Fatalf("scope rejection: %v", err)
+		var search rest.ScriptureSearch
+		err = r.Decode(&search)
+		r.Body.Close()
+		if err != nil || len(search.Verses) == 0 {
+			t.Fatal(search, err)
 		}
+		r, err = c.GetTranslation(ctx, "web", nil)
+		if err != nil {
+			t.Fatal(err)
+		}
+		var translation rest.CatalogueTranslation
+		err = r.Decode(&translation)
+		r.Body.Close()
+		if err != nil || translation.Slug != "web" {
+			t.Fatal(translation, err)
+		}
+		r, err = c.ListPersonalTranslations(ctx, identity.PersonalAccountID, nil)
+		if err != nil {
+			t.Fatal(err)
+		}
+		r.Body.Close()
 	})
-
-	t.Run("typed authorization exchange and revocation", func(t *testing.T) {
-		auth, err := NewAuthClient()
+	t.Run("scope and expiry enforcement", func(t *testing.T) {
+		scoped, _ := rest.NewClient(os.Getenv("BIBLEIT_SCOPED_TOKEN"), nil)
+		_, err := scoped.ListPersonalLives(ctx, identity.PersonalAccountID, nil)
+		restStatus(t, err, 403)
+		denied, _ := rest.NewClient(os.Getenv("BIBLEIT_DENIED_TOKEN"), nil)
+		_, err = denied.ReadPersonalVerse(ctx, identity.PersonalAccountID, "web", "19", "23", "1", nil)
+		restStatus(t, err, 403)
+		expired, _ := rest.NewClient(os.Getenv("BIBLEIT_EXPIRED_TOKEN"), nil)
+		_, err = expired.GetPersonalIdentity(ctx, nil)
+		restStatus(t, err, 401)
+	})
+	t.Run("browser exchange replay and revocation", func(t *testing.T) {
+		auth, _ := NewAuthClient()
+		request := CodeExchange{Code: os.Getenv("BIBLEIT_AUTH_CODE"), Verifier: os.Getenv("BIBLEIT_AUTH_VERIFIER"), DeviceName: "REST integration"}
+		issued, err := auth.ExchangeCode(ctx, request)
 		if err != nil {
 			t.Fatal(err)
 		}
-		request := CodeExchange{Code: os.Getenv("BIBLEIT_AUTH_CODE"), Verifier: os.Getenv("BIBLEIT_AUTH_VERIFIER"), DeviceName: "Go authorization integration"}
-		result, err := auth.ExchangeCode(ctx, request)
-		if err != nil {
-			t.Fatal(err)
-		}
-		if result.Actor != "security-owner" || result.TokenID == "" || result.IdentityName == "" || result.AccessToken == "" {
-			t.Fatal("missing authorization metadata")
-		}
-		credential, err := NewClient(result.AccessToken)
+		credential, err := NewClient(issued.AccessToken)
 		if err != nil {
 			t.Fatal(err)
 		}
 		t.Cleanup(func() { _ = credential.RevokeCredential(context.Background()) })
-		identity, err := credential.GetIdentity(ctx)
-		if err != nil || identity.Actor != "security-owner" {
-			t.Fatal("exchanged credential did not authenticate", err)
+		personal, _ := rest.NewClient(issued.AccessToken, nil)
+		r, err := personal.GetPersonalIdentity(ctx, nil)
+		if err != nil {
+			t.Fatal(err)
 		}
-		assertAuthError := func(err error, status int, code string) {
-			t.Helper()
-			var httpErr *HTTPError
-			if !errors.As(err, &httpErr) || httpErr.StatusCode != status || httpErr.Code != code {
-				t.Fatalf("authorization error: %v", err)
-			}
-		}
+		r.Body.Close()
 		_, err = auth.ExchangeCode(ctx, request)
-		assertAuthError(err, 400, "invalid_authorization_code")
-		invalid := CodeExchange{Code: os.Getenv("BIBLEIT_AUTH_BAD_CODE"), Verifier: "wrong-verifier", DeviceName: "Invalid verifier integration"}
+		var authError *HTTPError
+		if !errors.As(err, &authError) || authError.Code != "invalid_authorization_code" {
+			t.Fatal(err)
+		}
+		invalid := CodeExchange{Code: os.Getenv("BIBLEIT_AUTH_BAD_CODE"), Verifier: "wrong-verifier"}
 		_, err = auth.ExchangeCode(ctx, invalid)
-		assertAuthError(err, 400, "invalid_code_verifier")
+		if !errors.As(err, &authError) || authError.Code != "invalid_code_verifier" {
+			t.Fatal(err)
+		}
 		invalid.Verifier = request.Verifier
 		_, err = auth.ExchangeCode(ctx, invalid)
-		assertAuthError(err, 400, "invalid_authorization_code")
+		if !errors.As(err, &authError) || authError.Code != "invalid_authorization_code" {
+			t.Fatal(err)
+		}
 		if err = credential.RevokeCredential(ctx); err != nil {
 			t.Fatal(err)
 		}
-		_, err = credential.Ping(ctx)
-		var serverErr *ServerError
-		if !errors.As(err, &serverErr) || serverErr.Code != "unauthorized" {
-			t.Fatalf("revoked credential accepted: %v", err)
-		}
-		assertAuthError(credential.RevokeCredential(ctx), 401, "unauthorized")
+		_, err = personal.GetPersonalIdentity(ctx, nil)
+		restStatus(t, err, 401)
 	})
-
-	t.Run("expired token", func(t *testing.T) {
-		token := os.Getenv("BIBLEIT_EXPIRED_TOKEN")
-		if token == "" {
-			t.Fatal("missing expired-token fixture")
-		}
-		expired, err := NewClient(token)
+	t.Run("Live conditional lifecycle and cleanup", func(t *testing.T) {
+		r, err := c.CreatePersonalLive(ctx, identity.PersonalAccountID, &rest.Options{JSON: rest.CreateLive{Name: "REST integration"}, IdempotencyKey: "integration-live"})
 		if err != nil {
 			t.Fatal(err)
 		}
-		_, err = expired.Ping(ctx)
-		var httpErr *HTTPError
-		var serverErr *ServerError
-		if !(errors.As(err, &httpErr) && httpErr.StatusCode == 401) && !(errors.As(err, &serverErr) && serverErr.Code == "unauthorized") {
-			t.Fatalf("expired credential: %v", err)
+		var live rest.PersonalLiveSummary
+		err = r.Decode(&live)
+		r.Body.Close()
+		if err != nil || live.ID == "" {
+			t.Fatal(live, err)
 		}
-	})
-	t.Run("translations and read", func(t *testing.T) {
-		for _, makeCommand := range []func(string) (Command, error){AddTranslationCommand, RemoveTranslationCommand, AddTranslationCommand} {
-			cmd, err := makeCommand("web")
+		t.Cleanup(func() {
+			r, err := c.GetLive(context.Background(), live.ID, nil)
 			if err != nil {
-				t.Fatal(err)
+				return
 			}
-			if _, err := c.Execute(ctx, cmd); err != nil {
-				t.Fatal(err)
+			etag := r.Header.Get("ETag")
+			r.Body.Close()
+			r, err = c.DeleteLive(context.Background(), live.ID, &rest.Options{IfMatch: etag})
+			if err != nil {
+				t.Error(err)
+			} else {
+				r.Body.Close()
 			}
-		}
-		if _, err := c.ListTranslations(ctx); err != nil {
-			t.Fatal(err)
-		}
-		result, err := c.Read(ctx, Reference{Translation: "web", Book: "Psalms", Chapter: 23, Verse: 1})
+		})
+		r, err = c.GetLive(ctx, live.ID, nil)
 		if err != nil {
 			t.Fatal(err)
 		}
-		if !strings.Contains(result.Records[0].Fields["text"], "shepherd") {
-			t.Fatal("unexpected verse text")
-		}
-		result, err = c.Read(ctx, Reference{Translation: "web", Book: "19", Chapter: 23})
-		if err != nil || len(result.Records) != 3 {
-			t.Fatalf("chapter: records=%d error=%v", len(result.Records), err)
-		}
-		result, err = c.Search(ctx, "web", "shepherd")
-		if err != nil || len(result.Records) < 2 {
-			t.Fatalf("search: records=%d error=%v", len(result.Records), err)
-		}
-	})
-
-	t.Run("typed identity and reading", func(t *testing.T) {
-		identity, err := c.GetIdentity(ctx)
-		if err != nil || !identity.Authenticated || identity.Actor != "security-owner" || len(identity.Permissions) == 0 {
-			t.Fatalf("identity: %+v %v", identity, err)
-		}
-		verse, err := c.ReadVerses(ctx, Reference{Translation: "web", Book: "Psalms", Chapter: 23, Verse: 1})
-		if err != nil || len(verse.Verses) != 1 || verse.Verse == nil || *verse.Verse != 1 {
-			t.Fatalf("verse: %+v %v", verse, err)
-		}
-		chapter, err := c.ReadVerses(ctx, Reference{Translation: "web", Book: "19", Chapter: 23})
-		if err != nil || len(chapter.Verses) != 2 || chapter.Verse != nil {
-			t.Fatalf("chapter: %+v %v", chapter, err)
-		}
-		book, err := c.ReadVerses(ctx, Reference{Translation: "web", Book: "19"})
-		if err != nil || len(book.Verses) != 3 || book.Chapter != nil {
-			t.Fatalf("book: %+v %v", book, err)
-		}
-		search, err := c.SearchVerses(ctx, "web", "shepherd")
-		if err != nil || len(search.Verses) != 2 || search.Book != nil {
-			t.Fatalf("search: %+v %v", search, err)
-		}
-		empty, err := c.SearchVerses(ctx, "web", "no-match-xyz")
-		if err != nil || len(empty.Verses) != 0 {
-			t.Fatalf("empty search: %+v %v", empty, err)
-		}
-	})
-	t.Run("typed discovery and account", func(t *testing.T) {
-		info, err := c.GetServerInfo(ctx)
-		if err != nil || info.ProtocolVersion != 1 || len(info.Capabilities) == 0 {
-			t.Fatalf("server info: %+v %v", info, err)
-		}
-		help, err := c.Help(ctx, "account")
-		if err != nil || !help.Authenticated || len(help.Commands) == 0 {
-			t.Fatalf("help: %v", err)
-		}
-		account, err := c.GetAccountInfo(ctx)
-		if err != nil || account.Actor != "security-owner" || account.Tokens != 1 {
-			t.Fatalf("account: %+v %v", account, err)
-		}
-		quotas, err := c.ListQuotas(ctx)
-		if err != nil || len(quotas.Quotas) == 0 {
-			t.Fatalf("quotas: %v", err)
-		}
-	})
-
-	t.Run("translation metadata", func(t *testing.T) {
-		info, err := c.GetTranslationInfo(ctx, "web")
-		if err != nil || info.ShortName != "WEB" || info.RightsStatus != "public_domain" {
-			t.Fatalf("metadata: %+v %v", info, err)
-		}
-	})
-	t.Run("translation catalogue", func(t *testing.T) {
-		catalog, err := c.GetTranslationCatalog(ctx, "web")
+		etag := r.Header.Get("ETag")
+		r.Body.Close()
+		r, err = c.UpdateLiveMetadata(ctx, live.ID, &rest.Options{IfMatch: etag, JSON: rest.LiveMetadataPatch{Name: "Renamed"}})
 		if err != nil {
 			t.Fatal(err)
 		}
-		if len(catalog.Books) != 19 {
-			t.Fatalf("books: %d", len(catalog.Books))
-		}
-		book := catalog.Books[18]
-		if book.ID != 19 || book.Name != "Psalms" || len(book.Chapters) != 2 || book.Chapters[1].Number != 23 || book.Chapters[1].Verses != 2 {
-			t.Fatalf("Psalms: %+v", book)
-		}
-		_, err = c.GetTranslationCatalog(ctx, "not-a-translation")
-		var serverErr *ServerError
-		if !errors.As(err, &serverErr) || serverErr.Code != "translation_not_found" {
-			t.Fatalf("missing translation: %v", err)
-		}
-	})
-	created, err := c.CreateLive(ctx, "Client integration")
-	if err != nil {
-		t.Fatal(err)
-	}
-	id := created.Live.ID
-	var command Command
-	if id == "" {
-		t.Fatal("missing Live id")
-	}
-	defer func() {
-		if _, err := c.ControlLive(ctx, id, LiveDelete); err != nil {
-			t.Errorf("delete Live: %v", err)
-		}
-	}()
-
-	t.Run("live quota", func(t *testing.T) {
-		cmd, _ := CreateLiveCommand("Exceeds starter allowance")
-		_, err := c.Execute(ctx, cmd)
-		var serverErr *ServerError
-		if !errors.As(err, &serverErr) || serverErr.Code != "quota_exceeded" {
-			t.Fatalf("Live quota: %v", err)
-		}
-	})
-	t.Run("live push", func(t *testing.T) {
-		cmd, err := PushLiveCommand(id, Reference{Translation: "web", Book: "Psalms", Chapter: 23, Verse: 1})
+		etag = r.Header.Get("ETag")
+		r.Body.Close()
+		r, err = c.UpdateLivePlayback(ctx, live.ID, &rest.Options{IfMatch: etag, JSON: map[string]any{"status": "stopped"}})
 		if err != nil {
 			t.Fatal(err)
 		}
-		result, err := c.Execute(ctx, cmd)
+		r.Body.Close()
+		_, err = c.UpdateLivePlayback(ctx, live.ID, &rest.Options{IfMatch: etag, JSON: map[string]any{"status": "running"}})
+		restStatus(t, err, 412)
+		r, err = c.ListPersonalLives(ctx, identity.PersonalAccountID, nil)
 		if err != nil {
 			t.Fatal(err)
 		}
-		if len(result.Records) < 2 || !strings.Contains(result.Records[1].Fields["text"], "shepherd") {
-			t.Fatal("missing pushed verse")
-		}
+		r.Body.Close()
 	})
-
-	t.Run("typed Live results", func(t *testing.T) {
-		live, err := c.GetLive(ctx, id)
-		if err != nil || live.Live.ID != id || live.Live.Owned == nil || !*live.Live.Owned {
-			t.Fatalf("Live: %+v %v", live, err)
-		}
-		list, err := c.ListLives(ctx)
-		if err != nil || len(list.Lives) != 1 || list.Lives[0].ID != id {
-			t.Fatalf("list: %+v %v", list, err)
-		}
-		updated, err := c.SetLive(ctx, id, LiveName, "Typed integration")
-		if err != nil || updated.Live.Name != "Typed integration" {
-			t.Fatalf("set: %+v %v", updated, err)
-		}
-		stats, err := c.GetLiveStats(ctx, id)
-		if err != nil || stats.StackEntries != 1 || len(stats.Connections) != 0 {
-			t.Fatalf("stats: %+v %v", stats, err)
-		}
-		stack, err := c.GetLiveStack(ctx, id)
-		if err != nil || len(stack.Entries) != 1 || stack.Entries[0].Position != 1 {
-			t.Fatalf("stack: %+v %v", stack, err)
-		}
-		push, err := c.PushLive(ctx, id, Reference{Translation: "web", Book: "19", Chapter: 23, Verse: 2})
-		if err != nil || push.Event != "verse" || len(push.Verses) != 2 {
-			t.Fatalf("push: %+v %v", push, err)
-		}
-		pop, err := c.PopLive(ctx, id, 1)
-		if err != nil || pop.Event != "verse" || len(pop.Verses) != 1 {
-			t.Fatalf("pop: %+v %v", pop, err)
-		}
-		for _, action := range []LiveAction{LivePause, LiveResume, LiveStop, LiveStart, LiveClear} {
-			if _, err := c.ControlLive(ctx, id, action); err != nil {
-				t.Fatalf("%s: %v", action, err)
-			}
-		}
-		stack, err = c.GetLiveStack(ctx, id)
-		if err != nil || len(stack.Entries) != 0 {
-			t.Fatalf("cleared stack: %+v %v", stack, err)
-		}
-	})
-	for _, action := range []LiveAction{LiveInfo, LiveStats, LivePause, LiveStop, LiveStart} {
-		command, err = LiveCommand(id, action)
-		if err != nil {
-			t.Fatal(err)
-		}
-		if _, err = c.Execute(ctx, command); err != nil {
-			t.Fatalf("%s: %v", action, err)
-		}
-	}
-	result, err = c.Execute(ctx, LiveListCommand())
-	if err != nil || len(result.Records) < 2 {
-		t.Fatalf("Live list: %v", err)
-	}
-	cmd, _ := LiveCommand("not-a-live", LiveInfo)
-	_, err = c.Execute(ctx, cmd)
-	var serverErr *ServerError
-	if !errors.As(err, &serverErr) || serverErr.Code != "not_found" {
-		t.Fatalf("missing Live: %v", err)
-	}
 }

@@ -2,226 +2,79 @@ package bibleit
 
 import (
 	"context"
-	"encoding/json"
 	"errors"
-	"io"
 	"net/http"
 	"strings"
 	"testing"
-	"time"
 )
 
 type roundTripFunc func(*http.Request) (*http.Response, error)
 
 func (f roundTripFunc) RoundTrip(r *http.Request) (*http.Response, error) { return f(r) }
-func reply(status int, body string) *http.Response {
-	return &http.Response{StatusCode: status, Header: make(http.Header), Body: io.NopCloser(strings.NewReader(body))}
-}
-func testClient(t *testing.T, fn roundTripFunc) *Client {
-	t.Helper()
-	c, err := NewClientWithHTTPClient("bt_test", &http.Client{Transport: fn})
+func TestCredentialClientCannotSendCommands(t *testing.T) {
+	c, err := NewClientWithHTTPClient("bt_test", &http.Client{Transport: roundTripFunc(func(r *http.Request) (*http.Response, error) {
+		t.Fatal("credential client sent a command over HTTP", r.URL)
+		return nil, nil
+	})})
 	if err != nil {
 		t.Fatal(err)
 	}
-	return c
-}
-
-func TestHTTPRead(t *testing.T) {
-	c := testClient(t, func(r *http.Request) (*http.Response, error) {
-		if r.Method != "POST" || r.URL.Path != "/api/cli/command" || r.Header.Get("Authorization") != "Bearer bt_test" || r.Header.Get("Content-Type") != "application/json" {
-			t.Fatalf("unexpected request: %v", r)
-		}
-		var payload map[string]string
-		if err := json.NewDecoder(r.Body).Decode(&payload); err != nil {
-			t.Fatal(err)
-		}
-		if payload["command"] != `READ web "Song of Songs" 2 1` {
-			t.Fatalf("got %q", payload["command"])
-		}
-		return reply(200, "OK translation=\"web\" text=\"Verse\"\n"), nil
-	})
-	result, err := c.Read(context.Background(), Reference{Translation: "web", Book: "Song of Songs", Chapter: 2, Verse: 1})
-	if err != nil || result.Records[0].Fields["text"] != "Verse" {
-		t.Fatalf("%#v, %v", result, err)
+	if _, err = c.Ping(context.Background()); err == nil {
+		t.Fatal("command HTTP transport remains enabled")
 	}
 }
-
-func TestHTTPFailures(t *testing.T) {
-	for _, tc := range []struct {
-		name       string
-		status     int
-		body, code string
-		httpError  bool
-	}{
-		{"protocol-error", 200, "ERR forbidden\n", "forbidden", false},
-		{"unauthorized", 401, "not a protocol reply", "unauthorized", false},
-		{"rate-limit", 429, "ERR rate_limited retry_after_ms=250\n", "rate_limited", false},
-		{"http-error", 400, `{"error":"invalid_json"}`, "", true},
-		{"server-error", 503, "upstream failure", "", true},
-	} {
-		t.Run(tc.name, func(t *testing.T) {
-			calls := 0
-			c := testClient(t, func(*http.Request) (*http.Response, error) { calls++; return reply(tc.status, tc.body), nil })
-			_, err := c.Ping(context.Background())
-			if calls != 1 {
-				t.Fatalf("retried %d times", calls)
-			}
-			if tc.httpError {
-				var e *HTTPError
-				if !errors.As(err, &e) || e.StatusCode != tc.status {
-					t.Fatalf("got %v", err)
-				}
-			} else {
-				var e *ServerError
-				if !errors.As(err, &e) || e.Code != tc.code {
-					t.Fatalf("got %v", err)
-				}
-			}
-		})
+func TestSSHClientRequiresExplicitExecutor(t *testing.T) {
+	if _, err := NewSSHClient(nil); err == nil {
+		t.Fatal("accepted missing executor")
 	}
-}
-
-func TestRedirectIsNotFollowed(t *testing.T) {
 	calls := 0
-	c := testClient(t, func(*http.Request) (*http.Response, error) {
+	c, _ := NewSSHClient(func(ctx context.Context, cmd Command) (Response, error) {
 		calls++
-		res := reply(307, "")
-		res.Header.Set("Location", "https://another.example/api/cli/command")
-		return res, nil
+		if cmd.String() != "PING" {
+			t.Fatal(cmd)
+		}
+		return DecodeCommandResponse(cmd, strings.NewReader("OK pong=true\n"))
 	})
-	_, err := c.Ping(context.Background())
-	var e *HTTPError
-	if !errors.As(err, &e) || e.StatusCode != 307 || calls != 1 {
-		t.Fatalf("calls=%d, err=%v", calls, err)
-	}
-}
-
-func TestCancellation(t *testing.T) {
-	c := testClient(t, func(r *http.Request) (*http.Response, error) { <-r.Context().Done(); return nil, r.Context().Err() })
-	ctx, cancel := context.WithCancel(context.Background())
-	cancel()
-	_, err := c.Ping(ctx)
-	if !errors.Is(err, context.Canceled) {
-		t.Fatalf("got %v", err)
-	}
-}
-
-func TestHTTPRejectsStreamingAndZeroCommandLocally(t *testing.T) {
-	c := testClient(t, func(*http.Request) (*http.Response, error) { t.Fatal("unexpected request"); return nil, nil })
-	subscribe, err := LiveCommand("abc", LiveSubscribe)
-	if err != nil {
-		t.Fatal(err)
-	}
-	_, err = c.Execute(context.Background(), subscribe)
-	var e *ServerError
-	if !errors.As(err, &e) || e.Code != "streaming_requires_ssh" {
-		t.Fatalf("got %v", err)
+	res, err := c.Ping(context.Background())
+	if err != nil || res.Records[0].Fields["pong"] != "true" || calls != 1 {
+		t.Fatal(res, err, calls)
 	}
 	if _, err = c.Execute(context.Background(), Command{}); err == nil {
 		t.Fatal("accepted zero command")
 	}
+	if _, err = c.Execute(context.Background(), Command{wire: strings.Repeat("x", MaxCommandBytes+1)}); err == nil {
+		t.Fatal("accepted oversized command")
+	}
+	sub, _ := LiveCommand("L1", LiveSubscribe)
+	if _, err = c.Execute(context.Background(), sub); err == nil {
+		t.Fatal("finite executor accepted subscription")
+	}
+	ctx, cancel := context.WithCancel(context.Background())
+	cancel()
+	if _, err = c.Ping(ctx); !errors.Is(err, context.Canceled) {
+		t.Fatal(err)
+	}
+	if err := c.RevokeCredential(context.Background()); err == nil {
+		t.Fatal("SSH executor accepted browser revocation")
+	}
+	if calls != 1 {
+		t.Fatal("invalid operation reached executor")
+	}
 }
-
-func TestInternalTransportValidation(t *testing.T) {
-	for _, endpoint := range []string{"http://remote.example", "https://user:pass@example.com", "https://example.com?token=secret", "https://example.com#fragment", "missing"} {
+func TestCredentialTransportAndValidation(t *testing.T) {
+	for _, token := range []string{"", " ", "bad\ntoken", "bad\r", "bad\x00"} {
+		if _, err := NewClient(token); err == nil {
+			t.Fatal("invalid token accepted")
+		}
+	}
+	for _, endpoint := range []string{"http://remote.example", "https://user:secret@example.com", "https://example.com?secret=x", "https://example.com#fragment", "invalid"} {
 		if _, _, err := newHTTPTransport(endpoint, nil); err == nil {
-			t.Fatalf("accepted %s", endpoint)
+			t.Fatal(endpoint)
 		}
 	}
-	for _, endpoint := range []string{"https://example.com", "http://127.0.0.1:8080", "http://localhost:8080", "http://[::1]:8080"} {
-		if _, _, err := newHTTPTransport(endpoint, nil); err != nil {
-			t.Fatalf("%s: %v", endpoint, err)
-		}
-	}
-}
-
-func TestRequestSizeLimitsBeforeNetwork(t *testing.T) {
-	c := testClient(t, func(*http.Request) (*http.Response, error) {
-		t.Fatal("oversized request reached transport")
-		return nil, nil
-	})
-	for _, wire := range []string{strings.Repeat("é", 4097), strings.Repeat("<", 8000)} {
-		_, err := c.Execute(context.Background(), Command{wire: wire})
-		var e *RequestSizeError
-		if !errors.As(err, &e) {
-			t.Fatalf("got %v", err)
-		}
-	}
-}
-
-func TestHTTPJSONErrorMetadata(t *testing.T) {
-	c := testClient(t, func(*http.Request) (*http.Response, error) {
-		return reply(413, `{"error":"request_too_large","limit":8192,"future":"kept"}`), nil
-	})
-	_, err := c.Ping(context.Background())
-	var e *HTTPError
-	if !errors.As(err, &e) || e.StatusCode != 413 || e.Code != "request_too_large" || e.Fields["future"] != "kept" {
-		t.Fatalf("got %#v", err)
-	}
-}
-
-func TestPublicClientsUseProjectEndpoint(t *testing.T) {
-	t.Setenv("BIBLEIT_ENDPOINT", "https://other.example")
-	paths := []string{}
-	transport := &http.Client{Transport: roundTripFunc(func(r *http.Request) (*http.Response, error) {
-		if r.URL.Scheme+"://"+r.URL.Host != ServerEndpoint {
-			t.Fatalf("unexpected destination: %s", r.URL)
-		}
-		paths = append(paths, r.URL.Path)
-		switch r.URL.Path {
-		case "/api/cli/token":
-			return reply(200, `{"actor":"user","access_token":"bt_test"}`), nil
-		case "/api/cli/logout":
-			return reply(204, ""), nil
-		default:
-			return reply(200, "OK pong=true\n"), nil
-		}
-	})}
-	client, err := NewClientWithHTTPClient("bt_test", transport)
-	if err != nil {
-		t.Fatal(err)
-	}
-	auth, err := NewAuthClientWithHTTPClient(transport)
-	if err != nil {
-		t.Fatal(err)
-	}
-	if _, err := client.Ping(context.Background()); err != nil {
-		t.Fatal(err)
-	}
-	if _, err := auth.ExchangeCode(context.Background(), CodeExchange{Code: "code", Verifier: "verifier"}); err != nil {
-		t.Fatal(err)
-	}
-	if err := client.RevokeCredential(context.Background()); err != nil {
-		t.Fatal(err)
-	}
-	if strings.Join(paths, ",") != "/api/cli/command,/api/cli/token,/api/cli/logout" {
-		t.Fatal(paths)
-	}
-}
-
-func TestSimpleClientRejectsInvalidAPITokens(t *testing.T) {
-	calls := 0
-	httpClient := &http.Client{Transport: roundTripFunc(func(*http.Request) (*http.Response, error) {
-		calls++
-		return reply(200, "OK pong=true\n"), nil
-	})}
-	for _, apiToken := range []string{"", " \t", "bad\r\ntoken", "bad\x00token"} {
-		if _, err := NewClient(apiToken); err == nil {
-			t.Fatal("simple constructor accepted an invalid API token")
-		}
-		if _, err := NewClientWithHTTPClient(apiToken, httpClient); err == nil {
-			t.Fatal("custom constructor accepted an invalid API token")
-		}
-	}
-	if calls != 0 {
-		t.Fatal("constructor made a request")
-	}
-	client, err := NewClient("bt_test")
-	if err != nil || client.endpoint != ServerEndpoint || client.apiToken != "bt_test" || client.http.Timeout != 15*time.Second {
-		t.Fatal("invalid default client", err)
-	}
-	auth, err := NewAuthClient()
-	if err != nil || auth.endpoint != ServerEndpoint || auth.http.Timeout != 15*time.Second {
-		t.Fatal("invalid default auth client", err)
+	supplied := &http.Client{}
+	c, err := NewClientWithHTTPClient("bt_test", supplied)
+	if err != nil || c.http == supplied || supplied.CheckRedirect != nil || c.http.CheckRedirect(nil, nil) != http.ErrUseLastResponse {
+		t.Fatal("credential transport must copy client and block redirects", err)
 	}
 }

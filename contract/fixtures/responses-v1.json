@@ -15,12 +15,12 @@
   },
   {
     "name": "unicode-and-escapes",
-    "wire": "OK text=\"Jo\u00e3o \\\"amor\\\" \\\\ caminho\" empty=\"\"\n",
+    "wire": "OK text=\"João \\\"amor\\\" \\\\ caminho\" empty=\"\"\n",
     "records": [
       {
         "type": "ok",
         "fields": {
-          "text": "Jo\u00e3o \"amor\" \\ caminho",
+          "text": "João \"amor\" \\ caminho",
           "empty": ""
         }
       }
@@ -81,27 +81,8 @@
     "server_response_term": "{ok,{live_stats,#{subscribers=>[#{id=><<\"c1\">>}],connections=>1,future=>true}}}"
   },
   {
-    "name": "legacy-live-stats-identical-duplicates",
-    "wire": "OK connections=1 connections=1 future=true\nCONNECTION id=\"c1\"\nEND\n",
-    "records": [
-      {
-        "type": "ok",
-        "fields": {
-          "connections": "1",
-          "future": "true"
-        }
-      },
-      {
-        "type": "connection",
-        "fields": {
-          "id": "c1"
-        }
-      }
-    ]
-  },
-  {
     "name": "live-push",
-    "wire": "OK event=verse translations=1\nVERSE translation=\"web\" reference=\"\" text=\"John 3:16\"\nEND\n",
+    "wire": "OK event=verse translations=1\nVERSE translation=\"web\" reference=\"\" text=\"John 3:16\" attribution=\"\"\nEND\n",
     "records": [
       {
         "type": "ok",
@@ -115,7 +96,8 @@
         "fields": {
           "translation": "web",
           "text": "John 3:16",
-          "reference": ""
+          "reference": "",
+          "attribution": ""
         }
       }
     ],
@@ -353,7 +335,7 @@
   },
   {
     "name": "typed-live-stack",
-    "wire": "OK id=\"live\" count=1\nSTACK position=1 translation=\"web\" reference=\"Psalms 23:1\" text=\"Fixture verse\"\nEND\n",
+    "wire": "OK id=\"live\" count=1\nSTACK position=1 translation=\"web\" reference=\"Psalms 23:1\" text=\"Fixture verse\" attribution=\"\"\nEND\n",
     "records": [
       {
         "type": "ok",
@@ -368,7 +350,8 @@
           "position": "1",
           "translation": "web",
           "reference": "Psalms 23:1",
-          "text": "Fixture verse"
+          "text": "Fixture verse",
+          "attribution": ""
         }
       }
     ],
@@ -395,7 +378,7 @@
       {
         "type": "ok",
         "fields": {
-          "label": "first\nsecond\r\t\u0001\u007f"
+          "label": "first\nsecond\r\t\u0001"
         }
       }
     ],

@@ -96,6 +96,9 @@ func (c *AuthClient) ExchangeCode(ctx context.Context, exchange CodeExchange) (A
 // RevokeCredential revokes this client's bearer credential via CLI logout.
 // Only HTTP 204 is a successful acknowledgement; errors never mutate the client.
 func (c *Client) RevokeCredential(ctx context.Context) error {
+	if c.http == nil || c.apiToken == "" {
+		return errors.New("browser credential client required for revocation")
+	}
 	req, err := http.NewRequestWithContext(ctx, http.MethodPost, c.endpoint+"/api/cli/logout", nil)
 	if err != nil {
 		return err

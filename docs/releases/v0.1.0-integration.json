@@ -1,0 +1,38 @@
+{
+  "release_date": "2026-10-19",
+  "sdk_release": "v0.1.0",
+  "cli_release": "v0.1.0",
+  "server_revision": "7eceda4f722e529b930257e9d9f4675b793873b7",
+  "catalogue_qualified_server_revision": "7eceda4f722e529b930257e9d9f4675b793873b7",
+  "server_source_dirty": false,
+  "openapi_sha256": "c2ff4bc73d72be4145abef29363e20907cb717555b3ce6f2000751fe3e953ef7",
+  "isolation": {
+    "disposable_database": true,
+    "egress_disabled_containers": true,
+    "verified_loopback_https": true,
+    "production_mutations": false
+  },
+  "passed": [
+    "37 SSH request decoder fixtures",
+    "18 SSH response encoder fixtures including attribution",
+    "SDK REST identity, scripture, search, translation metadata and library",
+    "Scoped and expired personal token enforcement",
+    "Browser CLI code exchange, replay rejection, bad-verifier consumption and revocation",
+    "Personal Live creation, conditional metadata/playback writes, stale-ETag rejection and cleanup",
+    "CLI REST commands and schema-version-2 output",
+    "SSH subscriptions, pause/reconnect/closure, connection statistics and changed-host-key rejection",
+    "Server authentication/security cases and six server EUnit modules",
+    "Import access and atomic publication suites",
+    "Sparse REST verse IDs, missing-verse 404 and canonical reviewed book coverage",
+    "Five SSH sparse catalogue/read cases and failed-index publication preserves previous generation",
+    "Standalone SDK race tests, vet and generated REST contract verification",
+    "CLI workspace race tests"
+  ],
+  "remaining_release_gates": [
+    "SDK native GitHub checks",
+    "SDK publication",
+    "CLI published-SDK dependency verification",
+    "CLI native/candidate checks",
+    "CLI publication"
+  ]
+}

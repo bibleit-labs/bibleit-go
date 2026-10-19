@@ -3,7 +3,6 @@ package bibleit
 import (
 	"context"
 	"encoding/json"
-	"net/http"
 	"os"
 	"strings"
 	"testing"
@@ -27,7 +26,7 @@ func TestOrganizationTypedFixtureResults(t *testing.T) {
 			continue
 		}
 		t.Run(tc.Name, func(t *testing.T) {
-			client := testClient(t, func(r *http.Request) (*http.Response, error) { return reply(200, tc.Wire), nil })
+			client := discoveryClient(t, map[string]string{"ORGANIZATION LIST": tc.Wire, "ORGANIZATION APPLICATION application-fixture STATUS": tc.Wire})
 			if strings.Contains(tc.Name, "directory") {
 				value, err := client.ListOrganizations(context.Background(), "")
 				if err != nil {
@@ -76,9 +75,7 @@ func TestOrganizationBuildersAndUnknownStates(t *testing.T) {
 	if cmd, err := HelpCommand("organization"); err != nil || cmd.String() != "HELP ORGANIZATION" {
 		t.Fatalf("%s %v", cmd.String(), err)
 	}
-	client := testClient(t, func(r *http.Request) (*http.Response, error) {
-		return reply(200, "OK application_id=id name=Example domain=example.org state=future_state next_action=future_action verification_url=/organizations/applications/id future=kept\n"), nil
-	})
+	client := discoveryClient(t, map[string]string{"ORGANIZATION APPLICATION id STATUS": "OK application_id=id name=Example domain=example.org state=future_state next_action=future_action verification_url=/organizations/applications/id future=kept\n"})
 	value, err := client.GetOrganizationApplicationStatus(context.Background(), "id")
 	if err != nil || value.Application.State != "future_state" || value.Application.Fields["future"] != "kept" {
 		t.Fatalf("%+v %v", value, err)
@@ -86,7 +83,7 @@ func TestOrganizationBuildersAndUnknownStates(t *testing.T) {
 }
 
 func TestOrganizationTypedCountMismatch(t *testing.T) {
-	client := testClient(t, func(r *http.Request) (*http.Response, error) { return reply(200, "OK count=1\nEND\n"), nil })
+	client := discoveryClient(t, map[string]string{"ORGANIZATION LIST": "OK count=1\nEND\n"})
 	if _, err := client.ListOrganizations(context.Background(), ""); err == nil {
 		t.Fatal("accepted wrong directory count")
 	}

@@ -1,208 +1,86 @@
 # Bibleit Go client
 
-A dependency-free Go client for reading and searching Bible translations,
-managing Lives, and inspecting your Bibleit account. It connects to the project-managed service at `https://bibleit.app`.
+A dependency-free Go SDK for Bibleit REST resources, registered OAuth clients,
+and SSH command construction/decoding. HTTP resources use the pinned
+`https://api.bibleit.app/v1` service. Browser authentication uses
+`https://bibleit.app`. There is no command-style HTTP transport.
 
-The client is released independently from the [Bibleit CLI](https://github.com/bibleit-labs/bibleit-cli).
-Use the Go toolchain specified in [go.mod](go.mod). The CLI imports this library;
-the library does not depend
-on CLI configuration or credential storage.
+The module is released independently from the [Bibleit CLI](https://github.com/bibleit-labs/bibleit-cli).
+Use the Go version in [go.mod](go.mod). The SDK does not read CLI configuration,
+open browsers, store credentials, or depend on the CLI.
 
 ## Installation
-
-Install the public module using ordinary Go module proxy and checksum verification:
 
 ```sh
 go get github.com/bibleit-labs/bibleit-go
 ```
 
-A sibling CLI checkout or Go workspace is not required. See
-[contributing](CONTRIBUTING.md) for standalone development.
+## REST resources
 
-## Quickstart
-
-Supply an **API token** to `bibleit.NewClient(apiToken)`. The application chooses
-where to obtain the token; the library does not read environment variables.
+Import `github.com/bibleit-labs/bibleit-go/rest`. The client includes all 66 REST
+operations, generated schemas, response metadata, conditional writes, binary
+streams and versioned Live event polling. See [REST usage](rest/README.md) and
+the [runnable reading example](examples/read/main.go).
 
 ```go
-package main
-
-import (
-    "context"
-    "fmt"
-    "log"
-    "os"
-
-    bibleit "github.com/bibleit-labs/bibleit-go"
-)
-
-func main() {
-    client, err := bibleit.NewClient(os.Getenv("BIBLEIT_TOKEN"))
-    if err != nil {
-        log.Fatal(err)
-    }
-
-    reading, err := client.ReadVerses(context.Background(), bibleit.Reference{
-        Translation: "web",
-        Book:        "John",
-        Chapter:     3,
-        Verse:       16,
-    })
-    if err != nil {
-        log.Fatal(err)
-    }
-    for _, verse := range reading.Verses {
-        fmt.Println(verse.Text)
-    }
-}
+client, err := rest.NewClient(token, nil)
+if err != nil { return err }
+response, err := client.GetPersonalIdentity(ctx, nil)
+if err != nil { return err }
+defer response.Body.Close()
+var identity rest.PersonalIdentity
+if err := response.Decode(&identity); err != nil { return err }
+fmt.Println(identity.ID, identity.PersonalAccountID)
 ```
 
-Use a translation enabled for your account; `web` is an example.
-The translation catalogue supplies book identifiers and names, which may be localized.
-Omit `Verse` to read a chapter, or both `Chapter` and `Verse` to read a book.
+Credentials are explicit: finite personal `bt_`, delegated `oa_`, or organization
+`svc_` tokens. The server enforces their separate scopes and resource boundaries.
+`ProblemError` exposes HTTP status, stable code, request ID and response headers.
+Operations never retry automatically; redirects are blocked and TLS verification
+is enabled. The host cannot be overridden through configuration or environment.
 
-The constructor returns `(*Client, error)` and validates the API token before
-network access. Constructor errors do not include its value.
+## SSH protocol helpers
 
-## API overview
-
-| Methods | Purpose |
-| --- | --- |
-| `Ping`, `GetServerInfo`, `Help` | Inspect service availability and capabilities |
-| `GetIdentity`, `GetAccountInfo`, `ListQuotas` | Inspect identity, account details, and limits |
-| `ListTokens` | Inspect active personal token metadata |
-| `ListTranslations`, `GetTranslationInfo`, `GetTranslationCatalog` | Discover translations and their references |
-| `ReadVerses`, `SearchVerses` | Return typed readings and search results |
-| `CreateLive`, `ListLives`, `GetLive`, `SetLive` | Create, discover, and configure Lives |
-| `GetLiveStats`, `GetLiveStack`, `PushLive`, `PopLive`, `ControlLive` | Inspect and control Lives and their stacks |
-
-`Read`, `Search`, and `Identity` return protocol responses for callers that need
-records directly. `Execute` accepts validated command builders for additional
-operations such as translation add/remove and Live secret management. There is
-no arbitrary protocol-string constructor. `Command.String()` is intended for
-transport adapters and may contain a Live secret; avoid logging it.
-
-Typed results preserve `Raw` records and unknown fields. Parsers reject malformed
-numbers/booleans, conflicting duplicates, inconsistent counts, and invalid stack
-positions instead of silently accepting them. Unknown status, role, permission,
-and error-code strings remain available.
-
-### Translation metadata and catalogue
-
-`GetTranslationInfo(ctx, slug)` returns names, edition, update label, rights,
-attribution, and trademark details when supplied.
-`GetTranslationCatalog(ctx, slug)` returns ordered books and chapters.
-Book IDs are server identifiers, not array positions; IDs and chapter numbers may be sparse.
-Metadata availability does not guarantee installation or account enablement.
-
-A catalogue chapter's `Verses` is the highest source verse identifier, not a dense
-count. Editions may omit verse numbers: an omitted individual verse returns
-`verse_not_found`, while a chapter read contains the available rows.
-Source numbering is preserved.
-
-### Readings and Lives
-
-`Reading.Book`, `Chapter`, and `Verse` reflect coordinates supplied by the response
-header. Chapter/book reads and search results contain verse text without invented
-per-verse coordinates. Search coordinates are normally nil. Empty searches and
-stacks return empty slices.
-
-Optional Live management fields use pointers so absence differs from false, zero,
-or an empty string. Public list/create replies may omit owner-only metadata.
-`ControlLive` accepts START, STOP, PAUSE, RESUME, CLEAR, and DELETE and returns the
-acknowledgement without a follow-up request. Push/pop retain all verse entries,
-including repeated translation names.
-
-### Token metadata
-
-`ListTokens(ctx)` returns active personal credential metadata: IDs, sources,
-issuers, labels, scopes, timestamps, and retirement status when supplied.
-It returns no bearer values and is not a credential history; revoked and expired
-tokens are excluded. Missing scopes remain nil; an explicitly empty list means
-the credential inherits the actor's current permissions. Scopes restrict access
-and do not guarantee effective permissions.
-
-## Behavior and current limits
-
-- The service endpoint is fixed. Constructors and environment variables cannot
-  override it. HTTPS certificate verification stays enabled and redirects are blocked.
-- All requests accept a context. The default HTTP timeout is 15 seconds.
-  Operations are never retried automatically; a decoding failure after a mutation
-  does not imply rollback.
-- Use `NewClientWithHTTPClient(apiToken, httpClient)` or
-  `NewAuthClientWithHTTPClient(httpClient)` to customize transport and timeout.
-  The supplied `http.Client` value is copied; its `Transport` and `Jar` remain
-  shared. A custom client controls its own timeout, but redirects remain blocked.
-- Commands are limited to 8192 bytes, JSON request bodies to 16384 bytes, and
-  finite responses to 2 MiB. Oversized or incomplete responses fail explicitly.
-- Request arguments support quoted whitespace, but embedded double quotes, CR,
-  LF, and NUL are rejected. Backslashes are literal in requests. Escaped response
-  strings do not define a request escape syntax.
-- Live secrets are generated by the server through CREATE/ROTATE. Custom SECRET
-  SET is unsupported and rejected by the client.
-- HTTP subscriptions return `streaming_requires_ssh`. OpenSSH execution and
-  subscriptions are provided by the CLI, not this HTTP library.
-- Browser authorization and credential storage belong to the application.
-  The library provides code exchange and credential revocation.
-
-Use `errors.As` with `*bibleit.ServerError` for protocol errors and `RetryAfter()`
-for rate-limit metadata. `*bibleit.HTTPError` represents HTTP failures without a
-usable protocol error and preserves available JSON error codes/metadata.
-
-See the [protocol contract](contract/README.md) and
-[feature coverage](contract/features.md) for compatibility details.
-
-## Browser authorization
-
-Use `NewAuthClient()` before an API token exists. Your application owns PKCE
-verifier generation, browser authorization, callback-state validation, and storage.
-Exchange an approved code, then construct an authenticated client:
+The parent `bibleit` package contains validated command builders, response parsers
+and typed domain helpers for SSH. It does not open SSH connections. Applications
+supply their own SSH executor to `NewSSHClient`:
 
 ```go
-auth, err := bibleit.NewAuthClient()
-if err != nil {
-    return err
-}
-credential, err := auth.ExchangeCode(ctx, bibleit.CodeExchange{
-    Code: code, Verifier: verifier, DeviceName: "My application",
+client, err := bibleit.NewSSHClient(func(ctx context.Context, cmd bibleit.Command) (bibleit.Response, error) {
+    // Execute cmd.String() over your verified SSH connection, then decode stdout.
+    return bibleit.DecodeCommandResponse(cmd, stdout)
 })
-if err != nil {
-    return err
-}
-client, err := bibleit.NewClient(credential.AccessToken)
-if err != nil {
-    return err
-}
 ```
 
-`AuthorizationResult` and its `Fields` contain the bearer value; avoid logging them.
-An authorization code is single-use, including when an invalid verifier consumes it.
-Omitting `DeviceName` uses the server's default label.
+The executor owns SSH authentication, host-key verification and connection
+lifetime. The CLI uses OpenSSH to `bibleit.app:22`. Persistent Live subscriptions
+use the streaming protocol directly, rather than the finite executor.
+[Protocol fixtures](contract/README.md) document quoting and response framing.
+No command-to-REST adapter is provided. Bearer credential clients cannot execute
+commands; `NewClient` / `NewClientWithHTTPClient` remain only for browser-issued
+CLI credential revocation.
 
-Call `client.RevokeCredential(ctx)` to revoke the credential. Only HTTP 204 is
-accepted as success. Revocation does not erase local storage or modify the client;
-subsequent authenticated requests with that credential are expected to fail.
+## Browser login and registered OAuth
+
+`NewAuthClient` / `NewAuthClientWithHTTPClient` exchange an approved CLI browser
+code with `ExchangeCode`. The application validates callback state, supplies the
+PKCE verifier and securely stores the result. Revoke that browser-issued CLI
+credential with `NewClient(token).RevokeCredential(ctx)` (handling construction
+errors as usual). The token exchange and logout endpoints remain supported.
+
+For registered delegated OAuth clients use the separate `rest.NewOAuthClient`:
+S256 consent URLs, metadata, code exchange, refresh rotation and revocation stay
+on the website origin. Codes and refresh tokens are single-use. The SDK never
+retries an ambiguous exchange or refresh attempt.
 
 ## Development
 
-From this repository, using the toolchain in go.mod:
+See [CONTRIBUTING.md](CONTRIBUTING.md), [SECURITY.md](SECURITY.md), and the
+[REST contract regeneration instructions](rest/README.md#updating-the-contract).
 
 ```sh
 GOWORK=off go test -race ./...
 GOWORK=off go vet ./...
 ```
 
-Unit tests use in-memory transports. Shared protocol fixtures live in
-`contract/fixtures/responses-v1.json`. Native CI covers Linux, macOS, and Windows.
-
-See the [changelog](CHANGELOG.md) and [contributing guide](CONTRIBUTING.md).
-Contributions use Conventional Commits. Licensed under [MIT](LICENSE).
-
-The MIT software license does not grant rights to Bible translations returned by
-the service, account access or quotas. Report vulnerabilities privately through
-[SECURITY.md](SECURITY.md).
-
-Organization verification reads use `ListOrganizations(ctx, cursor)` and
-`GetOrganizationApplicationStatus(ctx, id)`. Discover `organization_status` with
-`GetServerInfo` before using them against older servers. Applications grant no
-operating rights until Bibleit admin approval; membership is invitation-only.
+Licensed under [MIT](LICENSE).

@@ -1,19 +1,16 @@
 package bibleit
 
 import (
-	"bytes"
 	"context"
-	"encoding/json"
 	"errors"
 	"fmt"
-	"io"
 	"net/http"
 	"net/url"
 	"strings"
 	"time"
 )
 
-// ServerEndpoint is the project-managed Bibleit service address. Applications
+// ServerEndpoint is the project-managed browser authentication origin. Applications
 // cannot override it through configuration or environment variables. HTTPS
 // certificate verification is enabled by the default transport.
 const ServerEndpoint = "https://bibleit.app"
@@ -38,16 +35,18 @@ type Client struct {
 	endpoint string
 	apiToken string
 	http     *http.Client
+	execute  func(context.Context, Command) (Response, error)
 }
 
-// NewClient creates a client using an API token and the project-managed service.
+// NewClient creates a credential client for browser-issued CLI token revocation.
+// It cannot execute commands. Use package rest for HTTP resource operations.
 // The default HTTP timeout is 15 seconds. Operations are never retried automatically.
 func NewClient(apiToken string) (*Client, error) {
 	return NewClientWithHTTPClient(apiToken, nil)
 }
 
-// NewClientWithHTTPClient configures HTTP transport/timeouts while retaining the
-// fixed service endpoint. The supplied HTTP client is copied and redirects blocked.
+// NewClientWithHTTPClient configures browser-credential revocation transport/timeouts.
+// The origin stays fixed; the supplied client is copied and redirects are blocked.
 func NewClientWithHTTPClient(apiToken string, httpClient *http.Client) (*Client, error) {
 	if strings.TrimSpace(apiToken) == "" || strings.ContainsAny(apiToken, "\r\n\x00") {
 		return nil, errors.New("a valid API token is required")
@@ -90,61 +89,32 @@ func (e *HTTPError) Error() string {
 	return fmt.Sprintf("Bibleit HTTP request failed with status %d", e.StatusCode)
 }
 
+// NewSSHClient binds command helpers to an explicit caller-owned SSH executor.
+// Bearer credential clients cannot execute commands; use package rest for HTTP.
+func NewSSHClient(execute func(context.Context, Command) (Response, error)) (*Client, error) {
+	if execute == nil {
+		return nil, errors.New("an SSH command executor is required")
+	}
+	return &Client{execute: execute}, nil
+}
+
 func (c *Client) Execute(ctx context.Context, command Command) (Response, error) {
+	if c.execute == nil {
+		return Response{}, errors.New("command HTTP transport has been removed; use the REST client or an explicit SSH executor")
+	}
 	if command.wire == "" {
 		return Response{}, errors.New("invalid zero-value command")
 	}
 	if command.streaming {
-		return Response{}, &ServerError{Code: "streaming_requires_ssh"}
+		return Response{}, errors.New("streaming commands require a persistent SSH subscription")
 	}
 	if len(command.wire) > MaxCommandBytes {
 		return Response{}, &RequestSizeError{Part: "command", Bytes: len(command.wire), Limit: MaxCommandBytes}
 	}
-	body, err := json.Marshal(map[string]string{"command": command.wire})
-	if err != nil {
+	if err := ctx.Err(); err != nil {
 		return Response{}, err
 	}
-	if len(body) > MaxRequestBytes {
-		return Response{}, &RequestSizeError{Part: "JSON body", Bytes: len(body), Limit: MaxRequestBytes}
-	}
-	req, err := http.NewRequestWithContext(ctx, http.MethodPost, c.endpoint+"/api/cli/command", bytes.NewReader(body))
-	if err != nil {
-		return Response{}, err
-	}
-	req.Header.Set("Authorization", "Bearer "+c.apiToken)
-	req.Header.Set("Content-Type", "application/json")
-	res, err := c.http.Do(req)
-	if err != nil {
-		return Response{}, err
-	}
-	defer res.Body.Close()
-	responseBody, readErr := io.ReadAll(io.LimitReader(res.Body, maxResponseBytes+1))
-	if readErr != nil {
-		return Response{}, readErr
-	}
-	if len(responseBody) > maxResponseBytes {
-		return Response{}, errors.New("protocol response exceeds 2 MiB")
-	}
-	response, decodeErr := DecodeCommandResponse(command, bytes.NewReader(responseBody))
-	if res.StatusCode < 200 || res.StatusCode >= 300 {
-		var serverErr *ServerError
-		if errors.As(decodeErr, &serverErr) {
-			return Response{}, serverErr
-		}
-		var fields map[string]any
-		if json.Unmarshal(responseBody, &fields) == nil {
-			if code, ok := fields["error"].(string); ok {
-				return Response{}, &HTTPError{StatusCode: res.StatusCode, Code: code, Fields: fields}
-			}
-		}
-	}
-	if res.StatusCode == http.StatusUnauthorized {
-		return Response{}, &ServerError{Code: "unauthorized"}
-	}
-	if res.StatusCode < 200 || res.StatusCode >= 300 {
-		return Response{}, &HTTPError{StatusCode: res.StatusCode}
-	}
-	return response, decodeErr
+	return c.execute(ctx, command)
 }
 
 func (c *Client) Read(ctx context.Context, ref Reference) (Response, error) {

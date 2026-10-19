@@ -1,4 +1,4 @@
-// Read a verse using explicit server credentials supplied by the application.
+// Read a verse using a finite personal token supplied by the application.
 package main
 
 import (
@@ -7,7 +7,7 @@ import (
 	"os"
 	"os/signal"
 
-	bibleit "github.com/bibleit-labs/bibleit-go"
+	"github.com/bibleit-labs/bibleit-go/rest"
 )
 
 func main() {
@@ -17,17 +17,32 @@ func main() {
 	}
 }
 func run() error {
-	client, err := bibleit.NewClient(os.Getenv("BIBLEIT_TOKEN"))
+	c, err := rest.NewClient(os.Getenv("BIBLEIT_TOKEN"), nil)
 	if err != nil {
 		return err
 	}
 	ctx, cancel := signal.NotifyContext(context.Background(), os.Interrupt)
 	defer cancel()
-	result, err := client.ReadVerses(ctx, bibleit.Reference{Translation: "web", Book: "John", Chapter: 3, Verse: 16})
+	r, err := c.GetPersonalIdentity(ctx, nil)
 	if err != nil {
 		return err
 	}
-	for _, verse := range result.Verses {
+	var identity rest.PersonalIdentity
+	err = r.Decode(&identity)
+	r.Body.Close()
+	if err != nil {
+		return err
+	}
+	r, err = c.ReadPersonalVerse(ctx, identity.PersonalAccountID, "web", "43", "3", "16", nil)
+	if err != nil {
+		return err
+	}
+	defer r.Body.Close()
+	var reading rest.ScriptureRead
+	if err = r.Decode(&reading); err != nil {
+		return err
+	}
+	for _, verse := range reading.Verses {
 		fmt.Println(verse.Text)
 	}
 	return nil
