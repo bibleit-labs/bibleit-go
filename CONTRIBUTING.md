@@ -43,7 +43,8 @@ relevant validation in pull requests.
 See the [maintainer guide](docs/maintenance.md) for independent SDK releases,
 audit records and historical compatibility evidence.
 
-Retain the MIT copyright/permission notice when redistributing SDK source.
+Retain the MIT copyright/permission notice and applicable THIRD_PARTY_NOTICES
+when redistributing SDK source or compiled applications.
 The software grant does not cover translations obtained through the service,
 account access or service quotas. Applications distributing compiled binaries
 must also retain applicable Go/dependency notices.

@@ -84,3 +84,6 @@ GOWORK=off go vet ./...
 ```
 
 Licensed under [MIT](LICENSE).
+
+Generated-code and dependency redistribution notices are retained in
+[THIRD_PARTY_NOTICES](THIRD_PARTY_NOTICES), alongside the project MIT license.
