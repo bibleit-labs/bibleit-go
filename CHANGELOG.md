@@ -2,6 +2,17 @@
 
 ## Unreleased
 
+## v0.3.0 — 2026-10-20
+
+- Move all resource operations, models, pagination and OAuth APIs from `rest`
+  into the root `bibleit` package. Use `bibleit.NewClient(token)` or pass a custom
+  HTTP client as its optional second argument. Credential revocation is available
+  on the same client; empty credentials allow public discovery.
+- Return a distinct `SSHClient` from `NewSSHClient`. Protocol decoders now return
+  `CommandResponse`; SSH Live collections use `SSHLiveList`, `SSHLiveStack` and
+  `SSHLiveStatistics` to distinguish them from resource models.
+- Move contract generation inputs into `contract/` and document `go generate .`.
+
 ## v0.2.0 — 2026-10-20
 
 - Add bounded whole-book cursor pagination (default 50, maximum 500) and lazy

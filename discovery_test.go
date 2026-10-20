@@ -7,9 +7,9 @@ import (
 	"testing"
 )
 
-func discoveryClient(t *testing.T, responses map[string]string) *Client {
+func discoveryClient(t *testing.T, responses map[string]string) *SSHClient {
 	t.Helper()
-	c, err := NewSSHClient(func(ctx context.Context, cmd Command) (Response, error) {
+	c, err := NewSSHClient(func(ctx context.Context, cmd Command) (CommandResponse, error) {
 		wire, ok := responses[cmd.String()]
 		if !ok {
 			t.Fatalf("unexpected SSH command %q", cmd.String())

@@ -22,12 +22,12 @@ type TokenMetadata struct {
 type TokenList struct {
 	Actor  string
 	Tokens []TokenMetadata
-	Raw    Response
+	Raw    CommandResponse
 }
 
 // ListTokens lists active personal token metadata. The server filters expired,
 // revoked and expired rotation-grace credentials; it does not return a history.
-func (c *Client) ListTokens(ctx context.Context) (TokenList, error) {
+func (c *SSHClient) ListTokens(ctx context.Context) (TokenList, error) {
 	result, err := c.Execute(ctx, AccountTokensCommand())
 	if err != nil {
 		return TokenList{}, err

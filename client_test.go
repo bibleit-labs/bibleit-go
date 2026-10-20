@@ -11,16 +11,19 @@ import (
 type roundTripFunc func(*http.Request) (*http.Response, error)
 
 func (f roundTripFunc) RoundTrip(r *http.Request) (*http.Response, error) { return f(r) }
-func TestCredentialClientCannotSendCommands(t *testing.T) {
-	c, err := NewClientWithHTTPClient("bt_test", &http.Client{Transport: roundTripFunc(func(r *http.Request) (*http.Response, error) {
-		t.Fatal("credential client sent a command over HTTP", r.URL)
-		return nil, nil
-	})})
+func TestClientsExposeSeparateOperations(t *testing.T) {
+	api, err := NewClient("")
 	if err != nil {
 		t.Fatal(err)
 	}
-	if _, err = c.Ping(context.Background()); err == nil {
-		t.Fatal("command HTTP transport remains enabled")
+	if _, ok := any(api).(interface {
+		Ping(context.Context) (CommandResponse, error)
+	}); ok {
+		t.Fatal("resource client exposes SSH commands")
+	}
+	ssh, _ := NewSSHClient(func(context.Context, Command) (CommandResponse, error) { return CommandResponse{}, nil })
+	if _, ok := any(ssh).(interface{ RevokeCredential(context.Context) error }); ok {
+		t.Fatal("SSH client exposes credential revocation")
 	}
 }
 func TestSSHClientRequiresExplicitExecutor(t *testing.T) {
@@ -28,7 +31,7 @@ func TestSSHClientRequiresExplicitExecutor(t *testing.T) {
 		t.Fatal("accepted missing executor")
 	}
 	calls := 0
-	c, _ := NewSSHClient(func(ctx context.Context, cmd Command) (Response, error) {
+	c, _ := NewSSHClient(func(ctx context.Context, cmd Command) (CommandResponse, error) {
 		calls++
 		if cmd.String() != "PING" {
 			t.Fatal(cmd)
@@ -54,15 +57,12 @@ func TestSSHClientRequiresExplicitExecutor(t *testing.T) {
 	if _, err = c.Ping(ctx); !errors.Is(err, context.Canceled) {
 		t.Fatal(err)
 	}
-	if err := c.RevokeCredential(context.Background()); err == nil {
-		t.Fatal("SSH executor accepted browser revocation")
-	}
 	if calls != 1 {
 		t.Fatal("invalid operation reached executor")
 	}
 }
 func TestCredentialTransportAndValidation(t *testing.T) {
-	for _, token := range []string{"", " ", "bad\ntoken", "bad\r", "bad\x00"} {
+	for _, token := range []string{" ", "bad\ntoken", "bad\r", "bad\x00"} {
 		if _, err := NewClient(token); err == nil {
 			t.Fatal("invalid token accepted")
 		}

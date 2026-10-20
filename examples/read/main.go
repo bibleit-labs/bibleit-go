@@ -7,7 +7,7 @@ import (
 	"os"
 	"os/signal"
 
-	"github.com/bibleit-labs/bibleit-go/rest"
+	"github.com/bibleit-labs/bibleit-go"
 )
 
 func main() {
@@ -17,7 +17,7 @@ func main() {
 	}
 }
 func run() error {
-	c, err := rest.NewClient(os.Getenv("BIBLEIT_TOKEN"), nil)
+	c, err := bibleit.NewClient(os.Getenv("BIBLEIT_TOKEN"))
 	if err != nil {
 		return err
 	}
@@ -27,7 +27,7 @@ func run() error {
 	if err != nil {
 		return err
 	}
-	var identity rest.PersonalIdentity
+	var identity bibleit.PersonalIdentity
 	err = r.Decode(&identity)
 	r.Body.Close()
 	if err != nil {
@@ -38,7 +38,7 @@ func run() error {
 		return err
 	}
 	defer r.Body.Close()
-	var reading rest.ScriptureRead
+	var reading bibleit.ScriptureRead
 	if err = r.Decode(&reading); err != nil {
 		return err
 	}

@@ -10,7 +10,7 @@ type IdentityInfo struct {
 	Actor, DisplayName, IdentityName, AuthProvider, KeyFingerprint string
 	Authenticated                                                  bool
 	Roles, Permissions                                             []string
-	Raw                                                            Response
+	Raw                                                            CommandResponse
 }
 type VerseText struct {
 	// Text retains the historical wire text, including any reference prefix.
@@ -27,7 +27,7 @@ type Reading struct {
 	// is available in Verses when supplied by the server.
 	Book, Chapter, Verse *int64
 	Verses               []VerseText
-	Raw                  Response
+	Raw                  CommandResponse
 }
 
 func boolean(fields map[string]string, key string) (bool, error) {
@@ -79,7 +79,7 @@ func present(fields map[string]string, key string) (string, error) {
 	}
 	return value, nil
 }
-func (c *Client) GetIdentity(ctx context.Context) (IdentityInfo, error) {
+func (c *SSHClient) GetIdentity(ctx context.Context) (IdentityInfo, error) {
 	result, err := c.Identity(ctx)
 	if err != nil {
 		return IdentityInfo{}, err
@@ -99,21 +99,21 @@ func (c *Client) GetIdentity(ctx context.Context) (IdentityInfo, error) {
 	}
 	return value, nil
 }
-func (c *Client) ReadVerses(ctx context.Context, ref Reference) (Reading, error) {
+func (c *SSHClient) ReadVerses(ctx context.Context, ref Reference) (Reading, error) {
 	result, err := c.Read(ctx, ref)
 	if err != nil {
 		return Reading{}, err
 	}
 	return reading(result, false)
 }
-func (c *Client) SearchVerses(ctx context.Context, translation, query string) (Reading, error) {
+func (c *SSHClient) SearchVerses(ctx context.Context, translation, query string) (Reading, error) {
 	result, err := c.Search(ctx, translation, query)
 	if err != nil {
 		return Reading{}, err
 	}
 	return reading(result, true)
 }
-func reading(result Response, search bool) (Reading, error) {
+func reading(result CommandResponse, search bool) (Reading, error) {
 	if len(result.Records) == 0 || result.Records[0].Type != "ok" {
 		return Reading{}, fmt.Errorf("expected reading OK header")
 	}

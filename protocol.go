@@ -18,9 +18,9 @@ type Record struct {
 	Order  []string
 }
 
-// Response retains original lines for CLI raw output. END is excluded.
+// CommandResponse retains original lines for CLI raw output. END is excluded.
 // Protocol v1 fields remain strings; future typed models can build on Records.
-type Response struct {
+type CommandResponse struct {
 	Lines   []string
 	Records []Record
 }
@@ -192,33 +192,33 @@ func ParseRecord(line string) (Record, error) {
 
 // DecodeResponse decodes one finite HTTP or SSH-exec reply, requiring END for
 // multi-record replies. It is not a decoder for a persistent SSH subscription.
-func DecodeResponse(reader io.Reader) (Response, error) {
+func DecodeResponse(reader io.Reader) (CommandResponse, error) {
 	return decodeResponse(reader, false)
 }
 
 // DecodeCommandResponse uses the command's framing contract for a finite reply.
 // Account translation replies contain count but are single records without END.
-func DecodeCommandResponse(command Command, reader io.Reader) (Response, error) {
+func DecodeCommandResponse(command Command, reader io.Reader) (CommandResponse, error) {
 	if command.wire == "" || command.streaming {
-		return Response{}, errors.New("a finite validated command is required")
+		return CommandResponse{}, errors.New("a finite validated command is required")
 	}
 	return decodeResponse(reader, strings.HasPrefix(command.wire, "ACCOUNT TRANSLATION "))
 }
 
-func decodeResponse(reader io.Reader, singleRecord bool) (Response, error) {
+func decodeResponse(reader io.Reader, singleRecord bool) (CommandResponse, error) {
 	body, err := io.ReadAll(io.LimitReader(reader, maxResponseBytes+1))
 	if err != nil {
-		return Response{}, err
+		return CommandResponse{}, err
 	}
 	if len(body) > maxResponseBytes {
-		return Response{}, errors.New("protocol response exceeds 2 MiB")
+		return CommandResponse{}, errors.New("protocol response exceeds 2 MiB")
 	}
 	if len(body) == 0 || body[len(body)-1] != '\n' {
-		return Response{}, io.ErrUnexpectedEOF
+		return CommandResponse{}, io.ErrUnexpectedEOF
 	}
 	scanner := bufio.NewScanner(strings.NewReader(string(body)))
 	scanner.Buffer(make([]byte, 4096), maxResponseBytes+1)
-	var result Response
+	var result CommandResponse
 	size := 0
 	ended := false
 	var serverError *ServerError
@@ -227,17 +227,17 @@ func decodeResponse(reader io.Reader, singleRecord bool) (Response, error) {
 		line := scanner.Text()
 		size += len(line) + 1
 		if size > maxResponseBytes {
-			return Response{}, errors.New("protocol response exceeds 2 MiB")
+			return CommandResponse{}, errors.New("protocol response exceeds 2 MiB")
 		}
 		if ended {
-			return Response{}, errors.New("unexpected data after END")
+			return CommandResponse{}, errors.New("unexpected data after END")
 		}
 		if serverError != nil {
-			return Response{}, errors.New("unexpected data after ERR")
+			return CommandResponse{}, errors.New("unexpected data after ERR")
 		}
 		if line == "END" {
 			if len(result.Records) == 0 {
-				return Response{}, errors.New("unexpected END")
+				return CommandResponse{}, errors.New("unexpected END")
 			}
 			ended = true
 			continue
@@ -251,42 +251,42 @@ func decodeResponse(reader io.Reader, singleRecord bool) (Response, error) {
 			continue
 		}
 		if err != nil {
-			return Response{}, err
+			return CommandResponse{}, err
 		}
 		pending = ""
 		if len(result.Records) == 0 {
 			if record.Type == "err" {
 				words := strings.Fields(line)
 				if len(words) < 2 || strings.Contains(words[1], "=") {
-					return Response{}, errors.New("missing server error code")
+					return CommandResponse{}, errors.New("missing server error code")
 				}
 				serverError = &ServerError{Code: words[1], Fields: record.Fields}
 				continue
 			}
 			if record.Type != "ok" {
-				return Response{}, errors.New("response must start with OK or ERR")
+				return CommandResponse{}, errors.New("response must start with OK or ERR")
 			}
 		} else if record.Type == "ok" || record.Type == "err" || record.Type == "event" {
-			return Response{}, errors.New("unexpected response envelope")
+			return CommandResponse{}, errors.New("unexpected response envelope")
 		}
 		result.Lines = append(result.Lines, line)
 		result.Records = append(result.Records, record)
 	}
 	if err := scanner.Err(); err != nil {
-		return Response{}, err
+		return CommandResponse{}, err
 	}
 	if pending != "" {
-		return Response{}, io.ErrUnexpectedEOF
+		return CommandResponse{}, io.ErrUnexpectedEOF
 	}
 	if serverError != nil {
-		return Response{}, serverError
+		return CommandResponse{}, serverError
 	}
 	if len(result.Records) == 0 {
-		return Response{}, io.ErrUnexpectedEOF
+		return CommandResponse{}, io.ErrUnexpectedEOF
 	}
 	if !ended {
 		if len(result.Records) > 1 || (!singleRecord && multiRecord(result.Records[0])) {
-			return Response{}, io.ErrUnexpectedEOF
+			return CommandResponse{}, io.ErrUnexpectedEOF
 		}
 	}
 	return result, nil

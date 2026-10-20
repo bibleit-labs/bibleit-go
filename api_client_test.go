@@ -1,4 +1,4 @@
-package rest
+package bibleit
 
 import (
 	"context"
@@ -127,5 +127,15 @@ func TestBinaryAndJSON(t *testing.T) {
 	b, _ := io.ReadAll(r.Body)
 	if string(b) != "download" {
 		t.Fatal(string(b))
+	}
+}
+
+func TestNewClientOptionalTransport(t *testing.T) {
+	c, err := NewClient("")
+	if err != nil || c.http.Timeout != 40*time.Second {
+		t.Fatal("default client", err)
+	}
+	if _, err := NewClient("", nil, nil); err == nil {
+		t.Fatal("accepted multiple transports")
 	}
 }

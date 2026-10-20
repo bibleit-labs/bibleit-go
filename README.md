@@ -15,20 +15,20 @@ open browsers, store credentials, or depend on the CLI.
 go get github.com/bibleit-labs/bibleit-go
 ```
 
-## REST resources
+## Resource client
 
-Import `github.com/bibleit-labs/bibleit-go/rest`. The client includes all 88 REST
+Import `github.com/bibleit-labs/bibleit-go`. The client includes all 88 REST
 operations, generated schemas, response metadata, conditional writes, binary
-streams, versioned Live event polling and lazy whole-book page iterators. See [REST usage](rest/README.md) and
+streams, versioned Live event polling and lazy whole-book page iterators. See [REST usage](docs/api.md) and
 the [runnable reading example](examples/read/main.go).
 
 ```go
-client, err := rest.NewClient(token, nil)
+client, err := bibleit.NewClient(token)
 if err != nil { return err }
 response, err := client.GetPersonalIdentity(ctx, nil)
 if err != nil { return err }
 defer response.Body.Close()
-var identity rest.PersonalIdentity
+var identity bibleit.PersonalIdentity
 if err := response.Decode(&identity); err != nil { return err }
 fmt.Println(identity.ID, identity.PersonalAccountID)
 ```
@@ -41,12 +41,12 @@ is enabled. The host cannot be overridden through configuration or environment.
 
 ## SSH protocol helpers
 
-The parent `bibleit` package contains validated command builders, response parsers
+The `bibleit` package contains validated command builders, response parsers
 and typed domain helpers for SSH. It does not open SSH connections. Applications
 supply their own SSH executor to `NewSSHClient`:
 
 ```go
-client, err := bibleit.NewSSHClient(func(ctx context.Context, cmd bibleit.Command) (bibleit.Response, error) {
+client, err := bibleit.NewSSHClient(func(ctx context.Context, cmd bibleit.Command) (bibleit.CommandResponse, error) {
     // Execute cmd.String() over your verified SSH connection, then decode stdout.
     return bibleit.DecodeCommandResponse(cmd, stdout)
 })
@@ -57,18 +57,19 @@ lifetime. The CLI uses OpenSSH to `bibleit.app:22`. Persistent Live subscription
 use the streaming protocol directly, rather than the finite executor.
 [Protocol fixtures](contract/README.md) document quoting and response framing.
 No command-to-REST adapter is provided. Bearer credential clients cannot execute
-commands; `NewClient` / `NewClientWithHTTPClient` remain only for browser-issued
-CLI credential revocation.
+commands. `NewClient` returns a resource client; `NewSSHClient` returns an
+`SSHClient` with command and domain helpers. SSH decoders return `CommandResponse`;
+SSH Live collection results use `SSHLiveList`, `SSHLiveStack` and `SSHLiveStatistics`.
 
 ## Browser login and registered OAuth
 
 `NewAuthClient` / `NewAuthClientWithHTTPClient` exchange an approved CLI browser
 code with `ExchangeCode`. The application validates callback state, supplies the
 PKCE verifier and securely stores the result. Revoke that browser-issued CLI
-credential with `NewClient(token).RevokeCredential(ctx)` (handling construction
-errors as usual). The token exchange and logout endpoints remain supported.
+credential by constructing a resource client with `NewClient(token)` and calling
+`client.RevokeCredential(ctx)`. The token exchange and logout endpoints remain supported.
 
-For registered delegated OAuth clients use the separate `rest.NewOAuthClient`:
+For registered delegated OAuth clients use the separate `bibleit.NewOAuthClient`:
 S256 consent URLs, metadata, code exchange, refresh rotation and revocation stay
 on the website origin. Codes and refresh tokens are single-use. The SDK never
 retries an ambiguous exchange or refresh attempt.
@@ -76,7 +77,7 @@ retries an ambiguous exchange or refresh attempt.
 ## Development
 
 See [CONTRIBUTING.md](CONTRIBUTING.md), [SECURITY.md](SECURITY.md), and the
-[REST contract regeneration instructions](rest/README.md#updating-the-contract).
+[REST contract regeneration instructions](docs/api.md#updating-the-contract).
 
 ```sh
 GOWORK=off go test -race ./...

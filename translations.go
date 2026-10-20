@@ -10,7 +10,7 @@ type TranslationInfo struct {
 	Edition, Updated                                string
 	RightsStatus, RightsLabel, RightsURL, SourceURL string
 	Attribution, TrademarkNotice                    string
-	Raw                                             Response
+	Raw                                             CommandResponse
 }
 type CatalogChapter struct {
 	Number int64
@@ -28,10 +28,10 @@ type CatalogBook struct {
 type TranslationCatalog struct {
 	Translation string
 	Books       []CatalogBook
-	Raw         Response
+	Raw         CommandResponse
 }
 
-func (c *Client) GetTranslationInfo(ctx context.Context, slug string) (TranslationInfo, error) {
+func (c *SSHClient) GetTranslationInfo(ctx context.Context, slug string) (TranslationInfo, error) {
 	cmd, err := TranslationInfoCommand(slug)
 	if err != nil {
 		return TranslationInfo{}, err
@@ -65,7 +65,7 @@ func positive(fields map[string]string, key string) (int64, error) {
 	}
 	return value, nil
 }
-func (c *Client) GetTranslationCatalog(ctx context.Context, slug string) (TranslationCatalog, error) {
+func (c *SSHClient) GetTranslationCatalog(ctx context.Context, slug string) (TranslationCatalog, error) {
 	cmd, err := TranslationCatalogCommand(slug)
 	if err != nil {
 		return TranslationCatalog{}, err
@@ -76,7 +76,7 @@ func (c *Client) GetTranslationCatalog(ctx context.Context, slug string) (Transl
 	}
 	return translationCatalog(result)
 }
-func translationCatalog(result Response) (TranslationCatalog, error) {
+func translationCatalog(result CommandResponse) (TranslationCatalog, error) {
 	if len(result.Records) == 0 || result.Records[0].Type != "ok" {
 		return TranslationCatalog{}, fmt.Errorf("expected a catalogue OK header")
 	}

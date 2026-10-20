@@ -1,0 +1,9 @@
+package: bibleit
+output: ../operations.gen.go
+generate:
+  client: true
+output-options:
+  name-normalizer: ToCamelCaseWithInitialisms
+  user-templates:
+    client.tmpl: ../contract/client-compat.tmpl
+    client-with-responses.tmpl: ../contract/no-client-responses.tmpl
