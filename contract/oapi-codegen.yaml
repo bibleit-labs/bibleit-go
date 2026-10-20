@@ -1,5 +1,5 @@
-package: rest
-output: ../rest/models.gen.go
+package: bibleit
+output: ../models.gen.go
 generate:
   models: true
 output-options:
@@ -7,5 +7,5 @@ output-options:
   name-normalizer: ToCamelCaseWithInitialisms
   prefer-skip-optional-pointer-on-container-types: true
   overlay:
-    path: ../rest/compatibility-overlay.yaml
+    path: ../contract/compatibility-overlay.yaml
     strict: false

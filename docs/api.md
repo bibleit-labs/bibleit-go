@@ -1,18 +1,18 @@
-# Versioned REST client
+# Resource client
 
-Use `github.com/bibleit-labs/bibleit-go/rest` for new integrations. It pins
+Use `github.com/bibleit-labs/bibleit-go` for new integrations. It pins
 `https://api.bibleit.app/v1`, uses the pinned oapi-codegen runtime, and includes all
 88 REST operation bindings and 105 schema models from the canonical OpenAPI
 contract. Browser/consent and OAuth protocol endpoints remain outside this
-bearer REST client. Parent-package command helpers require an explicit SSH executor.
+bearer REST client. SSH command helpers require an explicit SSH executor.
 
 ```go
-client, err := rest.NewClient(token, nil)
+client, err := bibleit.NewClient(token)
 if err != nil { return err }
 response, err := client.GetPersonalIdentity(ctx, nil)
 if err != nil { return err }
 defer response.Body.Close()
-var identity rest.PersonalIdentity
+var identity bibleit.PersonalIdentity
 if err := response.Decode(&identity); err != nil { return err }
 fmt.Println(identity.ID, identity.PersonalAccountID)
 ```
@@ -22,7 +22,7 @@ tokens explicitly. The server enforces scopes and ownership; these credentials
 are not interchangeable. The client does not load environment variables, open
 browsers or persist tokens. An empty token permits public OpenAPI discovery.
 
-Every generated method accepts explicit path identifiers and `*rest.Options`.
+Every generated method accepts explicit path identifiers and `*bibleit.Options`.
 JSON bodies can use generated schema models or ordinary Go values. Optional
 nullable request fields use `json.RawMessage` to distinguish omitted (`nil`),
 explicit null (`json.RawMessage("null")`) and zero. Union schemas expose generated `As...`, `From...` and `Merge...` helpers;
@@ -33,7 +33,7 @@ read, err := client.GetLive(ctx, liveID, nil)
 if err != nil { return err }
 etag := read.Header.Get("ETag")
 read.Body.Close()
-updated, err := client.UpdateLivePlayback(ctx, liveID, &rest.Options{
+updated, err := client.UpdateLivePlayback(ctx, liveID, &bibleit.Options{
     IfMatch: etag,
     JSON: map[string]any{"paused": true},
 })
@@ -76,12 +76,12 @@ may contain fewer verses than its item limit. There is no unbounded whole-book
 API response.
 
 ```go
-response, err := client.ReadPersonalBook(ctx, accountID, "web", "19", &rest.Options{
+response, err := client.ReadPersonalBook(ctx, accountID, "web", "19", &bibleit.Options{
     Query: url.Values{"limit": {"100"}},
 })
 if err != nil { return err }
 defer response.Body.Close()
-var page rest.ScriptureBookRead
+var page bibleit.ScriptureBookRead
 if err := response.Decode(&page); err != nil { return err }
 // Use page.NextCursor as Query["after"] for the next request.
 ```
@@ -114,7 +114,7 @@ unrelated to Live event cursors and ETags.
 
 REST operations accept resource identifiers and structured bodies directly;
 this package does not translate commands or produce command-protocol responses.
-The parent package's command helpers require `NewSSHClient` with a caller-owned
+The SSH command helpers require `NewSSHClient` with a caller-owned
 SSH executor. Credential clients cannot execute commands. Browser login and
 logout remain independent supported flows.
 
@@ -131,11 +131,11 @@ the whole grant. Existing official CLI login remains supported separately.
 ## Updating the contract
 
 Copy the reviewed `priv/openapi/bibleit-v1.json` from bibleit-server to
-`rest/openapi.json`, then run from the module root:
+`contract/openapi.json`, then run from the module root:
 
 ```sh
-go generate ./rest
-git diff --exit-code -- rest/models.gen.go rest/operations.gen.go
+go generate .
+git diff --exit-code -- models.gen.go operations.gen.go
 go test -race ./...
 go vet ./...
 ```

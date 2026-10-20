@@ -9,11 +9,9 @@ import (
 	"strings"
 	"testing"
 	"time"
-
-	"github.com/bibleit-labs/bibleit-go/rest"
 )
 
-func integrationREST(t *testing.T) (context.Context, *rest.Client, rest.PersonalIdentity) {
+func integrationREST(t *testing.T) (context.Context, *Client, PersonalIdentity) {
 	t.Helper()
 	if os.Getenv("BIBLEIT_CLIENT_TEST_DISPOSABLE") != "1" {
 		t.Skip("run the isolated server harness")
@@ -32,18 +30,18 @@ func integrationREST(t *testing.T) (context.Context, *rest.Client, rest.Personal
 	}
 	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
 	t.Cleanup(cancel)
-	c, err := rest.NewClient(os.Getenv("BIBLEIT_INTEGRATION_TOKEN"), nil)
+	c, err := NewClient(os.Getenv("BIBLEIT_INTEGRATION_TOKEN"), nil)
 	if err != nil {
 		t.Fatal(err)
 	}
-	var identity rest.PersonalIdentity
+	var identity PersonalIdentity
 	decodeREST(t, c.GetPersonalIdentity, ctx, &identity)
 	if identity.ID == "" || identity.PersonalAccountID == "" {
 		t.Fatal("missing personal identity")
 	}
 	return ctx, c, identity
 }
-func decodeREST(t *testing.T, call func(context.Context, *rest.Options) (*rest.Response, error), ctx context.Context, target any) {
+func decodeREST(t *testing.T, call func(context.Context, *Options) (*Response, error), ctx context.Context, target any) {
 	t.Helper()
 	r, err := call(ctx, nil)
 	if err != nil {
@@ -56,7 +54,7 @@ func decodeREST(t *testing.T, call func(context.Context, *rest.Options) (*rest.R
 }
 func restStatus(t *testing.T, err error, status int) {
 	t.Helper()
-	var p *rest.ProblemError
+	var p *ProblemError
 	if !errors.As(err, &p) || p.Status != status {
 		t.Fatalf("expected HTTP %d: %v", status, err)
 	}
@@ -70,7 +68,7 @@ func TestServerHTTPIntegration(t *testing.T) {
 		if err != nil {
 			t.Fatal(err)
 		}
-		var verse rest.ScriptureRead
+		var verse ScriptureRead
 		err = r.Decode(&verse)
 		r.Body.Close()
 		if err != nil || len(verse.Verses) != 1 || verse.Verses[0].BookID != 19 || !strings.Contains(verse.Verses[0].Text, "shepherd") {
@@ -80,17 +78,17 @@ func TestServerHTTPIntegration(t *testing.T) {
 		if err != nil {
 			t.Fatal(err)
 		}
-		var chapter rest.ScriptureRead
+		var chapter ScriptureRead
 		err = r.Decode(&chapter)
 		r.Body.Close()
 		if err != nil || len(chapter.Verses) != 2 {
 			t.Fatal(chapter, err)
 		}
-		r, err = c.SearchPersonalScripture(ctx, identity.PersonalAccountID, "web", &rest.Options{Query: url.Values{"q": {"shepherd"}, "limit": {"100"}}})
+		r, err = c.SearchPersonalScripture(ctx, identity.PersonalAccountID, "web", &Options{Query: url.Values{"q": {"shepherd"}, "limit": {"100"}}})
 		if err != nil {
 			t.Fatal(err)
 		}
-		var search rest.ScriptureSearch
+		var search ScriptureSearch
 		err = r.Decode(&search)
 		r.Body.Close()
 		if err != nil || len(search.Verses) == 0 {
@@ -100,7 +98,7 @@ func TestServerHTTPIntegration(t *testing.T) {
 		if err != nil {
 			t.Fatal(err)
 		}
-		var translation rest.CatalogueTranslation
+		var translation CatalogueTranslation
 		err = r.Decode(&translation)
 		r.Body.Close()
 		if err != nil || translation.Slug != "web" {
@@ -117,7 +115,7 @@ func TestServerHTTPIntegration(t *testing.T) {
 		if err != nil {
 			t.Fatal(err)
 		}
-		var quotas rest.AccountQuotaCollection
+		var quotas AccountQuotaCollection
 		err = r.Decode(&quotas)
 		r.Body.Close()
 		if err != nil || len(quotas.Data) == 0 {
@@ -127,7 +125,7 @@ func TestServerHTTPIntegration(t *testing.T) {
 		if err != nil {
 			t.Fatal(err)
 		}
-		var tokens rest.PersonalTokenCollection
+		var tokens PersonalTokenCollection
 		err = r.Decode(&tokens)
 		r.Body.Close()
 		if err != nil || len(tokens.Data) == 0 {
@@ -144,7 +142,7 @@ func TestServerHTTPIntegration(t *testing.T) {
 		if err != nil {
 			t.Fatal(err)
 		}
-		var book rest.ScriptureBookRead
+		var book ScriptureBookRead
 		err = r.Decode(&book)
 		r.Body.Close()
 		if err != nil || len(book.Verses) != 50 || book.NextCursor == nil || book.Verses[0].BookID != 19 {
@@ -154,7 +152,7 @@ func TestServerHTTPIntegration(t *testing.T) {
 		if err != nil {
 			t.Fatal(err)
 		}
-		var catalogue rest.TranslationCatalogueDetails
+		var catalogue TranslationCatalogueDetails
 		err = r.Decode(&catalogue)
 		r.Body.Close()
 		if err != nil || len(catalogue.Data) == 0 {
@@ -162,13 +160,13 @@ func TestServerHTTPIntegration(t *testing.T) {
 		}
 	})
 	t.Run("scope and expiry enforcement", func(t *testing.T) {
-		scoped, _ := rest.NewClient(os.Getenv("BIBLEIT_SCOPED_TOKEN"), nil)
+		scoped, _ := NewClient(os.Getenv("BIBLEIT_SCOPED_TOKEN"), nil)
 		_, err := scoped.ListPersonalLives(ctx, identity.PersonalAccountID, nil)
 		restStatus(t, err, 403)
-		denied, _ := rest.NewClient(os.Getenv("BIBLEIT_DENIED_TOKEN"), nil)
+		denied, _ := NewClient(os.Getenv("BIBLEIT_DENIED_TOKEN"), nil)
 		_, err = denied.ReadPersonalVerse(ctx, identity.PersonalAccountID, "web", "19", "23", "1", nil)
 		restStatus(t, err, 403)
-		expired, _ := rest.NewClient(os.Getenv("BIBLEIT_EXPIRED_TOKEN"), nil)
+		expired, _ := NewClient(os.Getenv("BIBLEIT_EXPIRED_TOKEN"), nil)
 		_, err = expired.GetPersonalIdentity(ctx, nil)
 		restStatus(t, err, 401)
 	})
@@ -184,7 +182,7 @@ func TestServerHTTPIntegration(t *testing.T) {
 			t.Fatal(err)
 		}
 		t.Cleanup(func() { _ = credential.RevokeCredential(context.Background()) })
-		personal, _ := rest.NewClient(issued.AccessToken, nil)
+		personal, _ := NewClient(issued.AccessToken, nil)
 		r, err := personal.GetPersonalIdentity(ctx, nil)
 		if err != nil {
 			t.Fatal(err)
@@ -212,11 +210,11 @@ func TestServerHTTPIntegration(t *testing.T) {
 		restStatus(t, err, 401)
 	})
 	t.Run("Live conditional lifecycle and cleanup", func(t *testing.T) {
-		r, err := c.CreatePersonalLive(ctx, identity.PersonalAccountID, &rest.Options{JSON: rest.CreateLive{Name: "REST integration"}, IdempotencyKey: "integration-live"})
+		r, err := c.CreatePersonalLive(ctx, identity.PersonalAccountID, &Options{JSON: CreateLive{Name: "REST integration"}, IdempotencyKey: "integration-live"})
 		if err != nil {
 			t.Fatal(err)
 		}
-		var live rest.PersonalLiveSummary
+		var live PersonalLiveSummary
 		err = r.Decode(&live)
 		r.Body.Close()
 		if err != nil || live.ID == "" {
@@ -229,7 +227,7 @@ func TestServerHTTPIntegration(t *testing.T) {
 			}
 			etag := r.Header.Get("ETag")
 			r.Body.Close()
-			r, err = c.DeleteLive(context.Background(), live.ID, &rest.Options{IfMatch: etag})
+			r, err = c.DeleteLive(context.Background(), live.ID, &Options{IfMatch: etag})
 			if err != nil {
 				t.Error(err)
 			} else {
@@ -242,18 +240,18 @@ func TestServerHTTPIntegration(t *testing.T) {
 		}
 		etag := r.Header.Get("ETag")
 		r.Body.Close()
-		r, err = c.UpdateLiveMetadata(ctx, live.ID, &rest.Options{IfMatch: etag, JSON: rest.LiveMetadataPatch{Name: "Renamed"}})
+		r, err = c.UpdateLiveMetadata(ctx, live.ID, &Options{IfMatch: etag, JSON: LiveMetadataPatch{Name: "Renamed"}})
 		if err != nil {
 			t.Fatal(err)
 		}
 		etag = r.Header.Get("ETag")
 		r.Body.Close()
-		r, err = c.UpdateLivePlayback(ctx, live.ID, &rest.Options{IfMatch: etag, JSON: map[string]any{"status": "stopped"}})
+		r, err = c.UpdateLivePlayback(ctx, live.ID, &Options{IfMatch: etag, JSON: map[string]any{"status": "stopped"}})
 		if err != nil {
 			t.Fatal(err)
 		}
 		r.Body.Close()
-		_, err = c.UpdateLivePlayback(ctx, live.ID, &rest.Options{IfMatch: etag, JSON: map[string]any{"status": "running"}})
+		_, err = c.UpdateLivePlayback(ctx, live.ID, &Options{IfMatch: etag, JSON: map[string]any{"status": "running"}})
 		restStatus(t, err, 412)
 		r, err = c.ListPersonalLives(ctx, identity.PersonalAccountID, nil)
 		if err != nil {

@@ -2,7 +2,7 @@
 
 | Surface | Client support |
 | --- | --- |
-| REST v1 | `rest` package: all 88 resource operations and generated schema models |
+| REST v1 | `bibleit.NewClient`: all 88 resource operations and generated schema models |
 | Personal resources | Finite personal/delegated tokens, identity, account, library, reading/search and Lives |
 | Organization resources | Scoped service tokens, membership, translations, Lives, Studio, presentations, assets and exports |
 | Conditional writes | Exact ETags and explicit caller-supplied idempotency keys; no automatic retries |
@@ -12,4 +12,4 @@
 | SSH command protocol | Builders, decoders and typed domain helpers with an explicit caller-owned SSH executor |
 
 Command-style HTTP transport is removed. Command fixtures describe SSH syntax
-and decoding only. See [REST usage](../rest/README.md) and [SSH framing](README.md).
+and decoding only. See [REST usage](../docs/api.md) and [SSH framing](README.md).

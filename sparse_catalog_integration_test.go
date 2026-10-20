@@ -1,7 +1,6 @@
 package bibleit
 
 import (
-	"github.com/bibleit-labs/bibleit-go/rest"
 	"testing"
 )
 
@@ -12,7 +11,7 @@ func TestServerSparseCatalogIntegration(t *testing.T) {
 		if err != nil {
 			t.Fatal(err)
 		}
-		var reading rest.ScriptureRead
+		var reading ScriptureRead
 		err = r.Decode(&reading)
 		r.Body.Close()
 		if err != nil || len(reading.Verses) != 1 || reading.Verses[0].Verse != 37 || reading.Verses[0].BookID != 42 || reading.Verses[0].Text != "after-gap" {
@@ -26,7 +25,7 @@ func TestServerSparseCatalogIntegration(t *testing.T) {
 		if err != nil {
 			t.Fatal(err)
 		}
-		var reading rest.ScriptureRead
+		var reading ScriptureRead
 		err = r.Decode(&reading)
 		r.Body.Close()
 		if err != nil || len(reading.Verses) != 2 || reading.Verses[0].Verse != 35 || reading.Verses[1].Verse != 37 {
@@ -39,7 +38,7 @@ func TestServerSparseCatalogIntegration(t *testing.T) {
 			if err != nil {
 				t.Fatal(err)
 			}
-			var books rest.BookCollection
+			var books BookCollection
 			err = r.Decode(&books)
 			r.Body.Close()
 			if err != nil || len(books.Data) == 0 || books.Data[0].ID != 1 {

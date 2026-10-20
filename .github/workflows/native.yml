@@ -26,8 +26,8 @@ jobs:
       - name: Verify generated REST contract bindings
         if: runner.os == 'Linux'
         run: |
-          go generate ./rest
-          git diff --exit-code -- rest/models.gen.go rest/operations.gen.go
+          go generate .
+          git diff --exit-code -- models.gen.go operations.gen.go
       - name: Prepare Windows race compiler
         if: runner.os == 'Windows'
         shell: pwsh

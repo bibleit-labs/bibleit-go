@@ -16,22 +16,22 @@ type LiveState struct {
 }
 type LiveResult struct {
 	Live LiveState
-	Raw  Response
+	Raw  CommandResponse
 }
-type LiveList struct {
+type SSHLiveList struct {
 	Lives []LiveState
-	Raw   Response
+	Raw   CommandResponse
 }
 type LiveConnection struct {
 	Actor, Access                    string
 	ConnectedAt, ConnectedForSeconds int64
 	Fields                           map[string]string
 }
-type LiveStatistics struct {
+type SSHLiveStatistics struct {
 	ID                                                                                string
 	RunningForSeconds, Revision, StackEntries, ActorConnections, AnonymousConnections int64
 	Connections                                                                       []LiveConnection
-	Raw                                                                               Response
+	Raw                                                                               CommandResponse
 }
 type LiveVerse struct {
 	Translation, Reference, Text string
@@ -41,15 +41,15 @@ type StackEntry struct {
 	Position int64
 	LiveVerse
 }
-type LiveStack struct {
+type SSHLiveStack struct {
 	ID      string
 	Entries []StackEntry
-	Raw     Response
+	Raw     CommandResponse
 }
 type LiveVerseResult struct {
 	Event  string
 	Verses []LiveVerse
-	Raw    Response
+	Raw    CommandResponse
 }
 
 // LiveActionResult reflects the server acknowledgement without fetching state.
@@ -57,7 +57,7 @@ type LiveActionResult struct {
 	State  *LiveState
 	Paused *bool
 	Event  string
-	Raw    Response
+	Raw    CommandResponse
 }
 
 func liveState(fields map[string]string) (LiveState, error) {
@@ -93,7 +93,7 @@ func liveState(fields map[string]string) (LiveState, error) {
 	}
 	return value, nil
 }
-func (c *Client) liveResult(ctx context.Context, cmd Command) (LiveResult, error) {
+func (c *SSHClient) liveResult(ctx context.Context, cmd Command) (LiveResult, error) {
 	result, err := c.Execute(ctx, cmd)
 	if err != nil {
 		return LiveResult{}, err
@@ -108,94 +108,94 @@ func (c *Client) liveResult(ctx context.Context, cmd Command) (LiveResult, error
 	}
 	return LiveResult{Live: state, Raw: result}, nil
 }
-func (c *Client) CreateLive(ctx context.Context, name string) (LiveResult, error) {
+func (c *SSHClient) CreateLive(ctx context.Context, name string) (LiveResult, error) {
 	cmd, err := CreateLiveCommand(name)
 	if err != nil {
 		return LiveResult{}, err
 	}
 	return c.liveResult(ctx, cmd)
 }
-func (c *Client) GetLive(ctx context.Context, id string) (LiveResult, error) {
+func (c *SSHClient) GetLive(ctx context.Context, id string) (LiveResult, error) {
 	cmd, err := LiveCommand(id, LiveInfo)
 	if err != nil {
 		return LiveResult{}, err
 	}
 	return c.liveResult(ctx, cmd)
 }
-func (c *Client) SetLive(ctx context.Context, id string, field LiveField, values ...string) (LiveResult, error) {
+func (c *SSHClient) SetLive(ctx context.Context, id string, field LiveField, values ...string) (LiveResult, error) {
 	cmd, err := SetLiveCommand(id, field, values...)
 	if err != nil {
 		return LiveResult{}, err
 	}
 	return c.liveResult(ctx, cmd)
 }
-func (c *Client) ListLives(ctx context.Context) (LiveList, error) {
+func (c *SSHClient) ListLives(ctx context.Context) (SSHLiveList, error) {
 	result, err := c.Execute(ctx, LiveListCommand())
 	if err != nil {
-		return LiveList{}, err
+		return SSHLiveList{}, err
 	}
 	if _, err := counted(result, "count", "live"); err != nil {
-		return LiveList{}, err
+		return SSHLiveList{}, err
 	}
-	value := LiveList{Lives: []LiveState{}, Raw: result}
+	value := SSHLiveList{Lives: []LiveState{}, Raw: result}
 	seen := map[string]bool{}
 	for _, record := range result.Records[1:] {
 		state, err := liveState(record.Fields)
 		if err != nil {
-			return LiveList{}, err
+			return SSHLiveList{}, err
 		}
 		if seen[state.ID] {
-			return LiveList{}, fmt.Errorf("duplicate Live id")
+			return SSHLiveList{}, fmt.Errorf("duplicate Live id")
 		}
 		seen[state.ID] = true
 		value.Lives = append(value.Lives, state)
 	}
 	return value, nil
 }
-func (c *Client) GetLiveStats(ctx context.Context, id string) (LiveStatistics, error) {
+func (c *SSHClient) GetLiveStats(ctx context.Context, id string) (SSHLiveStatistics, error) {
 	cmd, err := LiveCommand(id, LiveStats)
 	if err != nil {
-		return LiveStatistics{}, err
+		return SSHLiveStatistics{}, err
 	}
 	result, err := c.Execute(ctx, cmd)
 	if err != nil {
-		return LiveStatistics{}, err
+		return SSHLiveStatistics{}, err
 	}
 	fields, err := counted(result, "connections", "connection")
 	if err != nil {
-		return LiveStatistics{}, err
+		return SSHLiveStatistics{}, err
 	}
-	value := LiveStatistics{Raw: result, Connections: []LiveConnection{}}
+	value := SSHLiveStatistics{Raw: result, Connections: []LiveConnection{}}
 	value.ID, err = required(fields, "id")
 	if err != nil {
-		return LiveStatistics{}, err
+		return SSHLiveStatistics{}, err
 	}
 	for key, target := range map[string]*int64{"running_for_seconds": &value.RunningForSeconds, "revision": &value.Revision, "stack_entries": &value.StackEntries, "actor_connections": &value.ActorConnections, "anonymous_connections": &value.AnonymousConnections} {
 		*target, err = number(fields, key)
 		if err != nil {
-			return LiveStatistics{}, err
+			return SSHLiveStatistics{}, err
 		}
 	}
 	if value.ActorConnections > int64(len(result.Records)-1) || value.AnonymousConnections != int64(len(result.Records)-1)-value.ActorConnections {
-		return LiveStatistics{}, fmt.Errorf("inconsistent Live connection totals")
+		return SSHLiveStatistics{}, fmt.Errorf("inconsistent Live connection totals")
 	}
 	for _, record := range result.Records[1:] {
 		entry := LiveConnection{Fields: record.Fields}
 		entry.Actor, err = required(record.Fields, "actor")
 		if err != nil {
-			return LiveStatistics{}, err
+			return SSHLiveStatistics{}, err
 		}
 		entry.Access, err = required(record.Fields, "access")
 		if err != nil {
-			return LiveStatistics{}, err
+			return SSHLiveStatistics{}, err
 		}
 		entry.ConnectedAt, err = number(record.Fields, "connected_at")
 		if err != nil {
-			return LiveStatistics{}, err
+			return SSHLiveStatistics{}, err
 		}
 		entry.ConnectedForSeconds, err = number(record.Fields, "connected_for_seconds")
 		if err != nil {
-			return LiveStatistics{}, err
+			return SSHLiveStatistics{}, err
 		}
 		value.Connections = append(value.Connections, entry)
 	}
@@ -211,41 +211,41 @@ func liveVerse(fields map[string]string) (LiveVerse, error) {
 	value.Text, err = present(fields, "text")
 	return value, err
 }
-func (c *Client) GetLiveStack(ctx context.Context, id string) (LiveStack, error) {
+func (c *SSHClient) GetLiveStack(ctx context.Context, id string) (SSHLiveStack, error) {
 	cmd, err := LiveStackCommand(id, StackInfo)
 	if err != nil {
-		return LiveStack{}, err
+		return SSHLiveStack{}, err
 	}
 	result, err := c.Execute(ctx, cmd)
 	if err != nil {
-		return LiveStack{}, err
+		return SSHLiveStack{}, err
 	}
 	fields, err := counted(result, "count", "stack")
 	if err != nil {
-		return LiveStack{}, err
+		return SSHLiveStack{}, err
 	}
-	value := LiveStack{Raw: result, Entries: []StackEntry{}}
+	value := SSHLiveStack{Raw: result, Entries: []StackEntry{}}
 	value.ID, err = required(fields, "id")
 	if err != nil {
-		return LiveStack{}, err
+		return SSHLiveStack{}, err
 	}
 	for i, record := range result.Records[1:] {
 		position, err := positive(record.Fields, "position")
 		if err != nil {
-			return LiveStack{}, err
+			return SSHLiveStack{}, err
 		}
 		if position != int64(i+1) {
-			return LiveStack{}, fmt.Errorf("invalid stack position")
+			return SSHLiveStack{}, fmt.Errorf("invalid stack position")
 		}
 		verse, err := liveVerse(record.Fields)
 		if err != nil {
-			return LiveStack{}, err
+			return SSHLiveStack{}, err
 		}
 		value.Entries = append(value.Entries, StackEntry{Position: position, LiveVerse: verse})
 	}
 	return value, nil
 }
-func (c *Client) liveVerses(ctx context.Context, cmd Command) (LiveVerseResult, error) {
+func (c *SSHClient) liveVerses(ctx context.Context, cmd Command) (LiveVerseResult, error) {
 	result, err := c.Execute(ctx, cmd)
 	if err != nil {
 		return LiveVerseResult{}, err
@@ -276,21 +276,21 @@ func (c *Client) liveVerses(ctx context.Context, cmd Command) (LiveVerseResult, 
 	}
 	return value, nil
 }
-func (c *Client) PushLive(ctx context.Context, id string, ref Reference) (LiveVerseResult, error) {
+func (c *SSHClient) PushLive(ctx context.Context, id string, ref Reference) (LiveVerseResult, error) {
 	cmd, err := PushLiveCommand(id, ref)
 	if err != nil {
 		return LiveVerseResult{}, err
 	}
 	return c.liveVerses(ctx, cmd)
 }
-func (c *Client) PopLive(ctx context.Context, id string, count int) (LiveVerseResult, error) {
+func (c *SSHClient) PopLive(ctx context.Context, id string, count int) (LiveVerseResult, error) {
 	cmd, err := PopLiveCommand(id, count)
 	if err != nil {
 		return LiveVerseResult{}, err
 	}
 	return c.liveVerses(ctx, cmd)
 }
-func (c *Client) ControlLive(ctx context.Context, id string, action LiveAction) (LiveActionResult, error) {
+func (c *SSHClient) ControlLive(ctx context.Context, id string, action LiveAction) (LiveActionResult, error) {
 	switch action {
 	case LiveStart, LiveStop, LivePause, LiveResume, LiveClear, LiveDelete:
 	default:

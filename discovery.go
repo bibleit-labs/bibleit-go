@@ -12,7 +12,7 @@ type ServerInfo struct {
 	ProtocolVersion int64
 	Version         string
 	Capabilities    []string
-	Raw             Response
+	Raw             CommandResponse
 }
 type HelpEntry struct {
 	Usage, Summary string
@@ -23,14 +23,14 @@ type HelpEntry struct {
 type HelpResult struct {
 	Authenticated bool
 	Commands      []HelpEntry
-	Raw           Response
+	Raw           CommandResponse
 }
 type AccountInfo struct {
 	Actor, DisplayName, Handle, AvatarURL, Locale, Theme string
 	Plan, PlanName, PlanSource                           string
 	PlanActivatedAt                                      int64
 	Lives, Translations, Tokens, Keys                    int64
-	Raw                                                  Response
+	Raw                                                  CommandResponse
 }
 type QuotaLimit struct {
 	Unlimited bool
@@ -44,7 +44,7 @@ type Quota struct {
 }
 type QuotaResult struct {
 	Quotas []Quota
-	Raw    Response
+	Raw    CommandResponse
 }
 
 func number(fields map[string]string, key string) (int64, error) {
@@ -61,13 +61,13 @@ func required(fields map[string]string, key string) (string, error) {
 	}
 	return value, nil
 }
-func single(result Response) (map[string]string, error) {
+func single(result CommandResponse) (map[string]string, error) {
 	if len(result.Records) != 1 || result.Records[0].Type != "ok" {
 		return nil, fmt.Errorf("expected a single OK response")
 	}
 	return result.Records[0].Fields, nil
 }
-func counted(result Response, key, kind string) (map[string]string, error) {
+func counted(result CommandResponse, key, kind string) (map[string]string, error) {
 	if len(result.Records) == 0 || result.Records[0].Type != "ok" {
 		return nil, fmt.Errorf("expected an OK response")
 	}
@@ -87,7 +87,7 @@ func counted(result Response, key, kind string) (map[string]string, error) {
 	return fields, nil
 }
 
-func (c *Client) GetServerInfo(ctx context.Context) (ServerInfo, error) {
+func (c *SSHClient) GetServerInfo(ctx context.Context) (ServerInfo, error) {
 	result, err := c.Execute(ctx, ServerInfoCommand())
 	if err != nil {
 		return ServerInfo{}, err
@@ -111,7 +111,7 @@ func (c *Client) GetServerInfo(ctx context.Context) (ServerInfo, error) {
 	}
 	return value, nil
 }
-func (c *Client) Help(ctx context.Context, topic string) (HelpResult, error) {
+func (c *SSHClient) Help(ctx context.Context, topic string) (HelpResult, error) {
 	cmd, err := HelpCommand(topic)
 	if err != nil {
 		return HelpResult{}, err
@@ -145,7 +145,7 @@ func (c *Client) Help(ctx context.Context, topic string) (HelpResult, error) {
 	}
 	return value, nil
 }
-func (c *Client) GetAccountInfo(ctx context.Context) (AccountInfo, error) {
+func (c *SSHClient) GetAccountInfo(ctx context.Context) (AccountInfo, error) {
 	result, err := c.Execute(ctx, AccountInfoCommand())
 	if err != nil {
 		return AccountInfo{}, err
@@ -169,7 +169,7 @@ func (c *Client) GetAccountInfo(ctx context.Context) (AccountInfo, error) {
 	}
 	return value, nil
 }
-func (c *Client) ListQuotas(ctx context.Context) (QuotaResult, error) {
+func (c *SSHClient) ListQuotas(ctx context.Context) (QuotaResult, error) {
 	result, err := c.Execute(ctx, AccountQuotasCommand())
 	if err != nil {
 		return QuotaResult{}, err

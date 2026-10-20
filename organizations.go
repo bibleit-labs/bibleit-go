@@ -16,11 +16,11 @@ type OrganizationDirectoryEntry struct {
 type OrganizationDirectory struct {
 	Entries []OrganizationDirectoryEntry
 	Next    *string
-	Raw     Response
+	Raw     CommandResponse
 }
 type OrganizationApplicationResult struct {
 	Application OrganizationDirectoryEntry
-	Raw         Response
+	Raw         CommandResponse
 }
 
 // OrganizationListCommand returns one page; pass the previous Next cursor unchanged.
@@ -49,7 +49,7 @@ func organizationEntry(kind string, fields map[string]string) (OrganizationDirec
 	}
 	return OrganizationDirectoryEntry{Kind: kind, ID: fields["id"], ApplicationID: fields["application_id"], Handle: fields["handle"], Name: fields["name"], Domain: fields["domain"], Role: fields["role"], Verification: fields["verification"], Status: fields["status"], State: fields["state"], NextAction: fields["next_action"], VerificationURL: fields["verification_url"], OrganizationID: optionalString(fields, "organization_id"), Fields: fields}, nil
 }
-func (c *Client) ListOrganizations(ctx context.Context, cursor string) (OrganizationDirectory, error) {
+func (c *SSHClient) ListOrganizations(ctx context.Context, cursor string) (OrganizationDirectory, error) {
 	cmd, err := OrganizationListCommand(cursor)
 	if err != nil {
 		return OrganizationDirectory{}, err
@@ -81,7 +81,7 @@ func (c *Client) ListOrganizations(ctx context.Context, cursor string) (Organiza
 	}
 	return value, nil
 }
-func (c *Client) GetOrganizationApplicationStatus(ctx context.Context, id string) (OrganizationApplicationResult, error) {
+func (c *SSHClient) GetOrganizationApplicationStatus(ctx context.Context, id string) (OrganizationApplicationResult, error) {
 	cmd, err := OrganizationApplicationStatusCommand(id)
 	if err != nil {
 		return OrganizationApplicationResult{}, err
