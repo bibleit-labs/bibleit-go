@@ -3,6 +3,8 @@ name: Publish Go package documentation
 on:
   push:
     tags: ['v*']
+  release:
+    types: [published]
   workflow_dispatch:
     inputs:
       version:

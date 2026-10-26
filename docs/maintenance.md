@@ -24,7 +24,8 @@ Keep API compatibility, supported operations, Go requirements and fixture change
 documented in the changelog. Obtain owner approval before release tags or repository
 visibility changes; keep published tags immutable.
 
-The Publish Go package documentation workflow runs on version-tag pushes. It
+The Publish Go package documentation workflow runs on version-tag pushes and
+published GitHub releases. It
 downloads the published version through proxy.golang.org with checksum
 verification, requests pkg.go.dev indexing, and verifies the versioned
 documentation page. No publishing credentials are required. For an existing
