@@ -3,8 +3,6 @@ package bibleit
 import (
 	"context"
 	"fmt"
-	"net/url"
-	"strconv"
 )
 
 // Event is a v1 snapshot, changed snapshot, or heartbeat. Cursor is opaque and
@@ -23,14 +21,37 @@ type Event struct {
 // PollLiveEvents performs exactly one bounded long poll; it never retries.
 // Run writes independently of the outstanding poll and honor rate limits.
 func (c *Client) PollLiveEvents(ctx context.Context, id, after string, wait int) (Event, error) {
+	waitSeconds := int64(wait)
+	params := GetLiveEventsParams{Wait: &waitSeconds}
+	if after != "" {
+		params.After = &after
+	}
+	return c.PollLiveEventsWithOptions(ctx, id, &params)
+}
+
+// PollLiveEventsWithOptions performs one long poll with a default wait of 25
+// seconds and no cursor. Set After to resume, or Wait to explicitly choose a
+// wait (including zero). The supplied parameters are never changed.
+func (c *Client) PollLiveEventsWithOptions(ctx context.Context, id string, options ...*GetLiveEventsParams) (Event, error) {
+	if len(options) > 1 {
+		return Event{}, fmt.Errorf("at most one event options value is supported")
+	}
+	wait := int64(25)
+	params := GetLiveEventsParams{}
+	if len(options) == 1 && options[0] != nil {
+		params = *options[0]
+	}
+	if params.Wait != nil {
+		wait = *params.Wait
+	}
 	if wait < 0 || wait > 25 {
 		return Event{}, fmt.Errorf("event wait must be between 0 and 25 seconds")
 	}
-	q := url.Values{"wait": {strconv.Itoa(wait)}}
-	if after != "" {
-		q.Set("after", after)
+	params.Wait = &wait
+	if params.After != nil && *params.After == "" {
+		params.After = nil
 	}
-	res, err := c.GetLiveEvents(ctx, id, &Options{Query: q})
+	res, err := c.GetLiveEvents(ctx, id, &Options{Params: params})
 	if err != nil {
 		return Event{}, err
 	}

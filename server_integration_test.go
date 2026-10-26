@@ -41,7 +41,7 @@ func integrationREST(t *testing.T) (context.Context, *Client, PersonalIdentity) 
 	}
 	return ctx, c, identity
 }
-func decodeREST(t *testing.T, call func(context.Context, *Options) (*Response, error), ctx context.Context, target any) {
+func decodeREST(t *testing.T, call func(context.Context, ...*Options) (*Response, error), ctx context.Context, target any) {
 	t.Helper()
 	r, err := call(ctx, nil)
 	if err != nil {

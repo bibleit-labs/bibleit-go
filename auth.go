@@ -44,6 +44,15 @@ type AuthorizationResult struct {
 	Fields                                                               map[string]json.RawMessage
 }
 
+type authorizationResponse struct {
+	Actor        string `json:"actor"`
+	IdentityName string `json:"identity_name"`
+	DisplayName  string `json:"display_name"`
+	AuthProvider string `json:"auth_provider"`
+	TokenID      string `json:"token_id"`
+	AccessToken  string `json:"access_token"`
+}
+
 // ExchangeCode redeems an approved one-use code with its PKCE verifier.
 // Even a rejected verifier can consume the code on the current server.
 func (c *AuthClient) ExchangeCode(ctx context.Context, exchange CodeExchange) (AuthorizationResult, error) {
@@ -75,14 +84,7 @@ func (c *AuthClient) ExchangeCode(ctx context.Context, exchange CodeExchange) (A
 	if res.StatusCode != http.StatusOK {
 		return AuthorizationResult{}, authHTTPError(res.StatusCode, data)
 	}
-	var payload struct {
-		Actor        string `json:"actor"`
-		IdentityName string `json:"identity_name"`
-		DisplayName  string `json:"display_name"`
-		AuthProvider string `json:"auth_provider"`
-		TokenID      string `json:"token_id"`
-		AccessToken  string `json:"access_token"`
-	}
+	var payload authorizationResponse
 	if err := json.Unmarshal(data, &payload); err != nil || payload.Actor == "" || payload.AccessToken == "" || strings.ContainsAny(payload.AccessToken, "\r\n") {
 		return AuthorizationResult{}, errors.New("invalid authorization response")
 	}

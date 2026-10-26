@@ -3,9 +3,12 @@ output: ../models.gen.go
 generate:
   models: true
 output-options:
+  generate-types-for-anonymous-schemas: true
   skip-prune: true
   name-normalizer: ToCamelCaseWithInitialisms
   prefer-skip-optional-pointer-on-container-types: true
+  user-templates:
+    union.tmpl: ../contract/union-named.tmpl
   overlay:
     path: ../contract/compatibility-overlay.yaml
     strict: false

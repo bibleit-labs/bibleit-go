@@ -9,7 +9,7 @@ bearer REST client. SSH command helpers require an explicit SSH executor.
 ```go
 client, err := bibleit.NewClient(token)
 if err != nil { return err }
-response, err := client.GetPersonalIdentity(ctx, nil)
+response, err := client.GetPersonalIdentity(ctx)
 if err != nil { return err }
 defer response.Body.Close()
 var identity bibleit.PersonalIdentity
@@ -22,20 +22,34 @@ tokens explicitly. The server enforces scopes and ownership; these credentials
 are not interchangeable. The client does not load environment variables, open
 browsers or persist tokens. An empty token permits public OpenAPI discovery.
 
-Every generated method accepts explicit path identifiers and `*bibleit.Options`.
+Every generated method accepts explicit path identifiers and an optional
+`*bibleit.Options`. Omit it when defaults are sufficient; pass at most one value.
+Prefer generated schema models for JSON bodies. For queries, use generated
+operation parameters through `Options.Params`, for example
+`Options{Params: bibleit.ListLivesParams{}.WithAfter(cursor)}`. Each query field
+has a chainable `With...` method accepting its value directly. These methods
+return a copy without changing the original parameters; explicit zero and empty
+values remain present, while unset optional fields are omitted. Query fields are
+encoded with their wire names, preserving omitted values and escaping opaque
+cursors. `Options.Query` remains available for raw query values; supplying both
+`Params` and `Query` returns an error before sending a request. Params header
+fields are not encoded as queries; use `Options.IfMatch`, `IdempotencyKey`, and
+the other explicit header options.
+
 JSON bodies can use generated schema models or ordinary Go values. Optional
 nullable request fields use `json.RawMessage` to distinguish omitted (`nil`),
 explicit null (`json.RawMessage("null")`) and zero. Union schemas expose generated `As...`, `From...` and `Merge...` helpers;
 choose the concrete variant using the contract discriminator.
 
 ```go
-read, err := client.GetLive(ctx, liveID, nil)
+read, err := client.GetLive(ctx, liveID)
 if err != nil { return err }
 etag := read.Header.Get("ETag")
 read.Body.Close()
+paused := true
 updated, err := client.UpdateLivePlayback(ctx, liveID, &bibleit.Options{
     IfMatch: etag,
-    JSON: map[string]any{"paused": true},
+    JSON: bibleit.PlaybackPatch{Paused: &paused},
 })
 if err != nil { return err }
 updated.Body.Close()
@@ -58,9 +72,20 @@ injection retains the fixed host. The default timeout is 40 seconds; supplied
 clients retain their own timeout and must allow the 25-second long-poll wait plus
 latency. Mutations must not queue behind an outstanding poll.
 
-Collections retain `NextCursor`. Explicitly pass it as `Options.Query["after"]`
+Collections retain `NextCursor`. Pass it as the generated Params struct’s `After` field
 with a limit of 1–100 until nil; search instead uses `HasMore` without cursors.
-`PollLiveEvents` makes one request, decodes a typed envelope and rejects unsupported
+`PollLiveEventsWithOptions(ctx, liveID)` defaults to no cursor and a 25-second wait.
+To resume with an explicit wait (including zero), build parameters and pass
+their address:
+
+```go
+params := bibleit.GetLiveEventsParams{}.WithAfter(cursor).WithWait(25)
+event, err := client.PollLiveEventsWithOptions(ctx, liveID, &params)
+```
+
+The original
+`PollLiveEvents(ctx, liveID, cursor, wait)` remains available. Both make one
+request, decode a typed envelope and reject unsupported
 event schema versions. Snapshot cursors are opaque and are never ETags. Poll
 again with the returned cursor; reconnect without one to resynchronize. Events
 are current snapshots, not a durable or exactly-once event log.
@@ -76,20 +101,21 @@ may contain fewer verses than its item limit. There is no unbounded whole-book
 API response.
 
 ```go
+params := bibleit.ReadPersonalBookParams{}.WithLimit(100).WithAfter(cursor)
 response, err := client.ReadPersonalBook(ctx, accountID, "web", "19", &bibleit.Options{
-    Query: url.Values{"limit": {"100"}},
+    Params: params,
 })
 if err != nil { return err }
 defer response.Body.Close()
 var page bibleit.ScriptureBookRead
 if err := response.Decode(&page); err != nil { return err }
-// Use page.NextCursor as Query["after"] for the next request.
+// Use page.NextCursor as ReadPersonalBookParams.After for the next request.
 ```
 
 Use the lazy Go iterators to traverse pages without managing response bodies:
 
 ```go
-for page, err := range client.ReadPersonalBookPages(ctx, accountID, "web", "19", nil) {
+for page, err := range client.ReadPersonalBookPages(ctx, accountID, "web", "19") {
     if err != nil { return err }
     for _, verse := range page.Verses {
         fmt.Println(verse.Chapter, verse.Verse, verse.Text)
@@ -156,6 +182,12 @@ helpers. A small supported client template retains the public `*Client` methods
 and operation directory; the handwritten transport still enforces fixed hosts,
 blocked redirects/cookies, bounded decoding and no automatic retries. A separate
 OpenAPI Overlay preserves string UUID identifiers, int64 coordinates/timestamps,
-optional/null `RawMessage` fields and the optional string Live name. This changes
+optional/null `RawMessage` fields and the optional string Live name. It also
+provides concrete types for string enum/constant fields, nullable snapshots,
+and empty JSON objects, avoiding generic map/interface fields for known schemas. This changes
 Go representation only, not the canonical server wire schema. `GetOpenApi` is a
 compatibility alias for the generated Go-initialism spelling `GetOpenAPI`.
+
+Generated nested object schemas use named Go types. The union template also
+uses named discriminator payloads; handwritten response decoders use named
+package types.

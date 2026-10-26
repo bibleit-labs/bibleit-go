@@ -2,6 +2,25 @@
 
 ## Unreleased
 
+## v0.3.1 — 2026-10-26
+
+- Add chainable, value-returning `With...` methods for every generated REST
+  query field, including limits, cursors, search terms and asset kinds.
+
+- Use named types for decoder payloads, generated nested objects and union
+  discriminators instead of inline structs.
+
+- Add typed query encoding through `Options.Params` and generated operation
+  parameters, so callers can use structs instead of constructing query maps.
+- Allow resource methods and whole-book iterators to omit unused options. Direct
+  calls passing a single options pointer or nil still work; method values must
+  now use a variadic `...*Options` function signature.
+- Add `PollLiveEventsWithOptions`, defaulting to no cursor and a 25-second wait.
+  The existing explicit-cursor polling method remains supported.
+- Generate concrete string enums, typed nullable snapshots and empty-object
+  request bodies instead of generic maps or interface fields. Code assigning
+  variables to enum fields may need conversion to the generated enum type.
+
 ## v0.3.0 — 2026-10-20
 
 - Move all resource operations, models, pagination and OAuth APIs from `rest`

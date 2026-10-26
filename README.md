@@ -25,7 +25,7 @@ the [runnable reading example](examples/read/main.go).
 ```go
 client, err := bibleit.NewClient(token)
 if err != nil { return err }
-response, err := client.GetPersonalIdentity(ctx, nil)
+response, err := client.GetPersonalIdentity(ctx)
 if err != nil { return err }
 defer response.Body.Close()
 var identity bibleit.PersonalIdentity

@@ -14,6 +14,12 @@ import (
 // Callers should discard partial results rather than treat them as a full book.
 var ErrInvalidBookPage = errors.New("invalid REST book page")
 
+// bookPageFields preserves field presence for required nullable page metadata.
+type bookPageFields struct {
+	Rights     json.RawMessage `json:"rights"`
+	NextCursor json.RawMessage `json:"next_cursor"`
+}
+
 // ReadPersonalBookPages lazily reads a personal book in bounded pages. It fetches
 // cursor pages with limit=50 unless Options.Query specifies a limit
 // (1..500). Query.after can resume a previous traversal. Options are copied;
@@ -22,28 +28,39 @@ var ErrInvalidBookPage = errors.New("invalid REST book page")
 // a zero page, and are never retried. Every response body is closed before yield.
 // ReadPersonalBook remains a single request and returns one page (50 verses
 // by default). Use this iterator to read the complete book.
-func (c *Client) ReadPersonalBookPages(ctx context.Context, accountID, slug, bookID string, options *Options) iter.Seq2[ScriptureBookRead, error] {
+func (c *Client) ReadPersonalBookPages(ctx context.Context, accountID, slug, bookID string, options ...*Options) iter.Seq2[ScriptureBookRead, error] {
 	return c.bookPages(ctx, "readPersonalBook", map[string]string{"account_id": accountID, "slug": slug, "book_id": bookID}, options)
 }
 
 // ReadBookPages is the organization-scoped counterpart of ReadPersonalBookPages.
 // It has the same lazy iteration, cancellation and error behavior. ReadBook
 // remains a single-request method returning one bounded page.
-func (c *Client) ReadBookPages(ctx context.Context, organizationID, slug, bookID string, options *Options) iter.Seq2[ScriptureBookRead, error] {
+func (c *Client) ReadBookPages(ctx context.Context, organizationID, slug, bookID string, options ...*Options) iter.Seq2[ScriptureBookRead, error] {
 	return c.bookPages(ctx, "readBook", map[string]string{"organization_id": organizationID, "slug": slug, "book_id": bookID}, options)
 }
 
-func (c *Client) bookPages(ctx context.Context, operation string, params map[string]string, options *Options) iter.Seq2[ScriptureBookRead, error] {
+func (c *Client) bookPages(ctx context.Context, operation string, params map[string]string, options []*Options) iter.Seq2[ScriptureBookRead, error] {
 	snapshot := Options{}
-	if options != nil {
-		snapshot = *options
+	option, optionErr := singleOptions(options)
+	if option != nil {
+		snapshot = *option
 	}
-	snapshot.Query = cloneBookQuery(snapshot.Query)
+	query, queryErr := snapshot.queryValues()
+	snapshot.Params = nil
+	snapshot.Query = cloneBookQuery(query)
 	if !snapshot.Query.Has("limit") {
 		snapshot.Query.Set("limit", "50")
 	}
 	return func(yield func(ScriptureBookRead, error) bool) {
 		fail := func(err error) { yield(ScriptureBookRead{}, err) }
+		if optionErr != nil {
+			fail(optionErr)
+			return
+		}
+		if queryErr != nil {
+			fail(queryErr)
+			return
+		}
 		opts := snapshot
 		opts.Query = cloneBookQuery(snapshot.Query)
 		limit, err := strconv.Atoi(opts.Query.Get("limit"))
@@ -82,13 +99,13 @@ func (c *Client) bookPages(ctx context.Context, operation string, params map[str
 				return
 			}
 			var page ScriptureBookRead
-			var fields map[string]json.RawMessage
-			if json.Unmarshal(raw, &page) != nil || json.Unmarshal(raw, &fields) != nil || page.Verses == nil || page.Translation == "" || len(fields["rights"]) == 0 || string(fields["rights"]) == "null" {
+			var fields bookPageFields
+			if json.Unmarshal(raw, &page) != nil || json.Unmarshal(raw, &fields) != nil || page.Verses == nil || page.Translation == "" || len(fields.Rights) == 0 || string(fields.Rights) == "null" {
 				fail(fmt.Errorf("%w: missing or malformed Scripture fields", ErrInvalidBookPage))
 				return
 			}
-			cursor, exists := fields["next_cursor"]
-			if !exists || len(cursor) == 0 {
+			cursor := fields.NextCursor
+			if len(cursor) == 0 {
 				fail(fmt.Errorf("%w: missing next_cursor", ErrInvalidBookPage))
 				return
 			}

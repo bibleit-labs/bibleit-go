@@ -77,15 +77,43 @@ func OperationNames() []string {
 	return names
 }
 
+// QueryParameters is implemented by generated operation Params with query fields.
+type QueryParameters interface {
+	QueryValues() url.Values
+}
+
 type Options struct {
-	Query url.Values
-	JSON  any
+	// Params accepts generated typed parameters, such as ReadPersonalBookParams.
+	// Params and Query are mutually exclusive.
+	Params QueryParameters
+	Query  url.Values
+	JSON   any
 	// Body streams raw uploads/imports. It is mutually exclusive with JSON.
 	Body        io.Reader
 	ContentType string
 	// ContentLength is required for raw uploads; use the exact byte length.
 	ContentLength                                    int64
 	IfMatch, IdempotencyKey, DestinationToken, Range string
+}
+
+func singleOptions(options []*Options) (*Options, error) {
+	if len(options) > 1 {
+		return nil, errors.New("at most one Options value is supported")
+	}
+	if len(options) == 1 {
+		return options[0], nil
+	}
+	return nil, nil
+}
+
+func (o Options) queryValues() (url.Values, error) {
+	if o.Params != nil {
+		if o.Query != nil {
+			return nil, errors.New("Params and Query are mutually exclusive")
+		}
+		return o.Params.QueryValues(), nil
+	}
+	return o.Query, nil
 }
 
 // Response retains ETag, Location, Retry-After and request IDs in Header.
@@ -164,8 +192,12 @@ func (c *Client) Call(ctx context.Context, operation string, params map[string]s
 			contentType = "application/json"
 		}
 	}
+	query, err := o.queryValues()
+	if err != nil {
+		return nil, err
+	}
 	endpoint := Endpoint + path
-	if q := o.Query.Encode(); q != "" {
+	if q := query.Encode(); q != "" {
 		endpoint += "?" + q
 	}
 	req, err := http.NewRequestWithContext(ctx, op.Method, endpoint, body)
