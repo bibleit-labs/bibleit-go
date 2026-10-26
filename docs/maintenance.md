@@ -24,6 +24,14 @@ Keep API compatibility, supported operations, Go requirements and fixture change
 documented in the changelog. Obtain owner approval before release tags or repository
 visibility changes; keep published tags immutable.
 
+The Publish Go package documentation workflow runs on version-tag pushes. It
+downloads the published version through proxy.golang.org with checksum
+verification, requests pkg.go.dev indexing, and verifies the versioned
+documentation page. No publishing credentials are required. For an existing
+release, dispatch `.github/workflows/pkg-go-dev.yml` with its `version` input.
+Indexing is asynchronous; a failed availability check can be rerun without
+changing the release tag. See [pkg.go.dev's indexing process](https://pkg.go.dev/about#adding-a-package).
+
 The [cross-repository launch record](https://github.com/bibleit-labs/bibleit-cli/blob/main/docs/public-launch.md),
 [security audit](https://github.com/bibleit-labs/bibleit-cli/blob/main/docs/security-audit.md)
 and [licensing audit](https://github.com/bibleit-labs/bibleit-cli/blob/main/docs/licensing-audit.md)
