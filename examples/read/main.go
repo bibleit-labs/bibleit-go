@@ -23,7 +23,7 @@ func run() error {
 	}
 	ctx, cancel := signal.NotifyContext(context.Background(), os.Interrupt)
 	defer cancel()
-	r, err := c.GetPersonalIdentity(ctx, nil)
+	r, err := c.GetPersonalIdentity(ctx)
 	if err != nil {
 		return err
 	}
@@ -33,7 +33,7 @@ func run() error {
 	if err != nil {
 		return err
 	}
-	r, err = c.ReadPersonalVerse(ctx, identity.PersonalAccountID, "web", "43", "3", "16", nil)
+	r, err = c.ReadPersonalVerse(ctx, identity.PersonalAccountID, "web", "43", "3", "16")
 	if err != nil {
 		return err
 	}

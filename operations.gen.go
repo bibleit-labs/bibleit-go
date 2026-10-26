@@ -5,6 +5,8 @@ package bibleit
 
 import (
 	"context"
+	"fmt"
+	"net/url"
 )
 
 // The generated operation directory is consumed by the policy-preserving Client.
@@ -189,443 +191,1336 @@ var operations = map[string]Operation{
 }
 
 // ListPersonalAccounts List your personal account.
-func (c *Client) ListPersonalAccounts(ctx context.Context, options *Options) (*Response, error) {
-	return c.Call(ctx, "listPersonalAccounts", map[string]string{}, options)
+func (c *Client) ListPersonalAccounts(ctx context.Context, options ...*Options) (*Response, error) {
+	opts, err := singleOptions(options)
+	if err != nil {
+		return nil, err
+	}
+	return c.Call(ctx, "listPersonalAccounts", map[string]string{}, opts)
+}
+
+// WithLimit returns a copy with the limit query parameter set.
+func (p ListPersonalAccountsParams) WithLimit(value int64) ListPersonalAccountsParams {
+	p.Limit = &value
+	return p
+}
+
+// WithAfter returns a copy with the after query parameter set.
+func (p ListPersonalAccountsParams) WithAfter(value string) ListPersonalAccountsParams {
+	p.After = &value
+	return p
+}
+
+// QueryValues encodes the operation's typed query parameters. Each call returns fresh values.
+func (p ListPersonalAccountsParams) QueryValues() url.Values {
+	values := url.Values{}
+
+	if p.Limit != nil {
+		values.Set("limit", fmt.Sprint(*p.Limit))
+	}
+
+	if p.After != nil {
+		values.Set("after", fmt.Sprint(*p.After))
+	}
+
+	return values
 }
 
 // GetPersonalAccount Read your personal account.
-func (c *Client) GetPersonalAccount(ctx context.Context, account_id string, options *Options) (*Response, error) {
-	return c.Call(ctx, "getPersonalAccount", map[string]string{"account_id": account_id}, options)
+func (c *Client) GetPersonalAccount(ctx context.Context, account_id string, options ...*Options) (*Response, error) {
+	opts, err := singleOptions(options)
+	if err != nil {
+		return nil, err
+	}
+	return c.Call(ctx, "getPersonalAccount", map[string]string{"account_id": account_id}, opts)
 }
 
 // DeletePersonalLives Atomically delete all Lives in this workspace.
-func (c *Client) DeletePersonalLives(ctx context.Context, account_id string, options *Options) (*Response, error) {
-	return c.Call(ctx, "deletePersonalLives", map[string]string{"account_id": account_id}, options)
+func (c *Client) DeletePersonalLives(ctx context.Context, account_id string, options ...*Options) (*Response, error) {
+	opts, err := singleOptions(options)
+	if err != nil {
+		return nil, err
+	}
+	return c.Call(ctx, "deletePersonalLives", map[string]string{"account_id": account_id}, opts)
 }
 
 // ListPersonalLives List your personal Lives.
-func (c *Client) ListPersonalLives(ctx context.Context, account_id string, options *Options) (*Response, error) {
-	return c.Call(ctx, "listPersonalLives", map[string]string{"account_id": account_id}, options)
+func (c *Client) ListPersonalLives(ctx context.Context, account_id string, options ...*Options) (*Response, error) {
+	opts, err := singleOptions(options)
+	if err != nil {
+		return nil, err
+	}
+	return c.Call(ctx, "listPersonalLives", map[string]string{"account_id": account_id}, opts)
+}
+
+// WithLimit returns a copy with the limit query parameter set.
+func (p ListPersonalLivesParams) WithLimit(value int64) ListPersonalLivesParams {
+	p.Limit = &value
+	return p
+}
+
+// WithAfter returns a copy with the after query parameter set.
+func (p ListPersonalLivesParams) WithAfter(value string) ListPersonalLivesParams {
+	p.After = &value
+	return p
+}
+
+// QueryValues encodes the operation's typed query parameters. Each call returns fresh values.
+func (p ListPersonalLivesParams) QueryValues() url.Values {
+	values := url.Values{}
+
+	if p.Limit != nil {
+		values.Set("limit", fmt.Sprint(*p.Limit))
+	}
+
+	if p.After != nil {
+		values.Set("after", fmt.Sprint(*p.After))
+	}
+
+	return values
 }
 
 // CreatePersonalLive Create a personal Reader Live.
-func (c *Client) CreatePersonalLive(ctx context.Context, account_id string, options *Options) (*Response, error) {
-	return c.Call(ctx, "createPersonalLive", map[string]string{"account_id": account_id}, options)
+func (c *Client) CreatePersonalLive(ctx context.Context, account_id string, options ...*Options) (*Response, error) {
+	opts, err := singleOptions(options)
+	if err != nil {
+		return nil, err
+	}
+	return c.Call(ctx, "createPersonalLive", map[string]string{"account_id": account_id}, opts)
 }
 
 // GetPersonalQuotas Read your effective personal quotas and current usage.
-func (c *Client) GetPersonalQuotas(ctx context.Context, account_id string, options *Options) (*Response, error) {
-	return c.Call(ctx, "getPersonalQuotas", map[string]string{"account_id": account_id}, options)
+func (c *Client) GetPersonalQuotas(ctx context.Context, account_id string, options ...*Options) (*Response, error) {
+	opts, err := singleOptions(options)
+	if err != nil {
+		return nil, err
+	}
+	return c.Call(ctx, "getPersonalQuotas", map[string]string{"account_id": account_id}, opts)
 }
 
 // ListPersonalTokens List personal credential metadata.
-func (c *Client) ListPersonalTokens(ctx context.Context, account_id string, options *Options) (*Response, error) {
-	return c.Call(ctx, "listPersonalTokens", map[string]string{"account_id": account_id}, options)
+func (c *Client) ListPersonalTokens(ctx context.Context, account_id string, options ...*Options) (*Response, error) {
+	opts, err := singleOptions(options)
+	if err != nil {
+		return nil, err
+	}
+	return c.Call(ctx, "listPersonalTokens", map[string]string{"account_id": account_id}, opts)
+}
+
+// WithLimit returns a copy with the limit query parameter set.
+func (p ListPersonalTokensParams) WithLimit(value int64) ListPersonalTokensParams {
+	p.Limit = &value
+	return p
+}
+
+// WithAfter returns a copy with the after query parameter set.
+func (p ListPersonalTokensParams) WithAfter(value string) ListPersonalTokensParams {
+	p.After = &value
+	return p
+}
+
+// QueryValues encodes the operation's typed query parameters. Each call returns fresh values.
+func (p ListPersonalTokensParams) QueryValues() url.Values {
+	values := url.Values{}
+
+	if p.Limit != nil {
+		values.Set("limit", fmt.Sprint(*p.Limit))
+	}
+
+	if p.After != nil {
+		values.Set("after", fmt.Sprint(*p.After))
+	}
+
+	return values
 }
 
 // ListPersonalTranslations List the personal account translation library.
-func (c *Client) ListPersonalTranslations(ctx context.Context, account_id string, options *Options) (*Response, error) {
-	return c.Call(ctx, "listPersonalTranslations", map[string]string{"account_id": account_id}, options)
+func (c *Client) ListPersonalTranslations(ctx context.Context, account_id string, options ...*Options) (*Response, error) {
+	opts, err := singleOptions(options)
+	if err != nil {
+		return nil, err
+	}
+	return c.Call(ctx, "listPersonalTranslations", map[string]string{"account_id": account_id}, opts)
+}
+
+// WithLimit returns a copy with the limit query parameter set.
+func (p ListPersonalTranslationsParams) WithLimit(value int64) ListPersonalTranslationsParams {
+	p.Limit = &value
+	return p
+}
+
+// WithAfter returns a copy with the after query parameter set.
+func (p ListPersonalTranslationsParams) WithAfter(value string) ListPersonalTranslationsParams {
+	p.After = &value
+	return p
+}
+
+// QueryValues encodes the operation's typed query parameters. Each call returns fresh values.
+func (p ListPersonalTranslationsParams) QueryValues() url.Values {
+	values := url.Values{}
+
+	if p.Limit != nil {
+		values.Set("limit", fmt.Sprint(*p.Limit))
+	}
+
+	if p.After != nil {
+		values.Set("after", fmt.Sprint(*p.After))
+	}
+
+	return values
 }
 
 // DisablePersonalTranslation Disable a personal translation.
-func (c *Client) DisablePersonalTranslation(ctx context.Context, account_id string, slug string, options *Options) (*Response, error) {
-	return c.Call(ctx, "disablePersonalTranslation", map[string]string{"account_id": account_id, "slug": slug}, options)
+func (c *Client) DisablePersonalTranslation(ctx context.Context, account_id string, slug string, options ...*Options) (*Response, error) {
+	opts, err := singleOptions(options)
+	if err != nil {
+		return nil, err
+	}
+	return c.Call(ctx, "disablePersonalTranslation", map[string]string{"account_id": account_id, "slug": slug}, opts)
 }
 
 // GetPersonalTranslation Read an personal account library membership.
-func (c *Client) GetPersonalTranslation(ctx context.Context, account_id string, slug string, options *Options) (*Response, error) {
-	return c.Call(ctx, "getPersonalTranslation", map[string]string{"account_id": account_id, "slug": slug}, options)
+func (c *Client) GetPersonalTranslation(ctx context.Context, account_id string, slug string, options ...*Options) (*Response, error) {
+	opts, err := singleOptions(options)
+	if err != nil {
+		return nil, err
+	}
+	return c.Call(ctx, "getPersonalTranslation", map[string]string{"account_id": account_id, "slug": slug}, opts)
 }
 
 // EnablePersonalTranslation Enable an installed personal translation.
-func (c *Client) EnablePersonalTranslation(ctx context.Context, account_id string, slug string, options *Options) (*Response, error) {
-	return c.Call(ctx, "enablePersonalTranslation", map[string]string{"account_id": account_id, "slug": slug}, options)
+func (c *Client) EnablePersonalTranslation(ctx context.Context, account_id string, slug string, options ...*Options) (*Response, error) {
+	opts, err := singleOptions(options)
+	if err != nil {
+		return nil, err
+	}
+	return c.Call(ctx, "enablePersonalTranslation", map[string]string{"account_id": account_id, "slug": slug}, opts)
 }
 
 // ReadPersonalBook Read a book page with source verse identifiers.
-func (c *Client) ReadPersonalBook(ctx context.Context, account_id string, slug string, book_id string, options *Options) (*Response, error) {
-	return c.Call(ctx, "readPersonalBook", map[string]string{"account_id": account_id, "slug": slug, "book_id": book_id}, options)
+func (c *Client) ReadPersonalBook(ctx context.Context, account_id string, slug string, book_id string, options ...*Options) (*Response, error) {
+	opts, err := singleOptions(options)
+	if err != nil {
+		return nil, err
+	}
+	return c.Call(ctx, "readPersonalBook", map[string]string{"account_id": account_id, "slug": slug, "book_id": book_id}, opts)
+}
+
+// WithLimit returns a copy with the limit query parameter set.
+func (p ReadPersonalBookParams) WithLimit(value int64) ReadPersonalBookParams {
+	p.Limit = &value
+	return p
+}
+
+// WithAfter returns a copy with the after query parameter set.
+func (p ReadPersonalBookParams) WithAfter(value string) ReadPersonalBookParams {
+	p.After = &value
+	return p
+}
+
+// QueryValues encodes the operation's typed query parameters. Each call returns fresh values.
+func (p ReadPersonalBookParams) QueryValues() url.Values {
+	values := url.Values{}
+
+	if p.Limit != nil {
+		values.Set("limit", fmt.Sprint(*p.Limit))
+	}
+
+	if p.After != nil {
+		values.Set("after", fmt.Sprint(*p.After))
+	}
+
+	return values
 }
 
 // ReadPersonalChapter Read a chapter.
-func (c *Client) ReadPersonalChapter(ctx context.Context, account_id string, slug string, book_id string, chapter string, options *Options) (*Response, error) {
-	return c.Call(ctx, "readPersonalChapter", map[string]string{"account_id": account_id, "slug": slug, "book_id": book_id, "chapter": chapter}, options)
+func (c *Client) ReadPersonalChapter(ctx context.Context, account_id string, slug string, book_id string, chapter string, options ...*Options) (*Response, error) {
+	opts, err := singleOptions(options)
+	if err != nil {
+		return nil, err
+	}
+	return c.Call(ctx, "readPersonalChapter", map[string]string{"account_id": account_id, "slug": slug, "book_id": book_id, "chapter": chapter}, opts)
 }
 
 // ReadPersonalVerse Read a verse.
-func (c *Client) ReadPersonalVerse(ctx context.Context, account_id string, slug string, book_id string, chapter string, verse string, options *Options) (*Response, error) {
-	return c.Call(ctx, "readPersonalVerse", map[string]string{"account_id": account_id, "slug": slug, "book_id": book_id, "chapter": chapter, "verse": verse}, options)
+func (c *Client) ReadPersonalVerse(ctx context.Context, account_id string, slug string, book_id string, chapter string, verse string, options ...*Options) (*Response, error) {
+	opts, err := singleOptions(options)
+	if err != nil {
+		return nil, err
+	}
+	return c.Call(ctx, "readPersonalVerse", map[string]string{"account_id": account_id, "slug": slug, "book_id": book_id, "chapter": chapter, "verse": verse}, opts)
 }
 
 // SearchPersonalScripture Search personal account scripture.
-func (c *Client) SearchPersonalScripture(ctx context.Context, account_id string, slug string, options *Options) (*Response, error) {
-	return c.Call(ctx, "searchPersonalScripture", map[string]string{"account_id": account_id, "slug": slug}, options)
+func (c *Client) SearchPersonalScripture(ctx context.Context, account_id string, slug string, options ...*Options) (*Response, error) {
+	opts, err := singleOptions(options)
+	if err != nil {
+		return nil, err
+	}
+	return c.Call(ctx, "searchPersonalScripture", map[string]string{"account_id": account_id, "slug": slug}, opts)
+}
+
+// WithQ returns a copy with the q query parameter set.
+func (p SearchPersonalScriptureParams) WithQ(value string) SearchPersonalScriptureParams {
+	p.Q = value
+	return p
+}
+
+// WithLimit returns a copy with the limit query parameter set.
+func (p SearchPersonalScriptureParams) WithLimit(value int64) SearchPersonalScriptureParams {
+	p.Limit = &value
+	return p
+}
+
+// QueryValues encodes the operation's typed query parameters. Each call returns fresh values.
+func (p SearchPersonalScriptureParams) QueryValues() url.Values {
+	values := url.Values{}
+
+	values.Set("q", fmt.Sprint(p.Q))
+
+	if p.Limit != nil {
+		values.Set("limit", fmt.Sprint(*p.Limit))
+	}
+
+	return values
 }
 
 // ListBooks List canonical book definitions.
-func (c *Client) ListBooks(ctx context.Context, options *Options) (*Response, error) {
-	return c.Call(ctx, "listBooks", map[string]string{}, options)
+func (c *Client) ListBooks(ctx context.Context, options ...*Options) (*Response, error) {
+	opts, err := singleOptions(options)
+	if err != nil {
+		return nil, err
+	}
+	return c.Call(ctx, "listBooks", map[string]string{}, opts)
+}
+
+// WithLimit returns a copy with the limit query parameter set.
+func (p ListBooksParams) WithLimit(value int64) ListBooksParams {
+	p.Limit = &value
+	return p
+}
+
+// WithAfter returns a copy with the after query parameter set.
+func (p ListBooksParams) WithAfter(value string) ListBooksParams {
+	p.After = &value
+	return p
+}
+
+// QueryValues encodes the operation's typed query parameters. Each call returns fresh values.
+func (p ListBooksParams) QueryValues() url.Values {
+	values := url.Values{}
+
+	if p.Limit != nil {
+		values.Set("limit", fmt.Sprint(*p.Limit))
+	}
+
+	if p.After != nil {
+		values.Set("after", fmt.Sprint(*p.After))
+	}
+
+	return values
 }
 
 // DeleteLive Delete a Live.
-func (c *Client) DeleteLive(ctx context.Context, live_id string, options *Options) (*Response, error) {
-	return c.Call(ctx, "deleteLive", map[string]string{"live_id": live_id}, options)
+func (c *Client) DeleteLive(ctx context.Context, live_id string, options ...*Options) (*Response, error) {
+	opts, err := singleOptions(options)
+	if err != nil {
+		return nil, err
+	}
+	return c.Call(ctx, "deleteLive", map[string]string{"live_id": live_id}, opts)
 }
 
 // GetLive Read Live state.
-func (c *Client) GetLive(ctx context.Context, live_id string, options *Options) (*Response, error) {
-	return c.Call(ctx, "getLive", map[string]string{"live_id": live_id}, options)
+func (c *Client) GetLive(ctx context.Context, live_id string, options ...*Options) (*Response, error) {
+	opts, err := singleOptions(options)
+	if err != nil {
+		return nil, err
+	}
+	return c.Call(ctx, "getLive", map[string]string{"live_id": live_id}, opts)
 }
 
 // UpdateLiveMetadata Edit Live metadata.
-func (c *Client) UpdateLiveMetadata(ctx context.Context, live_id string, options *Options) (*Response, error) {
-	return c.Call(ctx, "updateLiveMetadata", map[string]string{"live_id": live_id}, options)
+func (c *Client) UpdateLiveMetadata(ctx context.Context, live_id string, options ...*Options) (*Response, error) {
+	opts, err := singleOptions(options)
+	if err != nil {
+		return nil, err
+	}
+	return c.Call(ctx, "updateLiveMetadata", map[string]string{"live_id": live_id}, opts)
 }
 
 // DeleteLiveAudienceSecret Remove audience-secret protection.
-func (c *Client) DeleteLiveAudienceSecret(ctx context.Context, live_id string, options *Options) (*Response, error) {
-	return c.Call(ctx, "deleteLiveAudienceSecret", map[string]string{"live_id": live_id}, options)
+func (c *Client) DeleteLiveAudienceSecret(ctx context.Context, live_id string, options ...*Options) (*Response, error) {
+	opts, err := singleOptions(options)
+	if err != nil {
+		return nil, err
+	}
+	return c.Call(ctx, "deleteLiveAudienceSecret", map[string]string{"live_id": live_id}, opts)
 }
 
 // CreateLiveAudienceSecret Create a one-time audience secret.
-func (c *Client) CreateLiveAudienceSecret(ctx context.Context, live_id string, options *Options) (*Response, error) {
-	return c.Call(ctx, "createLiveAudienceSecret", map[string]string{"live_id": live_id}, options)
+func (c *Client) CreateLiveAudienceSecret(ctx context.Context, live_id string, options ...*Options) (*Response, error) {
+	opts, err := singleOptions(options)
+	if err != nil {
+		return nil, err
+	}
+	return c.Call(ctx, "createLiveAudienceSecret", map[string]string{"live_id": live_id}, opts)
 }
 
 // RotateLiveAudienceSecret Rotate a one-time audience secret.
-func (c *Client) RotateLiveAudienceSecret(ctx context.Context, live_id string, options *Options) (*Response, error) {
-	return c.Call(ctx, "rotateLiveAudienceSecret", map[string]string{"live_id": live_id}, options)
+func (c *Client) RotateLiveAudienceSecret(ctx context.Context, live_id string, options ...*Options) (*Response, error) {
+	opts, err := singleOptions(options)
+	if err != nil {
+		return nil, err
+	}
+	return c.Call(ctx, "rotateLiveAudienceSecret", map[string]string{"live_id": live_id}, opts)
 }
 
 // GetLiveDisplay Read the Live display.
-func (c *Client) GetLiveDisplay(ctx context.Context, live_id string, options *Options) (*Response, error) {
-	return c.Call(ctx, "getLiveDisplay", map[string]string{"live_id": live_id}, options)
+func (c *Client) GetLiveDisplay(ctx context.Context, live_id string, options ...*Options) (*Response, error) {
+	opts, err := singleOptions(options)
+	if err != nil {
+		return nil, err
+	}
+	return c.Call(ctx, "getLiveDisplay", map[string]string{"live_id": live_id}, opts)
 }
 
 // ReplaceLiveDisplay Replace or clear the Live display.
-func (c *Client) ReplaceLiveDisplay(ctx context.Context, live_id string, options *Options) (*Response, error) {
-	return c.Call(ctx, "replaceLiveDisplay", map[string]string{"live_id": live_id}, options)
+func (c *Client) ReplaceLiveDisplay(ctx context.Context, live_id string, options ...*Options) (*Response, error) {
+	opts, err := singleOptions(options)
+	if err != nil {
+		return nil, err
+	}
+	return c.Call(ctx, "replaceLiveDisplay", map[string]string{"live_id": live_id}, opts)
 }
 
 // GetLiveEvents Receive versioned Live events.
-func (c *Client) GetLiveEvents(ctx context.Context, live_id string, options *Options) (*Response, error) {
-	return c.Call(ctx, "getLiveEvents", map[string]string{"live_id": live_id}, options)
+func (c *Client) GetLiveEvents(ctx context.Context, live_id string, options ...*Options) (*Response, error) {
+	opts, err := singleOptions(options)
+	if err != nil {
+		return nil, err
+	}
+	return c.Call(ctx, "getLiveEvents", map[string]string{"live_id": live_id}, opts)
+}
+
+// WithAfter returns a copy with the after query parameter set.
+func (p GetLiveEventsParams) WithAfter(value string) GetLiveEventsParams {
+	p.After = &value
+	return p
+}
+
+// WithWait returns a copy with the wait query parameter set.
+func (p GetLiveEventsParams) WithWait(value int64) GetLiveEventsParams {
+	p.Wait = &value
+	return p
+}
+
+// QueryValues encodes the operation's typed query parameters. Each call returns fresh values.
+func (p GetLiveEventsParams) QueryValues() url.Values {
+	values := url.Values{}
+
+	if p.After != nil {
+		values.Set("after", fmt.Sprint(*p.After))
+	}
+
+	if p.Wait != nil {
+		values.Set("wait", fmt.Sprint(*p.Wait))
+	}
+
+	return values
 }
 
 // GetLivePlayback Read Live playback state.
-func (c *Client) GetLivePlayback(ctx context.Context, live_id string, options *Options) (*Response, error) {
-	return c.Call(ctx, "getLivePlayback", map[string]string{"live_id": live_id}, options)
+func (c *Client) GetLivePlayback(ctx context.Context, live_id string, options ...*Options) (*Response, error) {
+	opts, err := singleOptions(options)
+	if err != nil {
+		return nil, err
+	}
+	return c.Call(ctx, "getLivePlayback", map[string]string{"live_id": live_id}, opts)
 }
 
 // UpdateLivePlayback Update Live playback state.
-func (c *Client) UpdateLivePlayback(ctx context.Context, live_id string, options *Options) (*Response, error) {
-	return c.Call(ctx, "updateLivePlayback", map[string]string{"live_id": live_id}, options)
+func (c *Client) UpdateLivePlayback(ctx context.Context, live_id string, options ...*Options) (*Response, error) {
+	opts, err := singleOptions(options)
+	if err != nil {
+		return nil, err
+	}
+	return c.Call(ctx, "updateLivePlayback", map[string]string{"live_id": live_id}, opts)
 }
 
 // ListLiveQueueItems List ordered Live queue items.
-func (c *Client) ListLiveQueueItems(ctx context.Context, live_id string, options *Options) (*Response, error) {
-	return c.Call(ctx, "listLiveQueueItems", map[string]string{"live_id": live_id}, options)
+func (c *Client) ListLiveQueueItems(ctx context.Context, live_id string, options ...*Options) (*Response, error) {
+	opts, err := singleOptions(options)
+	if err != nil {
+		return nil, err
+	}
+	return c.Call(ctx, "listLiveQueueItems", map[string]string{"live_id": live_id}, opts)
+}
+
+// WithLimit returns a copy with the limit query parameter set.
+func (p ListLiveQueueItemsParams) WithLimit(value int64) ListLiveQueueItemsParams {
+	p.Limit = &value
+	return p
+}
+
+// WithAfter returns a copy with the after query parameter set.
+func (p ListLiveQueueItemsParams) WithAfter(value string) ListLiveQueueItemsParams {
+	p.After = &value
+	return p
+}
+
+// QueryValues encodes the operation's typed query parameters. Each call returns fresh values.
+func (p ListLiveQueueItemsParams) QueryValues() url.Values {
+	values := url.Values{}
+
+	if p.Limit != nil {
+		values.Set("limit", fmt.Sprint(*p.Limit))
+	}
+
+	if p.After != nil {
+		values.Set("after", fmt.Sprint(*p.After))
+	}
+
+	return values
 }
 
 // CreateLiveQueueItem Insert a scripture queue item.
-func (c *Client) CreateLiveQueueItem(ctx context.Context, live_id string, options *Options) (*Response, error) {
-	return c.Call(ctx, "createLiveQueueItem", map[string]string{"live_id": live_id}, options)
+func (c *Client) CreateLiveQueueItem(ctx context.Context, live_id string, options ...*Options) (*Response, error) {
+	opts, err := singleOptions(options)
+	if err != nil {
+		return nil, err
+	}
+	return c.Call(ctx, "createLiveQueueItem", map[string]string{"live_id": live_id}, opts)
 }
 
 // ReplaceLiveQueueOrder Replace queue ordering.
-func (c *Client) ReplaceLiveQueueOrder(ctx context.Context, live_id string, options *Options) (*Response, error) {
-	return c.Call(ctx, "replaceLiveQueueOrder", map[string]string{"live_id": live_id}, options)
+func (c *Client) ReplaceLiveQueueOrder(ctx context.Context, live_id string, options ...*Options) (*Response, error) {
+	opts, err := singleOptions(options)
+	if err != nil {
+		return nil, err
+	}
+	return c.Call(ctx, "replaceLiveQueueOrder", map[string]string{"live_id": live_id}, opts)
 }
 
 // DeleteLiveQueueItem Remove a queue item.
-func (c *Client) DeleteLiveQueueItem(ctx context.Context, live_id string, item_id string, options *Options) (*Response, error) {
-	return c.Call(ctx, "deleteLiveQueueItem", map[string]string{"live_id": live_id, "item_id": item_id}, options)
+func (c *Client) DeleteLiveQueueItem(ctx context.Context, live_id string, item_id string, options ...*Options) (*Response, error) {
+	opts, err := singleOptions(options)
+	if err != nil {
+		return nil, err
+	}
+	return c.Call(ctx, "deleteLiveQueueItem", map[string]string{"live_id": live_id, "item_id": item_id}, opts)
 }
 
 // GetLiveQueueItem Read a stable queue item.
-func (c *Client) GetLiveQueueItem(ctx context.Context, live_id string, item_id string, options *Options) (*Response, error) {
-	return c.Call(ctx, "getLiveQueueItem", map[string]string{"live_id": live_id, "item_id": item_id}, options)
+func (c *Client) GetLiveQueueItem(ctx context.Context, live_id string, item_id string, options ...*Options) (*Response, error) {
+	opts, err := singleOptions(options)
+	if err != nil {
+		return nil, err
+	}
+	return c.Call(ctx, "getLiveQueueItem", map[string]string{"live_id": live_id, "item_id": item_id}, opts)
 }
 
 // GetLiveSettings Read retained reference and selected translations.
-func (c *Client) GetLiveSettings(ctx context.Context, live_id string, options *Options) (*Response, error) {
-	return c.Call(ctx, "getLiveSettings", map[string]string{"live_id": live_id}, options)
+func (c *Client) GetLiveSettings(ctx context.Context, live_id string, options ...*Options) (*Response, error) {
+	opts, err := singleOptions(options)
+	if err != nil {
+		return nil, err
+	}
+	return c.Call(ctx, "getLiveSettings", map[string]string{"live_id": live_id}, opts)
 }
 
 // UpdateLiveSettings Update retained reference and translations.
-func (c *Client) UpdateLiveSettings(ctx context.Context, live_id string, options *Options) (*Response, error) {
-	return c.Call(ctx, "updateLiveSettings", map[string]string{"live_id": live_id}, options)
+func (c *Client) UpdateLiveSettings(ctx context.Context, live_id string, options ...*Options) (*Response, error) {
+	opts, err := singleOptions(options)
+	if err != nil {
+		return nil, err
+	}
+	return c.Call(ctx, "updateLiveSettings", map[string]string{"live_id": live_id}, opts)
 }
 
 // ClearLiveStack Clear the retained scripture stack.
-func (c *Client) ClearLiveStack(ctx context.Context, live_id string, options *Options) (*Response, error) {
-	return c.Call(ctx, "clearLiveStack", map[string]string{"live_id": live_id}, options)
+func (c *Client) ClearLiveStack(ctx context.Context, live_id string, options ...*Options) (*Response, error) {
+	opts, err := singleOptions(options)
+	if err != nil {
+		return nil, err
+	}
+	return c.Call(ctx, "clearLiveStack", map[string]string{"live_id": live_id}, opts)
 }
 
 // GetLiveStack Read retained scripture stack.
-func (c *Client) GetLiveStack(ctx context.Context, live_id string, options *Options) (*Response, error) {
-	return c.Call(ctx, "getLiveStack", map[string]string{"live_id": live_id}, options)
+func (c *Client) GetLiveStack(ctx context.Context, live_id string, options ...*Options) (*Response, error) {
+	opts, err := singleOptions(options)
+	if err != nil {
+		return nil, err
+	}
+	return c.Call(ctx, "getLiveStack", map[string]string{"live_id": live_id}, opts)
 }
 
 // PushLiveStack Push retained scripture with optional selected translations.
-func (c *Client) PushLiveStack(ctx context.Context, live_id string, options *Options) (*Response, error) {
-	return c.Call(ctx, "pushLiveStack", map[string]string{"live_id": live_id}, options)
+func (c *Client) PushLiveStack(ctx context.Context, live_id string, options ...*Options) (*Response, error) {
+	opts, err := singleOptions(options)
+	if err != nil {
+		return nil, err
+	}
+	return c.Call(ctx, "pushLiveStack", map[string]string{"live_id": live_id}, opts)
 }
 
 // PopLiveStack Remove a positive count from the retained stack tail.
-func (c *Client) PopLiveStack(ctx context.Context, live_id string, options *Options) (*Response, error) {
-	return c.Call(ctx, "popLiveStack", map[string]string{"live_id": live_id}, options)
+func (c *Client) PopLiveStack(ctx context.Context, live_id string, options ...*Options) (*Response, error) {
+	opts, err := singleOptions(options)
+	if err != nil {
+		return nil, err
+	}
+	return c.Call(ctx, "popLiveStack", map[string]string{"live_id": live_id}, opts)
 }
 
 // GetLiveStatistics Read Live connection and retained-stack statistics.
-func (c *Client) GetLiveStatistics(ctx context.Context, live_id string, options *Options) (*Response, error) {
-	return c.Call(ctx, "getLiveStatistics", map[string]string{"live_id": live_id}, options)
+func (c *Client) GetLiveStatistics(ctx context.Context, live_id string, options ...*Options) (*Response, error) {
+	opts, err := singleOptions(options)
+	if err != nil {
+		return nil, err
+	}
+	return c.Call(ctx, "getLiveStatistics", map[string]string{"live_id": live_id}, opts)
 }
 
 // MoveLiveWorkspace Move a Live to another organization.
-func (c *Client) MoveLiveWorkspace(ctx context.Context, live_id string, options *Options) (*Response, error) {
-	return c.Call(ctx, "moveLiveWorkspace", map[string]string{"live_id": live_id}, options)
+func (c *Client) MoveLiveWorkspace(ctx context.Context, live_id string, options ...*Options) (*Response, error) {
+	opts, err := singleOptions(options)
+	if err != nil {
+		return nil, err
+	}
+	return c.Call(ctx, "moveLiveWorkspace", map[string]string{"live_id": live_id}, opts)
 }
 
 // GetPersonalIdentity Read your personal identity.
-func (c *Client) GetPersonalIdentity(ctx context.Context, options *Options) (*Response, error) {
-	return c.Call(ctx, "getPersonalIdentity", map[string]string{}, options)
+func (c *Client) GetPersonalIdentity(ctx context.Context, options ...*Options) (*Response, error) {
+	opts, err := singleOptions(options)
+	if err != nil {
+		return nil, err
+	}
+	return c.Call(ctx, "getPersonalIdentity", map[string]string{}, opts)
 }
 
 // ListOAuthGrants List your connected OAuth applications.
-func (c *Client) ListOAuthGrants(ctx context.Context, options *Options) (*Response, error) {
-	return c.Call(ctx, "listOAuthGrants", map[string]string{}, options)
+func (c *Client) ListOAuthGrants(ctx context.Context, options ...*Options) (*Response, error) {
+	opts, err := singleOptions(options)
+	if err != nil {
+		return nil, err
+	}
+	return c.Call(ctx, "listOAuthGrants", map[string]string{}, opts)
 }
 
 // RevokeOAuthGrant Disconnect your OAuth grant.
-func (c *Client) RevokeOAuthGrant(ctx context.Context, grant_id string, options *Options) (*Response, error) {
-	return c.Call(ctx, "revokeOAuthGrant", map[string]string{"grant_id": grant_id}, options)
+func (c *Client) RevokeOAuthGrant(ctx context.Context, grant_id string, options ...*Options) (*Response, error) {
+	opts, err := singleOptions(options)
+	if err != nil {
+		return nil, err
+	}
+	return c.Call(ctx, "revokeOAuthGrant", map[string]string{"grant_id": grant_id}, opts)
 }
 
 // GetPersonalOrganizationApplication Read your organization application status.
-func (c *Client) GetPersonalOrganizationApplication(ctx context.Context, application_id string, options *Options) (*Response, error) {
-	return c.Call(ctx, "getPersonalOrganizationApplication", map[string]string{"application_id": application_id}, options)
+func (c *Client) GetPersonalOrganizationApplication(ctx context.Context, application_id string, options ...*Options) (*Response, error) {
+	opts, err := singleOptions(options)
+	if err != nil {
+		return nil, err
+	}
+	return c.Call(ctx, "getPersonalOrganizationApplication", map[string]string{"application_id": application_id}, opts)
 }
 
 // ListPersonalOrganizations List your memberships and applications.
-func (c *Client) ListPersonalOrganizations(ctx context.Context, options *Options) (*Response, error) {
-	return c.Call(ctx, "listPersonalOrganizations", map[string]string{}, options)
+func (c *Client) ListPersonalOrganizations(ctx context.Context, options ...*Options) (*Response, error) {
+	opts, err := singleOptions(options)
+	if err != nil {
+		return nil, err
+	}
+	return c.Call(ctx, "listPersonalOrganizations", map[string]string{}, opts)
+}
+
+// WithAfter returns a copy with the after query parameter set.
+func (p ListPersonalOrganizationsParams) WithAfter(value string) ListPersonalOrganizationsParams {
+	p.After = &value
+	return p
+}
+
+// QueryValues encodes the operation's typed query parameters. Each call returns fresh values.
+func (p ListPersonalOrganizationsParams) QueryValues() url.Values {
+	values := url.Values{}
+
+	if p.After != nil {
+		values.Set("after", fmt.Sprint(*p.After))
+	}
+
+	return values
 }
 
 // GetOpenAPI Download the OpenAPI contract.
-func (c *Client) GetOpenAPI(ctx context.Context, options *Options) (*Response, error) {
-	return c.Call(ctx, "getOpenApi", map[string]string{}, options)
+func (c *Client) GetOpenAPI(ctx context.Context, options ...*Options) (*Response, error) {
+	opts, err := singleOptions(options)
+	if err != nil {
+		return nil, err
+	}
+	return c.Call(ctx, "getOpenApi", map[string]string{}, opts)
 }
 
 // GetServiceOrganization Discover the service token organization.
-func (c *Client) GetServiceOrganization(ctx context.Context, options *Options) (*Response, error) {
-	return c.Call(ctx, "getServiceOrganization", map[string]string{}, options)
+func (c *Client) GetServiceOrganization(ctx context.Context, options ...*Options) (*Response, error) {
+	opts, err := singleOptions(options)
+	if err != nil {
+		return nil, err
+	}
+	return c.Call(ctx, "getServiceOrganization", map[string]string{}, opts)
 }
 
 // GetOrganization Read organization identity.
-func (c *Client) GetOrganization(ctx context.Context, organization_id string, options *Options) (*Response, error) {
-	return c.Call(ctx, "getOrganization", map[string]string{"organization_id": organization_id}, options)
+func (c *Client) GetOrganization(ctx context.Context, organization_id string, options ...*Options) (*Response, error) {
+	opts, err := singleOptions(options)
+	if err != nil {
+		return nil, err
+	}
+	return c.Call(ctx, "getOrganization", map[string]string{"organization_id": organization_id}, opts)
 }
 
 // GetOrganizationLiveStudio Read organization Live Studio settings.
-func (c *Client) GetOrganizationLiveStudio(ctx context.Context, organization_id string, options *Options) (*Response, error) {
-	return c.Call(ctx, "getOrganizationLiveStudio", map[string]string{"organization_id": organization_id}, options)
+func (c *Client) GetOrganizationLiveStudio(ctx context.Context, organization_id string, options ...*Options) (*Response, error) {
+	opts, err := singleOptions(options)
+	if err != nil {
+		return nil, err
+	}
+	return c.Call(ctx, "getOrganizationLiveStudio", map[string]string{"organization_id": organization_id}, opts)
 }
 
 // ReplaceOrganizationLiveStudio Replace organization Live Studio settings.
-func (c *Client) ReplaceOrganizationLiveStudio(ctx context.Context, organization_id string, options *Options) (*Response, error) {
-	return c.Call(ctx, "replaceOrganizationLiveStudio", map[string]string{"organization_id": organization_id}, options)
+func (c *Client) ReplaceOrganizationLiveStudio(ctx context.Context, organization_id string, options ...*Options) (*Response, error) {
+	opts, err := singleOptions(options)
+	if err != nil {
+		return nil, err
+	}
+	return c.Call(ctx, "replaceOrganizationLiveStudio", map[string]string{"organization_id": organization_id}, opts)
 }
 
 // DeleteOrganizationLives Atomically delete all Lives in this workspace.
-func (c *Client) DeleteOrganizationLives(ctx context.Context, organization_id string, options *Options) (*Response, error) {
-	return c.Call(ctx, "deleteOrganizationLives", map[string]string{"organization_id": organization_id}, options)
+func (c *Client) DeleteOrganizationLives(ctx context.Context, organization_id string, options ...*Options) (*Response, error) {
+	opts, err := singleOptions(options)
+	if err != nil {
+		return nil, err
+	}
+	return c.Call(ctx, "deleteOrganizationLives", map[string]string{"organization_id": organization_id}, opts)
 }
 
 // ListLives List organization Lives.
-func (c *Client) ListLives(ctx context.Context, organization_id string, options *Options) (*Response, error) {
-	return c.Call(ctx, "listLives", map[string]string{"organization_id": organization_id}, options)
+func (c *Client) ListLives(ctx context.Context, organization_id string, options ...*Options) (*Response, error) {
+	opts, err := singleOptions(options)
+	if err != nil {
+		return nil, err
+	}
+	return c.Call(ctx, "listLives", map[string]string{"organization_id": organization_id}, opts)
+}
+
+// WithLimit returns a copy with the limit query parameter set.
+func (p ListLivesParams) WithLimit(value int64) ListLivesParams {
+	p.Limit = &value
+	return p
+}
+
+// WithAfter returns a copy with the after query parameter set.
+func (p ListLivesParams) WithAfter(value string) ListLivesParams {
+	p.After = &value
+	return p
+}
+
+// QueryValues encodes the operation's typed query parameters. Each call returns fresh values.
+func (p ListLivesParams) QueryValues() url.Values {
+	values := url.Values{}
+
+	if p.Limit != nil {
+		values.Set("limit", fmt.Sprint(*p.Limit))
+	}
+
+	if p.After != nil {
+		values.Set("after", fmt.Sprint(*p.After))
+	}
+
+	return values
 }
 
 // CreateLive Create an organization Live.
-func (c *Client) CreateLive(ctx context.Context, organization_id string, options *Options) (*Response, error) {
-	return c.Call(ctx, "createLive", map[string]string{"organization_id": organization_id}, options)
+func (c *Client) CreateLive(ctx context.Context, organization_id string, options ...*Options) (*Response, error) {
+	opts, err := singleOptions(options)
+	if err != nil {
+		return nil, err
+	}
+	return c.Call(ctx, "createLive", map[string]string{"organization_id": organization_id}, opts)
 }
 
 // ListOrganizationMembers List active organization memberships.
-func (c *Client) ListOrganizationMembers(ctx context.Context, organization_id string, options *Options) (*Response, error) {
-	return c.Call(ctx, "listOrganizationMembers", map[string]string{"organization_id": organization_id}, options)
+func (c *Client) ListOrganizationMembers(ctx context.Context, organization_id string, options ...*Options) (*Response, error) {
+	opts, err := singleOptions(options)
+	if err != nil {
+		return nil, err
+	}
+	return c.Call(ctx, "listOrganizationMembers", map[string]string{"organization_id": organization_id}, opts)
+}
+
+// WithLimit returns a copy with the limit query parameter set.
+func (p ListOrganizationMembersParams) WithLimit(value int64) ListOrganizationMembersParams {
+	p.Limit = &value
+	return p
+}
+
+// WithAfter returns a copy with the after query parameter set.
+func (p ListOrganizationMembersParams) WithAfter(value string) ListOrganizationMembersParams {
+	p.After = &value
+	return p
+}
+
+// QueryValues encodes the operation's typed query parameters. Each call returns fresh values.
+func (p ListOrganizationMembersParams) QueryValues() url.Values {
+	values := url.Values{}
+
+	if p.Limit != nil {
+		values.Set("limit", fmt.Sprint(*p.Limit))
+	}
+
+	if p.After != nil {
+		values.Set("after", fmt.Sprint(*p.After))
+	}
+
+	return values
 }
 
 // DeleteOrganizationMember Remove a member.
-func (c *Client) DeleteOrganizationMember(ctx context.Context, organization_id string, member_id string, options *Options) (*Response, error) {
-	return c.Call(ctx, "deleteOrganizationMember", map[string]string{"organization_id": organization_id, "member_id": member_id}, options)
+func (c *Client) DeleteOrganizationMember(ctx context.Context, organization_id string, member_id string, options ...*Options) (*Response, error) {
+	opts, err := singleOptions(options)
+	if err != nil {
+		return nil, err
+	}
+	return c.Call(ctx, "deleteOrganizationMember", map[string]string{"organization_id": organization_id, "member_id": member_id}, opts)
 }
 
 // GetOrganizationMember Read an active membership.
-func (c *Client) GetOrganizationMember(ctx context.Context, organization_id string, member_id string, options *Options) (*Response, error) {
-	return c.Call(ctx, "getOrganizationMember", map[string]string{"organization_id": organization_id, "member_id": member_id}, options)
+func (c *Client) GetOrganizationMember(ctx context.Context, organization_id string, member_id string, options ...*Options) (*Response, error) {
+	opts, err := singleOptions(options)
+	if err != nil {
+		return nil, err
+	}
+	return c.Call(ctx, "getOrganizationMember", map[string]string{"organization_id": organization_id, "member_id": member_id}, opts)
 }
 
 // UpdateOrganizationMember Change a member role.
-func (c *Client) UpdateOrganizationMember(ctx context.Context, organization_id string, member_id string, options *Options) (*Response, error) {
-	return c.Call(ctx, "updateOrganizationMember", map[string]string{"organization_id": organization_id, "member_id": member_id}, options)
+func (c *Client) UpdateOrganizationMember(ctx context.Context, organization_id string, member_id string, options ...*Options) (*Response, error) {
+	opts, err := singleOptions(options)
+	if err != nil {
+		return nil, err
+	}
+	return c.Call(ctx, "updateOrganizationMember", map[string]string{"organization_id": organization_id, "member_id": member_id}, opts)
 }
 
 // ImportPresentation Import a portable presentation bundle.
-func (c *Client) ImportPresentation(ctx context.Context, organization_id string, options *Options) (*Response, error) {
-	return c.Call(ctx, "importPresentation", map[string]string{"organization_id": organization_id}, options)
+func (c *Client) ImportPresentation(ctx context.Context, organization_id string, options ...*Options) (*Response, error) {
+	opts, err := singleOptions(options)
+	if err != nil {
+		return nil, err
+	}
+	return c.Call(ctx, "importPresentation", map[string]string{"organization_id": organization_id}, opts)
 }
 
 // ListPresentations List organization presentations.
-func (c *Client) ListPresentations(ctx context.Context, organization_id string, options *Options) (*Response, error) {
-	return c.Call(ctx, "listPresentations", map[string]string{"organization_id": organization_id}, options)
+func (c *Client) ListPresentations(ctx context.Context, organization_id string, options ...*Options) (*Response, error) {
+	opts, err := singleOptions(options)
+	if err != nil {
+		return nil, err
+	}
+	return c.Call(ctx, "listPresentations", map[string]string{"organization_id": organization_id}, opts)
+}
+
+// WithLimit returns a copy with the limit query parameter set.
+func (p ListPresentationsParams) WithLimit(value int64) ListPresentationsParams {
+	p.Limit = &value
+	return p
+}
+
+// WithAfter returns a copy with the after query parameter set.
+func (p ListPresentationsParams) WithAfter(value string) ListPresentationsParams {
+	p.After = &value
+	return p
+}
+
+// QueryValues encodes the operation's typed query parameters. Each call returns fresh values.
+func (p ListPresentationsParams) QueryValues() url.Values {
+	values := url.Values{}
+
+	if p.Limit != nil {
+		values.Set("limit", fmt.Sprint(*p.Limit))
+	}
+
+	if p.After != nil {
+		values.Set("after", fmt.Sprint(*p.After))
+	}
+
+	return values
 }
 
 // CreatePresentation Create an organization presentation.
-func (c *Client) CreatePresentation(ctx context.Context, organization_id string, options *Options) (*Response, error) {
-	return c.Call(ctx, "createPresentation", map[string]string{"organization_id": organization_id}, options)
+func (c *Client) CreatePresentation(ctx context.Context, organization_id string, options ...*Options) (*Response, error) {
+	opts, err := singleOptions(options)
+	if err != nil {
+		return nil, err
+	}
+	return c.Call(ctx, "createPresentation", map[string]string{"organization_id": organization_id}, opts)
 }
 
 // GetOrganizationQuotas Read organization limits and usage.
-func (c *Client) GetOrganizationQuotas(ctx context.Context, organization_id string, options *Options) (*Response, error) {
-	return c.Call(ctx, "getOrganizationQuotas", map[string]string{"organization_id": organization_id}, options)
+func (c *Client) GetOrganizationQuotas(ctx context.Context, organization_id string, options ...*Options) (*Response, error) {
+	opts, err := singleOptions(options)
+	if err != nil {
+		return nil, err
+	}
+	return c.Call(ctx, "getOrganizationQuotas", map[string]string{"organization_id": organization_id}, opts)
 }
 
 // ListServiceTokens List service tokens.
-func (c *Client) ListServiceTokens(ctx context.Context, organization_id string, options *Options) (*Response, error) {
-	return c.Call(ctx, "listServiceTokens", map[string]string{"organization_id": organization_id}, options)
+func (c *Client) ListServiceTokens(ctx context.Context, organization_id string, options ...*Options) (*Response, error) {
+	opts, err := singleOptions(options)
+	if err != nil {
+		return nil, err
+	}
+	return c.Call(ctx, "listServiceTokens", map[string]string{"organization_id": organization_id}, opts)
+}
+
+// WithLimit returns a copy with the limit query parameter set.
+func (p ListServiceTokensParams) WithLimit(value int64) ListServiceTokensParams {
+	p.Limit = &value
+	return p
+}
+
+// WithAfter returns a copy with the after query parameter set.
+func (p ListServiceTokensParams) WithAfter(value string) ListServiceTokensParams {
+	p.After = &value
+	return p
+}
+
+// QueryValues encodes the operation's typed query parameters. Each call returns fresh values.
+func (p ListServiceTokensParams) QueryValues() url.Values {
+	values := url.Values{}
+
+	if p.Limit != nil {
+		values.Set("limit", fmt.Sprint(*p.Limit))
+	}
+
+	if p.After != nil {
+		values.Set("after", fmt.Sprint(*p.After))
+	}
+
+	return values
 }
 
 // CreateServiceToken Create a service token.
-func (c *Client) CreateServiceToken(ctx context.Context, organization_id string, options *Options) (*Response, error) {
-	return c.Call(ctx, "createServiceToken", map[string]string{"organization_id": organization_id}, options)
+func (c *Client) CreateServiceToken(ctx context.Context, organization_id string, options ...*Options) (*Response, error) {
+	opts, err := singleOptions(options)
+	if err != nil {
+		return nil, err
+	}
+	return c.Call(ctx, "createServiceToken", map[string]string{"organization_id": organization_id}, opts)
 }
 
 // RevokeServiceToken Revoke a service token.
-func (c *Client) RevokeServiceToken(ctx context.Context, organization_id string, credential_id string, options *Options) (*Response, error) {
-	return c.Call(ctx, "revokeServiceToken", map[string]string{"organization_id": organization_id, "credential_id": credential_id}, options)
+func (c *Client) RevokeServiceToken(ctx context.Context, organization_id string, credential_id string, options ...*Options) (*Response, error) {
+	opts, err := singleOptions(options)
+	if err != nil {
+		return nil, err
+	}
+	return c.Call(ctx, "revokeServiceToken", map[string]string{"organization_id": organization_id, "credential_id": credential_id}, opts)
 }
 
 // GetServiceToken Read service-token configuration.
-func (c *Client) GetServiceToken(ctx context.Context, organization_id string, credential_id string, options *Options) (*Response, error) {
-	return c.Call(ctx, "getServiceToken", map[string]string{"organization_id": organization_id, "credential_id": credential_id}, options)
+func (c *Client) GetServiceToken(ctx context.Context, organization_id string, credential_id string, options ...*Options) (*Response, error) {
+	opts, err := singleOptions(options)
+	if err != nil {
+		return nil, err
+	}
+	return c.Call(ctx, "getServiceToken", map[string]string{"organization_id": organization_id, "credential_id": credential_id}, opts)
 }
 
 // UpdateServiceToken Edit service-token configuration.
-func (c *Client) UpdateServiceToken(ctx context.Context, organization_id string, credential_id string, options *Options) (*Response, error) {
-	return c.Call(ctx, "updateServiceToken", map[string]string{"organization_id": organization_id, "credential_id": credential_id}, options)
+func (c *Client) UpdateServiceToken(ctx context.Context, organization_id string, credential_id string, options ...*Options) (*Response, error) {
+	opts, err := singleOptions(options)
+	if err != nil {
+		return nil, err
+	}
+	return c.Call(ctx, "updateServiceToken", map[string]string{"organization_id": organization_id, "credential_id": credential_id}, opts)
 }
 
 // RotateServiceToken Rotate a service-token secret.
-func (c *Client) RotateServiceToken(ctx context.Context, organization_id string, credential_id string, options *Options) (*Response, error) {
-	return c.Call(ctx, "rotateServiceToken", map[string]string{"organization_id": organization_id, "credential_id": credential_id}, options)
+func (c *Client) RotateServiceToken(ctx context.Context, organization_id string, credential_id string, options ...*Options) (*Response, error) {
+	opts, err := singleOptions(options)
+	if err != nil {
+		return nil, err
+	}
+	return c.Call(ctx, "rotateServiceToken", map[string]string{"organization_id": organization_id, "credential_id": credential_id}, opts)
 }
 
 // ListOrganizationTranslations List the organization translation library.
-func (c *Client) ListOrganizationTranslations(ctx context.Context, organization_id string, options *Options) (*Response, error) {
-	return c.Call(ctx, "listOrganizationTranslations", map[string]string{"organization_id": organization_id}, options)
+func (c *Client) ListOrganizationTranslations(ctx context.Context, organization_id string, options ...*Options) (*Response, error) {
+	opts, err := singleOptions(options)
+	if err != nil {
+		return nil, err
+	}
+	return c.Call(ctx, "listOrganizationTranslations", map[string]string{"organization_id": organization_id}, opts)
+}
+
+// WithLimit returns a copy with the limit query parameter set.
+func (p ListOrganizationTranslationsParams) WithLimit(value int64) ListOrganizationTranslationsParams {
+	p.Limit = &value
+	return p
+}
+
+// WithAfter returns a copy with the after query parameter set.
+func (p ListOrganizationTranslationsParams) WithAfter(value string) ListOrganizationTranslationsParams {
+	p.After = &value
+	return p
+}
+
+// QueryValues encodes the operation's typed query parameters. Each call returns fresh values.
+func (p ListOrganizationTranslationsParams) QueryValues() url.Values {
+	values := url.Values{}
+
+	if p.Limit != nil {
+		values.Set("limit", fmt.Sprint(*p.Limit))
+	}
+
+	if p.After != nil {
+		values.Set("after", fmt.Sprint(*p.After))
+	}
+
+	return values
 }
 
 // DisableOrganizationTranslation Remove a translation from the organization library.
-func (c *Client) DisableOrganizationTranslation(ctx context.Context, organization_id string, slug string, options *Options) (*Response, error) {
-	return c.Call(ctx, "disableOrganizationTranslation", map[string]string{"organization_id": organization_id, "slug": slug}, options)
+func (c *Client) DisableOrganizationTranslation(ctx context.Context, organization_id string, slug string, options ...*Options) (*Response, error) {
+	opts, err := singleOptions(options)
+	if err != nil {
+		return nil, err
+	}
+	return c.Call(ctx, "disableOrganizationTranslation", map[string]string{"organization_id": organization_id, "slug": slug}, opts)
 }
 
 // GetOrganizationTranslation Read an organization library membership.
-func (c *Client) GetOrganizationTranslation(ctx context.Context, organization_id string, slug string, options *Options) (*Response, error) {
-	return c.Call(ctx, "getOrganizationTranslation", map[string]string{"organization_id": organization_id, "slug": slug}, options)
+func (c *Client) GetOrganizationTranslation(ctx context.Context, organization_id string, slug string, options ...*Options) (*Response, error) {
+	opts, err := singleOptions(options)
+	if err != nil {
+		return nil, err
+	}
+	return c.Call(ctx, "getOrganizationTranslation", map[string]string{"organization_id": organization_id, "slug": slug}, opts)
 }
 
 // EnableOrganizationTranslation Enable an installed translation in the organization library.
-func (c *Client) EnableOrganizationTranslation(ctx context.Context, organization_id string, slug string, options *Options) (*Response, error) {
-	return c.Call(ctx, "enableOrganizationTranslation", map[string]string{"organization_id": organization_id, "slug": slug}, options)
+func (c *Client) EnableOrganizationTranslation(ctx context.Context, organization_id string, slug string, options ...*Options) (*Response, error) {
+	opts, err := singleOptions(options)
+	if err != nil {
+		return nil, err
+	}
+	return c.Call(ctx, "enableOrganizationTranslation", map[string]string{"organization_id": organization_id, "slug": slug}, opts)
 }
 
 // ReadBook Read a book page with source verse identifiers.
-func (c *Client) ReadBook(ctx context.Context, organization_id string, slug string, book_id string, options *Options) (*Response, error) {
-	return c.Call(ctx, "readBook", map[string]string{"organization_id": organization_id, "slug": slug, "book_id": book_id}, options)
+func (c *Client) ReadBook(ctx context.Context, organization_id string, slug string, book_id string, options ...*Options) (*Response, error) {
+	opts, err := singleOptions(options)
+	if err != nil {
+		return nil, err
+	}
+	return c.Call(ctx, "readBook", map[string]string{"organization_id": organization_id, "slug": slug, "book_id": book_id}, opts)
+}
+
+// WithLimit returns a copy with the limit query parameter set.
+func (p ReadBookParams) WithLimit(value int64) ReadBookParams {
+	p.Limit = &value
+	return p
+}
+
+// WithAfter returns a copy with the after query parameter set.
+func (p ReadBookParams) WithAfter(value string) ReadBookParams {
+	p.After = &value
+	return p
+}
+
+// QueryValues encodes the operation's typed query parameters. Each call returns fresh values.
+func (p ReadBookParams) QueryValues() url.Values {
+	values := url.Values{}
+
+	if p.Limit != nil {
+		values.Set("limit", fmt.Sprint(*p.Limit))
+	}
+
+	if p.After != nil {
+		values.Set("after", fmt.Sprint(*p.After))
+	}
+
+	return values
 }
 
 // ReadChapter Read a chapter.
-func (c *Client) ReadChapter(ctx context.Context, organization_id string, slug string, book_id string, chapter string, options *Options) (*Response, error) {
-	return c.Call(ctx, "readChapter", map[string]string{"organization_id": organization_id, "slug": slug, "book_id": book_id, "chapter": chapter}, options)
+func (c *Client) ReadChapter(ctx context.Context, organization_id string, slug string, book_id string, chapter string, options ...*Options) (*Response, error) {
+	opts, err := singleOptions(options)
+	if err != nil {
+		return nil, err
+	}
+	return c.Call(ctx, "readChapter", map[string]string{"organization_id": organization_id, "slug": slug, "book_id": book_id, "chapter": chapter}, opts)
 }
 
 // ReadVerse Read a verse.
-func (c *Client) ReadVerse(ctx context.Context, organization_id string, slug string, book_id string, chapter string, verse string, options *Options) (*Response, error) {
-	return c.Call(ctx, "readVerse", map[string]string{"organization_id": organization_id, "slug": slug, "book_id": book_id, "chapter": chapter, "verse": verse}, options)
+func (c *Client) ReadVerse(ctx context.Context, organization_id string, slug string, book_id string, chapter string, verse string, options ...*Options) (*Response, error) {
+	opts, err := singleOptions(options)
+	if err != nil {
+		return nil, err
+	}
+	return c.Call(ctx, "readVerse", map[string]string{"organization_id": organization_id, "slug": slug, "book_id": book_id, "chapter": chapter, "verse": verse}, opts)
 }
 
 // SearchScripture Search organization scripture.
-func (c *Client) SearchScripture(ctx context.Context, organization_id string, slug string, options *Options) (*Response, error) {
-	return c.Call(ctx, "searchScripture", map[string]string{"organization_id": organization_id, "slug": slug}, options)
+func (c *Client) SearchScripture(ctx context.Context, organization_id string, slug string, options ...*Options) (*Response, error) {
+	opts, err := singleOptions(options)
+	if err != nil {
+		return nil, err
+	}
+	return c.Call(ctx, "searchScripture", map[string]string{"organization_id": organization_id, "slug": slug}, opts)
+}
+
+// WithQ returns a copy with the q query parameter set.
+func (p SearchScriptureParams) WithQ(value string) SearchScriptureParams {
+	p.Q = value
+	return p
+}
+
+// WithLimit returns a copy with the limit query parameter set.
+func (p SearchScriptureParams) WithLimit(value int64) SearchScriptureParams {
+	p.Limit = &value
+	return p
+}
+
+// QueryValues encodes the operation's typed query parameters. Each call returns fresh values.
+func (p SearchScriptureParams) QueryValues() url.Values {
+	values := url.Values{}
+
+	values.Set("q", fmt.Sprint(p.Q))
+
+	if p.Limit != nil {
+		values.Set("limit", fmt.Sprint(*p.Limit))
+	}
+
+	return values
 }
 
 // DeletePresentation Delete a saved presentation.
-func (c *Client) DeletePresentation(ctx context.Context, presentation_id string, options *Options) (*Response, error) {
-	return c.Call(ctx, "deletePresentation", map[string]string{"presentation_id": presentation_id}, options)
+func (c *Client) DeletePresentation(ctx context.Context, presentation_id string, options ...*Options) (*Response, error) {
+	opts, err := singleOptions(options)
+	if err != nil {
+		return nil, err
+	}
+	return c.Call(ctx, "deletePresentation", map[string]string{"presentation_id": presentation_id}, opts)
 }
 
 // GetPresentation Read a saved presentation.
-func (c *Client) GetPresentation(ctx context.Context, presentation_id string, options *Options) (*Response, error) {
-	return c.Call(ctx, "getPresentation", map[string]string{"presentation_id": presentation_id}, options)
+func (c *Client) GetPresentation(ctx context.Context, presentation_id string, options ...*Options) (*Response, error) {
+	opts, err := singleOptions(options)
+	if err != nil {
+		return nil, err
+	}
+	return c.Call(ctx, "getPresentation", map[string]string{"presentation_id": presentation_id}, opts)
 }
 
 // ReplacePresentation Replace a saved presentation document.
-func (c *Client) ReplacePresentation(ctx context.Context, presentation_id string, options *Options) (*Response, error) {
-	return c.Call(ctx, "replacePresentation", map[string]string{"presentation_id": presentation_id}, options)
+func (c *Client) ReplacePresentation(ctx context.Context, presentation_id string, options ...*Options) (*Response, error) {
+	opts, err := singleOptions(options)
+	if err != nil {
+		return nil, err
+	}
+	return c.Call(ctx, "replacePresentation", map[string]string{"presentation_id": presentation_id}, opts)
 }
 
 // UploadPresentationAsset Upload a staged presentation asset.
-func (c *Client) UploadPresentationAsset(ctx context.Context, presentation_id string, options *Options) (*Response, error) {
-	return c.Call(ctx, "uploadPresentationAsset", map[string]string{"presentation_id": presentation_id}, options)
+func (c *Client) UploadPresentationAsset(ctx context.Context, presentation_id string, options ...*Options) (*Response, error) {
+	opts, err := singleOptions(options)
+	if err != nil {
+		return nil, err
+	}
+	return c.Call(ctx, "uploadPresentationAsset", map[string]string{"presentation_id": presentation_id}, opts)
+}
+
+// WithKind returns a copy with the kind query parameter set.
+func (p UploadPresentationAssetParams) WithKind(value UploadPresentationAssetParamsKind) UploadPresentationAssetParams {
+	p.Kind = value
+	return p
+}
+
+// QueryValues encodes the operation's typed query parameters. Each call returns fresh values.
+func (p UploadPresentationAssetParams) QueryValues() url.Values {
+	values := url.Values{}
+
+	values.Set("kind", fmt.Sprint(p.Kind))
+
+	return values
 }
 
 // GetPresentationAsset Read protected presentation asset bytes.
-func (c *Client) GetPresentationAsset(ctx context.Context, presentation_id string, asset_id string, options *Options) (*Response, error) {
-	return c.Call(ctx, "getPresentationAsset", map[string]string{"presentation_id": presentation_id, "asset_id": asset_id}, options)
+func (c *Client) GetPresentationAsset(ctx context.Context, presentation_id string, asset_id string, options ...*Options) (*Response, error) {
+	opts, err := singleOptions(options)
+	if err != nil {
+		return nil, err
+	}
+	return c.Call(ctx, "getPresentationAsset", map[string]string{"presentation_id": presentation_id, "asset_id": asset_id}, opts)
 }
 
 // ListPresentationExports List the requesting service credential’s export jobs.
-func (c *Client) ListPresentationExports(ctx context.Context, presentation_id string, options *Options) (*Response, error) {
-	return c.Call(ctx, "listPresentationExports", map[string]string{"presentation_id": presentation_id}, options)
+func (c *Client) ListPresentationExports(ctx context.Context, presentation_id string, options ...*Options) (*Response, error) {
+	opts, err := singleOptions(options)
+	if err != nil {
+		return nil, err
+	}
+	return c.Call(ctx, "listPresentationExports", map[string]string{"presentation_id": presentation_id}, opts)
+}
+
+// WithLimit returns a copy with the limit query parameter set.
+func (p ListPresentationExportsParams) WithLimit(value int64) ListPresentationExportsParams {
+	p.Limit = &value
+	return p
+}
+
+// WithAfter returns a copy with the after query parameter set.
+func (p ListPresentationExportsParams) WithAfter(value string) ListPresentationExportsParams {
+	p.After = &value
+	return p
+}
+
+// QueryValues encodes the operation's typed query parameters. Each call returns fresh values.
+func (p ListPresentationExportsParams) QueryValues() url.Values {
+	values := url.Values{}
+
+	if p.Limit != nil {
+		values.Set("limit", fmt.Sprint(*p.Limit))
+	}
+
+	if p.After != nil {
+		values.Set("after", fmt.Sprint(*p.After))
+	}
+
+	return values
 }
 
 // CreatePresentationExport Queue a saved-revision presentation export.
-func (c *Client) CreatePresentationExport(ctx context.Context, presentation_id string, options *Options) (*Response, error) {
-	return c.Call(ctx, "createPresentationExport", map[string]string{"presentation_id": presentation_id}, options)
+func (c *Client) CreatePresentationExport(ctx context.Context, presentation_id string, options ...*Options) (*Response, error) {
+	opts, err := singleOptions(options)
+	if err != nil {
+		return nil, err
+	}
+	return c.Call(ctx, "createPresentationExport", map[string]string{"presentation_id": presentation_id}, opts)
 }
 
 // GetPresentationExport Read export job status.
-func (c *Client) GetPresentationExport(ctx context.Context, presentation_id string, export_id string, options *Options) (*Response, error) {
-	return c.Call(ctx, "getPresentationExport", map[string]string{"presentation_id": presentation_id, "export_id": export_id}, options)
+func (c *Client) GetPresentationExport(ctx context.Context, presentation_id string, export_id string, options ...*Options) (*Response, error) {
+	opts, err := singleOptions(options)
+	if err != nil {
+		return nil, err
+	}
+	return c.Call(ctx, "getPresentationExport", map[string]string{"presentation_id": presentation_id, "export_id": export_id}, opts)
 }
 
 // DownloadPresentationExport Consume and download a completed export once.
-func (c *Client) DownloadPresentationExport(ctx context.Context, presentation_id string, export_id string, options *Options) (*Response, error) {
-	return c.Call(ctx, "downloadPresentationExport", map[string]string{"presentation_id": presentation_id, "export_id": export_id}, options)
+func (c *Client) DownloadPresentationExport(ctx context.Context, presentation_id string, export_id string, options ...*Options) (*Response, error) {
+	opts, err := singleOptions(options)
+	if err != nil {
+		return nil, err
+	}
+	return c.Call(ctx, "downloadPresentationExport", map[string]string{"presentation_id": presentation_id, "export_id": export_id}, opts)
 }
 
 // ListTranslationCatalogue List reviewed translation editions.
-func (c *Client) ListTranslationCatalogue(ctx context.Context, options *Options) (*Response, error) {
-	return c.Call(ctx, "listTranslationCatalogue", map[string]string{}, options)
+func (c *Client) ListTranslationCatalogue(ctx context.Context, options ...*Options) (*Response, error) {
+	opts, err := singleOptions(options)
+	if err != nil {
+		return nil, err
+	}
+	return c.Call(ctx, "listTranslationCatalogue", map[string]string{}, opts)
+}
+
+// WithLimit returns a copy with the limit query parameter set.
+func (p ListTranslationCatalogueParams) WithLimit(value int64) ListTranslationCatalogueParams {
+	p.Limit = &value
+	return p
+}
+
+// WithAfter returns a copy with the after query parameter set.
+func (p ListTranslationCatalogueParams) WithAfter(value string) ListTranslationCatalogueParams {
+	p.After = &value
+	return p
+}
+
+// QueryValues encodes the operation's typed query parameters. Each call returns fresh values.
+func (p ListTranslationCatalogueParams) QueryValues() url.Values {
+	values := url.Values{}
+
+	if p.Limit != nil {
+		values.Set("limit", fmt.Sprint(*p.Limit))
+	}
+
+	if p.After != nil {
+		values.Set("after", fmt.Sprint(*p.After))
+	}
+
+	return values
 }
 
 // GetTranslation Read translation edition metadata.
-func (c *Client) GetTranslation(ctx context.Context, slug string, options *Options) (*Response, error) {
-	return c.Call(ctx, "getTranslation", map[string]string{"slug": slug}, options)
+func (c *Client) GetTranslation(ctx context.Context, slug string, options ...*Options) (*Response, error) {
+	opts, err := singleOptions(options)
+	if err != nil {
+		return nil, err
+	}
+	return c.Call(ctx, "getTranslation", map[string]string{"slug": slug}, opts)
 }
 
 // ListTranslationBooks List a translation edition book coverage.
-func (c *Client) ListTranslationBooks(ctx context.Context, slug string, options *Options) (*Response, error) {
-	return c.Call(ctx, "listTranslationBooks", map[string]string{"slug": slug}, options)
+func (c *Client) ListTranslationBooks(ctx context.Context, slug string, options ...*Options) (*Response, error) {
+	opts, err := singleOptions(options)
+	if err != nil {
+		return nil, err
+	}
+	return c.Call(ctx, "listTranslationBooks", map[string]string{"slug": slug}, opts)
+}
+
+// WithLimit returns a copy with the limit query parameter set.
+func (p ListTranslationBooksParams) WithLimit(value int64) ListTranslationBooksParams {
+	p.Limit = &value
+	return p
+}
+
+// WithAfter returns a copy with the after query parameter set.
+func (p ListTranslationBooksParams) WithAfter(value string) ListTranslationBooksParams {
+	p.After = &value
+	return p
+}
+
+// QueryValues encodes the operation's typed query parameters. Each call returns fresh values.
+func (p ListTranslationBooksParams) QueryValues() url.Values {
+	values := url.Values{}
+
+	if p.Limit != nil {
+		values.Set("limit", fmt.Sprint(*p.Limit))
+	}
+
+	if p.After != nil {
+		values.Set("after", fmt.Sprint(*p.After))
+	}
+
+	return values
 }
 
 // GetTranslationCatalogueDetails Read installed chapter and verse catalogue.
-func (c *Client) GetTranslationCatalogueDetails(ctx context.Context, slug string, options *Options) (*Response, error) {
-	return c.Call(ctx, "getTranslationCatalogueDetails", map[string]string{"slug": slug}, options)
+func (c *Client) GetTranslationCatalogueDetails(ctx context.Context, slug string, options ...*Options) (*Response, error) {
+	opts, err := singleOptions(options)
+	if err != nil {
+		return nil, err
+	}
+	return c.Call(ctx, "getTranslationCatalogueDetails", map[string]string{"slug": slug}, opts)
 }
 
 // Resource response decoding stays in the SDK's bounded Response.Decode.

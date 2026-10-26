@@ -10,6 +10,30 @@ import (
 	"github.com/oapi-codegen/runtime"
 )
 
+// Defines values for CatalogueTranslationLanguage.
+const (
+	CatalogueTranslationLanguageDe  CatalogueTranslationLanguage = "de"
+	CatalogueTranslationLanguageEn  CatalogueTranslationLanguage = "en"
+	CatalogueTranslationLanguagePt  CatalogueTranslationLanguage = "pt"
+	CatalogueTranslationLanguageUnd CatalogueTranslationLanguage = "und"
+)
+
+// Valid indicates whether the value is a known member of the CatalogueTranslationLanguage enum.
+func (e CatalogueTranslationLanguage) Valid() bool {
+	switch e {
+	case CatalogueTranslationLanguageDe:
+		return true
+	case CatalogueTranslationLanguageEn:
+		return true
+	case CatalogueTranslationLanguagePt:
+		return true
+	case CatalogueTranslationLanguageUnd:
+		return true
+	default:
+		return false
+	}
+}
+
 // Defines values for CreatePresentationExport0Format.
 const (
 	CreatePresentationExport0FormatBibleit CreatePresentationExport0Format = "bibleit"
@@ -127,6 +151,123 @@ func (e LiveStatus) Valid() bool {
 	}
 }
 
+// Defines values for LiveDisplayStatus.
+const (
+	LiveDisplayStatusRunning LiveDisplayStatus = "running"
+	LiveDisplayStatusStopped LiveDisplayStatus = "stopped"
+)
+
+// Valid indicates whether the value is a known member of the LiveDisplayStatus enum.
+func (e LiveDisplayStatus) Valid() bool {
+	switch e {
+	case LiveDisplayStatusRunning:
+		return true
+	case LiveDisplayStatusStopped:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for LiveDisplayType.
+const (
+	LiveDisplayTypeEmpty        LiveDisplayType = "empty"
+	LiveDisplayTypePresentation LiveDisplayType = "presentation"
+	LiveDisplayTypeScripture    LiveDisplayType = "scripture"
+)
+
+// Valid indicates whether the value is a known member of the LiveDisplayType enum.
+func (e LiveDisplayType) Valid() bool {
+	switch e {
+	case LiveDisplayTypeEmpty:
+		return true
+	case LiveDisplayTypePresentation:
+		return true
+	case LiveDisplayTypeScripture:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for LiveEventViewerSettingsPreset.
+const (
+	LiveEventViewerSettingsPresetDefault  LiveEventViewerSettingsPreset = "default"
+	LiveEventViewerSettingsPresetMidnight LiveEventViewerSettingsPreset = "midnight"
+	LiveEventViewerSettingsPresetOcean    LiveEventViewerSettingsPreset = "ocean"
+	LiveEventViewerSettingsPresetPaper    LiveEventViewerSettingsPreset = "paper"
+)
+
+// Valid indicates whether the value is a known member of the LiveEventViewerSettingsPreset enum.
+func (e LiveEventViewerSettingsPreset) Valid() bool {
+	switch e {
+	case LiveEventViewerSettingsPresetDefault:
+		return true
+	case LiveEventViewerSettingsPresetMidnight:
+		return true
+	case LiveEventViewerSettingsPresetOcean:
+		return true
+	case LiveEventViewerSettingsPresetPaper:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for LiveEventViewerSettingsTheme.
+const (
+	Dark  LiveEventViewerSettingsTheme = "dark"
+	Light LiveEventViewerSettingsTheme = "light"
+)
+
+// Valid indicates whether the value is a known member of the LiveEventViewerSettingsTheme enum.
+func (e LiveEventViewerSettingsTheme) Valid() bool {
+	switch e {
+	case Dark:
+		return true
+	case Light:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for LiveEventViewerSettingsTransition.
+const (
+	LiveEventViewerSettingsTransitionFade      LiveEventViewerSettingsTransition = "fade"
+	LiveEventViewerSettingsTransitionNone      LiveEventViewerSettingsTransition = "none"
+	LiveEventViewerSettingsTransitionSlide     LiveEventViewerSettingsTransition = "slide"
+	LiveEventViewerSettingsTransitionSlideDown LiveEventViewerSettingsTransition = "slide_down"
+	LiveEventViewerSettingsTransitionSlideUp   LiveEventViewerSettingsTransition = "slide_up"
+	LiveEventViewerSettingsTransitionWipe      LiveEventViewerSettingsTransition = "wipe"
+	LiveEventViewerSettingsTransitionZoomIn    LiveEventViewerSettingsTransition = "zoom_in"
+	LiveEventViewerSettingsTransitionZoomOut   LiveEventViewerSettingsTransition = "zoom_out"
+)
+
+// Valid indicates whether the value is a known member of the LiveEventViewerSettingsTransition enum.
+func (e LiveEventViewerSettingsTransition) Valid() bool {
+	switch e {
+	case LiveEventViewerSettingsTransitionFade:
+		return true
+	case LiveEventViewerSettingsTransitionNone:
+		return true
+	case LiveEventViewerSettingsTransitionSlide:
+		return true
+	case LiveEventViewerSettingsTransitionSlideDown:
+		return true
+	case LiveEventViewerSettingsTransitionSlideUp:
+		return true
+	case LiveEventViewerSettingsTransitionWipe:
+		return true
+	case LiveEventViewerSettingsTransitionZoomIn:
+		return true
+	case LiveEventViewerSettingsTransitionZoomOut:
+		return true
+	default:
+		return false
+	}
+}
+
 // Defines values for LiveHeartbeatEventResourceType.
 const (
 	LiveHeartbeatEventResourceTypeLive LiveHeartbeatEventResourceType = "live"
@@ -220,6 +361,213 @@ func (e LiveSnapshotEventType) Valid() bool {
 	}
 }
 
+// Defines values for LiveStudioSettingsElementsReferenceAlign.
+const (
+	LiveStudioSettingsElementsReferenceAlignCenter LiveStudioSettingsElementsReferenceAlign = "center"
+	LiveStudioSettingsElementsReferenceAlignLeft   LiveStudioSettingsElementsReferenceAlign = "left"
+	LiveStudioSettingsElementsReferenceAlignRight  LiveStudioSettingsElementsReferenceAlign = "right"
+)
+
+// Valid indicates whether the value is a known member of the LiveStudioSettingsElementsReferenceAlign enum.
+func (e LiveStudioSettingsElementsReferenceAlign) Valid() bool {
+	switch e {
+	case LiveStudioSettingsElementsReferenceAlignCenter:
+		return true
+	case LiveStudioSettingsElementsReferenceAlignLeft:
+		return true
+	case LiveStudioSettingsElementsReferenceAlignRight:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for LiveStudioSettingsElementsReferenceFont.
+const (
+	LiveStudioSettingsElementsReferenceFontMono  LiveStudioSettingsElementsReferenceFont = "mono"
+	LiveStudioSettingsElementsReferenceFontSans  LiveStudioSettingsElementsReferenceFont = "sans"
+	LiveStudioSettingsElementsReferenceFontSerif LiveStudioSettingsElementsReferenceFont = "serif"
+)
+
+// Valid indicates whether the value is a known member of the LiveStudioSettingsElementsReferenceFont enum.
+func (e LiveStudioSettingsElementsReferenceFont) Valid() bool {
+	switch e {
+	case LiveStudioSettingsElementsReferenceFontMono:
+		return true
+	case LiveStudioSettingsElementsReferenceFontSans:
+		return true
+	case LiveStudioSettingsElementsReferenceFontSerif:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for LiveStudioSettingsElementsTextAlign.
+const (
+	LiveStudioSettingsElementsTextAlignCenter LiveStudioSettingsElementsTextAlign = "center"
+	LiveStudioSettingsElementsTextAlignLeft   LiveStudioSettingsElementsTextAlign = "left"
+	LiveStudioSettingsElementsTextAlignRight  LiveStudioSettingsElementsTextAlign = "right"
+)
+
+// Valid indicates whether the value is a known member of the LiveStudioSettingsElementsTextAlign enum.
+func (e LiveStudioSettingsElementsTextAlign) Valid() bool {
+	switch e {
+	case LiveStudioSettingsElementsTextAlignCenter:
+		return true
+	case LiveStudioSettingsElementsTextAlignLeft:
+		return true
+	case LiveStudioSettingsElementsTextAlignRight:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for LiveStudioSettingsElementsTextFont.
+const (
+	LiveStudioSettingsElementsTextFontMono  LiveStudioSettingsElementsTextFont = "mono"
+	LiveStudioSettingsElementsTextFontSans  LiveStudioSettingsElementsTextFont = "sans"
+	LiveStudioSettingsElementsTextFontSerif LiveStudioSettingsElementsTextFont = "serif"
+)
+
+// Valid indicates whether the value is a known member of the LiveStudioSettingsElementsTextFont enum.
+func (e LiveStudioSettingsElementsTextFont) Valid() bool {
+	switch e {
+	case LiveStudioSettingsElementsTextFontMono:
+		return true
+	case LiveStudioSettingsElementsTextFontSans:
+		return true
+	case LiveStudioSettingsElementsTextFontSerif:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for LiveStudioSettingsElementsTranslationAlign.
+const (
+	LiveStudioSettingsElementsTranslationAlignCenter LiveStudioSettingsElementsTranslationAlign = "center"
+	LiveStudioSettingsElementsTranslationAlignLeft   LiveStudioSettingsElementsTranslationAlign = "left"
+	LiveStudioSettingsElementsTranslationAlignRight  LiveStudioSettingsElementsTranslationAlign = "right"
+)
+
+// Valid indicates whether the value is a known member of the LiveStudioSettingsElementsTranslationAlign enum.
+func (e LiveStudioSettingsElementsTranslationAlign) Valid() bool {
+	switch e {
+	case LiveStudioSettingsElementsTranslationAlignCenter:
+		return true
+	case LiveStudioSettingsElementsTranslationAlignLeft:
+		return true
+	case LiveStudioSettingsElementsTranslationAlignRight:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for LiveStudioSettingsElementsTranslationFont.
+const (
+	LiveStudioSettingsElementsTranslationFontMono  LiveStudioSettingsElementsTranslationFont = "mono"
+	LiveStudioSettingsElementsTranslationFontSans  LiveStudioSettingsElementsTranslationFont = "sans"
+	LiveStudioSettingsElementsTranslationFontSerif LiveStudioSettingsElementsTranslationFont = "serif"
+)
+
+// Valid indicates whether the value is a known member of the LiveStudioSettingsElementsTranslationFont enum.
+func (e LiveStudioSettingsElementsTranslationFont) Valid() bool {
+	switch e {
+	case LiveStudioSettingsElementsTranslationFontMono:
+		return true
+	case LiveStudioSettingsElementsTranslationFontSans:
+		return true
+	case LiveStudioSettingsElementsTranslationFontSerif:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for LiveStudioSettingsOrder.
+const (
+	LiveStudioSettingsOrderReference   LiveStudioSettingsOrder = "reference"
+	LiveStudioSettingsOrderText        LiveStudioSettingsOrder = "text"
+	LiveStudioSettingsOrderTranslation LiveStudioSettingsOrder = "translation"
+)
+
+// Valid indicates whether the value is a known member of the LiveStudioSettingsOrder enum.
+func (e LiveStudioSettingsOrder) Valid() bool {
+	switch e {
+	case LiveStudioSettingsOrderReference:
+		return true
+	case LiveStudioSettingsOrderText:
+		return true
+	case LiveStudioSettingsOrderTranslation:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for LiveStudioSettingsPreset.
+const (
+	LiveStudioSettingsPresetDefault  LiveStudioSettingsPreset = "default"
+	LiveStudioSettingsPresetMidnight LiveStudioSettingsPreset = "midnight"
+	LiveStudioSettingsPresetOcean    LiveStudioSettingsPreset = "ocean"
+	LiveStudioSettingsPresetPaper    LiveStudioSettingsPreset = "paper"
+)
+
+// Valid indicates whether the value is a known member of the LiveStudioSettingsPreset enum.
+func (e LiveStudioSettingsPreset) Valid() bool {
+	switch e {
+	case LiveStudioSettingsPresetDefault:
+		return true
+	case LiveStudioSettingsPresetMidnight:
+		return true
+	case LiveStudioSettingsPresetOcean:
+		return true
+	case LiveStudioSettingsPresetPaper:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for LiveStudioSettingsTransition.
+const (
+	LiveStudioSettingsTransitionFade      LiveStudioSettingsTransition = "fade"
+	LiveStudioSettingsTransitionNone      LiveStudioSettingsTransition = "none"
+	LiveStudioSettingsTransitionSlide     LiveStudioSettingsTransition = "slide"
+	LiveStudioSettingsTransitionSlideDown LiveStudioSettingsTransition = "slide_down"
+	LiveStudioSettingsTransitionSlideUp   LiveStudioSettingsTransition = "slide_up"
+	LiveStudioSettingsTransitionWipe      LiveStudioSettingsTransition = "wipe"
+	LiveStudioSettingsTransitionZoomIn    LiveStudioSettingsTransition = "zoom_in"
+	LiveStudioSettingsTransitionZoomOut   LiveStudioSettingsTransition = "zoom_out"
+)
+
+// Valid indicates whether the value is a known member of the LiveStudioSettingsTransition enum.
+func (e LiveStudioSettingsTransition) Valid() bool {
+	switch e {
+	case LiveStudioSettingsTransitionFade:
+		return true
+	case LiveStudioSettingsTransitionNone:
+		return true
+	case LiveStudioSettingsTransitionSlide:
+		return true
+	case LiveStudioSettingsTransitionSlideDown:
+		return true
+	case LiveStudioSettingsTransitionSlideUp:
+		return true
+	case LiveStudioSettingsTransitionWipe:
+		return true
+	case LiveStudioSettingsTransitionZoomIn:
+		return true
+	case LiveStudioSettingsTransitionZoomOut:
+		return true
+	default:
+		return false
+	}
+}
+
 // Defines values for LiveStudioSettingsVersion.
 const (
 	LiveStudioSettingsVersionN1 LiveStudioSettingsVersion = 1
@@ -229,6 +577,213 @@ const (
 func (e LiveStudioSettingsVersion) Valid() bool {
 	switch e {
 	case LiveStudioSettingsVersionN1:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for LiveStudioSettingsInputElementsReferenceAlign.
+const (
+	LiveStudioSettingsInputElementsReferenceAlignCenter LiveStudioSettingsInputElementsReferenceAlign = "center"
+	LiveStudioSettingsInputElementsReferenceAlignLeft   LiveStudioSettingsInputElementsReferenceAlign = "left"
+	LiveStudioSettingsInputElementsReferenceAlignRight  LiveStudioSettingsInputElementsReferenceAlign = "right"
+)
+
+// Valid indicates whether the value is a known member of the LiveStudioSettingsInputElementsReferenceAlign enum.
+func (e LiveStudioSettingsInputElementsReferenceAlign) Valid() bool {
+	switch e {
+	case LiveStudioSettingsInputElementsReferenceAlignCenter:
+		return true
+	case LiveStudioSettingsInputElementsReferenceAlignLeft:
+		return true
+	case LiveStudioSettingsInputElementsReferenceAlignRight:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for LiveStudioSettingsInputElementsReferenceFont.
+const (
+	LiveStudioSettingsInputElementsReferenceFontMono  LiveStudioSettingsInputElementsReferenceFont = "mono"
+	LiveStudioSettingsInputElementsReferenceFontSans  LiveStudioSettingsInputElementsReferenceFont = "sans"
+	LiveStudioSettingsInputElementsReferenceFontSerif LiveStudioSettingsInputElementsReferenceFont = "serif"
+)
+
+// Valid indicates whether the value is a known member of the LiveStudioSettingsInputElementsReferenceFont enum.
+func (e LiveStudioSettingsInputElementsReferenceFont) Valid() bool {
+	switch e {
+	case LiveStudioSettingsInputElementsReferenceFontMono:
+		return true
+	case LiveStudioSettingsInputElementsReferenceFontSans:
+		return true
+	case LiveStudioSettingsInputElementsReferenceFontSerif:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for LiveStudioSettingsInputElementsTextAlign.
+const (
+	LiveStudioSettingsInputElementsTextAlignCenter LiveStudioSettingsInputElementsTextAlign = "center"
+	LiveStudioSettingsInputElementsTextAlignLeft   LiveStudioSettingsInputElementsTextAlign = "left"
+	LiveStudioSettingsInputElementsTextAlignRight  LiveStudioSettingsInputElementsTextAlign = "right"
+)
+
+// Valid indicates whether the value is a known member of the LiveStudioSettingsInputElementsTextAlign enum.
+func (e LiveStudioSettingsInputElementsTextAlign) Valid() bool {
+	switch e {
+	case LiveStudioSettingsInputElementsTextAlignCenter:
+		return true
+	case LiveStudioSettingsInputElementsTextAlignLeft:
+		return true
+	case LiveStudioSettingsInputElementsTextAlignRight:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for LiveStudioSettingsInputElementsTextFont.
+const (
+	LiveStudioSettingsInputElementsTextFontMono  LiveStudioSettingsInputElementsTextFont = "mono"
+	LiveStudioSettingsInputElementsTextFontSans  LiveStudioSettingsInputElementsTextFont = "sans"
+	LiveStudioSettingsInputElementsTextFontSerif LiveStudioSettingsInputElementsTextFont = "serif"
+)
+
+// Valid indicates whether the value is a known member of the LiveStudioSettingsInputElementsTextFont enum.
+func (e LiveStudioSettingsInputElementsTextFont) Valid() bool {
+	switch e {
+	case LiveStudioSettingsInputElementsTextFontMono:
+		return true
+	case LiveStudioSettingsInputElementsTextFontSans:
+		return true
+	case LiveStudioSettingsInputElementsTextFontSerif:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for LiveStudioSettingsInputElementsTranslationAlign.
+const (
+	LiveStudioSettingsInputElementsTranslationAlignCenter LiveStudioSettingsInputElementsTranslationAlign = "center"
+	LiveStudioSettingsInputElementsTranslationAlignLeft   LiveStudioSettingsInputElementsTranslationAlign = "left"
+	LiveStudioSettingsInputElementsTranslationAlignRight  LiveStudioSettingsInputElementsTranslationAlign = "right"
+)
+
+// Valid indicates whether the value is a known member of the LiveStudioSettingsInputElementsTranslationAlign enum.
+func (e LiveStudioSettingsInputElementsTranslationAlign) Valid() bool {
+	switch e {
+	case LiveStudioSettingsInputElementsTranslationAlignCenter:
+		return true
+	case LiveStudioSettingsInputElementsTranslationAlignLeft:
+		return true
+	case LiveStudioSettingsInputElementsTranslationAlignRight:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for LiveStudioSettingsInputElementsTranslationFont.
+const (
+	LiveStudioSettingsInputElementsTranslationFontMono  LiveStudioSettingsInputElementsTranslationFont = "mono"
+	LiveStudioSettingsInputElementsTranslationFontSans  LiveStudioSettingsInputElementsTranslationFont = "sans"
+	LiveStudioSettingsInputElementsTranslationFontSerif LiveStudioSettingsInputElementsTranslationFont = "serif"
+)
+
+// Valid indicates whether the value is a known member of the LiveStudioSettingsInputElementsTranslationFont enum.
+func (e LiveStudioSettingsInputElementsTranslationFont) Valid() bool {
+	switch e {
+	case LiveStudioSettingsInputElementsTranslationFontMono:
+		return true
+	case LiveStudioSettingsInputElementsTranslationFontSans:
+		return true
+	case LiveStudioSettingsInputElementsTranslationFontSerif:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for LiveStudioSettingsInputOrder.
+const (
+	LiveStudioSettingsInputOrderReference   LiveStudioSettingsInputOrder = "reference"
+	LiveStudioSettingsInputOrderText        LiveStudioSettingsInputOrder = "text"
+	LiveStudioSettingsInputOrderTranslation LiveStudioSettingsInputOrder = "translation"
+)
+
+// Valid indicates whether the value is a known member of the LiveStudioSettingsInputOrder enum.
+func (e LiveStudioSettingsInputOrder) Valid() bool {
+	switch e {
+	case LiveStudioSettingsInputOrderReference:
+		return true
+	case LiveStudioSettingsInputOrderText:
+		return true
+	case LiveStudioSettingsInputOrderTranslation:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for LiveStudioSettingsInputPreset.
+const (
+	LiveStudioSettingsInputPresetDefault  LiveStudioSettingsInputPreset = "default"
+	LiveStudioSettingsInputPresetMidnight LiveStudioSettingsInputPreset = "midnight"
+	LiveStudioSettingsInputPresetOcean    LiveStudioSettingsInputPreset = "ocean"
+	LiveStudioSettingsInputPresetPaper    LiveStudioSettingsInputPreset = "paper"
+)
+
+// Valid indicates whether the value is a known member of the LiveStudioSettingsInputPreset enum.
+func (e LiveStudioSettingsInputPreset) Valid() bool {
+	switch e {
+	case LiveStudioSettingsInputPresetDefault:
+		return true
+	case LiveStudioSettingsInputPresetMidnight:
+		return true
+	case LiveStudioSettingsInputPresetOcean:
+		return true
+	case LiveStudioSettingsInputPresetPaper:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for LiveStudioSettingsInputTransition.
+const (
+	LiveStudioSettingsInputTransitionFade      LiveStudioSettingsInputTransition = "fade"
+	LiveStudioSettingsInputTransitionNone      LiveStudioSettingsInputTransition = "none"
+	LiveStudioSettingsInputTransitionSlide     LiveStudioSettingsInputTransition = "slide"
+	LiveStudioSettingsInputTransitionSlideDown LiveStudioSettingsInputTransition = "slide_down"
+	LiveStudioSettingsInputTransitionSlideUp   LiveStudioSettingsInputTransition = "slide_up"
+	LiveStudioSettingsInputTransitionWipe      LiveStudioSettingsInputTransition = "wipe"
+	LiveStudioSettingsInputTransitionZoomIn    LiveStudioSettingsInputTransition = "zoom_in"
+	LiveStudioSettingsInputTransitionZoomOut   LiveStudioSettingsInputTransition = "zoom_out"
+)
+
+// Valid indicates whether the value is a known member of the LiveStudioSettingsInputTransition enum.
+func (e LiveStudioSettingsInputTransition) Valid() bool {
+	switch e {
+	case LiveStudioSettingsInputTransitionFade:
+		return true
+	case LiveStudioSettingsInputTransitionNone:
+		return true
+	case LiveStudioSettingsInputTransitionSlide:
+		return true
+	case LiveStudioSettingsInputTransitionSlideDown:
+		return true
+	case LiveStudioSettingsInputTransitionSlideUp:
+		return true
+	case LiveStudioSettingsInputTransitionWipe:
+		return true
+	case LiveStudioSettingsInputTransitionZoomIn:
+		return true
+	case LiveStudioSettingsInputTransitionZoomOut:
 		return true
 	default:
 		return false
@@ -265,6 +820,51 @@ func (e LiveSubscriberAccess) Valid() bool {
 	case Open:
 		return true
 	case Secret:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for MembershipRole.
+const (
+	MembershipRoleAdmin    MembershipRole = "admin"
+	MembershipRoleOperator MembershipRole = "operator"
+	MembershipRoleOwner    MembershipRole = "owner"
+	MembershipRoleViewer   MembershipRole = "viewer"
+)
+
+// Valid indicates whether the value is a known member of the MembershipRole enum.
+func (e MembershipRole) Valid() bool {
+	switch e {
+	case MembershipRoleAdmin:
+		return true
+	case MembershipRoleOperator:
+		return true
+	case MembershipRoleOwner:
+		return true
+	case MembershipRoleViewer:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for MembershipPatchRole.
+const (
+	MembershipPatchRoleAdmin    MembershipPatchRole = "admin"
+	MembershipPatchRoleOperator MembershipPatchRole = "operator"
+	MembershipPatchRoleViewer   MembershipPatchRole = "viewer"
+)
+
+// Valid indicates whether the value is a known member of the MembershipPatchRole enum.
+func (e MembershipPatchRole) Valid() bool {
+	switch e {
+	case MembershipPatchRoleAdmin:
+		return true
+	case MembershipPatchRoleOperator:
+		return true
+	case MembershipPatchRoleViewer:
 		return true
 	default:
 		return false
@@ -559,18 +1159,36 @@ func (e PersonalLiveStatus) Valid() bool {
 	}
 }
 
+// Defines values for PersonalLiveDisplayStatus.
+const (
+	PersonalLiveDisplayStatusRunning PersonalLiveDisplayStatus = "running"
+	PersonalLiveDisplayStatusStopped PersonalLiveDisplayStatus = "stopped"
+)
+
+// Valid indicates whether the value is a known member of the PersonalLiveDisplayStatus enum.
+func (e PersonalLiveDisplayStatus) Valid() bool {
+	switch e {
+	case PersonalLiveDisplayStatusRunning:
+		return true
+	case PersonalLiveDisplayStatusStopped:
+		return true
+	default:
+		return false
+	}
+}
+
 // Defines values for PersonalLiveDisplayType.
 const (
-	Empty     PersonalLiveDisplayType = "empty"
-	Scripture PersonalLiveDisplayType = "scripture"
+	PersonalLiveDisplayTypeEmpty     PersonalLiveDisplayType = "empty"
+	PersonalLiveDisplayTypeScripture PersonalLiveDisplayType = "scripture"
 )
 
 // Valid indicates whether the value is a known member of the PersonalLiveDisplayType enum.
 func (e PersonalLiveDisplayType) Valid() bool {
 	switch e {
-	case Empty:
+	case PersonalLiveDisplayTypeEmpty:
 		return true
-	case Scripture:
+	case PersonalLiveDisplayTypeScripture:
 		return true
 	default:
 		return false
@@ -592,6 +1210,42 @@ func (e PersonalTokenMetadataSource) Valid() bool {
 	case Cli:
 		return true
 	case Manual:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for PlaybackStatus.
+const (
+	PlaybackStatusRunning PlaybackStatus = "running"
+	PlaybackStatusStopped PlaybackStatus = "stopped"
+)
+
+// Valid indicates whether the value is a known member of the PlaybackStatus enum.
+func (e PlaybackStatus) Valid() bool {
+	switch e {
+	case PlaybackStatusRunning:
+		return true
+	case PlaybackStatusStopped:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for PlaybackPatchStatus.
+const (
+	PlaybackPatchStatusRunning PlaybackPatchStatus = "running"
+	PlaybackPatchStatusStopped PlaybackPatchStatus = "stopped"
+)
+
+// Valid indicates whether the value is a known member of the PlaybackPatchStatus enum.
+func (e PlaybackPatchStatus) Valid() bool {
+	switch e {
+	case PlaybackPatchStatusRunning:
+		return true
+	case PlaybackPatchStatusStopped:
 		return true
 	default:
 		return false
@@ -643,6 +1297,21 @@ func (e PresentationAssetMime) Valid() bool {
 	}
 }
 
+// Defines values for PresentationDisplayReferenceType.
+const (
+	PresentationDisplayReferenceTypePresentation PresentationDisplayReferenceType = "presentation"
+)
+
+// Valid indicates whether the value is a known member of the PresentationDisplayReferenceType enum.
+func (e PresentationDisplayReferenceType) Valid() bool {
+	switch e {
+	case PresentationDisplayReferenceTypePresentation:
+		return true
+	default:
+		return false
+	}
+}
+
 // Defines values for PresentationDocumentVersion.
 const (
 	PresentationDocumentVersionN1 PresentationDocumentVersion = 1
@@ -652,6 +1321,69 @@ const (
 func (e PresentationDocumentVersion) Valid() bool {
 	switch e {
 	case PresentationDocumentVersionN1:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for PresentationElementStyleAlign.
+const (
+	PresentationElementStyleAlignCenter PresentationElementStyleAlign = "center"
+	PresentationElementStyleAlignLeft   PresentationElementStyleAlign = "left"
+	PresentationElementStyleAlignRight  PresentationElementStyleAlign = "right"
+)
+
+// Valid indicates whether the value is a known member of the PresentationElementStyleAlign enum.
+func (e PresentationElementStyleAlign) Valid() bool {
+	switch e {
+	case PresentationElementStyleAlignCenter:
+		return true
+	case PresentationElementStyleAlignLeft:
+		return true
+	case PresentationElementStyleAlignRight:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for PresentationElementStyleFontFamily.
+const (
+	PresentationElementStyleFontFamilyMono  PresentationElementStyleFontFamily = "mono"
+	PresentationElementStyleFontFamilySans  PresentationElementStyleFontFamily = "sans"
+	PresentationElementStyleFontFamilySerif PresentationElementStyleFontFamily = "serif"
+)
+
+// Valid indicates whether the value is a known member of the PresentationElementStyleFontFamily enum.
+func (e PresentationElementStyleFontFamily) Valid() bool {
+	switch e {
+	case PresentationElementStyleFontFamilyMono:
+		return true
+	case PresentationElementStyleFontFamilySans:
+		return true
+	case PresentationElementStyleFontFamilySerif:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for PresentationElementStyleStrokeStyle.
+const (
+	Dashed PresentationElementStyleStrokeStyle = "dashed"
+	Dotted PresentationElementStyleStrokeStyle = "dotted"
+	Solid  PresentationElementStyleStrokeStyle = "solid"
+)
+
+// Valid indicates whether the value is a known member of the PresentationElementStyleStrokeStyle enum.
+func (e PresentationElementStyleStrokeStyle) Valid() bool {
+	switch e {
+	case Dashed:
+		return true
+	case Dotted:
+		return true
+	case Solid:
 		return true
 	default:
 		return false
@@ -733,6 +1465,219 @@ func (e PresentationExportStatus) Valid() bool {
 	case PresentationExportStatusQueued:
 		return true
 	case PresentationExportStatusRunning:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for PresentationImageElementFit.
+const (
+	PresentationImageElementFitContain PresentationImageElementFit = "contain"
+	PresentationImageElementFitCover   PresentationImageElementFit = "cover"
+)
+
+// Valid indicates whether the value is a known member of the PresentationImageElementFit enum.
+func (e PresentationImageElementFit) Valid() bool {
+	switch e {
+	case PresentationImageElementFitContain:
+		return true
+	case PresentationImageElementFitCover:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for PresentationImageElementType.
+const (
+	PresentationImageElementTypeImage PresentationImageElementType = "image"
+)
+
+// Valid indicates whether the value is a known member of the PresentationImageElementType enum.
+func (e PresentationImageElementType) Valid() bool {
+	switch e {
+	case PresentationImageElementTypeImage:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for PresentationShapeElementShape.
+const (
+	Arrow            PresentationShapeElementShape = "arrow"
+	CurvedConnector  PresentationShapeElementShape = "curved_connector"
+	Diamond          PresentationShapeElementShape = "diamond"
+	ElbowConnector   PresentationShapeElementShape = "elbow_connector"
+	Ellipse          PresentationShapeElementShape = "ellipse"
+	Line             PresentationShapeElementShape = "line"
+	LineArrow        PresentationShapeElementShape = "line_arrow"
+	Rectangle        PresentationShapeElementShape = "rectangle"
+	RoundedRectangle PresentationShapeElementShape = "rounded_rectangle"
+	Triangle         PresentationShapeElementShape = "triangle"
+)
+
+// Valid indicates whether the value is a known member of the PresentationShapeElementShape enum.
+func (e PresentationShapeElementShape) Valid() bool {
+	switch e {
+	case Arrow:
+		return true
+	case CurvedConnector:
+		return true
+	case Diamond:
+		return true
+	case ElbowConnector:
+		return true
+	case Ellipse:
+		return true
+	case Line:
+		return true
+	case LineArrow:
+		return true
+	case Rectangle:
+		return true
+	case RoundedRectangle:
+		return true
+	case Triangle:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for PresentationShapeElementType.
+const (
+	Shape PresentationShapeElementType = "shape"
+)
+
+// Valid indicates whether the value is a known member of the PresentationShapeElementType enum.
+func (e PresentationShapeElementType) Valid() bool {
+	switch e {
+	case Shape:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for PresentationTextElementType.
+const (
+	PresentationTextElementTypeText PresentationTextElementType = "text"
+)
+
+// Valid indicates whether the value is a known member of the PresentationTextElementType enum.
+func (e PresentationTextElementType) Valid() bool {
+	switch e {
+	case PresentationTextElementTypeText:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for PresentationVerseElementType.
+const (
+	PresentationVerseElementTypeVerse PresentationVerseElementType = "verse"
+)
+
+// Valid indicates whether the value is a known member of the PresentationVerseElementType enum.
+func (e PresentationVerseElementType) Valid() bool {
+	switch e {
+	case PresentationVerseElementTypeVerse:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for PresentationVideoElementFit.
+const (
+	PresentationVideoElementFitContain PresentationVideoElementFit = "contain"
+	PresentationVideoElementFitCover   PresentationVideoElementFit = "cover"
+)
+
+// Valid indicates whether the value is a known member of the PresentationVideoElementFit enum.
+func (e PresentationVideoElementFit) Valid() bool {
+	switch e {
+	case PresentationVideoElementFitContain:
+		return true
+	case PresentationVideoElementFitCover:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for PresentationVideoElementType.
+const (
+	PresentationVideoElementTypeVideo PresentationVideoElementType = "video"
+)
+
+// Valid indicates whether the value is a known member of the PresentationVideoElementType enum.
+func (e PresentationVideoElementType) Valid() bool {
+	switch e {
+	case PresentationVideoElementTypeVideo:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for PresentationYouTubeElementType.
+const (
+	Youtube PresentationYouTubeElementType = "youtube"
+)
+
+// Valid indicates whether the value is a known member of the PresentationYouTubeElementType enum.
+func (e PresentationYouTubeElementType) Valid() bool {
+	switch e {
+	case Youtube:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for ProblemType.
+const (
+	AboutBlank ProblemType = "about:blank"
+)
+
+// Valid indicates whether the value is a known member of the ProblemType enum.
+func (e ProblemType) Valid() bool {
+	switch e {
+	case AboutBlank:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for ReplaceDisplay0Type.
+const (
+	ReplaceDisplay0TypeEmpty ReplaceDisplay0Type = "empty"
+)
+
+// Valid indicates whether the value is a known member of the ReplaceDisplay0Type enum.
+func (e ReplaceDisplay0Type) Valid() bool {
+	switch e {
+	case ReplaceDisplay0TypeEmpty:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for ReplaceDisplay1Type.
+const (
+	ReplaceDisplay1TypeScripture ReplaceDisplay1Type = "scripture"
+)
+
+// Valid indicates whether the value is a known member of the ReplaceDisplay1Type enum.
+func (e ReplaceDisplay1Type) Valid() bool {
+	switch e {
+	case ReplaceDisplay1TypeScripture:
 		return true
 	default:
 		return false
@@ -969,26 +1914,32 @@ type BookCollection struct {
 
 // BookDefinition defines model for BookDefinition.
 type BookDefinition struct {
-	Aliases []string `json:"aliases"`
-	Code    string   `json:"code"`
-	ID      int64    `json:"id"`
-	Names   struct {
-		De string `json:"de"`
-		En string `json:"en"`
-		Pt string `json:"pt"`
-	} `json:"names"`
+	Aliases []string             `json:"aliases"`
+	Code    string               `json:"code"`
+	ID      int64                `json:"id"`
+	Names   BookDefinition_Names `json:"names"`
+}
+
+// BookDefinition_Names defines model for BookDefinition.Names.
+type BookDefinition_Names struct {
+	De string `json:"de"`
+	En string `json:"en"`
+	Pt string `json:"pt"`
 }
 
 // CatalogueTranslation defines model for CatalogueTranslation.
 type CatalogueTranslation struct {
-	BookIds    []int64               `json:"book_ids"`
-	Installed  bool                  `json:"installed"`
-	Language   interface{}           `json:"language"`
-	Name       string                `json:"name"`
-	Provenance TranslationProvenance `json:"provenance"`
-	Rights     TranslationRights     `json:"rights"`
-	Slug       string                `json:"slug"`
+	BookIds    []int64                      `json:"book_ids"`
+	Installed  bool                         `json:"installed"`
+	Language   CatalogueTranslationLanguage `json:"language"`
+	Name       string                       `json:"name"`
+	Provenance TranslationProvenance        `json:"provenance"`
+	Rights     TranslationRights            `json:"rights"`
+	Slug       string                       `json:"slug"`
 }
+
+// CatalogueTranslationLanguage defines model for CatalogueTranslation.Language.
+type CatalogueTranslationLanguage string
 
 // CreateLive Examples: {"name":"Sunday Service"}
 type CreateLive struct {
@@ -999,13 +1950,16 @@ type CreateLive struct {
 // CreateLiveQueueItem Examples: {"reference":{"book_id":1,"chapter":1,"translation":"web","verse":1}}
 type CreateLiveQueueItem struct {
 	// BeforeItemID Insert before this item ID. Omit or use null to append. Unknown anchor returns 404.
-	BeforeItemID json.RawMessage `json:"before_item_id,omitempty"`
-	Reference    struct {
-		BookID      int64  `json:"book_id"`
-		Chapter     int64  `json:"chapter"`
-		Translation string `json:"translation"`
-		Verse       int64  `json:"verse"`
-	} `json:"reference"`
+	BeforeItemID json.RawMessage               `json:"before_item_id,omitempty"`
+	Reference    CreateLiveQueueItem_Reference `json:"reference"`
+}
+
+// CreateLiveQueueItem_Reference defines model for CreateLiveQueueItem.Reference.
+type CreateLiveQueueItem_Reference struct {
+	BookID      int64  `json:"book_id"`
+	Chapter     int64  `json:"chapter"`
+	Translation string `json:"translation"`
+	Verse       int64  `json:"verse"`
 }
 
 // CreatePresentation Examples: {"name":"Sunday"}
@@ -1022,11 +1976,7 @@ type CreatePresentationExport struct {
 }
 
 // CreatePresentationExport0 defines model for CreatePresentationExport.0.
-type CreatePresentationExport0 struct {
-	Format   CreatePresentationExport0Format  `json:"format"`
-	Locale   *CreatePresentationExport0Locale `json:"locale,omitempty"`
-	Revision int64                            `json:"revision"`
-}
+type CreatePresentationExport0 CreatePresentationExport_0
 
 // CreatePresentationExport0Format defines model for CreatePresentationExport.0.Format.
 type CreatePresentationExport0Format string
@@ -1034,8 +1984,24 @@ type CreatePresentationExport0Format string
 // CreatePresentationExport0Locale defines model for CreatePresentationExport.0.Locale.
 type CreatePresentationExport0Locale string
 
+// CreatePresentationExport_0 defines model for CreatePresentationExport.0.
+type CreatePresentationExport_0 struct {
+	Format   CreatePresentationExport0Format  `json:"format"`
+	Locale   *CreatePresentationExport0Locale `json:"locale,omitempty"`
+	Revision int64                            `json:"revision"`
+}
+
 // CreatePresentationExport1 defines model for CreatePresentationExport.1.
-type CreatePresentationExport1 struct {
+type CreatePresentationExport1 CreatePresentationExport_1
+
+// CreatePresentationExport1Format defines model for CreatePresentationExport.1.Format.
+type CreatePresentationExport1Format string
+
+// CreatePresentationExport1Locale defines model for CreatePresentationExport.1.Locale.
+type CreatePresentationExport1Locale string
+
+// CreatePresentationExport_1 defines model for CreatePresentationExport.1.
+type CreatePresentationExport_1 struct {
 	Format   CreatePresentationExport1Format  `json:"format"`
 	Locale   *CreatePresentationExport1Locale `json:"locale,omitempty"`
 	Revision int64                            `json:"revision"`
@@ -1043,12 +2009,6 @@ type CreatePresentationExport1 struct {
 	// SlideIndex Required zero-based index in this saved revision.
 	SlideIndex int64 `json:"slide_index"`
 }
-
-// CreatePresentationExport1Format defines model for CreatePresentationExport.1.Format.
-type CreatePresentationExport1Format string
-
-// CreatePresentationExport1Locale defines model for CreatePresentationExport.1.Locale.
-type CreatePresentationExport1Locale string
 
 // CreateServiceToken Examples: {"expires_at":null,"label":"Integration backend","scopes":["live.list","live.get"]}
 type CreateServiceToken struct {
@@ -1075,7 +2035,7 @@ type DisplayVerse struct {
 }
 
 // EmptyObject defines model for EmptyObject.
-type EmptyObject = map[string]interface{}
+type EmptyObject = struct{}
 
 // IssuedServiceToken defines model for IssuedServiceToken.
 type IssuedServiceToken struct {
@@ -1122,16 +2082,22 @@ type LiveBulkDeletion struct {
 
 // LiveDisplay defines model for LiveDisplay.
 type LiveDisplay struct {
-	LiveID         string           `json:"live_id"`
-	OrganizationID string           `json:"organization_id"`
-	Paused         bool             `json:"paused"`
-	Sequence       int64            `json:"sequence"`
-	Showing        bool             `json:"showing"`
-	Snapshot       *SnapshotSummary `json:"snapshot"`
-	Status         interface{}      `json:"status"`
-	Type           interface{}      `json:"type"`
-	Verses         []DisplayVerse   `json:"verses"`
+	LiveID         string            `json:"live_id"`
+	OrganizationID string            `json:"organization_id"`
+	Paused         bool              `json:"paused"`
+	Sequence       int64             `json:"sequence"`
+	Showing        bool              `json:"showing"`
+	Snapshot       *SnapshotSummary  `json:"snapshot"`
+	Status         LiveDisplayStatus `json:"status"`
+	Type           LiveDisplayType   `json:"type"`
+	Verses         []DisplayVerse    `json:"verses"`
 }
+
+// LiveDisplayStatus defines model for LiveDisplay.Status.
+type LiveDisplayStatus string
+
+// LiveDisplayType defines model for LiveDisplay.Type.
+type LiveDisplayType string
 
 // LiveEvent Event schema major version 1. Snapshot on connection/reconnection; changed snapshot when comparison differs; null-data heartbeat at wait expiry. Notifications may coalesce, repeat or be missed. Not exactly-once and no historical replay.
 type LiveEvent struct {
@@ -1169,20 +2135,29 @@ type LiveEventSnapshot_Live struct {
 
 // LiveEventViewerSettings defines model for LiveEventViewerSettings.
 type LiveEventViewerSettings struct {
-	Presentation bool        `json:"presentation"`
-	Preset       interface{} `json:"preset,omitempty"`
+	Presentation bool                           `json:"presentation"`
+	Preset       *LiveEventViewerSettingsPreset `json:"preset,omitempty"`
 
 	// Scale Existing viewer font-size step, independent of Studio text size.
-	Scale      int64       `json:"scale"`
-	Theme      interface{} `json:"theme"`
-	Transition interface{} `json:"transition,omitempty"`
+	Scale      int64                              `json:"scale"`
+	Theme      LiveEventViewerSettingsTheme       `json:"theme"`
+	Transition *LiveEventViewerSettingsTransition `json:"transition,omitempty"`
 }
+
+// LiveEventViewerSettingsPreset defines model for LiveEventViewerSettings.Preset.
+type LiveEventViewerSettingsPreset string
+
+// LiveEventViewerSettingsTheme defines model for LiveEventViewerSettings.Theme.
+type LiveEventViewerSettingsTheme string
+
+// LiveEventViewerSettingsTransition defines model for LiveEventViewerSettings.Transition.
+type LiveEventViewerSettingsTransition string
 
 // LiveHeartbeatEvent Examples: {"cursor":"v1:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa","data":null,"resource_id":"sample-live","resource_type":"live","schema_version":1,"sequence":3,"type":"stream.heartbeat"}
 type LiveHeartbeatEvent struct {
 	// Cursor Opaque current-state comparison token covering the snapshot including independent design revisions. No durable log position, event ID, expiry promise or universal ETag.
 	Cursor        string                          `json:"cursor"`
-	Data          any                             `json:"data"`
+	Data          *LiveEventSnapshot              `json:"data"`
 	ResourceID    string                          `json:"resource_id"`
 	ResourceType  LiveHeartbeatEventResourceType  `json:"resource_type"`
 	SchemaVersion LiveHeartbeatEventSchemaVersion `json:"schema_version"`
@@ -1334,83 +2309,137 @@ type LiveStatistics struct {
 
 // LiveStudioSettings Examples: {"container":{"border":null,"padding":null,"radius":null},"controls":{"fontSize":true,"fullscreen":true,"theme":true},"elements":{"reference":{"align":"left","bold":true,"font":"sans","italic":false,"lineHeight":112,"size":100},"text":{"align":"left","bold":false,"font":"serif","italic":false,"lineHeight":112,"size":100},"translation":{"align":"left","bold":true,"font":"sans","italic":false,"lineHeight":112,"size":100}},"order":["translation","reference","text"],"palettes":{"dark":{"background":null,"container":null,"reference":null,"text":null,"translation":null},"light":{"background":null,"container":null,"reference":null,"text":null,"translation":null}},"preset":"default","showLogo":true,"transition":"none","version":1}
 type LiveStudioSettings struct {
-	Container struct {
-		// Border Six-digit hexadecimal color; null inherits the selected preset.
-		Border  *string `json:"border"`
-		Padding *int64  `json:"padding"`
-		Radius  *int64  `json:"radius"`
-	} `json:"container"`
-	Controls struct {
-		FontSize   bool `json:"fontSize"`
-		Fullscreen bool `json:"fullscreen"`
-		Theme      bool `json:"theme"`
-	} `json:"controls"`
-	Elements struct {
-		Reference struct {
-			Align      interface{} `json:"align"`
-			Bold       bool        `json:"bold"`
-			Font       interface{} `json:"font"`
-			Italic     bool        `json:"italic"`
-			LineHeight int64       `json:"lineHeight"`
-			Size       int64       `json:"size"`
-		} `json:"reference"`
-		Text struct {
-			Align      interface{} `json:"align"`
-			Bold       bool        `json:"bold"`
-			Font       interface{} `json:"font"`
-			Italic     bool        `json:"italic"`
-			LineHeight int64       `json:"lineHeight"`
-			Size       int64       `json:"size"`
-		} `json:"text"`
-		Translation struct {
-			Align      interface{} `json:"align"`
-			Bold       bool        `json:"bold"`
-			Font       interface{} `json:"font"`
-			Italic     bool        `json:"italic"`
-			LineHeight int64       `json:"lineHeight"`
-			Size       int64       `json:"size"`
-		} `json:"translation"`
-	} `json:"elements"`
-	Order    []interface{} `json:"order"`
-	Palettes struct {
-		Dark struct {
-			// Background Six-digit hexadecimal color; null inherits the selected preset.
-			Background *string `json:"background"`
-
-			// Container Six-digit hexadecimal color; null inherits the selected preset.
-			Container *string `json:"container"`
-
-			// Reference Six-digit hexadecimal color; null inherits the selected preset.
-			Reference *string `json:"reference"`
-
-			// Text Six-digit hexadecimal color; null inherits the selected preset.
-			Text *string `json:"text"`
-
-			// Translation Six-digit hexadecimal color; null inherits the selected preset.
-			Translation *string `json:"translation"`
-		} `json:"dark"`
-		Light struct {
-			// Background Six-digit hexadecimal color; null inherits the selected preset.
-			Background *string `json:"background"`
-
-			// Container Six-digit hexadecimal color; null inherits the selected preset.
-			Container *string `json:"container"`
-
-			// Reference Six-digit hexadecimal color; null inherits the selected preset.
-			Reference *string `json:"reference"`
-
-			// Text Six-digit hexadecimal color; null inherits the selected preset.
-			Text *string `json:"text"`
-
-			// Translation Six-digit hexadecimal color; null inherits the selected preset.
-			Translation *string `json:"translation"`
-		} `json:"light"`
-	} `json:"palettes"`
-	Preset     interface{}               `json:"preset"`
-	ShowLogo   bool                      `json:"showLogo"`
-	Transition interface{}               `json:"transition"`
-	Version    LiveStudioSettingsVersion `json:"version"`
+	Container  LiveStudioSettings_Container `json:"container"`
+	Controls   LiveStudioSettings_Controls  `json:"controls"`
+	Elements   LiveStudioSettings_Elements  `json:"elements"`
+	Order      []LiveStudioSettingsOrder    `json:"order"`
+	Palettes   LiveStudioSettings_Palettes  `json:"palettes"`
+	Preset     LiveStudioSettingsPreset     `json:"preset"`
+	ShowLogo   bool                         `json:"showLogo"`
+	Transition LiveStudioSettingsTransition `json:"transition"`
+	Version    LiveStudioSettingsVersion    `json:"version"`
 }
+
+// LiveStudioSettings_Container defines model for LiveStudioSettings.Container.
+type LiveStudioSettings_Container struct {
+	// Border Six-digit hexadecimal color; null inherits the selected preset.
+	Border  *string `json:"border"`
+	Padding *int64  `json:"padding"`
+	Radius  *int64  `json:"radius"`
+}
+
+// LiveStudioSettings_Controls defines model for LiveStudioSettings.Controls.
+type LiveStudioSettings_Controls struct {
+	FontSize   bool `json:"fontSize"`
+	Fullscreen bool `json:"fullscreen"`
+	Theme      bool `json:"theme"`
+}
+
+// LiveStudioSettingsElementsReferenceAlign defines model for LiveStudioSettings.Elements.Reference.Align.
+type LiveStudioSettingsElementsReferenceAlign string
+
+// LiveStudioSettingsElementsReferenceFont defines model for LiveStudioSettings.Elements.Reference.Font.
+type LiveStudioSettingsElementsReferenceFont string
+
+// LiveStudioSettings_Elements_Reference defines model for LiveStudioSettings.Elements.Reference.
+type LiveStudioSettings_Elements_Reference struct {
+	Align      LiveStudioSettingsElementsReferenceAlign `json:"align"`
+	Bold       bool                                     `json:"bold"`
+	Font       LiveStudioSettingsElementsReferenceFont  `json:"font"`
+	Italic     bool                                     `json:"italic"`
+	LineHeight int64                                    `json:"lineHeight"`
+	Size       int64                                    `json:"size"`
+}
+
+// LiveStudioSettingsElementsTextAlign defines model for LiveStudioSettings.Elements.Text.Align.
+type LiveStudioSettingsElementsTextAlign string
+
+// LiveStudioSettingsElementsTextFont defines model for LiveStudioSettings.Elements.Text.Font.
+type LiveStudioSettingsElementsTextFont string
+
+// LiveStudioSettings_Elements_Text defines model for LiveStudioSettings.Elements.Text.
+type LiveStudioSettings_Elements_Text struct {
+	Align      LiveStudioSettingsElementsTextAlign `json:"align"`
+	Bold       bool                                `json:"bold"`
+	Font       LiveStudioSettingsElementsTextFont  `json:"font"`
+	Italic     bool                                `json:"italic"`
+	LineHeight int64                               `json:"lineHeight"`
+	Size       int64                               `json:"size"`
+}
+
+// LiveStudioSettingsElementsTranslationAlign defines model for LiveStudioSettings.Elements.Translation.Align.
+type LiveStudioSettingsElementsTranslationAlign string
+
+// LiveStudioSettingsElementsTranslationFont defines model for LiveStudioSettings.Elements.Translation.Font.
+type LiveStudioSettingsElementsTranslationFont string
+
+// LiveStudioSettings_Elements_Translation defines model for LiveStudioSettings.Elements.Translation.
+type LiveStudioSettings_Elements_Translation struct {
+	Align      LiveStudioSettingsElementsTranslationAlign `json:"align"`
+	Bold       bool                                       `json:"bold"`
+	Font       LiveStudioSettingsElementsTranslationFont  `json:"font"`
+	Italic     bool                                       `json:"italic"`
+	LineHeight int64                                      `json:"lineHeight"`
+	Size       int64                                      `json:"size"`
+}
+
+// LiveStudioSettings_Elements defines model for LiveStudioSettings.Elements.
+type LiveStudioSettings_Elements struct {
+	Reference   LiveStudioSettings_Elements_Reference   `json:"reference"`
+	Text        LiveStudioSettings_Elements_Text        `json:"text"`
+	Translation LiveStudioSettings_Elements_Translation `json:"translation"`
+}
+
+// LiveStudioSettingsOrder defines model for LiveStudioSettings.Order.
+type LiveStudioSettingsOrder string
+
+// LiveStudioSettings_Palettes_Dark defines model for LiveStudioSettings.Palettes.Dark.
+type LiveStudioSettings_Palettes_Dark struct {
+	// Background Six-digit hexadecimal color; null inherits the selected preset.
+	Background *string `json:"background"`
+
+	// Container Six-digit hexadecimal color; null inherits the selected preset.
+	Container *string `json:"container"`
+
+	// Reference Six-digit hexadecimal color; null inherits the selected preset.
+	Reference *string `json:"reference"`
+
+	// Text Six-digit hexadecimal color; null inherits the selected preset.
+	Text *string `json:"text"`
+
+	// Translation Six-digit hexadecimal color; null inherits the selected preset.
+	Translation *string `json:"translation"`
+}
+
+// LiveStudioSettings_Palettes_Light defines model for LiveStudioSettings.Palettes.Light.
+type LiveStudioSettings_Palettes_Light struct {
+	// Background Six-digit hexadecimal color; null inherits the selected preset.
+	Background *string `json:"background"`
+
+	// Container Six-digit hexadecimal color; null inherits the selected preset.
+	Container *string `json:"container"`
+
+	// Reference Six-digit hexadecimal color; null inherits the selected preset.
+	Reference *string `json:"reference"`
+
+	// Text Six-digit hexadecimal color; null inherits the selected preset.
+	Text *string `json:"text"`
+
+	// Translation Six-digit hexadecimal color; null inherits the selected preset.
+	Translation *string `json:"translation"`
+}
+
+// LiveStudioSettings_Palettes defines model for LiveStudioSettings.Palettes.
+type LiveStudioSettings_Palettes struct {
+	Dark  LiveStudioSettings_Palettes_Dark  `json:"dark"`
+	Light LiveStudioSettings_Palettes_Light `json:"light"`
+}
+
+// LiveStudioSettingsPreset defines model for LiveStudioSettings.Preset.
+type LiveStudioSettingsPreset string
+
+// LiveStudioSettingsTransition defines model for LiveStudioSettings.Transition.
+type LiveStudioSettingsTransition string
 
 // LiveStudioSettingsVersion defines model for LiveStudioSettings.Version.
 type LiveStudioSettingsVersion int64
@@ -1419,83 +2448,137 @@ type LiveStudioSettingsVersion int64
 //
 // Examples: {"container":{"border":null,"padding":null,"radius":null},"controls":{"fontSize":true,"fullscreen":true,"theme":true},"elements":{"reference":{"align":"left","bold":true,"font":"sans","italic":false,"lineHeight":112,"size":100},"text":{"align":"left","bold":false,"font":"serif","italic":false,"lineHeight":112,"size":100},"translation":{"align":"left","bold":true,"font":"sans","italic":false,"lineHeight":112,"size":100}},"order":["translation","reference","text"],"palettes":{"dark":{"background":null,"container":null,"reference":null,"text":null,"translation":null},"light":{"background":null,"container":null,"reference":null,"text":null,"translation":null}},"preset":"default","showLogo":true,"transition":"none","version":1}
 type LiveStudioSettingsInput struct {
-	Container struct {
-		// Border Six-digit hexadecimal color; null inherits the selected preset.
-		Border  *string `json:"border"`
-		Padding *int64  `json:"padding"`
-		Radius  *int64  `json:"radius"`
-	} `json:"container"`
-	Controls struct {
-		FontSize   bool `json:"fontSize"`
-		Fullscreen bool `json:"fullscreen"`
-		Theme      bool `json:"theme"`
-	} `json:"controls"`
-	Elements struct {
-		Reference struct {
-			Align      interface{} `json:"align"`
-			Bold       bool        `json:"bold"`
-			Font       interface{} `json:"font"`
-			Italic     bool        `json:"italic"`
-			LineHeight int64       `json:"lineHeight"`
-			Size       int64       `json:"size"`
-		} `json:"reference"`
-		Text struct {
-			Align      interface{} `json:"align"`
-			Bold       bool        `json:"bold"`
-			Font       interface{} `json:"font"`
-			Italic     bool        `json:"italic"`
-			LineHeight int64       `json:"lineHeight"`
-			Size       int64       `json:"size"`
-		} `json:"text"`
-		Translation struct {
-			Align      interface{} `json:"align"`
-			Bold       bool        `json:"bold"`
-			Font       interface{} `json:"font"`
-			Italic     bool        `json:"italic"`
-			LineHeight int64       `json:"lineHeight"`
-			Size       int64       `json:"size"`
-		} `json:"translation"`
-	} `json:"elements"`
-	Order    []interface{} `json:"order"`
-	Palettes struct {
-		Dark struct {
-			// Background Six-digit hexadecimal color; null inherits the selected preset.
-			Background *string `json:"background"`
-
-			// Container Six-digit hexadecimal color; null inherits the selected preset.
-			Container *string `json:"container"`
-
-			// Reference Six-digit hexadecimal color; null inherits the selected preset.
-			Reference *string `json:"reference"`
-
-			// Text Six-digit hexadecimal color; null inherits the selected preset.
-			Text *string `json:"text"`
-
-			// Translation Six-digit hexadecimal color; null inherits the selected preset.
-			Translation *string `json:"translation"`
-		} `json:"dark"`
-		Light struct {
-			// Background Six-digit hexadecimal color; null inherits the selected preset.
-			Background *string `json:"background"`
-
-			// Container Six-digit hexadecimal color; null inherits the selected preset.
-			Container *string `json:"container"`
-
-			// Reference Six-digit hexadecimal color; null inherits the selected preset.
-			Reference *string `json:"reference"`
-
-			// Text Six-digit hexadecimal color; null inherits the selected preset.
-			Text *string `json:"text"`
-
-			// Translation Six-digit hexadecimal color; null inherits the selected preset.
-			Translation *string `json:"translation"`
-		} `json:"light"`
-	} `json:"palettes"`
-	Preset     interface{}                    `json:"preset,omitempty"`
-	ShowLogo   bool                           `json:"showLogo"`
-	Transition interface{}                    `json:"transition,omitempty"`
-	Version    LiveStudioSettingsInputVersion `json:"version"`
+	Container  LiveStudioSettingsInput_Container  `json:"container"`
+	Controls   LiveStudioSettingsInput_Controls   `json:"controls"`
+	Elements   LiveStudioSettingsInput_Elements   `json:"elements"`
+	Order      []LiveStudioSettingsInputOrder     `json:"order"`
+	Palettes   LiveStudioSettingsInput_Palettes   `json:"palettes"`
+	Preset     *LiveStudioSettingsInputPreset     `json:"preset,omitempty"`
+	ShowLogo   bool                               `json:"showLogo"`
+	Transition *LiveStudioSettingsInputTransition `json:"transition,omitempty"`
+	Version    LiveStudioSettingsInputVersion     `json:"version"`
 }
+
+// LiveStudioSettingsInput_Container defines model for LiveStudioSettingsInput.Container.
+type LiveStudioSettingsInput_Container struct {
+	// Border Six-digit hexadecimal color; null inherits the selected preset.
+	Border  *string `json:"border"`
+	Padding *int64  `json:"padding"`
+	Radius  *int64  `json:"radius"`
+}
+
+// LiveStudioSettingsInput_Controls defines model for LiveStudioSettingsInput.Controls.
+type LiveStudioSettingsInput_Controls struct {
+	FontSize   bool `json:"fontSize"`
+	Fullscreen bool `json:"fullscreen"`
+	Theme      bool `json:"theme"`
+}
+
+// LiveStudioSettingsInputElementsReferenceAlign defines model for LiveStudioSettingsInput.Elements.Reference.Align.
+type LiveStudioSettingsInputElementsReferenceAlign string
+
+// LiveStudioSettingsInputElementsReferenceFont defines model for LiveStudioSettingsInput.Elements.Reference.Font.
+type LiveStudioSettingsInputElementsReferenceFont string
+
+// LiveStudioSettingsInput_Elements_Reference defines model for LiveStudioSettingsInput.Elements.Reference.
+type LiveStudioSettingsInput_Elements_Reference struct {
+	Align      LiveStudioSettingsInputElementsReferenceAlign `json:"align"`
+	Bold       bool                                          `json:"bold"`
+	Font       LiveStudioSettingsInputElementsReferenceFont  `json:"font"`
+	Italic     bool                                          `json:"italic"`
+	LineHeight int64                                         `json:"lineHeight"`
+	Size       int64                                         `json:"size"`
+}
+
+// LiveStudioSettingsInputElementsTextAlign defines model for LiveStudioSettingsInput.Elements.Text.Align.
+type LiveStudioSettingsInputElementsTextAlign string
+
+// LiveStudioSettingsInputElementsTextFont defines model for LiveStudioSettingsInput.Elements.Text.Font.
+type LiveStudioSettingsInputElementsTextFont string
+
+// LiveStudioSettingsInput_Elements_Text defines model for LiveStudioSettingsInput.Elements.Text.
+type LiveStudioSettingsInput_Elements_Text struct {
+	Align      LiveStudioSettingsInputElementsTextAlign `json:"align"`
+	Bold       bool                                     `json:"bold"`
+	Font       LiveStudioSettingsInputElementsTextFont  `json:"font"`
+	Italic     bool                                     `json:"italic"`
+	LineHeight int64                                    `json:"lineHeight"`
+	Size       int64                                    `json:"size"`
+}
+
+// LiveStudioSettingsInputElementsTranslationAlign defines model for LiveStudioSettingsInput.Elements.Translation.Align.
+type LiveStudioSettingsInputElementsTranslationAlign string
+
+// LiveStudioSettingsInputElementsTranslationFont defines model for LiveStudioSettingsInput.Elements.Translation.Font.
+type LiveStudioSettingsInputElementsTranslationFont string
+
+// LiveStudioSettingsInput_Elements_Translation defines model for LiveStudioSettingsInput.Elements.Translation.
+type LiveStudioSettingsInput_Elements_Translation struct {
+	Align      LiveStudioSettingsInputElementsTranslationAlign `json:"align"`
+	Bold       bool                                            `json:"bold"`
+	Font       LiveStudioSettingsInputElementsTranslationFont  `json:"font"`
+	Italic     bool                                            `json:"italic"`
+	LineHeight int64                                           `json:"lineHeight"`
+	Size       int64                                           `json:"size"`
+}
+
+// LiveStudioSettingsInput_Elements defines model for LiveStudioSettingsInput.Elements.
+type LiveStudioSettingsInput_Elements struct {
+	Reference   LiveStudioSettingsInput_Elements_Reference   `json:"reference"`
+	Text        LiveStudioSettingsInput_Elements_Text        `json:"text"`
+	Translation LiveStudioSettingsInput_Elements_Translation `json:"translation"`
+}
+
+// LiveStudioSettingsInputOrder defines model for LiveStudioSettingsInput.Order.
+type LiveStudioSettingsInputOrder string
+
+// LiveStudioSettingsInput_Palettes_Dark defines model for LiveStudioSettingsInput.Palettes.Dark.
+type LiveStudioSettingsInput_Palettes_Dark struct {
+	// Background Six-digit hexadecimal color; null inherits the selected preset.
+	Background *string `json:"background"`
+
+	// Container Six-digit hexadecimal color; null inherits the selected preset.
+	Container *string `json:"container"`
+
+	// Reference Six-digit hexadecimal color; null inherits the selected preset.
+	Reference *string `json:"reference"`
+
+	// Text Six-digit hexadecimal color; null inherits the selected preset.
+	Text *string `json:"text"`
+
+	// Translation Six-digit hexadecimal color; null inherits the selected preset.
+	Translation *string `json:"translation"`
+}
+
+// LiveStudioSettingsInput_Palettes_Light defines model for LiveStudioSettingsInput.Palettes.Light.
+type LiveStudioSettingsInput_Palettes_Light struct {
+	// Background Six-digit hexadecimal color; null inherits the selected preset.
+	Background *string `json:"background"`
+
+	// Container Six-digit hexadecimal color; null inherits the selected preset.
+	Container *string `json:"container"`
+
+	// Reference Six-digit hexadecimal color; null inherits the selected preset.
+	Reference *string `json:"reference"`
+
+	// Text Six-digit hexadecimal color; null inherits the selected preset.
+	Text *string `json:"text"`
+
+	// Translation Six-digit hexadecimal color; null inherits the selected preset.
+	Translation *string `json:"translation"`
+}
+
+// LiveStudioSettingsInput_Palettes defines model for LiveStudioSettingsInput.Palettes.
+type LiveStudioSettingsInput_Palettes struct {
+	Dark  LiveStudioSettingsInput_Palettes_Dark  `json:"dark"`
+	Light LiveStudioSettingsInput_Palettes_Light `json:"light"`
+}
+
+// LiveStudioSettingsInputPreset defines model for LiveStudioSettingsInput.Preset.
+type LiveStudioSettingsInputPreset string
+
+// LiveStudioSettingsInputTransition defines model for LiveStudioSettingsInput.Transition.
+type LiveStudioSettingsInputTransition string
 
 // LiveStudioSettingsInputVersion defines model for LiveStudioSettingsInput.Version.
 type LiveStudioSettingsInputVersion int64
@@ -1526,12 +2609,15 @@ type LiveWorkspacePut struct {
 
 // Membership defines model for Membership.
 type Membership struct {
-	DisplayName    string      `json:"display_name"`
-	Handle         string      `json:"handle"`
-	ID             string      `json:"id"`
-	OrganizationID string      `json:"organization_id"`
-	Role           interface{} `json:"role"`
+	DisplayName    string         `json:"display_name"`
+	Handle         string         `json:"handle"`
+	ID             string         `json:"id"`
+	OrganizationID string         `json:"organization_id"`
+	Role           MembershipRole `json:"role"`
 }
+
+// MembershipRole defines model for Membership.Role.
+type MembershipRole string
 
 // MembershipPage defines model for MembershipPage.
 type MembershipPage struct {
@@ -1541,8 +2627,11 @@ type MembershipPage struct {
 
 // MembershipPatch Examples: {"role":"viewer"}
 type MembershipPatch struct {
-	Role interface{} `json:"role"`
+	Role MembershipPatchRole `json:"role"`
 }
+
+// MembershipPatchRole defines model for MembershipPatch.Role.
+type MembershipPatchRole string
 
 // OAuthError OAuth protocol error JSON, rather than REST Problem Details. Error redirects are sent only following a validated, session-bound consent decision. Invalid clients/redirects fail locally.
 type OAuthError struct {
@@ -1665,7 +2754,7 @@ type PersonalAccountKind string
 // PersonalAccountList defines model for PersonalAccountList.
 type PersonalAccountList struct {
 	Data       []PersonalAccount `json:"data"`
-	NextCursor any               `json:"next_cursor"`
+	NextCursor *string           `json:"next_cursor"`
 }
 
 // PersonalDirectory defines model for PersonalDirectory.
@@ -1718,16 +2807,19 @@ type PersonalLiveStatus string
 
 // PersonalLiveDisplay Personal-account Reader Live resource. Uses account_id instead of organization_id; only the personal account owner can access it with current personal token authority.
 type PersonalLiveDisplay struct {
-	AccountID string                  `json:"account_id"`
-	LiveID    string                  `json:"live_id"`
-	Paused    bool                    `json:"paused"`
-	Sequence  int64                   `json:"sequence"`
-	Showing   bool                    `json:"showing"`
-	Snapshot  any                     `json:"snapshot"`
-	Status    interface{}             `json:"status"`
-	Type      PersonalLiveDisplayType `json:"type"`
-	Verses    []DisplayVerse          `json:"verses"`
+	AccountID string                    `json:"account_id"`
+	LiveID    string                    `json:"live_id"`
+	Paused    bool                      `json:"paused"`
+	Sequence  int64                     `json:"sequence"`
+	Showing   bool                      `json:"showing"`
+	Snapshot  *SnapshotSummary          `json:"snapshot"`
+	Status    PersonalLiveDisplayStatus `json:"status"`
+	Type      PersonalLiveDisplayType   `json:"type"`
+	Verses    []DisplayVerse            `json:"verses"`
 }
+
+// PersonalLiveDisplayStatus defines model for PersonalLiveDisplay.Status.
+type PersonalLiveDisplayStatus string
 
 // PersonalLiveDisplayType defines model for PersonalLiveDisplay.Type.
 type PersonalLiveDisplayType string
@@ -1792,20 +2884,26 @@ type PersonalTokenMetadataSource string
 
 // Playback defines model for Playback.
 type Playback struct {
-	LiveID   string      `json:"live_id"`
-	Paused   bool        `json:"paused"`
-	Sequence int64       `json:"sequence"`
-	Showing  bool        `json:"showing"`
-	Status   interface{} `json:"status"`
+	LiveID   string         `json:"live_id"`
+	Paused   bool           `json:"paused"`
+	Sequence int64          `json:"sequence"`
+	Showing  bool           `json:"showing"`
+	Status   PlaybackStatus `json:"status"`
 }
+
+// PlaybackStatus defines model for Playback.Status.
+type PlaybackStatus string
 
 // PlaybackPatch Change lifecycle status and/or pause state atomically. Pausing a stopped Live returns 409. Stopping resets pause and visibility; starting alone does not redisplay content. paused:false resumes retained content on a running Live.
 //
 // Examples: {"paused":true}, {"status":"stopped"}
 type PlaybackPatch struct {
-	Paused *bool       `json:"paused,omitempty"`
-	Status interface{} `json:"status,omitempty"`
+	Paused *bool                `json:"paused,omitempty"`
+	Status *PlaybackPatchStatus `json:"status,omitempty"`
 }
+
+// PlaybackPatchStatus defines model for PlaybackPatch.Status.
+type PlaybackPatchStatus string
 
 // Presentation defines model for Presentation.
 type Presentation struct {
@@ -1838,11 +2936,14 @@ type PresentationAssetMime string
 
 // PresentationDisplayReference Explicitly capture the current saved revision of a same-organization deck. This API has no historical revision archive: if the current saved revision differs, return 409 presentation_revision_conflict. Optional slide_id selects a stable saved slide. Missing slide returns 422. Empty decks and stopped Lives return 409.
 type PresentationDisplayReference struct {
-	PresentationID string      `json:"presentation_id"`
-	Revision       int64       `json:"revision"`
-	SlideID        *string     `json:"slide_id,omitempty"`
-	Type           interface{} `json:"type"`
+	PresentationID string                           `json:"presentation_id"`
+	Revision       int64                            `json:"revision"`
+	SlideID        *string                          `json:"slide_id,omitempty"`
+	Type           PresentationDisplayReferenceType `json:"type"`
 }
+
+// PresentationDisplayReferenceType defines model for PresentationDisplayReference.Type.
+type PresentationDisplayReferenceType string
 
 // PresentationDocument Version-1 document, at most 2,000,000 encoded JSON bytes. Slide IDs are unique across the deck, element IDs within each slide. Omitted slide background is preserved as omitted. Save retains caller slide/element IDs; no automatic publishing. Existing same-workspace ready media references are checked by the domain; upload and portable import endpoints provide ready media. Uploading alone never modifies the saved document.
 //
@@ -1864,19 +2965,28 @@ type PresentationElement struct {
 
 // PresentationElementStyle defines model for PresentationElementStyle.
 type PresentationElementStyle struct {
-	Align       interface{} `json:"align,omitempty"`
-	Bold        *bool       `json:"bold,omitempty"`
-	Color       *string     `json:"color,omitempty"`
-	Fill        *string     `json:"fill,omitempty"`
-	FontFamily  interface{} `json:"font_family,omitempty"`
-	FontSize    *float32    `json:"font_size,omitempty"`
-	Italic      *bool       `json:"italic,omitempty"`
-	LineHeight  *float32    `json:"line_height,omitempty"`
-	Opacity     *float32    `json:"opacity,omitempty"`
-	Stroke      *string     `json:"stroke,omitempty"`
-	StrokeStyle interface{} `json:"stroke_style,omitempty"`
-	StrokeWidth *float32    `json:"stroke_width,omitempty"`
+	Align       *PresentationElementStyleAlign       `json:"align,omitempty"`
+	Bold        *bool                                `json:"bold,omitempty"`
+	Color       *string                              `json:"color,omitempty"`
+	Fill        *string                              `json:"fill,omitempty"`
+	FontFamily  *PresentationElementStyleFontFamily  `json:"font_family,omitempty"`
+	FontSize    *float32                             `json:"font_size,omitempty"`
+	Italic      *bool                                `json:"italic,omitempty"`
+	LineHeight  *float32                             `json:"line_height,omitempty"`
+	Opacity     *float32                             `json:"opacity,omitempty"`
+	Stroke      *string                              `json:"stroke,omitempty"`
+	StrokeStyle *PresentationElementStyleStrokeStyle `json:"stroke_style,omitempty"`
+	StrokeWidth *float32                             `json:"stroke_width,omitempty"`
 }
+
+// PresentationElementStyleAlign defines model for PresentationElementStyle.Align.
+type PresentationElementStyleAlign string
+
+// PresentationElementStyleFontFamily defines model for PresentationElementStyle.FontFamily.
+type PresentationElementStyleFontFamily string
+
+// PresentationElementStyleStrokeStyle defines model for PresentationElementStyle.StrokeStyle.
+type PresentationElementStyleStrokeStyle string
 
 // PresentationExport Safe requester-private job projection. Timestamps are Unix seconds. Jobs snapshot the saved revision at creation; later saves never alter the captured document. Expiry is initially ten minutes and resets to ten minutes on completion/failure. Jobs disappear on expiry, presentation deletion or successful download consumption. Starting a new export removes this requester’s failed jobs.
 type PresentationExport struct {
@@ -1913,18 +3023,24 @@ type PresentationExportList struct {
 // PresentationImageElement Coordinates and dimensions are integer canvas units; x+width must be <=1280 and y+height <=720 (checked by the domain validator). IDs must be unique within a slide.
 type PresentationImageElement struct {
 	// Alt UTF-8 text, at most 1000 bytes; NUL is rejected.
-	Alt      string                    `json:"alt"`
-	Asset    string                    `json:"asset"`
-	Fit      interface{}               `json:"fit"`
-	Height   int64                     `json:"height"`
-	ID       string                    `json:"id"`
-	Rotation *int64                    `json:"rotation,omitempty"`
-	Style    *PresentationElementStyle `json:"style,omitempty"`
-	Type     interface{}               `json:"type"`
-	Width    int64                     `json:"width"`
-	X        int64                     `json:"x"`
-	Y        int64                     `json:"y"`
+	Alt      string                       `json:"alt"`
+	Asset    string                       `json:"asset"`
+	Fit      PresentationImageElementFit  `json:"fit"`
+	Height   int64                        `json:"height"`
+	ID       string                       `json:"id"`
+	Rotation *int64                       `json:"rotation,omitempty"`
+	Style    *PresentationElementStyle    `json:"style,omitempty"`
+	Type     PresentationImageElementType `json:"type"`
+	Width    int64                        `json:"width"`
+	X        int64                        `json:"x"`
+	Y        int64                        `json:"y"`
 }
+
+// PresentationImageElementFit defines model for PresentationImageElement.Fit.
+type PresentationImageElementFit string
+
+// PresentationImageElementType defines model for PresentationImageElement.Type.
+type PresentationImageElementType string
 
 // PresentationPage defines model for PresentationPage.
 type PresentationPage struct {
@@ -1934,16 +3050,22 @@ type PresentationPage struct {
 
 // PresentationShapeElement Coordinates and dimensions are integer canvas units; x+width must be <=1280 and y+height <=720 (checked by the domain validator). IDs must be unique within a slide.
 type PresentationShapeElement struct {
-	Height   int64                     `json:"height"`
-	ID       string                    `json:"id"`
-	Rotation *int64                    `json:"rotation,omitempty"`
-	Shape    interface{}               `json:"shape"`
-	Style    *PresentationElementStyle `json:"style,omitempty"`
-	Type     interface{}               `json:"type"`
-	Width    int64                     `json:"width"`
-	X        int64                     `json:"x"`
-	Y        int64                     `json:"y"`
+	Height   int64                         `json:"height"`
+	ID       string                        `json:"id"`
+	Rotation *int64                        `json:"rotation,omitempty"`
+	Shape    PresentationShapeElementShape `json:"shape"`
+	Style    *PresentationElementStyle     `json:"style,omitempty"`
+	Type     PresentationShapeElementType  `json:"type"`
+	Width    int64                         `json:"width"`
+	X        int64                         `json:"x"`
+	Y        int64                         `json:"y"`
 }
+
+// PresentationShapeElementShape defines model for PresentationShapeElement.Shape.
+type PresentationShapeElementShape string
+
+// PresentationShapeElementType defines model for PresentationShapeElement.Type.
+type PresentationShapeElementType string
 
 // PresentationSlide defines model for PresentationSlide.
 type PresentationSlide struct {
@@ -1969,12 +3091,15 @@ type PresentationTextElement struct {
 	Style    *PresentationElementStyle `json:"style,omitempty"`
 
 	// Text UTF-8 text, at most 20000 bytes; NUL is rejected.
-	Text  string      `json:"text"`
-	Type  interface{} `json:"type"`
-	Width int64       `json:"width"`
-	X     int64       `json:"x"`
-	Y     int64       `json:"y"`
+	Text  string                      `json:"text"`
+	Type  PresentationTextElementType `json:"type"`
+	Width int64                       `json:"width"`
+	X     int64                       `json:"x"`
+	Y     int64                       `json:"y"`
 }
+
+// PresentationTextElementType defines model for PresentationTextElement.Type.
+type PresentationTextElementType string
 
 // PresentationVerseElement Coordinates and dimensions are integer canvas units; x+width must be <=1280 and y+height <=720 (checked by the domain validator). IDs must be unique within a slide. Known open-license edition/attribution fields are restored from the reviewed catalogue on saves and reads.
 type PresentationVerseElement struct {
@@ -1995,42 +3120,54 @@ type PresentationVerseElement struct {
 	Text string `json:"text"`
 
 	// Translation UTF-8 text, at most 200 bytes; NUL is rejected.
-	Translation string      `json:"translation"`
-	Type        interface{} `json:"type"`
-	Width       int64       `json:"width"`
-	X           int64       `json:"x"`
-	Y           int64       `json:"y"`
+	Translation string                       `json:"translation"`
+	Type        PresentationVerseElementType `json:"type"`
+	Width       int64                        `json:"width"`
+	X           int64                        `json:"x"`
+	Y           int64                        `json:"y"`
 }
+
+// PresentationVerseElementType defines model for PresentationVerseElement.Type.
+type PresentationVerseElementType string
 
 // PresentationVideoElement Coordinates and dimensions are integer canvas units; x+width must be <=1280 and y+height <=720 (checked by the domain validator). IDs must be unique within a slide.
 type PresentationVideoElement struct {
-	Asset    string                    `json:"asset"`
-	Fit      interface{}               `json:"fit"`
-	Height   int64                     `json:"height"`
-	ID       string                    `json:"id"`
-	Loop     *bool                     `json:"loop,omitempty"`
-	Muted    *bool                     `json:"muted,omitempty"`
-	Poster   *string                   `json:"poster,omitempty"`
-	Rotation *int64                    `json:"rotation,omitempty"`
-	Style    *PresentationElementStyle `json:"style,omitempty"`
-	Type     interface{}               `json:"type"`
-	Width    int64                     `json:"width"`
-	X        int64                     `json:"x"`
-	Y        int64                     `json:"y"`
+	Asset    string                       `json:"asset"`
+	Fit      PresentationVideoElementFit  `json:"fit"`
+	Height   int64                        `json:"height"`
+	ID       string                       `json:"id"`
+	Loop     *bool                        `json:"loop,omitempty"`
+	Muted    *bool                        `json:"muted,omitempty"`
+	Poster   *string                      `json:"poster,omitempty"`
+	Rotation *int64                       `json:"rotation,omitempty"`
+	Style    *PresentationElementStyle    `json:"style,omitempty"`
+	Type     PresentationVideoElementType `json:"type"`
+	Width    int64                        `json:"width"`
+	X        int64                        `json:"x"`
+	Y        int64                        `json:"y"`
 }
+
+// PresentationVideoElementFit defines model for PresentationVideoElement.Fit.
+type PresentationVideoElementFit string
+
+// PresentationVideoElementType defines model for PresentationVideoElement.Type.
+type PresentationVideoElementType string
 
 // PresentationYouTubeElement Coordinates and dimensions are integer canvas units; x+width must be <=1280 and y+height <=720 (checked by the domain validator). IDs must be unique within a slide.
 type PresentationYouTubeElement struct {
-	Height   int64                     `json:"height"`
-	ID       string                    `json:"id"`
-	Rotation *int64                    `json:"rotation,omitempty"`
-	Style    *PresentationElementStyle `json:"style,omitempty"`
-	Type     interface{}               `json:"type"`
-	VideoID  string                    `json:"video_id"`
-	Width    int64                     `json:"width"`
-	X        int64                     `json:"x"`
-	Y        int64                     `json:"y"`
+	Height   int64                          `json:"height"`
+	ID       string                         `json:"id"`
+	Rotation *int64                         `json:"rotation,omitempty"`
+	Style    *PresentationElementStyle      `json:"style,omitempty"`
+	Type     PresentationYouTubeElementType `json:"type"`
+	VideoID  string                         `json:"video_id"`
+	Width    int64                          `json:"width"`
+	X        int64                          `json:"x"`
+	Y        int64                          `json:"y"`
 }
+
+// PresentationYouTubeElementType defines model for PresentationYouTubeElement.Type.
+type PresentationYouTubeElementType string
 
 // Problem Examples: {"code":"forbidden","request_id":"000000000000000000000000","status":403,"title":"Forbidden","type":"about:blank"}
 type Problem struct {
@@ -2041,8 +3178,11 @@ type Problem struct {
 	RequestID string      `json:"request_id"`
 	Status    int64       `json:"status"`
 	Title     string      `json:"title"`
-	Type      interface{} `json:"type"`
+	Type      ProblemType `json:"type"`
 }
+
+// ProblemType defines model for Problem.Type.
+type ProblemType string
 
 // PutOrganizationLiveStudio Examples: {"settings":{"container":{"border":null,"padding":null,"radius":null},"controls":{"fontSize":true,"fullscreen":true,"theme":true},"elements":{"reference":{"align":"left","bold":true,"font":"sans","italic":false,"lineHeight":112,"size":100},"text":{"align":"left","bold":false,"font":"serif","italic":false,"lineHeight":112,"size":100},"translation":{"align":"left","bold":true,"font":"sans","italic":false,"lineHeight":112,"size":100}},"order":["translation","reference","text"],"palettes":{"dark":{"background":null,"container":null,"reference":null,"text":null,"translation":null},"light":{"background":null,"container":null,"reference":null,"text":null,"translation":null}},"preset":"default","showLogo":true,"transition":"none","version":1}}
 type PutOrganizationLiveStudio struct {
@@ -2068,14 +3208,26 @@ type ReplaceDisplay struct {
 }
 
 // ReplaceDisplay0 defines model for ReplaceDisplay.0.
-type ReplaceDisplay0 struct {
-	Type interface{} `json:"type"`
+type ReplaceDisplay0 ReplaceDisplay_0
+
+// ReplaceDisplay0Type defines model for ReplaceDisplay.0.Type.
+type ReplaceDisplay0Type string
+
+// ReplaceDisplay_0 defines model for ReplaceDisplay.0.
+type ReplaceDisplay_0 struct {
+	Type ReplaceDisplay0Type `json:"type"`
 }
 
 // ReplaceDisplay1 defines model for ReplaceDisplay.1.
-type ReplaceDisplay1 struct {
-	Reference ScriptureReference `json:"reference"`
-	Type      interface{}        `json:"type"`
+type ReplaceDisplay1 ReplaceDisplay_1
+
+// ReplaceDisplay1Type defines model for ReplaceDisplay.1.Type.
+type ReplaceDisplay1Type string
+
+// ReplaceDisplay_1 defines model for ReplaceDisplay.1.
+type ReplaceDisplay_1 struct {
+	Reference ScriptureReference  `json:"reference"`
+	Type      ReplaceDisplay1Type `json:"type"`
 }
 
 // Scope defines model for Scope.
@@ -2470,7 +3622,13 @@ type ExchangeOAuthTokenFormdataBody struct {
 }
 
 // ExchangeOAuthTokenFormdataBody0 defines parameters for ExchangeOAuthToken.
-type ExchangeOAuthTokenFormdataBody0 struct {
+type ExchangeOAuthTokenFormdataBody0 ExchangeOAuthTokenFormdataBody_0
+
+// ExchangeOAuthTokenFormdataBody0GrantType defines parameters for ExchangeOAuthToken.
+type ExchangeOAuthTokenFormdataBody0GrantType string
+
+// ExchangeOAuthTokenFormdataBody_0 defines parameters for ExchangeOAuthToken.
+type ExchangeOAuthTokenFormdataBody_0 struct {
 	ClientID     string                                   `json:"client_id"`
 	Code         string                                   `json:"code"`
 	CodeVerifier string                                   `json:"code_verifier"`
@@ -2478,11 +3636,14 @@ type ExchangeOAuthTokenFormdataBody0 struct {
 	RedirectURI  string                                   `json:"redirect_uri"`
 }
 
-// ExchangeOAuthTokenFormdataBody0GrantType defines parameters for ExchangeOAuthToken.
-type ExchangeOAuthTokenFormdataBody0GrantType string
-
 // ExchangeOAuthTokenFormdataBody1 defines parameters for ExchangeOAuthToken.
-type ExchangeOAuthTokenFormdataBody1 struct {
+type ExchangeOAuthTokenFormdataBody1 ExchangeOAuthTokenFormdataBody_1
+
+// ExchangeOAuthTokenFormdataBody1GrantType defines parameters for ExchangeOAuthToken.
+type ExchangeOAuthTokenFormdataBody1GrantType string
+
+// ExchangeOAuthTokenFormdataBody_1 defines parameters for ExchangeOAuthToken.
+type ExchangeOAuthTokenFormdataBody_1 struct {
 	ClientID     string                                   `json:"client_id"`
 	GrantType    ExchangeOAuthTokenFormdataBody1GrantType `json:"grant_type"`
 	RefreshToken string                                   `json:"refresh_token"`
@@ -2490,9 +3651,6 @@ type ExchangeOAuthTokenFormdataBody1 struct {
 	// Scope Space-separated explicit registered personal scopes. No empty scope. offline_access alone is invalid.
 	Scope *string `json:"scope,omitempty"`
 }
-
-// ExchangeOAuthTokenFormdataBody1GrantType defines parameters for ExchangeOAuthToken.
-type ExchangeOAuthTokenFormdataBody1GrantType string
 
 // ReplaceOrganizationLiveStudioParams defines parameters for ReplaceOrganizationLiveStudio.
 type ReplaceOrganizationLiveStudioParams struct {
@@ -2649,7 +3807,7 @@ type CreatePresentationExportParams struct {
 }
 
 // DownloadPresentationExportJSONBody defines parameters for DownloadPresentationExport.
-type DownloadPresentationExportJSONBody = map[string]interface{}
+type DownloadPresentationExportJSONBody = EmptyObject
 
 // DisconnectOAuthAppFormdataBody defines parameters for DisconnectOAuthApp.
 type DisconnectOAuthAppFormdataBody struct {
@@ -3214,10 +4372,12 @@ func (t *PresentationElement) MergePresentationYouTubeElement(v PresentationYouT
 	return err
 }
 
+type discriminatorForPresentationElement struct {
+	Discriminator string `json:"type"`
+}
+
 func (t PresentationElement) Discriminator() (string, error) {
-	var discriminator struct {
-		Discriminator string `json:"type"`
-	}
+	var discriminator discriminatorForPresentationElement
 	err := json.Unmarshal(t.union, &discriminator)
 	return discriminator.Discriminator, err
 }

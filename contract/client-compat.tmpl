@@ -7,7 +7,29 @@ var operations = map[string]Operation{
 }
 {{range .}}{{if eq (index .Spec.Extensions "x-fern-server-name") "rest"}}
 // {{.OperationId}} {{.Summary}}.
-func(c *Client) {{.OperationId}}(ctx context.Context, {{range .PathParams}}{{.ParamName}} string, {{end}}options *Options)(*Response,error){
- return c.Call(ctx,{{printf "%q" .SpecOperationId}},map[string]string{ {{range .PathParams}}{{printf "%q" .ParamName}}:{{.ParamName}},{{end}} },options)
+func(c *Client) {{.OperationId}}(ctx context.Context, {{range .PathParams}}{{.ParamName}} string, {{end}}options ...*Options)(*Response,error){
+ opts, err := singleOptions(options)
+ if err != nil { return nil, err }
+ return c.Call(ctx,{{printf "%q" .SpecOperationId}},map[string]string{ {{range .PathParams}}{{printf "%q" .ParamName}}:{{.ParamName}},{{end}} },opts)
 }
+{{if .QueryParams}}
+{{$paramsType := printf "%sParams" .OperationId}}
+{{range .QueryParams}}
+// With{{.GoName}} returns a copy with the {{.ParamName}} query parameter set.
+func(p {{$paramsType}}) With{{.GoName}}(value {{.TypeDef}}) {{$paramsType}} {
+ p.{{.GoName}} = {{if .HasOptionalPointer}}&{{end}}value
+ return p
+}
+{{end}}
+// QueryValues encodes the operation's typed query parameters. Each call returns fresh values.
+func(p {{.OperationId}}Params) QueryValues() url.Values {
+ values := url.Values{}
+ {{range .QueryParams}}
+ {{if .RequiresNilCheck}}if p.{{.GoName}} != nil { {{end}}
+ values.Set({{printf "%q" .ParamName}}, fmt.Sprint({{if .HasOptionalPointer}}*{{end}}p.{{.GoName}}))
+ {{if .RequiresNilCheck}} } {{end}}
+ {{end}}
+ return values
+}
+{{end}}
 {{end}}{{end}}

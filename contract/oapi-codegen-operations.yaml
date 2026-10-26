@@ -3,7 +3,11 @@ output: ../operations.gen.go
 generate:
   client: true
 output-options:
+  generate-types-for-anonymous-schemas: true
   name-normalizer: ToCamelCaseWithInitialisms
+  overlay:
+    path: ../contract/compatibility-overlay.yaml
+    strict: false
   user-templates:
     client.tmpl: ../contract/client-compat.tmpl
     client-with-responses.tmpl: ../contract/no-client-responses.tmpl

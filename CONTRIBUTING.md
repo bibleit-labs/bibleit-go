@@ -21,6 +21,10 @@ Normal tests use in-memory transports and synthetic protocol fixtures; optional
 server integration cases are skipped unless explicitly enabled. Native CI covers
 Linux, macOS and Windows. Review links, commands and content for docs-only changes.
 
+Use named Go types for domain models, nested objects and decoder payloads rather
+than inline structs. Keep generated model conventions in the generation config
+and templates so regeneration preserves them.
+
 Credentials are explicit, and the service address is project-managed. There are
 no constructor/environment endpoint overrides. Preserve HTTPS verification,
 context cancellation and the no-automatic-retry behavior. Browser orchestration,

@@ -35,3 +35,33 @@ actions:
     update:
       x-go-type: json.RawMessage
       x-go-type-skip-optional-pointer: true
+  # The contract omits type on string enums/constants; give the generator
+  # their concrete wire type instead of interface{}.
+  - target: $..[?(@.enum && !@.type)]
+    update:
+      type: string
+  - target: $..[?(@.const == 'about:blank' || @.const == 'empty' || @.const == 'scripture' || @.const == 'text' || @.const == 'verse' || @.const == 'shape' || @.const == 'image' || @.const == 'video' || @.const == 'youtube' || @.const == 'presentation')]
+    update:
+      type: string
+  - target: $.components.schemas.EmptyObject
+    update:
+      x-go-type: struct{}
+  - target: $.components.schemas.LiveDisplay.properties.snapshot
+    update:
+      x-go-type: '*SnapshotSummary'
+      x-go-type-skip-optional-pointer: true
+  - target: $.components.schemas.LiveHeartbeatEvent.properties.data
+    update:
+      x-go-type: '*LiveEventSnapshot'
+      x-go-type-skip-optional-pointer: true
+  - target: $.components.schemas.PersonalLiveDisplay.properties.snapshot
+    update:
+      x-go-type: '*SnapshotSummary'
+      x-go-type-skip-optional-pointer: true
+  - target: $.components.schemas.PersonalAccountList.properties.next_cursor
+    update:
+      x-go-type: '*string'
+      x-go-type-skip-optional-pointer: true
+  - target: $.paths['/presentations/{presentation_id}/exports/{export_id}/downloads'].post.requestBody.content['application/json'].schema
+    update:
+      x-go-type: EmptyObject
