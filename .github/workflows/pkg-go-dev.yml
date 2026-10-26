@@ -44,9 +44,16 @@ jobs:
         run: go mod download -json "$MODULE@$VERSION"
       - name: Request pkg.go.dev indexing
         run: |
-          curl --fail --show-error --silent --max-time 60 \
-            --retry 3 --retry-delay 5 --request POST \
-            "https://pkg.go.dev/fetch/$MODULE@$VERSION"
+          if curl --fail --silent --location --max-time 30 --output /dev/null \
+            "https://pkg.go.dev/$MODULE@$VERSION"; then
+            echo 'Version is already indexed'
+          else
+            # A fetch can outlive the HTTP request; the availability check below
+            # is the final success condition, even if this request times out.
+            curl --fail --show-error --silent --max-time 30 --request POST \
+              "https://pkg.go.dev/fetch/$MODULE@$VERSION" || \
+              echo 'Indexing request did not finish; waiting for documentation'
+          fi
       - name: Verify versioned documentation is available
         run: |
           curl --fail --show-error --silent --location --max-time 30 \
