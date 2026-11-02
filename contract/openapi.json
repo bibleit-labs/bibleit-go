@@ -3022,6 +3022,145 @@
         "x-fern-explorer": false
       }
     },
+    "/lives/{live_id}/queue-items/staged": {
+      "parameters": [
+        {
+          "name": "live_id",
+          "in": "path",
+          "required": true,
+          "description": "",
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "post": {
+        "operationId": "stageLiveQueueItem",
+        "summary": "Stage a scripture queue item while stopped",
+        "tags": [
+          "Lives"
+        ],
+        "x-required-scopes": [
+          "live.update",
+          "translation.read"
+        ],
+        "description": "**Required scopes:** `live.update`, `translation.read`.\n\nExplicitly insert one enabled, installed Scripture reference into a stopped, hidden Reader Live without displaying it, resuming playback or sending an audience event. These resources use the existing retained Scripture stack, not an independent draft playlist. Preserve stopped status and the prior pause state. Running or visible Lives return 409 queue_staging_requires_stopped; presentation mode returns 409 queue_mode_conflict. The normal POST /queue-items retains its existing display/resume behavior.\n\nRequires current If-Match; missing:428, stale:412, malformed:422. Ownership, current scopes, account/workspace restrictions, enabled translation and persisted revision are checked at commit. Insert before an existing item ID or append. Duplicate canonical verse/translation returns 409 queue_item_exists; insertion is bounded to 100 items. Each insertion is atomic and returns 201 with its item, new `ETag` and ordinary queue-item `Location`. No Idempotency-Key replay is provided: inspect current state after an ambiguous result, and never automatically replay a mutation.\n\nAccepts service, finite personal and registered delegated OAuth credentials within their existing ownership and scope boundaries. Personal credentials cannot stage organization or foreign Lives. This operation adds no MCP tools, OAuth scopes or account permissions.",
+        "responses": {
+          "201": {
+            "description": "Successful operation",
+            "headers": {
+              "X-Request-Id": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "ETag": {
+                "schema": {
+                  "type": "string",
+                  "pattern": "^\"live-[0-9]+\"$"
+                },
+                "description": "Shared Live sequence validator. Any relevant metadata, display, playback or workspace change invalidates it."
+              },
+              "Location": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Relative URL of the created queue item."
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LiveQueueItem"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Problem"
+          },
+          "403": {
+            "$ref": "#/components/responses/Problem"
+          },
+          "404": {
+            "$ref": "#/components/responses/Problem"
+          },
+          "409": {
+            "description": "Live must be a stopped, hidden Reader (queue_staging_requires_stopped); presentation mode, duplicate item, full queue or other domain conflict.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          },
+          "412": {
+            "$ref": "#/components/responses/Problem"
+          },
+          "422": {
+            "description": "Invalid reference, insertion position or If-Match validator.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          },
+          "428": {
+            "$ref": "#/components/responses/Problem"
+          },
+          "429": {
+            "$ref": "#/components/responses/Problem"
+          },
+          "503": {
+            "$ref": "#/components/responses/Problem"
+          },
+          "default": {
+            "$ref": "#/components/responses/Problem"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateLiveQueueItem"
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "If-Match",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^\"live-[0-9]+\"$"
+            },
+            "description": "Shared Live sequence validator. Any relevant metadata, display, playback or workspace change invalidates it. Missing:428; stale:412; malformed, weak, wildcard or list:422."
+          }
+        ],
+        "security": [
+          {
+            "serviceToken": []
+          },
+          {
+            "personalToken": []
+          },
+          {
+            "delegatedOAuth": [
+              "live.update",
+              "translation.read"
+            ]
+          }
+        ],
+        "x-fern-server-name": "rest",
+        "x-fern-explorer": false
+      }
+    },
     "/lives/{live_id}/queue-items/{item_id}": {
       "parameters": [
         {
@@ -6332,7 +6471,7 @@
       "get": {
         "operationId": "getConnectedAppsPage",
         "summary": "View connected applications",
-        "description": "Existing browser session; unauthenticated users are redirected to login. Lists only this user’s unexpired grants, with disconnect forms. No token hashes or secrets.\n\n**Response headers:**\n\n- `Cache-Control` (200).\n- `Referrer-Policy` (200): Native consent form Origin proof; never sends referrers cross-origin.\n- `Pragma` (200).",
+        "description": "Compatibility URL. GET redirects to /settings/applications; the canonical Settings page lists all current own OAuth authorizations. Existing response alternatives are retained for compatibility.\n\n**Response headers:**\n\n- `Cache-Control`: no-store for retained 200 responses and the canonical 303 redirect.\n- `Referrer-Policy`: same-origin for retained 200 pages; no-referrer for redirects.\n- `Pragma`: no-cache for the retained compatibility responses.\n- `Location` (303): /settings/applications.",
         "tags": [
           "OAuth"
         ],
@@ -6425,7 +6564,7 @@
       "post": {
         "operationId": "disconnectOAuthApp",
         "summary": "Disconnect an application",
-        "description": "Browser-only disconnect requires CSRF cookie/form plus same Origin and fresh active identity/account. Revokes the selected own grant and all its tokens. Other users cannot disconnect it.\n\n**Additional request headers:**\n\n- `Origin` (required): Must match the browser request origin for CSRF validation.",
+        "description": "Compatibility URL for existing disconnect forms. Retains the same browser-session ownership, same-origin and CSRF protections, and redirects successful revocation to /settings/applications.\n\n**Response headers:**\n\n- `Cache-Control` (303): no-store.\n- `Referrer-Policy` (303): no-referrer.\n- `Pragma`: no-cache on retained protocol redirect alternatives.\n- `Location` (303): Settings Applications after successful revocation.\n\n**Additional request headers:**\n\n- `Origin` (required): Must exactly match the Bibleit origin; the browser-session-bound CSRF form value is also required.",
         "tags": [
           "OAuth"
         ],
@@ -6523,7 +6662,7 @@
       "get": {
         "operationId": "listOAuthGrants",
         "summary": "List your connected OAuth applications",
-        "description": "**Required scopes:** `token.get`.\n\nRequires an existing finite bt_ personal credential. Delegated OAuth tokens cannot administer grants. Owner-only, current personal authority; no token/hash exposure. Returns at most twenty current grants. Revocation immediately denies access and refresh. Other users receive 404. Browser equivalent is /settings/connected-apps. Requires token.get in current user authority and explicit bt_ scopes when scoped.",
+        "description": "**Required scopes:** `token.get`.\n\nRequires an existing finite bt_ personal credential. Delegated OAuth tokens cannot administer grants. Owner-only, current personal authority; no token/hash exposure. Returns at most twenty current grants. Revocation immediately denies access and refresh. Other users receive 404. Browser equivalent is /settings/connected-apps. Requires token.get in current user authority and explicit bt_ scopes when scoped. Response scopes describe all grants owned by the caller, including separately consented MCP-only capabilities; this response vocabulary does not expand ordinary REST request scopes.",
         "tags": [
           "Personal accounts"
         ],
@@ -7856,6 +7995,761 @@
             }
           }
         ]
+      }
+    },
+    "/oauth/mcp/probe": {
+      "post": {
+        "operationId": "probeMcpOAuth",
+        "summary": "Validate an MCP connection",
+        "description": "Issuer-side validation endpoint for the Bibleit MCP adapter. Requires a Bearer oa_ token bound to BIBLEIT_MCP_RESOURCE_URI with `identity.read`. Returns basic identity, client ID, granted scopes, expiry and audience. Rejects ordinary REST OAuth, personal and organization service tokens with 401; missing identity scope returns 403. Not a general token introspection or REST delegation endpoint. Disabled when no MCP resource is configured. All responses are no-store.\n\n**Response headers:**\n\n- `Cache-Control` (200): no-store.\n- `Referrer-Policy` (200): no-referrer.\n- `Pragma` (200): no-cache. Requires current actor mcp.get permission; revocation returns 403 access_denied. Returns MCP-specific actor permissions for adapter discovery/tool gates and optional domain_permissions containing current Scripture authority intersected with approved grant scopes. Missing domain_permissions denies Scripture tools. Optional live_permissions contains only the current live.list/live.get authority intersected with approved scopes; missing live_permissions denies Live tools. Permissions never replace OAuth scopes.",
+        "tags": [
+          "OAuth"
+        ],
+        "servers": [
+          {
+            "url": "https://bibleit.app"
+          }
+        ],
+        "security": [
+          {
+            "delegatedOAuth": [
+              "identity.read"
+            ]
+          }
+        ],
+        "x-required-scopes": [
+          "identity.read"
+        ],
+        "x-oauth-protocol": true,
+        "x-fern-server-name": "protocol",
+        "x-fern-explorer": false,
+        "responses": {
+          "200": {
+            "description": "Validated basic identity and MCP grant metadata; checked freshly against the configured audience.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-referrer"
+                }
+              },
+              "Pragma": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-cache"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/McpOAuthProbe"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "OAuth protocol error. Unknown/duplicate/oversized parameters, invalid credentials, policy denial or rate limiting.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/McpOAuthProbeError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/oauth/mcp/authorize": {
+      "get": {
+        "operationId": "authorizeMcpOAuth",
+        "summary": "MCP: Start registered-client authorization",
+        "description": "Validate exact registered redirect URI and explicit allowlisted scopes before any redirect. Require response_type=code, high-entropy state (16–512 bytes), S256 and a 43-character base64url challenge. Unauthenticated users continue through existing login/onboarding using a five-minute opaque request bound to the eventual browser session. GET always requires explicit consent; no automatic approval. Return errors locally for unknown/untrusted callbacks. Clients must verify state and response iss. A resumed request uses only request, with no other query parameters.\n\n**Response headers:**\n\n- `Cache-Control` (200).\n- `Referrer-Policy` (200): Native consent form Origin proof; never sends referrers cross-origin.\n- `Pragma` (200).\n\nMCP accepts the configured resource URI for identity.read, offline_access, translation.list, translation.get, translation.read, translation.search, live.list and live.get. Registered client scopes, current actor permissions and explicit fresh consent bound each grant; existing grants cannot gain scopes through refresh. Exact fixed-port localhost HTTP callbacks are supported alongside literal loopback addresses. Uses the dedicated MCP issuer `https://bibleit.app/oauth/mcp`. Existing REST OAuth endpoints and error contracts remain unchanged.",
+        "tags": [
+          "OAuth"
+        ],
+        "servers": [
+          {
+            "url": "https://bibleit.app"
+          }
+        ],
+        "security": [
+          {
+            "browserSession": []
+          },
+          {}
+        ],
+        "x-oauth-protocol": true,
+        "responses": {
+          "200": {
+            "description": "Escaped server-rendered consent/connected-app page. No token is issued by GET.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "type": "string",
+                  "const": "same-origin"
+                },
+                "description": "Native consent form Origin proof; never sends referrers cross-origin."
+              },
+              "Pragma": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-cache"
+                }
+              }
+            },
+            "content": {
+              "text/html; charset=utf-8": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "303": {
+            "description": "Validated redirect: existing login/continuation, registered consent result or same-origin settings. Code/denial responses echo state and include iss.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-referrer"
+                }
+              },
+              "Pragma": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-cache"
+                }
+              },
+              "Location": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "OAuth protocol error. Unknown/duplicate/oversized parameters, invalid credentials, policy denial or rate limiting.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OAuthResourceError"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "response_type",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "const": "code"
+            }
+          },
+          {
+            "name": "client_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "redirect_uri",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "uri"
+            }
+          },
+          {
+            "name": "scope",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 512,
+              "description": "Space-separated explicit registered personal scopes. No empty scope. offline_access alone is invalid."
+            }
+          },
+          {
+            "name": "state",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "minLength": 16,
+              "maxLength": 512
+            }
+          },
+          {
+            "name": "code_challenge",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "pattern": "^[a-zA-Z0-9_-]{43}$"
+            }
+          },
+          {
+            "name": "code_challenge_method",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "const": "S256"
+            }
+          },
+          {
+            "name": "request",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{64}$"
+            }
+          },
+          {
+            "name": "resource",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "uri",
+              "maxLength": 2048,
+              "description": "Optional MCP resource indicator. Must equal the configured MCP resource URI and remain identical at code and refresh exchange. Omit for existing REST-only grants. MCP permits identity.read, offline_access and the read-only scopes advertised by its issuer metadata. Newly requested scopes require client approval and fresh user consent; existing grants are never widened automatically."
+            }
+          },
+          {
+            "name": "prompt",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "const": "consent"
+            },
+            "description": "Optional explicit consent request, used by Claude Code. Silent authorization is not supported."
+          },
+          {
+            "name": "ui_locales",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "maxLength": 256
+            },
+            "description": "Optional bounded space-separated language tags, as sent by ChatGPT. Advisory only; consent currently retains its existing language."
+          }
+        ],
+        "x-fern-server-name": "protocol",
+        "x-fern-explorer": false
+      },
+      "post": {
+        "operationId": "decideMcpOAuth",
+        "summary": "MCP: Approve or deny OAuth consent",
+        "description": "Requires current browser session, exact session-bound pending request, CSRF cookie/form equality and same Origin. Decision is single-use and expires after five minutes. Approval rechecks registered client, scopes, user/account/membership and current authority under locks. Authorization code expires after 60 seconds; never issued by a GET. Denial redirects access_denied only to the validated redirect. At most five active grants per client/user and twenty per user.\n\n**Additional request headers:**\n\n- `Origin` (required): Must match the browser request origin for CSRF validation. Uses the dedicated MCP issuer `https://bibleit.app/oauth/mcp`. Existing REST OAuth endpoints and error contracts remain unchanged.",
+        "tags": [
+          "OAuth"
+        ],
+        "servers": [
+          {
+            "url": "https://bibleit.app"
+          }
+        ],
+        "security": [
+          {
+            "browserSession": []
+          }
+        ],
+        "x-oauth-protocol": true,
+        "responses": {
+          "303": {
+            "description": "Validated redirect: existing login/continuation, registered consent result or same-origin settings. Code/denial responses echo state and include iss.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-referrer"
+                }
+              },
+              "Pragma": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-cache"
+                }
+              },
+              "Location": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "OAuth protocol error. Unknown/duplicate/oversized parameters, invalid credentials, policy denial or rate limiting.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OAuthResourceError"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "request": {
+                    "type": "string",
+                    "pattern": "^[a-f0-9]{64}$"
+                  },
+                  "csrf": {
+                    "type": "string",
+                    "pattern": "^[a-f0-9]{64}$"
+                  },
+                  "decision": {
+                    "type": "string",
+                    "enum": [
+                      "allow",
+                      "deny"
+                    ]
+                  }
+                },
+                "required": [
+                  "request",
+                  "csrf",
+                  "decision"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "Origin",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uri"
+            }
+          }
+        ],
+        "x-fern-server-name": "protocol",
+        "x-fern-explorer": false
+      }
+    },
+    "/oauth/mcp/token": {
+      "post": {
+        "operationId": "exchangeMcpOAuthToken",
+        "summary": "MCP: Exchange a code or rotate a refresh token",
+        "description": "Public clients send client_id in form; Authorization headers are rejected. Authorization code binds client_id, exact redirect_uri and S256 verifier (43–128 unreserved ASCII characters), expires in 60 seconds, and is single-use. Refresh tokens require offline_access, rotate on every use, and retain the fixed 30-day grant deadline. Reusing a successfully exchanged code or used refresh token revokes the entire grant, including outstanding access/refresh tokens; no retry grace. Wrong client, redirect or verifier cannot exchange the code. Optional refresh scope permanently narrows the grant; it cannot widen. Current user permissions and client enabled status apply. Organization/service/PAT secrets are never issued. No implicit, password or client_credentials grant.\n\n**Response headers:**\n\n- `Cache-Control` (200).\n- `Referrer-Policy` (200).\n- `Pragma` (200).\n\nAn MCP resource indicator must match consent at both code and refresh exchange; missing or changed indicators return invalid_target. MCP-audience tokens cannot authenticate REST endpoints. Uses the dedicated MCP issuer `https://bibleit.app/oauth/mcp`. Existing REST OAuth endpoints and error contracts remain unchanged.",
+        "tags": [
+          "OAuth"
+        ],
+        "servers": [
+          {
+            "url": "https://bibleit.app"
+          }
+        ],
+        "security": [],
+        "x-oauth-protocol": true,
+        "responses": {
+          "200": {
+            "description": "New opaque access token and optional rotating refresh token.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-referrer"
+                }
+              },
+              "Pragma": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-cache"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OAuthToken"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "OAuth protocol error. Unknown/duplicate/oversized parameters, invalid credentials, policy denial or rate limiting.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OAuthResourceError"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "oneOf": [
+                  {
+                    "type": "object",
+                    "properties": {
+                      "grant_type": {
+                        "type": "string",
+                        "const": "authorization_code"
+                      },
+                      "client_id": {
+                        "type": "string"
+                      },
+                      "code": {
+                        "type": "string"
+                      },
+                      "redirect_uri": {
+                        "type": "string",
+                        "format": "uri"
+                      },
+                      "code_verifier": {
+                        "type": "string",
+                        "pattern": "^[a-zA-Z0-9._~-]{43,128}$"
+                      },
+                      "resource": {
+                        "type": "string",
+                        "format": "uri",
+                        "maxLength": 2048,
+                        "description": "Optional MCP resource indicator. Must equal the configured MCP resource URI and remain identical at code and refresh exchange. Omit for existing REST-only grants. MCP permits identity.read, offline_access and the read-only scopes advertised by its issuer metadata. Newly requested scopes require client approval and fresh user consent; existing grants are never widened automatically."
+                      }
+                    },
+                    "required": [
+                      "grant_type",
+                      "client_id",
+                      "code",
+                      "redirect_uri",
+                      "code_verifier",
+                      "resource"
+                    ],
+                    "additionalProperties": false
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "grant_type": {
+                        "type": "string",
+                        "const": "refresh_token"
+                      },
+                      "client_id": {
+                        "type": "string"
+                      },
+                      "refresh_token": {
+                        "type": "string"
+                      },
+                      "scope": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 512,
+                        "description": "Space-separated explicit registered personal scopes. No empty scope. offline_access alone is invalid."
+                      },
+                      "resource": {
+                        "type": "string",
+                        "format": "uri",
+                        "maxLength": 2048,
+                        "description": "Optional MCP resource indicator. Must equal the configured MCP resource URI and remain identical at code and refresh exchange. Omit for existing REST-only grants. MCP permits identity.read, offline_access and the read-only scopes advertised by its issuer metadata. Newly requested scopes require client approval and fresh user consent; existing grants are never widened automatically."
+                      }
+                    },
+                    "required": [
+                      "grant_type",
+                      "client_id",
+                      "refresh_token",
+                      "resource"
+                    ],
+                    "additionalProperties": false
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "x-fern-server-name": "protocol",
+        "x-fern-explorer": false
+      }
+    },
+    "/.well-known/oauth-authorization-server/oauth/mcp": {
+      "get": {
+        "operationId": "getMcpOAuthMetadata",
+        "summary": "MCP: Read OAuth authorization-server metadata",
+        "description": "Authorization server metadata for the separate MCP issuer `https://bibleit.app/oauth/mcp`; resource-aware authorization/token endpoints, public clients with S256, identity.read, optional offline_access and the read-only Scripture scopes translation.list, translation.get, translation.read and translation.search, plus personal Reader Live scopes live.list and live.get. Canonical RFC8414 discovery path for the path-based issuer.\n\n**Response headers:**\n\n- `Cache-Control` (200).\n- `Referrer-Policy` (200).\n- `Pragma` (200).",
+        "tags": [
+          "OAuth"
+        ],
+        "servers": [
+          {
+            "url": "https://bibleit.app"
+          }
+        ],
+        "security": [],
+        "x-oauth-protocol": true,
+        "responses": {
+          "200": {
+            "description": "Authorization-server metadata.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-referrer"
+                }
+              },
+              "Pragma": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-cache"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/McpOAuthMetadata"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "OAuth protocol error. Unknown/duplicate/oversized parameters, invalid credentials, policy denial or rate limiting.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OAuthResourceError"
+                }
+              }
+            }
+          }
+        },
+        "x-fern-server-name": "protocol",
+        "x-fern-explorer": false
+      }
+    },
+    "/settings/applications": {
+      "get": {
+        "operationId": "getApplicationsSettingsPage",
+        "summary": "Review applications in Settings",
+        "description": "Existing browser session; unauthenticated users are redirected to login. Lists all of this user’s current OAuth authorizations, with approved capabilities/scopes, authorization expiry and CSRF-protected disconnect forms in the normal Settings shell. MCP account access guidance is secondary and does not restrict management of other applications. No token hashes, secrets or last-used telemetry.\n\n**Response headers:**\n\n- `Cache-Control` (200, 303): no-store.\n- `Referrer-Policy`: same-origin for the documented 200 page; no-referrer for redirects.\n- `Location` (303): login when unauthenticated.",
+        "tags": [
+          "OAuth"
+        ],
+        "servers": [
+          {
+            "url": "https://bibleit.app"
+          }
+        ],
+        "security": [
+          {
+            "browserSession": []
+          },
+          {}
+        ],
+        "x-oauth-protocol": true,
+        "responses": {
+          "200": {
+            "description": "Escaped server-rendered consent/connected-app page. No token is issued by GET.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "type": "string",
+                  "const": "same-origin"
+                },
+                "description": "Native consent form Origin proof; never sends referrers cross-origin."
+              }
+            },
+            "content": {
+              "text/html; charset=utf-8": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "303": {
+            "description": "Validated redirect: existing login/continuation, registered consent result or same-origin settings. Code/denial responses echo state and include iss.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-referrer"
+                }
+              },
+              "Location": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "OAuth protocol error. Unknown/duplicate/oversized parameters, invalid credentials, policy denial or rate limiting.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OAuthError"
+                }
+              }
+            }
+          }
+        },
+        "x-fern-server-name": "protocol",
+        "x-fern-explorer": false
+      },
+      "post": {
+        "operationId": "disconnectSettingsApplication",
+        "summary": "Disconnect an authorized application",
+        "description": "Reuses browser-session-owned OAuth grant revocation with exact same-origin and CSRF validation. Disconnecting revokes only the selected authorization and its access/refresh tokens, then redirects to Settings Applications with one-time success feedback. Browser sign-out is separate.\n\n**Response headers:**\n\n- `Cache-Control` (303): no-store.\n- `Referrer-Policy` (303): no-referrer.\n- `Location` (303): Settings Applications after successful revocation.\n\n**Additional request headers:**\n\n- `Origin` (required): Must exactly match the Bibleit origin; the browser-session-bound CSRF form value is also required.",
+        "tags": [
+          "OAuth"
+        ],
+        "servers": [
+          {
+            "url": "https://bibleit.app"
+          }
+        ],
+        "security": [
+          {
+            "browserSession": []
+          }
+        ],
+        "x-oauth-protocol": true,
+        "responses": {
+          "303": {
+            "description": "Validated redirect: existing login/continuation, registered consent result or same-origin settings. Code/denial responses echo state and include iss.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-referrer"
+                }
+              },
+              "Location": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "OAuth protocol error. Unknown/duplicate/oversized parameters, invalid credentials, policy denial or rate limiting.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OAuthError"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "csrf": {
+                    "type": "string"
+                  },
+                  "grant_id": {
+                    "type": "string",
+                    "pattern": "^[a-f0-9]{32}$"
+                  }
+                },
+                "required": [
+                  "csrf",
+                  "grant_id"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "Origin",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uri"
+            }
+          }
+        ],
+        "x-fern-server-name": "protocol",
+        "x-fern-explorer": false
       }
     }
   },
@@ -11672,7 +12566,7 @@
           "scopes": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/OAuthScope"
+              "$ref": "#/components/schemas/OAuthGrantedScope"
             }
           },
           "expires_at": {
@@ -12577,6 +13471,282 @@
         ],
         "additionalProperties": false,
         "description": "One bounded book page, always paginated: default 50, maximum 500 verses, and at most 3MiB serialized JSON including metadata. The byte budget can return fewer verses with nonnull next_cursor. Stable chapter/verse order; no totals or unbounded mode."
+      },
+      "McpOAuthProbe": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "display_name": {
+            "type": "string"
+          },
+          "handle": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "personal_account_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "client_id": {
+            "type": "string"
+          },
+          "scopes": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "expires_at": {
+            "type": "integer"
+          },
+          "resource": {
+            "type": "string",
+            "format": "uri"
+          },
+          "permissions": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "mcp.get",
+                "mcp.list",
+                "mcp.call"
+              ]
+            },
+            "uniqueItems": true,
+            "description": "Fresh actor MCP entitlement, separate from consented OAuth scopes. Missing mcp.get denies the request; list/call are enforced by the adapter."
+          },
+          "domain_permissions": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "translation.list",
+                "translation.get",
+                "translation.read",
+                "translation.search"
+              ]
+            },
+            "uniqueItems": true,
+            "maxItems": 4,
+            "description": "Current Scripture authority intersected with the grant's approved scopes. Absent in older issuer responses; clients must deny domain tools when absent. This never expands an existing grant."
+          },
+          "live_permissions": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "live.list",
+                "live.get",
+                "live.create",
+                "live.queue.stage",
+                "live.rename"
+              ]
+            },
+            "uniqueItems": true,
+            "maxItems": 5,
+            "description": "Current personal Reader Live authority intersected with the grant’s approved scopes, including separately consented stopped creation and quiet queue staging. Absent in older issuer responses; clients must deny Live tools when absent. Existing read-only grants never acquire write scopes automatically."
+          }
+        },
+        "required": [
+          "id",
+          "display_name",
+          "handle",
+          "personal_account_id",
+          "client_id",
+          "scopes",
+          "expires_at",
+          "resource",
+          "permissions"
+        ],
+        "description": "Issuer validation result for a valid identity.read MCP-audience token. No token secrets or email. Domain permissions are optional for compatibility with older issuer versions."
+      },
+      "OAuthResourceError": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "error": {
+            "type": "string",
+            "enum": [
+              "invalid_request",
+              "invalid_client",
+              "invalid_grant",
+              "invalid_scope",
+              "invalid_redirect_uri",
+              "unsupported_response_type",
+              "unsupported_grant_type",
+              "access_denied",
+              "slow_down",
+              "temporarily_unavailable",
+              "invalid_target"
+            ]
+          }
+        },
+        "required": [
+          "error"
+        ],
+        "description": "OAuth errors for resource-aware authorization and token exchange. invalid_target applies to the opt-in MCP audience extension."
+      },
+      "McpOAuthProbeError": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "error": {
+            "type": "string",
+            "enum": [
+              "invalid_request",
+              "invalid_client",
+              "invalid_grant",
+              "invalid_scope",
+              "invalid_redirect_uri",
+              "unsupported_response_type",
+              "unsupported_grant_type",
+              "access_denied",
+              "slow_down",
+              "temporarily_unavailable",
+              "invalid_token",
+              "insufficient_scope"
+            ]
+          }
+        },
+        "required": [
+          "error"
+        ],
+        "description": "MCP issuer probe error. Authentication failures are invalid_token; missing identity.read is insufficient_scope."
+      },
+      "McpOAuthScope": {
+        "type": "string",
+        "enum": [
+          "identity.read",
+          "offline_access",
+          "translation.list",
+          "translation.get",
+          "translation.read",
+          "translation.search",
+          "live.list",
+          "live.get",
+          "live.create",
+          "live.queue.stage",
+          "live.rename"
+        ],
+        "description": "Scopes advertised by the MCP resource issuer. Preparation scopes require explicit client approval and new consent; existing grants remain unchanged. This is separate from ordinary REST authorization scopes."
+      },
+      "OAuthGrantedScope": {
+        "type": "string",
+        "enum": [
+          "identity.read",
+          "offline_access",
+          "translation.list",
+          "translation.get",
+          "translation.read",
+          "translation.search",
+          "live.list",
+          "live.get",
+          "live.create",
+          "live.update",
+          "live.delete",
+          "live.queue.stage",
+          "live.rename"
+        ],
+        "description": "Response-only scope vocabulary for an owner inspecting existing REST or MCP grants. Does not allow MCP-only scopes in ordinary REST authorization requests."
+      },
+      "McpOAuthMetadata": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "issuer": {
+            "type": "string",
+            "format": "uri"
+          },
+          "authorization_endpoint": {
+            "type": "string",
+            "format": "uri"
+          },
+          "token_endpoint": {
+            "type": "string",
+            "format": "uri"
+          },
+          "revocation_endpoint": {
+            "type": "string",
+            "format": "uri"
+          },
+          "response_types_supported": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "code"
+              ]
+            }
+          },
+          "grant_types_supported": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "authorization_code",
+                "refresh_token"
+              ]
+            }
+          },
+          "token_endpoint_auth_methods_supported": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "none"
+              ]
+            }
+          },
+          "revocation_endpoint_auth_methods_supported": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "none"
+              ]
+            }
+          },
+          "code_challenge_methods_supported": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "S256"
+              ]
+            }
+          },
+          "scopes_supported": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/McpOAuthScope"
+            }
+          },
+          "authorization_response_iss_parameter_supported": {
+            "type": "boolean",
+            "const": true
+          }
+        },
+        "required": [
+          "issuer",
+          "authorization_endpoint",
+          "token_endpoint",
+          "revocation_endpoint",
+          "response_types_supported",
+          "grant_types_supported",
+          "token_endpoint_auth_methods_supported",
+          "revocation_endpoint_auth_methods_supported",
+          "code_challenge_methods_supported",
+          "scopes_supported",
+          "authorization_response_iss_parameter_supported"
+        ],
+        "description": "MCP resource issuer capability metadata. Its advertised scope vocabulary can extend independently of ordinary REST issuer/request scopes; newly advertised write scopes require explicit consent and current domain authority."
       }
     },
     "responses": {

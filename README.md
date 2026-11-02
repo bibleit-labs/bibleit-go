@@ -17,7 +17,7 @@ go get github.com/bibleit-labs/bibleit-go
 
 ## Resource client
 
-Import `github.com/bibleit-labs/bibleit-go`. The client includes all 88 REST
+Import `github.com/bibleit-labs/bibleit-go`. The client includes all 89 REST
 operations, generated schemas, response metadata, conditional writes, binary
 streams, versioned Live event polling and lazy whole-book page iterators. See [REST usage](docs/api.md) and
 the [runnable reading example](examples/read/main.go).
