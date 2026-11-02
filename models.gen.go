@@ -826,6 +826,264 @@ func (e LiveSubscriberAccess) Valid() bool {
 	}
 }
 
+// Defines values for McpOAuthMetadataAuthorizationResponseIssParameterSupported.
+const (
+	McpOAuthMetadataAuthorizationResponseIssParameterSupportedTrue McpOAuthMetadataAuthorizationResponseIssParameterSupported = true
+)
+
+// Valid indicates whether the value is a known member of the McpOAuthMetadataAuthorizationResponseIssParameterSupported enum.
+func (e McpOAuthMetadataAuthorizationResponseIssParameterSupported) Valid() bool {
+	switch e {
+	case McpOAuthMetadataAuthorizationResponseIssParameterSupportedTrue:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for McpOAuthMetadataCodeChallengeMethodsSupported.
+const (
+	McpOAuthMetadataCodeChallengeMethodsSupportedS256 McpOAuthMetadataCodeChallengeMethodsSupported = "S256"
+)
+
+// Valid indicates whether the value is a known member of the McpOAuthMetadataCodeChallengeMethodsSupported enum.
+func (e McpOAuthMetadataCodeChallengeMethodsSupported) Valid() bool {
+	switch e {
+	case McpOAuthMetadataCodeChallengeMethodsSupportedS256:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for McpOAuthMetadataGrantTypesSupported.
+const (
+	McpOAuthMetadataGrantTypesSupportedAuthorizationCode McpOAuthMetadataGrantTypesSupported = "authorization_code"
+	McpOAuthMetadataGrantTypesSupportedRefreshToken      McpOAuthMetadataGrantTypesSupported = "refresh_token"
+)
+
+// Valid indicates whether the value is a known member of the McpOAuthMetadataGrantTypesSupported enum.
+func (e McpOAuthMetadataGrantTypesSupported) Valid() bool {
+	switch e {
+	case McpOAuthMetadataGrantTypesSupportedAuthorizationCode:
+		return true
+	case McpOAuthMetadataGrantTypesSupportedRefreshToken:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for McpOAuthMetadataResponseTypesSupported.
+const (
+	McpOAuthMetadataResponseTypesSupportedCode McpOAuthMetadataResponseTypesSupported = "code"
+)
+
+// Valid indicates whether the value is a known member of the McpOAuthMetadataResponseTypesSupported enum.
+func (e McpOAuthMetadataResponseTypesSupported) Valid() bool {
+	switch e {
+	case McpOAuthMetadataResponseTypesSupportedCode:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for McpOAuthMetadataRevocationEndpointAuthMethodsSupported.
+const (
+	McpOAuthMetadataRevocationEndpointAuthMethodsSupportedNone McpOAuthMetadataRevocationEndpointAuthMethodsSupported = "none"
+)
+
+// Valid indicates whether the value is a known member of the McpOAuthMetadataRevocationEndpointAuthMethodsSupported enum.
+func (e McpOAuthMetadataRevocationEndpointAuthMethodsSupported) Valid() bool {
+	switch e {
+	case McpOAuthMetadataRevocationEndpointAuthMethodsSupportedNone:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for McpOAuthMetadataTokenEndpointAuthMethodsSupported.
+const (
+	McpOAuthMetadataTokenEndpointAuthMethodsSupportedNone McpOAuthMetadataTokenEndpointAuthMethodsSupported = "none"
+)
+
+// Valid indicates whether the value is a known member of the McpOAuthMetadataTokenEndpointAuthMethodsSupported enum.
+func (e McpOAuthMetadataTokenEndpointAuthMethodsSupported) Valid() bool {
+	switch e {
+	case McpOAuthMetadataTokenEndpointAuthMethodsSupportedNone:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for McpOAuthProbeDomainPermissions.
+const (
+	McpOAuthProbeDomainPermissionsTranslationGet    McpOAuthProbeDomainPermissions = "translation.get"
+	McpOAuthProbeDomainPermissionsTranslationList   McpOAuthProbeDomainPermissions = "translation.list"
+	McpOAuthProbeDomainPermissionsTranslationRead   McpOAuthProbeDomainPermissions = "translation.read"
+	McpOAuthProbeDomainPermissionsTranslationSearch McpOAuthProbeDomainPermissions = "translation.search"
+)
+
+// Valid indicates whether the value is a known member of the McpOAuthProbeDomainPermissions enum.
+func (e McpOAuthProbeDomainPermissions) Valid() bool {
+	switch e {
+	case McpOAuthProbeDomainPermissionsTranslationGet:
+		return true
+	case McpOAuthProbeDomainPermissionsTranslationList:
+		return true
+	case McpOAuthProbeDomainPermissionsTranslationRead:
+		return true
+	case McpOAuthProbeDomainPermissionsTranslationSearch:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for McpOAuthProbeLivePermissions.
+const (
+	McpOAuthProbeLivePermissionsLiveCreate     McpOAuthProbeLivePermissions = "live.create"
+	McpOAuthProbeLivePermissionsLiveGet        McpOAuthProbeLivePermissions = "live.get"
+	McpOAuthProbeLivePermissionsLiveList       McpOAuthProbeLivePermissions = "live.list"
+	McpOAuthProbeLivePermissionsLiveQueueStage McpOAuthProbeLivePermissions = "live.queue.stage"
+	McpOAuthProbeLivePermissionsLiveRename     McpOAuthProbeLivePermissions = "live.rename"
+)
+
+// Valid indicates whether the value is a known member of the McpOAuthProbeLivePermissions enum.
+func (e McpOAuthProbeLivePermissions) Valid() bool {
+	switch e {
+	case McpOAuthProbeLivePermissionsLiveCreate:
+		return true
+	case McpOAuthProbeLivePermissionsLiveGet:
+		return true
+	case McpOAuthProbeLivePermissionsLiveList:
+		return true
+	case McpOAuthProbeLivePermissionsLiveQueueStage:
+		return true
+	case McpOAuthProbeLivePermissionsLiveRename:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for McpOAuthProbePermissions.
+const (
+	McpCall McpOAuthProbePermissions = "mcp.call"
+	McpGet  McpOAuthProbePermissions = "mcp.get"
+	McpList McpOAuthProbePermissions = "mcp.list"
+)
+
+// Valid indicates whether the value is a known member of the McpOAuthProbePermissions enum.
+func (e McpOAuthProbePermissions) Valid() bool {
+	switch e {
+	case McpCall:
+		return true
+	case McpGet:
+		return true
+	case McpList:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for McpOAuthProbeErrorError.
+const (
+	McpOAuthProbeErrorErrorAccessDenied            McpOAuthProbeErrorError = "access_denied"
+	McpOAuthProbeErrorErrorInsufficientScope       McpOAuthProbeErrorError = "insufficient_scope"
+	McpOAuthProbeErrorErrorInvalidClient           McpOAuthProbeErrorError = "invalid_client"
+	McpOAuthProbeErrorErrorInvalidGrant            McpOAuthProbeErrorError = "invalid_grant"
+	McpOAuthProbeErrorErrorInvalidRedirectURI      McpOAuthProbeErrorError = "invalid_redirect_uri"
+	McpOAuthProbeErrorErrorInvalidRequest          McpOAuthProbeErrorError = "invalid_request"
+	McpOAuthProbeErrorErrorInvalidScope            McpOAuthProbeErrorError = "invalid_scope"
+	McpOAuthProbeErrorErrorInvalidToken            McpOAuthProbeErrorError = "invalid_token"
+	McpOAuthProbeErrorErrorSlowDown                McpOAuthProbeErrorError = "slow_down"
+	McpOAuthProbeErrorErrorTemporarilyUnavailable  McpOAuthProbeErrorError = "temporarily_unavailable"
+	McpOAuthProbeErrorErrorUnsupportedGrantType    McpOAuthProbeErrorError = "unsupported_grant_type"
+	McpOAuthProbeErrorErrorUnsupportedResponseType McpOAuthProbeErrorError = "unsupported_response_type"
+)
+
+// Valid indicates whether the value is a known member of the McpOAuthProbeErrorError enum.
+func (e McpOAuthProbeErrorError) Valid() bool {
+	switch e {
+	case McpOAuthProbeErrorErrorAccessDenied:
+		return true
+	case McpOAuthProbeErrorErrorInsufficientScope:
+		return true
+	case McpOAuthProbeErrorErrorInvalidClient:
+		return true
+	case McpOAuthProbeErrorErrorInvalidGrant:
+		return true
+	case McpOAuthProbeErrorErrorInvalidRedirectURI:
+		return true
+	case McpOAuthProbeErrorErrorInvalidRequest:
+		return true
+	case McpOAuthProbeErrorErrorInvalidScope:
+		return true
+	case McpOAuthProbeErrorErrorInvalidToken:
+		return true
+	case McpOAuthProbeErrorErrorSlowDown:
+		return true
+	case McpOAuthProbeErrorErrorTemporarilyUnavailable:
+		return true
+	case McpOAuthProbeErrorErrorUnsupportedGrantType:
+		return true
+	case McpOAuthProbeErrorErrorUnsupportedResponseType:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for McpOAuthScope.
+const (
+	McpOAuthScopeIdentityRead      McpOAuthScope = "identity.read"
+	McpOAuthScopeLiveCreate        McpOAuthScope = "live.create"
+	McpOAuthScopeLiveGet           McpOAuthScope = "live.get"
+	McpOAuthScopeLiveList          McpOAuthScope = "live.list"
+	McpOAuthScopeLiveQueueStage    McpOAuthScope = "live.queue.stage"
+	McpOAuthScopeLiveRename        McpOAuthScope = "live.rename"
+	McpOAuthScopeOfflineAccess     McpOAuthScope = "offline_access"
+	McpOAuthScopeTranslationGet    McpOAuthScope = "translation.get"
+	McpOAuthScopeTranslationList   McpOAuthScope = "translation.list"
+	McpOAuthScopeTranslationRead   McpOAuthScope = "translation.read"
+	McpOAuthScopeTranslationSearch McpOAuthScope = "translation.search"
+)
+
+// Valid indicates whether the value is a known member of the McpOAuthScope enum.
+func (e McpOAuthScope) Valid() bool {
+	switch e {
+	case McpOAuthScopeIdentityRead:
+		return true
+	case McpOAuthScopeLiveCreate:
+		return true
+	case McpOAuthScopeLiveGet:
+		return true
+	case McpOAuthScopeLiveList:
+		return true
+	case McpOAuthScopeLiveQueueStage:
+		return true
+	case McpOAuthScopeLiveRename:
+		return true
+	case McpOAuthScopeOfflineAccess:
+		return true
+	case McpOAuthScopeTranslationGet:
+		return true
+	case McpOAuthScopeTranslationList:
+		return true
+	case McpOAuthScopeTranslationRead:
+		return true
+	case McpOAuthScopeTranslationSearch:
+		return true
+	default:
+		return false
+	}
+}
+
 // Defines values for MembershipRole.
 const (
 	MembershipRoleAdmin    MembershipRole = "admin"
@@ -873,40 +1131,91 @@ func (e MembershipPatchRole) Valid() bool {
 
 // Defines values for OAuthErrorError.
 const (
-	AccessDenied            OAuthErrorError = "access_denied"
-	InvalidClient           OAuthErrorError = "invalid_client"
-	InvalidGrant            OAuthErrorError = "invalid_grant"
-	InvalidRedirectURI      OAuthErrorError = "invalid_redirect_uri"
-	InvalidRequest          OAuthErrorError = "invalid_request"
-	InvalidScope            OAuthErrorError = "invalid_scope"
-	SlowDown                OAuthErrorError = "slow_down"
-	TemporarilyUnavailable  OAuthErrorError = "temporarily_unavailable"
-	UnsupportedGrantType    OAuthErrorError = "unsupported_grant_type"
-	UnsupportedResponseType OAuthErrorError = "unsupported_response_type"
+	OAuthErrorErrorAccessDenied            OAuthErrorError = "access_denied"
+	OAuthErrorErrorInvalidClient           OAuthErrorError = "invalid_client"
+	OAuthErrorErrorInvalidGrant            OAuthErrorError = "invalid_grant"
+	OAuthErrorErrorInvalidRedirectURI      OAuthErrorError = "invalid_redirect_uri"
+	OAuthErrorErrorInvalidRequest          OAuthErrorError = "invalid_request"
+	OAuthErrorErrorInvalidScope            OAuthErrorError = "invalid_scope"
+	OAuthErrorErrorSlowDown                OAuthErrorError = "slow_down"
+	OAuthErrorErrorTemporarilyUnavailable  OAuthErrorError = "temporarily_unavailable"
+	OAuthErrorErrorUnsupportedGrantType    OAuthErrorError = "unsupported_grant_type"
+	OAuthErrorErrorUnsupportedResponseType OAuthErrorError = "unsupported_response_type"
 )
 
 // Valid indicates whether the value is a known member of the OAuthErrorError enum.
 func (e OAuthErrorError) Valid() bool {
 	switch e {
-	case AccessDenied:
+	case OAuthErrorErrorAccessDenied:
 		return true
-	case InvalidClient:
+	case OAuthErrorErrorInvalidClient:
 		return true
-	case InvalidGrant:
+	case OAuthErrorErrorInvalidGrant:
 		return true
-	case InvalidRedirectURI:
+	case OAuthErrorErrorInvalidRedirectURI:
 		return true
-	case InvalidRequest:
+	case OAuthErrorErrorInvalidRequest:
 		return true
-	case InvalidScope:
+	case OAuthErrorErrorInvalidScope:
 		return true
-	case SlowDown:
+	case OAuthErrorErrorSlowDown:
 		return true
-	case TemporarilyUnavailable:
+	case OAuthErrorErrorTemporarilyUnavailable:
 		return true
-	case UnsupportedGrantType:
+	case OAuthErrorErrorUnsupportedGrantType:
 		return true
-	case UnsupportedResponseType:
+	case OAuthErrorErrorUnsupportedResponseType:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for OAuthGrantedScope.
+const (
+	OAuthGrantedScopeIdentityRead      OAuthGrantedScope = "identity.read"
+	OAuthGrantedScopeLiveCreate        OAuthGrantedScope = "live.create"
+	OAuthGrantedScopeLiveDelete        OAuthGrantedScope = "live.delete"
+	OAuthGrantedScopeLiveGet           OAuthGrantedScope = "live.get"
+	OAuthGrantedScopeLiveList          OAuthGrantedScope = "live.list"
+	OAuthGrantedScopeLiveQueueStage    OAuthGrantedScope = "live.queue.stage"
+	OAuthGrantedScopeLiveRename        OAuthGrantedScope = "live.rename"
+	OAuthGrantedScopeLiveUpdate        OAuthGrantedScope = "live.update"
+	OAuthGrantedScopeOfflineAccess     OAuthGrantedScope = "offline_access"
+	OAuthGrantedScopeTranslationGet    OAuthGrantedScope = "translation.get"
+	OAuthGrantedScopeTranslationList   OAuthGrantedScope = "translation.list"
+	OAuthGrantedScopeTranslationRead   OAuthGrantedScope = "translation.read"
+	OAuthGrantedScopeTranslationSearch OAuthGrantedScope = "translation.search"
+)
+
+// Valid indicates whether the value is a known member of the OAuthGrantedScope enum.
+func (e OAuthGrantedScope) Valid() bool {
+	switch e {
+	case OAuthGrantedScopeIdentityRead:
+		return true
+	case OAuthGrantedScopeLiveCreate:
+		return true
+	case OAuthGrantedScopeLiveDelete:
+		return true
+	case OAuthGrantedScopeLiveGet:
+		return true
+	case OAuthGrantedScopeLiveList:
+		return true
+	case OAuthGrantedScopeLiveQueueStage:
+		return true
+	case OAuthGrantedScopeLiveRename:
+		return true
+	case OAuthGrantedScopeLiveUpdate:
+		return true
+	case OAuthGrantedScopeOfflineAccess:
+		return true
+	case OAuthGrantedScopeTranslationGet:
+		return true
+	case OAuthGrantedScopeTranslationList:
+		return true
+	case OAuthGrantedScopeTranslationRead:
+		return true
+	case OAuthGrantedScopeTranslationSearch:
 		return true
 	default:
 		return false
@@ -915,13 +1224,13 @@ func (e OAuthErrorError) Valid() bool {
 
 // Defines values for OAuthMetadataAuthorizationResponseIssParameterSupported.
 const (
-	True OAuthMetadataAuthorizationResponseIssParameterSupported = true
+	OAuthMetadataAuthorizationResponseIssParameterSupportedTrue OAuthMetadataAuthorizationResponseIssParameterSupported = true
 )
 
 // Valid indicates whether the value is a known member of the OAuthMetadataAuthorizationResponseIssParameterSupported enum.
 func (e OAuthMetadataAuthorizationResponseIssParameterSupported) Valid() bool {
 	switch e {
-	case True:
+	case OAuthMetadataAuthorizationResponseIssParameterSupportedTrue:
 		return true
 	default:
 		return false
@@ -1045,6 +1354,51 @@ const (
 func (e OAuthMetadataTokenEndpointAuthMethodsSupported) Valid() bool {
 	switch e {
 	case OAuthMetadataTokenEndpointAuthMethodsSupportedNone:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for OAuthResourceErrorError.
+const (
+	OAuthResourceErrorErrorAccessDenied            OAuthResourceErrorError = "access_denied"
+	OAuthResourceErrorErrorInvalidClient           OAuthResourceErrorError = "invalid_client"
+	OAuthResourceErrorErrorInvalidGrant            OAuthResourceErrorError = "invalid_grant"
+	OAuthResourceErrorErrorInvalidRedirectURI      OAuthResourceErrorError = "invalid_redirect_uri"
+	OAuthResourceErrorErrorInvalidRequest          OAuthResourceErrorError = "invalid_request"
+	OAuthResourceErrorErrorInvalidScope            OAuthResourceErrorError = "invalid_scope"
+	OAuthResourceErrorErrorInvalidTarget           OAuthResourceErrorError = "invalid_target"
+	OAuthResourceErrorErrorSlowDown                OAuthResourceErrorError = "slow_down"
+	OAuthResourceErrorErrorTemporarilyUnavailable  OAuthResourceErrorError = "temporarily_unavailable"
+	OAuthResourceErrorErrorUnsupportedGrantType    OAuthResourceErrorError = "unsupported_grant_type"
+	OAuthResourceErrorErrorUnsupportedResponseType OAuthResourceErrorError = "unsupported_response_type"
+)
+
+// Valid indicates whether the value is a known member of the OAuthResourceErrorError enum.
+func (e OAuthResourceErrorError) Valid() bool {
+	switch e {
+	case OAuthResourceErrorErrorAccessDenied:
+		return true
+	case OAuthResourceErrorErrorInvalidClient:
+		return true
+	case OAuthResourceErrorErrorInvalidGrant:
+		return true
+	case OAuthResourceErrorErrorInvalidRedirectURI:
+		return true
+	case OAuthResourceErrorErrorInvalidRequest:
+		return true
+	case OAuthResourceErrorErrorInvalidScope:
+		return true
+	case OAuthResourceErrorErrorInvalidTarget:
+		return true
+	case OAuthResourceErrorErrorSlowDown:
+		return true
+	case OAuthResourceErrorErrorTemporarilyUnavailable:
+		return true
+	case OAuthResourceErrorErrorUnsupportedGrantType:
+		return true
+	case OAuthResourceErrorErrorUnsupportedResponseType:
 		return true
 	default:
 		return false
@@ -1827,16 +2181,109 @@ func (e AuthorizeOAuthParamsCodeChallengeMethod) Valid() bool {
 
 // Defines values for DecideOAuthConsentFormdataBodyDecision.
 const (
-	Allow DecideOAuthConsentFormdataBodyDecision = "allow"
-	Deny  DecideOAuthConsentFormdataBodyDecision = "deny"
+	DecideOAuthConsentFormdataBodyDecisionAllow DecideOAuthConsentFormdataBodyDecision = "allow"
+	DecideOAuthConsentFormdataBodyDecisionDeny  DecideOAuthConsentFormdataBodyDecision = "deny"
 )
 
 // Valid indicates whether the value is a known member of the DecideOAuthConsentFormdataBodyDecision enum.
 func (e DecideOAuthConsentFormdataBodyDecision) Valid() bool {
 	switch e {
-	case Allow:
+	case DecideOAuthConsentFormdataBodyDecisionAllow:
 		return true
-	case Deny:
+	case DecideOAuthConsentFormdataBodyDecisionDeny:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for AuthorizeMcpOAuthParamsResponseType.
+const (
+	AuthorizeMcpOAuthParamsResponseTypeCode AuthorizeMcpOAuthParamsResponseType = "code"
+)
+
+// Valid indicates whether the value is a known member of the AuthorizeMcpOAuthParamsResponseType enum.
+func (e AuthorizeMcpOAuthParamsResponseType) Valid() bool {
+	switch e {
+	case AuthorizeMcpOAuthParamsResponseTypeCode:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for AuthorizeMcpOAuthParamsCodeChallengeMethod.
+const (
+	AuthorizeMcpOAuthParamsCodeChallengeMethodS256 AuthorizeMcpOAuthParamsCodeChallengeMethod = "S256"
+)
+
+// Valid indicates whether the value is a known member of the AuthorizeMcpOAuthParamsCodeChallengeMethod enum.
+func (e AuthorizeMcpOAuthParamsCodeChallengeMethod) Valid() bool {
+	switch e {
+	case AuthorizeMcpOAuthParamsCodeChallengeMethodS256:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for AuthorizeMcpOAuthParamsPrompt.
+const (
+	Consent AuthorizeMcpOAuthParamsPrompt = "consent"
+)
+
+// Valid indicates whether the value is a known member of the AuthorizeMcpOAuthParamsPrompt enum.
+func (e AuthorizeMcpOAuthParamsPrompt) Valid() bool {
+	switch e {
+	case Consent:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for DecideMcpOAuthFormdataBodyDecision.
+const (
+	DecideMcpOAuthFormdataBodyDecisionAllow DecideMcpOAuthFormdataBodyDecision = "allow"
+	DecideMcpOAuthFormdataBodyDecisionDeny  DecideMcpOAuthFormdataBodyDecision = "deny"
+)
+
+// Valid indicates whether the value is a known member of the DecideMcpOAuthFormdataBodyDecision enum.
+func (e DecideMcpOAuthFormdataBodyDecision) Valid() bool {
+	switch e {
+	case DecideMcpOAuthFormdataBodyDecisionAllow:
+		return true
+	case DecideMcpOAuthFormdataBodyDecisionDeny:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for ExchangeMcpOAuthTokenFormdataBody0GrantType.
+const (
+	ExchangeMcpOAuthTokenFormdataBody0GrantTypeAuthorizationCode ExchangeMcpOAuthTokenFormdataBody0GrantType = "authorization_code"
+)
+
+// Valid indicates whether the value is a known member of the ExchangeMcpOAuthTokenFormdataBody0GrantType enum.
+func (e ExchangeMcpOAuthTokenFormdataBody0GrantType) Valid() bool {
+	switch e {
+	case ExchangeMcpOAuthTokenFormdataBody0GrantTypeAuthorizationCode:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for ExchangeMcpOAuthTokenFormdataBody1GrantType.
+const (
+	ExchangeMcpOAuthTokenFormdataBody1GrantTypeRefreshToken ExchangeMcpOAuthTokenFormdataBody1GrantType = "refresh_token"
+)
+
+// Valid indicates whether the value is a known member of the ExchangeMcpOAuthTokenFormdataBody1GrantType enum.
+func (e ExchangeMcpOAuthTokenFormdataBody1GrantType) Valid() bool {
+	switch e {
+	case ExchangeMcpOAuthTokenFormdataBody1GrantTypeRefreshToken:
 		return true
 	default:
 		return false
@@ -2607,6 +3054,80 @@ type LiveWorkspacePut struct {
 	OrganizationID string `json:"organization_id"`
 }
 
+// McpOAuthMetadata MCP resource issuer capability metadata. Its advertised scope vocabulary can extend independently of ordinary REST issuer/request scopes; newly advertised write scopes require explicit consent and current domain authority.
+type McpOAuthMetadata struct {
+	AuthorizationEndpoint                      string                                                     `json:"authorization_endpoint"`
+	AuthorizationResponseIssParameterSupported McpOAuthMetadataAuthorizationResponseIssParameterSupported `json:"authorization_response_iss_parameter_supported"`
+	CodeChallengeMethodsSupported              []McpOAuthMetadataCodeChallengeMethodsSupported            `json:"code_challenge_methods_supported"`
+	GrantTypesSupported                        []McpOAuthMetadataGrantTypesSupported                      `json:"grant_types_supported"`
+	Issuer                                     string                                                     `json:"issuer"`
+	ResponseTypesSupported                     []McpOAuthMetadataResponseTypesSupported                   `json:"response_types_supported"`
+	RevocationEndpoint                         string                                                     `json:"revocation_endpoint"`
+	RevocationEndpointAuthMethodsSupported     []McpOAuthMetadataRevocationEndpointAuthMethodsSupported   `json:"revocation_endpoint_auth_methods_supported"`
+	ScopesSupported                            []McpOAuthScope                                            `json:"scopes_supported"`
+	TokenEndpoint                              string                                                     `json:"token_endpoint"`
+	TokenEndpointAuthMethodsSupported          []McpOAuthMetadataTokenEndpointAuthMethodsSupported        `json:"token_endpoint_auth_methods_supported"`
+}
+
+// McpOAuthMetadataAuthorizationResponseIssParameterSupported defines model for McpOAuthMetadata.AuthorizationResponseIssParameterSupported.
+type McpOAuthMetadataAuthorizationResponseIssParameterSupported bool
+
+// McpOAuthMetadataCodeChallengeMethodsSupported defines model for McpOAuthMetadata.CodeChallengeMethodsSupported.
+type McpOAuthMetadataCodeChallengeMethodsSupported string
+
+// McpOAuthMetadataGrantTypesSupported defines model for McpOAuthMetadata.GrantTypesSupported.
+type McpOAuthMetadataGrantTypesSupported string
+
+// McpOAuthMetadataResponseTypesSupported defines model for McpOAuthMetadata.ResponseTypesSupported.
+type McpOAuthMetadataResponseTypesSupported string
+
+// McpOAuthMetadataRevocationEndpointAuthMethodsSupported defines model for McpOAuthMetadata.RevocationEndpointAuthMethodsSupported.
+type McpOAuthMetadataRevocationEndpointAuthMethodsSupported string
+
+// McpOAuthMetadataTokenEndpointAuthMethodsSupported defines model for McpOAuthMetadata.TokenEndpointAuthMethodsSupported.
+type McpOAuthMetadataTokenEndpointAuthMethodsSupported string
+
+// McpOAuthProbe Issuer validation result for a valid identity.read MCP-audience token. No token secrets or email. Domain permissions are optional for compatibility with older issuer versions.
+type McpOAuthProbe struct {
+	ClientID    string `json:"client_id"`
+	DisplayName string `json:"display_name"`
+
+	// DomainPermissions Current Scripture authority intersected with the grant's approved scopes. Absent in older issuer responses; clients must deny domain tools when absent. This never expands an existing grant.
+	DomainPermissions []McpOAuthProbeDomainPermissions `json:"domain_permissions,omitempty"`
+	ExpiresAt         int64                            `json:"expires_at"`
+	Handle            *string                          `json:"handle"`
+	ID                string                           `json:"id"`
+
+	// LivePermissions Current personal Reader Live authority intersected with the grant’s approved scopes, including separately consented stopped creation and quiet queue staging. Absent in older issuer responses; clients must deny Live tools when absent. Existing read-only grants never acquire write scopes automatically.
+	LivePermissions []McpOAuthProbeLivePermissions `json:"live_permissions,omitempty"`
+
+	// Permissions Fresh actor MCP entitlement, separate from consented OAuth scopes. Missing mcp.get denies the request; list/call are enforced by the adapter.
+	Permissions       []McpOAuthProbePermissions `json:"permissions"`
+	PersonalAccountID string                     `json:"personal_account_id"`
+	Resource          string                     `json:"resource"`
+	Scopes            []string                   `json:"scopes"`
+}
+
+// McpOAuthProbeDomainPermissions defines model for McpOAuthProbe.DomainPermissions.
+type McpOAuthProbeDomainPermissions string
+
+// McpOAuthProbeLivePermissions defines model for McpOAuthProbe.LivePermissions.
+type McpOAuthProbeLivePermissions string
+
+// McpOAuthProbePermissions defines model for McpOAuthProbe.Permissions.
+type McpOAuthProbePermissions string
+
+// McpOAuthProbeError MCP issuer probe error. Authentication failures are invalid_token; missing identity.read is insufficient_scope.
+type McpOAuthProbeError struct {
+	Error McpOAuthProbeErrorError `json:"error"`
+}
+
+// McpOAuthProbeErrorError defines model for McpOAuthProbeError.Error.
+type McpOAuthProbeErrorError string
+
+// McpOAuthScope Scopes advertised by the MCP resource issuer. Preparation scopes require explicit client approval and new consent; existing grants remain unchanged. This is separate from ordinary REST authorization scopes.
+type McpOAuthScope string
+
 // Membership defines model for Membership.
 type Membership struct {
 	DisplayName    string         `json:"display_name"`
@@ -2643,17 +3164,20 @@ type OAuthErrorError string
 
 // OAuthGrant defines model for OAuthGrant.
 type OAuthGrant struct {
-	ClientID   string       `json:"client_id"`
-	ClientName string       `json:"client_name"`
-	ExpiresAt  int64        `json:"expires_at"`
-	ID         string       `json:"id"`
-	Scopes     []OAuthScope `json:"scopes"`
+	ClientID   string              `json:"client_id"`
+	ClientName string              `json:"client_name"`
+	ExpiresAt  int64               `json:"expires_at"`
+	ID         string              `json:"id"`
+	Scopes     []OAuthGrantedScope `json:"scopes"`
 }
 
 // OAuthGrantList defines model for OAuthGrantList.
 type OAuthGrantList struct {
 	Data []OAuthGrant `json:"data"`
 }
+
+// OAuthGrantedScope Response-only scope vocabulary for an owner inspecting existing REST or MCP grants. Does not allow MCP-only scopes in ordinary REST authorization requests.
+type OAuthGrantedScope string
 
 // OAuthMetadata defines model for OAuthMetadata.
 type OAuthMetadata struct {
@@ -2690,6 +3214,14 @@ type OAuthMetadataScopesSupported string
 
 // OAuthMetadataTokenEndpointAuthMethodsSupported defines model for OAuthMetadata.TokenEndpointAuthMethodsSupported.
 type OAuthMetadataTokenEndpointAuthMethodsSupported string
+
+// OAuthResourceError OAuth errors for resource-aware authorization and token exchange. invalid_target applies to the opt-in MCP audience extension.
+type OAuthResourceError struct {
+	Error OAuthResourceErrorError `json:"error"`
+}
+
+// OAuthResourceErrorError defines model for OAuthResourceError.Error.
+type OAuthResourceErrorError string
 
 // OAuthScope defines model for OAuthScope.
 type OAuthScope string
@@ -3535,6 +4067,12 @@ type ReplaceLiveQueueOrder200JSONResponseBody struct {
 	union json.RawMessage
 }
 
+// StageLiveQueueItemParams defines parameters for StageLiveQueueItem.
+type StageLiveQueueItemParams struct {
+	// IfMatch Shared Live sequence validator. Any relevant metadata, display, playback or workspace change invalidates it. Missing:428; stale:412; malformed, weak, wildcard or list:422.
+	IfMatch string `json:"If-Match"`
+}
+
 // DeleteLiveQueueItemParams defines parameters for DeleteLiveQueueItem.
 type DeleteLiveQueueItemParams struct {
 	// IfMatch Shared Live sequence validator. Any relevant metadata, display, playback or workspace change invalidates it. Missing:428; stale:412; malformed, weak, wildcard or list:422.
@@ -3608,6 +4146,91 @@ type DecideOAuthConsentParams struct {
 
 // DecideOAuthConsentFormdataBodyDecision defines parameters for DecideOAuthConsent.
 type DecideOAuthConsentFormdataBodyDecision string
+
+// AuthorizeMcpOAuthParams defines parameters for AuthorizeMcpOAuth.
+type AuthorizeMcpOAuthParams struct {
+	ResponseType        *AuthorizeMcpOAuthParamsResponseType        `form:"response_type,omitempty" json:"response_type,omitempty"`
+	ClientID            *string                                     `form:"client_id,omitempty" json:"client_id,omitempty"`
+	RedirectURI         *string                                     `form:"redirect_uri,omitempty" json:"redirect_uri,omitempty"`
+	Scope               *string                                     `form:"scope,omitempty" json:"scope,omitempty"`
+	State               *string                                     `form:"state,omitempty" json:"state,omitempty"`
+	CodeChallenge       *string                                     `form:"code_challenge,omitempty" json:"code_challenge,omitempty"`
+	CodeChallengeMethod *AuthorizeMcpOAuthParamsCodeChallengeMethod `form:"code_challenge_method,omitempty" json:"code_challenge_method,omitempty"`
+	Request             *string                                     `form:"request,omitempty" json:"request,omitempty"`
+	Resource            *string                                     `form:"resource,omitempty" json:"resource,omitempty"`
+
+	// Prompt Optional explicit consent request, used by Claude Code. Silent authorization is not supported.
+	Prompt *AuthorizeMcpOAuthParamsPrompt `form:"prompt,omitempty" json:"prompt,omitempty"`
+
+	// UILocales Optional bounded space-separated language tags, as sent by ChatGPT. Advisory only; consent currently retains its existing language.
+	UILocales *string `form:"ui_locales,omitempty" json:"ui_locales,omitempty"`
+}
+
+// AuthorizeMcpOAuthParamsResponseType defines parameters for AuthorizeMcpOAuth.
+type AuthorizeMcpOAuthParamsResponseType string
+
+// AuthorizeMcpOAuthParamsCodeChallengeMethod defines parameters for AuthorizeMcpOAuth.
+type AuthorizeMcpOAuthParamsCodeChallengeMethod string
+
+// AuthorizeMcpOAuthParamsPrompt defines parameters for AuthorizeMcpOAuth.
+type AuthorizeMcpOAuthParamsPrompt string
+
+// DecideMcpOAuthFormdataBody defines parameters for DecideMcpOAuth.
+type DecideMcpOAuthFormdataBody struct {
+	Csrf     string                             `form:"csrf" json:"csrf"`
+	Decision DecideMcpOAuthFormdataBodyDecision `form:"decision" json:"decision"`
+	Request  string                             `form:"request" json:"request"`
+}
+
+// DecideMcpOAuthParams defines parameters for DecideMcpOAuth.
+type DecideMcpOAuthParams struct {
+	Origin string `json:"Origin"`
+}
+
+// DecideMcpOAuthFormdataBodyDecision defines parameters for DecideMcpOAuth.
+type DecideMcpOAuthFormdataBodyDecision string
+
+// ExchangeMcpOAuthTokenFormdataBody defines parameters for ExchangeMcpOAuthToken.
+type ExchangeMcpOAuthTokenFormdataBody struct {
+	union json.RawMessage
+}
+
+// ExchangeMcpOAuthTokenFormdataBody0 defines parameters for ExchangeMcpOAuthToken.
+type ExchangeMcpOAuthTokenFormdataBody0 ExchangeMcpOAuthTokenFormdataBody_0
+
+// ExchangeMcpOAuthTokenFormdataBody0GrantType defines parameters for ExchangeMcpOAuthToken.
+type ExchangeMcpOAuthTokenFormdataBody0GrantType string
+
+// ExchangeMcpOAuthTokenFormdataBody_0 defines parameters for ExchangeMcpOAuthToken.
+type ExchangeMcpOAuthTokenFormdataBody_0 struct {
+	ClientID     string                                      `json:"client_id"`
+	Code         string                                      `json:"code"`
+	CodeVerifier string                                      `json:"code_verifier"`
+	GrantType    ExchangeMcpOAuthTokenFormdataBody0GrantType `json:"grant_type"`
+	RedirectURI  string                                      `json:"redirect_uri"`
+
+	// Resource Optional MCP resource indicator. Must equal the configured MCP resource URI and remain identical at code and refresh exchange. Omit for existing REST-only grants. MCP permits identity.read, offline_access and the read-only scopes advertised by its issuer metadata. Newly requested scopes require client approval and fresh user consent; existing grants are never widened automatically.
+	Resource string `json:"resource"`
+}
+
+// ExchangeMcpOAuthTokenFormdataBody1 defines parameters for ExchangeMcpOAuthToken.
+type ExchangeMcpOAuthTokenFormdataBody1 ExchangeMcpOAuthTokenFormdataBody_1
+
+// ExchangeMcpOAuthTokenFormdataBody1GrantType defines parameters for ExchangeMcpOAuthToken.
+type ExchangeMcpOAuthTokenFormdataBody1GrantType string
+
+// ExchangeMcpOAuthTokenFormdataBody_1 defines parameters for ExchangeMcpOAuthToken.
+type ExchangeMcpOAuthTokenFormdataBody_1 struct {
+	ClientID     string                                      `json:"client_id"`
+	GrantType    ExchangeMcpOAuthTokenFormdataBody1GrantType `json:"grant_type"`
+	RefreshToken string                                      `json:"refresh_token"`
+
+	// Resource Optional MCP resource indicator. Must equal the configured MCP resource URI and remain identical at code and refresh exchange. Omit for existing REST-only grants. MCP permits identity.read, offline_access and the read-only scopes advertised by its issuer metadata. Newly requested scopes require client approval and fresh user consent; existing grants are never widened automatically.
+	Resource string `json:"resource"`
+
+	// Scope Space-separated explicit registered personal scopes. No empty scope. offline_access alone is invalid.
+	Scope *string `json:"scope,omitempty"`
+}
 
 // RevokeOAuthTokenFormdataBody defines parameters for RevokeOAuthToken.
 type RevokeOAuthTokenFormdataBody struct {
@@ -3809,6 +4432,17 @@ type CreatePresentationExportParams struct {
 // DownloadPresentationExportJSONBody defines parameters for DownloadPresentationExport.
 type DownloadPresentationExportJSONBody = EmptyObject
 
+// DisconnectSettingsApplicationFormdataBody defines parameters for DisconnectSettingsApplication.
+type DisconnectSettingsApplicationFormdataBody struct {
+	Csrf    string `form:"csrf" json:"csrf"`
+	GrantID string `form:"grant_id" json:"grant_id"`
+}
+
+// DisconnectSettingsApplicationParams defines parameters for DisconnectSettingsApplication.
+type DisconnectSettingsApplicationParams struct {
+	Origin string `json:"Origin"`
+}
+
 // DisconnectOAuthAppFormdataBody defines parameters for DisconnectOAuthApp.
 type DisconnectOAuthAppFormdataBody struct {
 	Csrf    string `form:"csrf" json:"csrf"`
@@ -3863,6 +4497,9 @@ type CreateLiveQueueItemJSONRequestBody = CreateLiveQueueItem
 // ReplaceLiveQueueOrderJSONRequestBody defines body for ReplaceLiveQueueOrder for application/json ContentType.
 type ReplaceLiveQueueOrderJSONRequestBody = LiveQueueOrder
 
+// StageLiveQueueItemJSONRequestBody defines body for StageLiveQueueItem for application/json ContentType.
+type StageLiveQueueItemJSONRequestBody = CreateLiveQueueItem
+
 // UpdateLiveSettingsJSONRequestBody defines body for UpdateLiveSettings for application/json ContentType.
 type UpdateLiveSettingsJSONRequestBody = LiveSettingsPatch
 
@@ -3877,6 +4514,12 @@ type MoveLiveWorkspaceJSONRequestBody = LiveWorkspacePut
 
 // DecideOAuthConsentFormdataRequestBody defines body for DecideOAuthConsent for application/x-www-form-urlencoded ContentType.
 type DecideOAuthConsentFormdataRequestBody DecideOAuthConsentFormdataBody
+
+// DecideMcpOAuthFormdataRequestBody defines body for DecideMcpOAuth for application/x-www-form-urlencoded ContentType.
+type DecideMcpOAuthFormdataRequestBody DecideMcpOAuthFormdataBody
+
+// ExchangeMcpOAuthTokenFormdataRequestBody defines body for ExchangeMcpOAuthToken for application/x-www-form-urlencoded ContentType.
+type ExchangeMcpOAuthTokenFormdataRequestBody ExchangeMcpOAuthTokenFormdataBody
 
 // RevokeOAuthTokenFormdataRequestBody defines body for RevokeOAuthToken for application/x-www-form-urlencoded ContentType.
 type RevokeOAuthTokenFormdataRequestBody RevokeOAuthTokenFormdataBody
@@ -3916,6 +4559,9 @@ type CreatePresentationExportJSONRequestBody = CreatePresentationExport
 
 // DownloadPresentationExportJSONRequestBody defines body for DownloadPresentationExport for application/json ContentType.
 type DownloadPresentationExportJSONRequestBody = DownloadPresentationExportJSONBody
+
+// DisconnectSettingsApplicationFormdataRequestBody defines body for DisconnectSettingsApplication for application/x-www-form-urlencoded ContentType.
+type DisconnectSettingsApplicationFormdataRequestBody DisconnectSettingsApplicationFormdataBody
 
 // DisconnectOAuthAppFormdataRequestBody defines body for DisconnectOAuthApp for application/x-www-form-urlencoded ContentType.
 type DisconnectOAuthAppFormdataRequestBody DisconnectOAuthAppFormdataBody
@@ -4871,6 +5517,68 @@ func (t ReplaceLiveQueueOrder200JSONResponseBody) MarshalJSON() ([]byte, error) 
 }
 
 func (t *ReplaceLiveQueueOrder200JSONResponseBody) UnmarshalJSON(b []byte) error {
+	err := t.union.UnmarshalJSON(b)
+	return err
+}
+
+// AsExchangeMcpOAuthTokenFormdataBody0 returns the union data inside the ExchangeMcpOAuthTokenFormdataBody as a ExchangeMcpOAuthTokenFormdataBody0
+func (t ExchangeMcpOAuthTokenFormdataBody) AsExchangeMcpOAuthTokenFormdataBody0() (ExchangeMcpOAuthTokenFormdataBody0, error) {
+	var body ExchangeMcpOAuthTokenFormdataBody0
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromExchangeMcpOAuthTokenFormdataBody0 overwrites any union data inside the ExchangeMcpOAuthTokenFormdataBody as the provided ExchangeMcpOAuthTokenFormdataBody0
+func (t *ExchangeMcpOAuthTokenFormdataBody) FromExchangeMcpOAuthTokenFormdataBody0(v ExchangeMcpOAuthTokenFormdataBody0) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeExchangeMcpOAuthTokenFormdataBody0 performs a merge with any union data inside the ExchangeMcpOAuthTokenFormdataBody, using the provided ExchangeMcpOAuthTokenFormdataBody0
+func (t *ExchangeMcpOAuthTokenFormdataBody) MergeExchangeMcpOAuthTokenFormdataBody0(v ExchangeMcpOAuthTokenFormdataBody0) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
+// AsExchangeMcpOAuthTokenFormdataBody1 returns the union data inside the ExchangeMcpOAuthTokenFormdataBody as a ExchangeMcpOAuthTokenFormdataBody1
+func (t ExchangeMcpOAuthTokenFormdataBody) AsExchangeMcpOAuthTokenFormdataBody1() (ExchangeMcpOAuthTokenFormdataBody1, error) {
+	var body ExchangeMcpOAuthTokenFormdataBody1
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromExchangeMcpOAuthTokenFormdataBody1 overwrites any union data inside the ExchangeMcpOAuthTokenFormdataBody as the provided ExchangeMcpOAuthTokenFormdataBody1
+func (t *ExchangeMcpOAuthTokenFormdataBody) FromExchangeMcpOAuthTokenFormdataBody1(v ExchangeMcpOAuthTokenFormdataBody1) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeExchangeMcpOAuthTokenFormdataBody1 performs a merge with any union data inside the ExchangeMcpOAuthTokenFormdataBody, using the provided ExchangeMcpOAuthTokenFormdataBody1
+func (t *ExchangeMcpOAuthTokenFormdataBody) MergeExchangeMcpOAuthTokenFormdataBody1(v ExchangeMcpOAuthTokenFormdataBody1) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
+func (t ExchangeMcpOAuthTokenFormdataBody) MarshalJSON() ([]byte, error) {
+	b, err := t.union.MarshalJSON()
+	return b, err
+}
+
+func (t *ExchangeMcpOAuthTokenFormdataBody) UnmarshalJSON(b []byte) error {
 	err := t.union.UnmarshalJSON(b)
 	return err
 }

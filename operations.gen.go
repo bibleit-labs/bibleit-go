@@ -73,6 +73,8 @@ var operations = map[string]Operation{
 
 	"replaceLiveQueueOrder": {Method: "PUT", Path: "/lives/{live_id}/queue-items/order", Summary: "Replace queue ordering"},
 
+	"stageLiveQueueItem": {Method: "POST", Path: "/lives/{live_id}/queue-items/staged", Summary: "Stage a scripture queue item while stopped"},
+
 	"deleteLiveQueueItem": {Method: "DELETE", Path: "/lives/{live_id}/queue-items/{item_id}", Summary: "Remove a queue item"},
 
 	"getLiveQueueItem": {Method: "GET", Path: "/lives/{live_id}/queue-items/{item_id}", Summary: "Read a stable queue item"},
@@ -699,6 +701,15 @@ func (c *Client) ReplaceLiveQueueOrder(ctx context.Context, live_id string, opti
 		return nil, err
 	}
 	return c.Call(ctx, "replaceLiveQueueOrder", map[string]string{"live_id": live_id}, opts)
+}
+
+// StageLiveQueueItem Stage a scripture queue item while stopped.
+func (c *Client) StageLiveQueueItem(ctx context.Context, live_id string, options ...*Options) (*Response, error) {
+	opts, err := singleOptions(options)
+	if err != nil {
+		return nil, err
+	}
+	return c.Call(ctx, "stageLiveQueueItem", map[string]string{"live_id": live_id}, opts)
 }
 
 // DeleteLiveQueueItem Remove a queue item.

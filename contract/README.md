@@ -168,3 +168,16 @@ must happen only against an explicitly identified deployment target; these
 contract changes do not wipe any database. Coordinate the fresh schema and
 additive public read contract before SDK/CLI releases. Keep personal Bible/verse
 Lives available after the rollout; presentations belong to approved organizations.
+
+## Owner grant response scopes
+
+`OAuthGrant.Scopes` uses the response-only `OAuthGrantedScope` type. It includes
+MCP-only `live.queue.stage` and `live.rename` when returned by an owner's grant
+listing. Ordinary `OAuthScope` remains the request vocabulary and rejects those
+values. Do not copy grant scopes into an ordinary authorization request without
+validating the intended request scope.
+
+This is a Go source migration for callers constructing `OAuthGrant` values or
+assigning their scope slices: use `[]OAuthGrantedScope` instead of `[]OAuthScope`.
+The wire JSON is unchanged. This contract/model update does not activate tools,
+change a grant or publish an SDK release.
