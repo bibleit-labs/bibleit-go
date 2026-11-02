@@ -2,6 +2,20 @@
 
 ## Unreleased
 
+## v0.4.0 — 2026-11-02
+
+- Use response-only `OAuthGrantedScope` values for `OAuthGrant.Scopes`, including
+  MCP staging and rename scopes. Ordinary authorization request scopes retain
+  their existing vocabulary.
+- **Source migration:** change grant construction and scope assignments from
+  `[]OAuthScope` to `[]OAuthGrantedScope`, update response-scope constants and
+  recompile consumers. Grant JSON representations remain unchanged.
+- Refresh the pinned canonical contract to 89 REST operations and 111 schemas,
+  including safe queue staging and distinct MCP issuer/probe response models.
+- Add response decoding, strict scope separation and wire round-trip regressions.
+- Update isolated code-generation dependencies while retaining byte-identical
+  generated output and the existing SDK runtime dependencies.
+
 ## v0.3.1 — 2026-10-26
 
 - Add chainable, value-returning `With...` methods for every generated REST
