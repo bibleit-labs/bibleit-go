@@ -37,6 +37,12 @@ record supported behavior and tested baselines. Synchronize fixture changes
 explicitly with the CLI. Passing fixture tests does not establish
 production/provider behavior.
 
+The public API baseline in `contract/compatibility/go-v0.4.0-api.json` records
+existing exported declarations and struct fields. Its regression test permits
+additions but rejects removed or changed declarations, including generator enum
+collisions. Keep compatibility fixes in generator overlays rather than editing
+generated Go output. Do not replace the baseline to hide a source break.
+
 ## Commits and reviews
 
 Use Conventional Commits, for example `fix(protocol): reject incomplete envelopes`

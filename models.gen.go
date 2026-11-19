@@ -2596,13 +2596,13 @@ func (e PresentationVideoElementType) Valid() bool {
 
 // Defines values for PresentationYouTubeElementType.
 const (
-	PresentationYouTubeElementTypeYoutube PresentationYouTubeElementType = "youtube"
+	Youtube PresentationYouTubeElementType = "youtube"
 )
 
 // Valid indicates whether the value is a known member of the PresentationYouTubeElementType enum.
 func (e PresentationYouTubeElementType) Valid() bool {
 	switch e {
-	case PresentationYouTubeElementTypeYoutube:
+	case Youtube:
 		return true
 	default:
 		return false

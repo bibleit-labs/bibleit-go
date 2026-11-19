@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+- Preserve existing public generated enum names when new Broadcast metadata
+  values collide, with a complete v0.4.0 API compatibility baseline test.
+
 - Add 21 generated REST broadcast operations and shared domain models. Preserve
   signed Setup mutation bytes with explicit raw-body options, null channel
   results and the existing no-automatic-retry policy.
