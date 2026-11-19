@@ -1442,6 +1442,42 @@ func (e LiveSubscriberAccess) Valid() bool {
 	}
 }
 
+// Defines values for McpBroadcastErrorError.
+const (
+	McpBroadcastErrorErrorAccessDenied           McpBroadcastErrorError = "access_denied"
+	McpBroadcastErrorErrorInsufficientScope      McpBroadcastErrorError = "insufficient_scope"
+	McpBroadcastErrorErrorInvalidRequest         McpBroadcastErrorError = "invalid_request"
+	McpBroadcastErrorErrorInvalidToken           McpBroadcastErrorError = "invalid_token"
+	McpBroadcastErrorErrorNotFound               McpBroadcastErrorError = "not_found"
+	McpBroadcastErrorErrorRateLimited            McpBroadcastErrorError = "rate_limited"
+	McpBroadcastErrorErrorResponseTooLarge       McpBroadcastErrorError = "response_too_large"
+	McpBroadcastErrorErrorTemporarilyUnavailable McpBroadcastErrorError = "temporarily_unavailable"
+)
+
+// Valid indicates whether the value is a known member of the McpBroadcastErrorError enum.
+func (e McpBroadcastErrorError) Valid() bool {
+	switch e {
+	case McpBroadcastErrorErrorAccessDenied:
+		return true
+	case McpBroadcastErrorErrorInsufficientScope:
+		return true
+	case McpBroadcastErrorErrorInvalidRequest:
+		return true
+	case McpBroadcastErrorErrorInvalidToken:
+		return true
+	case McpBroadcastErrorErrorNotFound:
+		return true
+	case McpBroadcastErrorErrorRateLimited:
+		return true
+	case McpBroadcastErrorErrorResponseTooLarge:
+		return true
+	case McpBroadcastErrorErrorTemporarilyUnavailable:
+		return true
+	default:
+		return false
+	}
+}
+
 // Defines values for McpOAuthMetadataAuthorizationResponseIssParameterSupported.
 const (
 	McpOAuthMetadataAuthorizationResponseIssParameterSupportedTrue McpOAuthMetadataAuthorizationResponseIssParameterSupported = true
@@ -1657,6 +1693,7 @@ func (e McpOAuthProbeErrorError) Valid() bool {
 
 // Defines values for McpOAuthScope.
 const (
+	McpOAuthScopeBroadcastGet      McpOAuthScope = "broadcast.get"
 	McpOAuthScopeIdentityRead      McpOAuthScope = "identity.read"
 	McpOAuthScopeLiveCreate        McpOAuthScope = "live.create"
 	McpOAuthScopeLiveGet           McpOAuthScope = "live.get"
@@ -1673,6 +1710,8 @@ const (
 // Valid indicates whether the value is a known member of the McpOAuthScope enum.
 func (e McpOAuthScope) Valid() bool {
 	switch e {
+	case McpOAuthScopeBroadcastGet:
+		return true
 	case McpOAuthScopeIdentityRead:
 		return true
 	case McpOAuthScopeLiveCreate:
@@ -1694,6 +1733,84 @@ func (e McpOAuthScope) Valid() bool {
 	case McpOAuthScopeTranslationRead:
 		return true
 	case McpOAuthScopeTranslationSearch:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for McpWorkspaceScopes.
+const (
+	McpWorkspaceScopesBroadcastGet McpWorkspaceScopes = "broadcast.get"
+)
+
+// Valid indicates whether the value is a known member of the McpWorkspaceScopes enum.
+func (e McpWorkspaceScopes) Valid() bool {
+	switch e {
+	case McpWorkspaceScopesBroadcastGet:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for McpWorkspaceConsentErrorError.
+const (
+	McpWorkspaceConsentErrorErrorAccessDenied            McpWorkspaceConsentErrorError = "access_denied"
+	McpWorkspaceConsentErrorErrorInvalidClient           McpWorkspaceConsentErrorError = "invalid_client"
+	McpWorkspaceConsentErrorErrorInvalidGrant            McpWorkspaceConsentErrorError = "invalid_grant"
+	McpWorkspaceConsentErrorErrorInvalidRedirectURI      McpWorkspaceConsentErrorError = "invalid_redirect_uri"
+	McpWorkspaceConsentErrorErrorInvalidRequest          McpWorkspaceConsentErrorError = "invalid_request"
+	McpWorkspaceConsentErrorErrorInvalidScope            McpWorkspaceConsentErrorError = "invalid_scope"
+	McpWorkspaceConsentErrorErrorInvalidTarget           McpWorkspaceConsentErrorError = "invalid_target"
+	McpWorkspaceConsentErrorErrorNotFound                McpWorkspaceConsentErrorError = "not_found"
+	McpWorkspaceConsentErrorErrorSlowDown                McpWorkspaceConsentErrorError = "slow_down"
+	McpWorkspaceConsentErrorErrorTemporarilyUnavailable  McpWorkspaceConsentErrorError = "temporarily_unavailable"
+	McpWorkspaceConsentErrorErrorUnsupportedGrantType    McpWorkspaceConsentErrorError = "unsupported_grant_type"
+	McpWorkspaceConsentErrorErrorUnsupportedResponseType McpWorkspaceConsentErrorError = "unsupported_response_type"
+)
+
+// Valid indicates whether the value is a known member of the McpWorkspaceConsentErrorError enum.
+func (e McpWorkspaceConsentErrorError) Valid() bool {
+	switch e {
+	case McpWorkspaceConsentErrorErrorAccessDenied:
+		return true
+	case McpWorkspaceConsentErrorErrorInvalidClient:
+		return true
+	case McpWorkspaceConsentErrorErrorInvalidGrant:
+		return true
+	case McpWorkspaceConsentErrorErrorInvalidRedirectURI:
+		return true
+	case McpWorkspaceConsentErrorErrorInvalidRequest:
+		return true
+	case McpWorkspaceConsentErrorErrorInvalidScope:
+		return true
+	case McpWorkspaceConsentErrorErrorInvalidTarget:
+		return true
+	case McpWorkspaceConsentErrorErrorNotFound:
+		return true
+	case McpWorkspaceConsentErrorErrorSlowDown:
+		return true
+	case McpWorkspaceConsentErrorErrorTemporarilyUnavailable:
+		return true
+	case McpWorkspaceConsentErrorErrorUnsupportedGrantType:
+		return true
+	case McpWorkspaceConsentErrorErrorUnsupportedResponseType:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for McpWorkspacePermissionScopes.
+const (
+	McpWorkspacePermissionScopesBroadcastGet McpWorkspacePermissionScopes = "broadcast.get"
+)
+
+// Valid indicates whether the value is a known member of the McpWorkspacePermissionScopes enum.
+func (e McpWorkspacePermissionScopes) Valid() bool {
+	switch e {
+	case McpWorkspacePermissionScopesBroadcastGet:
 		return true
 	default:
 		return false
@@ -1789,6 +1906,7 @@ func (e OAuthErrorError) Valid() bool {
 
 // Defines values for OAuthGrantedScope.
 const (
+	OAuthGrantedScopeBroadcastGet      OAuthGrantedScope = "broadcast.get"
 	OAuthGrantedScopeIdentityRead      OAuthGrantedScope = "identity.read"
 	OAuthGrantedScopeLiveCreate        OAuthGrantedScope = "live.create"
 	OAuthGrantedScopeLiveDelete        OAuthGrantedScope = "live.delete"
@@ -1807,6 +1925,8 @@ const (
 // Valid indicates whether the value is a known member of the OAuthGrantedScope enum.
 func (e OAuthGrantedScope) Valid() bool {
 	switch e {
+	case OAuthGrantedScopeBroadcastGet:
+		return true
 	case OAuthGrantedScopeIdentityRead:
 		return true
 	case OAuthGrantedScopeLiveCreate:
@@ -2876,6 +2996,21 @@ func (e DecideMcpOAuthFormdataBodyDecision) Valid() bool {
 	}
 }
 
+// Defines values for ListMcpBroadcastSetupsJSONBodyAfter1.
+const (
+	ListMcpBroadcastSetupsJSONBodyAfter1Empty ListMcpBroadcastSetupsJSONBodyAfter1 = ""
+)
+
+// Valid indicates whether the value is a known member of the ListMcpBroadcastSetupsJSONBodyAfter1 enum.
+func (e ListMcpBroadcastSetupsJSONBodyAfter1) Valid() bool {
+	switch e {
+	case ListMcpBroadcastSetupsJSONBodyAfter1Empty:
+		return true
+	default:
+		return false
+	}
+}
+
 // Defines values for ExchangeMcpOAuthTokenFormdataBody0GrantType.
 const (
 	ExchangeMcpOAuthTokenFormdataBody0GrantTypeAuthorizationCode ExchangeMcpOAuthTokenFormdataBody0GrantType = "authorization_code"
@@ -2900,6 +3035,39 @@ const (
 func (e ExchangeMcpOAuthTokenFormdataBody1GrantType) Valid() bool {
 	switch e {
 	case ExchangeMcpOAuthTokenFormdataBody1GrantTypeRefreshToken:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for DecideMcpWorkspaceOAuthFormdataBodyDecision.
+const (
+	DecideMcpWorkspaceOAuthFormdataBodyDecisionAllow DecideMcpWorkspaceOAuthFormdataBodyDecision = "allow"
+	DecideMcpWorkspaceOAuthFormdataBodyDecisionDeny  DecideMcpWorkspaceOAuthFormdataBodyDecision = "deny"
+)
+
+// Valid indicates whether the value is a known member of the DecideMcpWorkspaceOAuthFormdataBodyDecision enum.
+func (e DecideMcpWorkspaceOAuthFormdataBodyDecision) Valid() bool {
+	switch e {
+	case DecideMcpWorkspaceOAuthFormdataBodyDecisionAllow:
+		return true
+	case DecideMcpWorkspaceOAuthFormdataBodyDecisionDeny:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for DecideMcpWorkspaceOAuthFormdataBodyWorkspaceID1.
+const (
+	DecideMcpWorkspaceOAuthFormdataBodyWorkspaceID1Empty DecideMcpWorkspaceOAuthFormdataBodyWorkspaceID1 = ""
+)
+
+// Valid indicates whether the value is a known member of the DecideMcpWorkspaceOAuthFormdataBodyWorkspaceID1 enum.
+func (e DecideMcpWorkspaceOAuthFormdataBodyWorkspaceID1) Valid() bool {
+	switch e {
+	case DecideMcpWorkspaceOAuthFormdataBodyWorkspaceID1Empty:
 		return true
 	default:
 		return false
@@ -4205,6 +4373,31 @@ type LiveWorkspacePut struct {
 	OrganizationID string `json:"organization_id"`
 }
 
+// McpBroadcastChannel defines model for McpBroadcastChannel.
+type McpBroadcastChannel struct {
+	Channel *BroadcastChannel `json:"channel"`
+}
+
+// McpBroadcastError defines model for McpBroadcastError.
+type McpBroadcastError struct {
+	Error McpBroadcastErrorError `json:"error"`
+}
+
+// McpBroadcastErrorError defines model for McpBroadcastError.Error.
+type McpBroadcastErrorError string
+
+// McpBroadcastSetupSummary defines model for McpBroadcastSetupSummary.
+type McpBroadcastSetupSummary struct {
+	DocumentBytes  int64  `json:"document_bytes"`
+	DocumentSha256 string `json:"document_sha256"`
+	ID             string `json:"id"`
+	Name           string `json:"name"`
+	OrganizationID string `json:"organization_id"`
+	Revision       int64  `json:"revision"`
+	SceneCount     int64  `json:"scene_count"`
+	SourceCount    int64  `json:"source_count"`
+}
+
 // McpOAuthMetadata MCP resource issuer capability metadata. Its advertised scope vocabulary can extend independently of ordinary REST issuer/request scopes; newly advertised write scopes require explicit consent and current domain authority.
 type McpOAuthMetadata struct {
 	AuthorizationEndpoint                      string                                                     `json:"authorization_endpoint"`
@@ -4257,6 +4450,9 @@ type McpOAuthProbe struct {
 	PersonalAccountID string                     `json:"personal_account_id"`
 	Resource          string                     `json:"resource"`
 	Scopes            []string                   `json:"scopes"`
+
+	// WorkspacePermissions Optional fresh effective authority for the one explicitly consented workspace. Absent for unbound, revoked or unauthorized grants. Missing means no Broadcast tools. Stored OAuth scopes alone are not workspace authority.
+	WorkspacePermissions []McpWorkspacePermission `json:"workspace_permissions,omitempty"`
 }
 
 // McpOAuthProbeDomainPermissions defines model for McpOAuthProbe.DomainPermissions.
@@ -4278,6 +4474,39 @@ type McpOAuthProbeErrorError string
 
 // McpOAuthScope Scopes advertised by the MCP resource issuer. Preparation scopes require explicit client approval and new consent; existing grants remain unchanged. This is separate from ordinary REST authorization scopes.
 type McpOAuthScope string
+
+// McpWorkspace defines model for McpWorkspace.
+type McpWorkspace struct {
+	ID     string               `json:"id"`
+	Name   string               `json:"name"`
+	Scopes []McpWorkspaceScopes `json:"scopes"`
+}
+
+// McpWorkspaceScopes defines model for McpWorkspace.Scopes.
+type McpWorkspaceScopes string
+
+// McpWorkspaceConsentError Closed workspace-consent error; disabled routes return not_found without changing existing issuer errors.
+type McpWorkspaceConsentError struct {
+	Error McpWorkspaceConsentErrorError `json:"error"`
+}
+
+// McpWorkspaceConsentErrorError defines model for McpWorkspaceConsentError.Error.
+type McpWorkspaceConsentErrorError string
+
+// McpWorkspaceList defines model for McpWorkspaceList.
+type McpWorkspaceList struct {
+	Workspaces []McpWorkspace `json:"workspaces"`
+}
+
+// McpWorkspacePermission defines model for McpWorkspacePermission.
+type McpWorkspacePermission struct {
+	Name           string                         `json:"name"`
+	OrganizationID string                         `json:"organization_id"`
+	Scopes         []McpWorkspacePermissionScopes `json:"scopes"`
+}
+
+// McpWorkspacePermissionScopes defines model for McpWorkspacePermission.Scopes.
+type McpWorkspacePermissionScopes string
 
 // Membership defines model for Membership.
 type Membership struct {
@@ -5343,6 +5572,76 @@ type DecideMcpOAuthParams struct {
 // DecideMcpOAuthFormdataBodyDecision defines parameters for DecideMcpOAuth.
 type DecideMcpOAuthFormdataBodyDecision string
 
+// GetMcpBroadcastChannelJSONBody defines parameters for GetMcpBroadcastChannel.
+type GetMcpBroadcastChannelJSONBody struct {
+	OrganizationID string `json:"organization_id"`
+}
+
+// GetMcpBroadcastEventJSONBody defines parameters for GetMcpBroadcastEvent.
+type GetMcpBroadcastEventJSONBody struct {
+	EventID        string `json:"event_id"`
+	OrganizationID string `json:"organization_id"`
+}
+
+// ListMcpBroadcastEventsJSONBody defines parameters for ListMcpBroadcastEvents.
+type ListMcpBroadcastEventsJSONBody struct {
+	OrganizationID string `json:"organization_id"`
+}
+
+// GetMcpBroadcastSetupJSONBody defines parameters for GetMcpBroadcastSetup.
+type GetMcpBroadcastSetupJSONBody struct {
+	OrganizationID string `json:"organization_id"`
+	SetupID        string `json:"setup_id"`
+}
+
+// ListMcpBroadcastSetupsJSONBody defines parameters for ListMcpBroadcastSetups.
+type ListMcpBroadcastSetupsJSONBody struct {
+	After          *ListMcpBroadcastSetupsJSONBody_After `json:"after,omitempty"`
+	Limit          *int64                                `json:"limit,omitempty"`
+	OrganizationID string                                `json:"organization_id"`
+}
+
+// ListMcpBroadcastSetupsJSONBodyAfter0 defines parameters for ListMcpBroadcastSetups.
+type ListMcpBroadcastSetupsJSONBodyAfter0 = string
+
+// ListMcpBroadcastSetupsJSONBodyAfter1 defines parameters for ListMcpBroadcastSetups.
+type ListMcpBroadcastSetupsJSONBodyAfter1 string
+
+// ListMcpBroadcastSetupsJSONBody_After defines parameters for ListMcpBroadcastSetups.
+type ListMcpBroadcastSetupsJSONBody_After struct {
+	union json.RawMessage
+}
+
+// ListMcpBroadcastWorkspacesJSONBody defines parameters for ListMcpBroadcastWorkspaces.
+type ListMcpBroadcastWorkspacesJSONBody = map[string]interface{}
+
+// GetMcpBroadcastOperationJSONBody defines parameters for GetMcpBroadcastOperation.
+type GetMcpBroadcastOperationJSONBody struct {
+	OperationID    string `json:"operation_id"`
+	OrganizationID string `json:"organization_id"`
+}
+
+// GetMcpBroadcastPreflightJSONBody defines parameters for GetMcpBroadcastPreflight.
+type GetMcpBroadcastPreflightJSONBody struct {
+	OrganizationID string `json:"organization_id"`
+}
+
+// ListMcpBroadcastProfilesJSONBody defines parameters for ListMcpBroadcastProfiles.
+type ListMcpBroadcastProfilesJSONBody struct {
+	OrganizationID string `json:"organization_id"`
+}
+
+// GetMcpBroadcastPublisherJSONBody defines parameters for GetMcpBroadcastPublisher.
+type GetMcpBroadcastPublisherJSONBody struct {
+	OrganizationID string `json:"organization_id"`
+	PublisherID    string `json:"publisher_id"`
+}
+
+// ListMcpBroadcastPublishersJSONBody defines parameters for ListMcpBroadcastPublishers.
+type ListMcpBroadcastPublishersJSONBody struct {
+	OrganizationID string `json:"organization_id"`
+}
+
 // ExchangeMcpOAuthTokenFormdataBody defines parameters for ExchangeMcpOAuthToken.
 type ExchangeMcpOAuthTokenFormdataBody struct {
 	union json.RawMessage
@@ -5383,6 +5682,33 @@ type ExchangeMcpOAuthTokenFormdataBody_1 struct {
 
 	// Scope Space-separated explicit registered personal scopes. No empty scope. offline_access alone is invalid.
 	Scope *string `json:"scope,omitempty"`
+}
+
+// DecideMcpWorkspaceOAuthFormdataBody defines parameters for DecideMcpWorkspaceOAuth.
+type DecideMcpWorkspaceOAuthFormdataBody struct {
+	Csrf        string                                           `form:"csrf" json:"csrf"`
+	Decision    DecideMcpWorkspaceOAuthFormdataBodyDecision      `form:"decision" json:"decision"`
+	Request     string                                           `form:"request" json:"request"`
+	WorkspaceID *DecideMcpWorkspaceOAuthFormdataBody_WorkspaceID `form:"workspace_id,omitempty" json:"workspace_id,omitempty"`
+}
+
+// DecideMcpWorkspaceOAuthParams defines parameters for DecideMcpWorkspaceOAuth.
+type DecideMcpWorkspaceOAuthParams struct {
+	Origin string `json:"Origin"`
+}
+
+// DecideMcpWorkspaceOAuthFormdataBodyDecision defines parameters for DecideMcpWorkspaceOAuth.
+type DecideMcpWorkspaceOAuthFormdataBodyDecision string
+
+// DecideMcpWorkspaceOAuthFormdataBodyWorkspaceID0 defines parameters for DecideMcpWorkspaceOAuth.
+type DecideMcpWorkspaceOAuthFormdataBodyWorkspaceID0 = string
+
+// DecideMcpWorkspaceOAuthFormdataBodyWorkspaceID1 defines parameters for DecideMcpWorkspaceOAuth.
+type DecideMcpWorkspaceOAuthFormdataBodyWorkspaceID1 string
+
+// DecideMcpWorkspaceOAuthFormdataBody_WorkspaceID defines parameters for DecideMcpWorkspaceOAuth.
+type DecideMcpWorkspaceOAuthFormdataBody_WorkspaceID struct {
+	union json.RawMessage
 }
 
 // RevokeOAuthTokenFormdataBody defines parameters for RevokeOAuthToken.
@@ -5721,8 +6047,44 @@ type DecideOAuthConsentFormdataRequestBody DecideOAuthConsentFormdataBody
 // DecideMcpOAuthFormdataRequestBody defines body for DecideMcpOAuth for application/x-www-form-urlencoded ContentType.
 type DecideMcpOAuthFormdataRequestBody DecideMcpOAuthFormdataBody
 
+// GetMcpBroadcastChannelJSONRequestBody defines body for GetMcpBroadcastChannel for application/json ContentType.
+type GetMcpBroadcastChannelJSONRequestBody GetMcpBroadcastChannelJSONBody
+
+// GetMcpBroadcastEventJSONRequestBody defines body for GetMcpBroadcastEvent for application/json ContentType.
+type GetMcpBroadcastEventJSONRequestBody GetMcpBroadcastEventJSONBody
+
+// ListMcpBroadcastEventsJSONRequestBody defines body for ListMcpBroadcastEvents for application/json ContentType.
+type ListMcpBroadcastEventsJSONRequestBody ListMcpBroadcastEventsJSONBody
+
+// GetMcpBroadcastSetupJSONRequestBody defines body for GetMcpBroadcastSetup for application/json ContentType.
+type GetMcpBroadcastSetupJSONRequestBody GetMcpBroadcastSetupJSONBody
+
+// ListMcpBroadcastSetupsJSONRequestBody defines body for ListMcpBroadcastSetups for application/json ContentType.
+type ListMcpBroadcastSetupsJSONRequestBody ListMcpBroadcastSetupsJSONBody
+
+// ListMcpBroadcastWorkspacesJSONRequestBody defines body for ListMcpBroadcastWorkspaces for application/json ContentType.
+type ListMcpBroadcastWorkspacesJSONRequestBody = ListMcpBroadcastWorkspacesJSONBody
+
+// GetMcpBroadcastOperationJSONRequestBody defines body for GetMcpBroadcastOperation for application/json ContentType.
+type GetMcpBroadcastOperationJSONRequestBody GetMcpBroadcastOperationJSONBody
+
+// GetMcpBroadcastPreflightJSONRequestBody defines body for GetMcpBroadcastPreflight for application/json ContentType.
+type GetMcpBroadcastPreflightJSONRequestBody GetMcpBroadcastPreflightJSONBody
+
+// ListMcpBroadcastProfilesJSONRequestBody defines body for ListMcpBroadcastProfiles for application/json ContentType.
+type ListMcpBroadcastProfilesJSONRequestBody ListMcpBroadcastProfilesJSONBody
+
+// GetMcpBroadcastPublisherJSONRequestBody defines body for GetMcpBroadcastPublisher for application/json ContentType.
+type GetMcpBroadcastPublisherJSONRequestBody GetMcpBroadcastPublisherJSONBody
+
+// ListMcpBroadcastPublishersJSONRequestBody defines body for ListMcpBroadcastPublishers for application/json ContentType.
+type ListMcpBroadcastPublishersJSONRequestBody ListMcpBroadcastPublishersJSONBody
+
 // ExchangeMcpOAuthTokenFormdataRequestBody defines body for ExchangeMcpOAuthToken for application/x-www-form-urlencoded ContentType.
 type ExchangeMcpOAuthTokenFormdataRequestBody ExchangeMcpOAuthTokenFormdataBody
+
+// DecideMcpWorkspaceOAuthFormdataRequestBody defines body for DecideMcpWorkspaceOAuth for application/x-www-form-urlencoded ContentType.
+type DecideMcpWorkspaceOAuthFormdataRequestBody DecideMcpWorkspaceOAuthFormdataBody
 
 // RevokeOAuthTokenFormdataRequestBody defines body for RevokeOAuthToken for application/x-www-form-urlencoded ContentType.
 type RevokeOAuthTokenFormdataRequestBody RevokeOAuthTokenFormdataBody
@@ -6946,6 +7308,68 @@ func (t *ReplaceLiveQueueOrder200JSONResponseBody) UnmarshalJSON(b []byte) error
 	return err
 }
 
+// AsListMcpBroadcastSetupsJSONBodyAfter0 returns the union data inside the ListMcpBroadcastSetupsJSONBody_After as a ListMcpBroadcastSetupsJSONBodyAfter0
+func (t ListMcpBroadcastSetupsJSONBody_After) AsListMcpBroadcastSetupsJSONBodyAfter0() (ListMcpBroadcastSetupsJSONBodyAfter0, error) {
+	var body ListMcpBroadcastSetupsJSONBodyAfter0
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromListMcpBroadcastSetupsJSONBodyAfter0 overwrites any union data inside the ListMcpBroadcastSetupsJSONBody_After as the provided ListMcpBroadcastSetupsJSONBodyAfter0
+func (t *ListMcpBroadcastSetupsJSONBody_After) FromListMcpBroadcastSetupsJSONBodyAfter0(v ListMcpBroadcastSetupsJSONBodyAfter0) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeListMcpBroadcastSetupsJSONBodyAfter0 performs a merge with any union data inside the ListMcpBroadcastSetupsJSONBody_After, using the provided ListMcpBroadcastSetupsJSONBodyAfter0
+func (t *ListMcpBroadcastSetupsJSONBody_After) MergeListMcpBroadcastSetupsJSONBodyAfter0(v ListMcpBroadcastSetupsJSONBodyAfter0) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
+// AsListMcpBroadcastSetupsJSONBodyAfter1 returns the union data inside the ListMcpBroadcastSetupsJSONBody_After as a ListMcpBroadcastSetupsJSONBodyAfter1
+func (t ListMcpBroadcastSetupsJSONBody_After) AsListMcpBroadcastSetupsJSONBodyAfter1() (ListMcpBroadcastSetupsJSONBodyAfter1, error) {
+	var body ListMcpBroadcastSetupsJSONBodyAfter1
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromListMcpBroadcastSetupsJSONBodyAfter1 overwrites any union data inside the ListMcpBroadcastSetupsJSONBody_After as the provided ListMcpBroadcastSetupsJSONBodyAfter1
+func (t *ListMcpBroadcastSetupsJSONBody_After) FromListMcpBroadcastSetupsJSONBodyAfter1(v ListMcpBroadcastSetupsJSONBodyAfter1) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeListMcpBroadcastSetupsJSONBodyAfter1 performs a merge with any union data inside the ListMcpBroadcastSetupsJSONBody_After, using the provided ListMcpBroadcastSetupsJSONBodyAfter1
+func (t *ListMcpBroadcastSetupsJSONBody_After) MergeListMcpBroadcastSetupsJSONBodyAfter1(v ListMcpBroadcastSetupsJSONBodyAfter1) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
+func (t ListMcpBroadcastSetupsJSONBody_After) MarshalJSON() ([]byte, error) {
+	b, err := t.union.MarshalJSON()
+	return b, err
+}
+
+func (t *ListMcpBroadcastSetupsJSONBody_After) UnmarshalJSON(b []byte) error {
+	err := t.union.UnmarshalJSON(b)
+	return err
+}
+
 // AsExchangeMcpOAuthTokenFormdataBody0 returns the union data inside the ExchangeMcpOAuthTokenFormdataBody as a ExchangeMcpOAuthTokenFormdataBody0
 func (t ExchangeMcpOAuthTokenFormdataBody) AsExchangeMcpOAuthTokenFormdataBody0() (ExchangeMcpOAuthTokenFormdataBody0, error) {
 	var body ExchangeMcpOAuthTokenFormdataBody0
@@ -7004,6 +7428,68 @@ func (t ExchangeMcpOAuthTokenFormdataBody) MarshalJSON() ([]byte, error) {
 }
 
 func (t *ExchangeMcpOAuthTokenFormdataBody) UnmarshalJSON(b []byte) error {
+	err := t.union.UnmarshalJSON(b)
+	return err
+}
+
+// AsDecideMcpWorkspaceOAuthFormdataBodyWorkspaceID0 returns the union data inside the DecideMcpWorkspaceOAuthFormdataBody_WorkspaceID as a DecideMcpWorkspaceOAuthFormdataBodyWorkspaceID0
+func (t DecideMcpWorkspaceOAuthFormdataBody_WorkspaceID) AsDecideMcpWorkspaceOAuthFormdataBodyWorkspaceID0() (DecideMcpWorkspaceOAuthFormdataBodyWorkspaceID0, error) {
+	var body DecideMcpWorkspaceOAuthFormdataBodyWorkspaceID0
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromDecideMcpWorkspaceOAuthFormdataBodyWorkspaceID0 overwrites any union data inside the DecideMcpWorkspaceOAuthFormdataBody_WorkspaceID as the provided DecideMcpWorkspaceOAuthFormdataBodyWorkspaceID0
+func (t *DecideMcpWorkspaceOAuthFormdataBody_WorkspaceID) FromDecideMcpWorkspaceOAuthFormdataBodyWorkspaceID0(v DecideMcpWorkspaceOAuthFormdataBodyWorkspaceID0) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeDecideMcpWorkspaceOAuthFormdataBodyWorkspaceID0 performs a merge with any union data inside the DecideMcpWorkspaceOAuthFormdataBody_WorkspaceID, using the provided DecideMcpWorkspaceOAuthFormdataBodyWorkspaceID0
+func (t *DecideMcpWorkspaceOAuthFormdataBody_WorkspaceID) MergeDecideMcpWorkspaceOAuthFormdataBodyWorkspaceID0(v DecideMcpWorkspaceOAuthFormdataBodyWorkspaceID0) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
+// AsDecideMcpWorkspaceOAuthFormdataBodyWorkspaceID1 returns the union data inside the DecideMcpWorkspaceOAuthFormdataBody_WorkspaceID as a DecideMcpWorkspaceOAuthFormdataBodyWorkspaceID1
+func (t DecideMcpWorkspaceOAuthFormdataBody_WorkspaceID) AsDecideMcpWorkspaceOAuthFormdataBodyWorkspaceID1() (DecideMcpWorkspaceOAuthFormdataBodyWorkspaceID1, error) {
+	var body DecideMcpWorkspaceOAuthFormdataBodyWorkspaceID1
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromDecideMcpWorkspaceOAuthFormdataBodyWorkspaceID1 overwrites any union data inside the DecideMcpWorkspaceOAuthFormdataBody_WorkspaceID as the provided DecideMcpWorkspaceOAuthFormdataBodyWorkspaceID1
+func (t *DecideMcpWorkspaceOAuthFormdataBody_WorkspaceID) FromDecideMcpWorkspaceOAuthFormdataBodyWorkspaceID1(v DecideMcpWorkspaceOAuthFormdataBodyWorkspaceID1) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeDecideMcpWorkspaceOAuthFormdataBodyWorkspaceID1 performs a merge with any union data inside the DecideMcpWorkspaceOAuthFormdataBody_WorkspaceID, using the provided DecideMcpWorkspaceOAuthFormdataBodyWorkspaceID1
+func (t *DecideMcpWorkspaceOAuthFormdataBody_WorkspaceID) MergeDecideMcpWorkspaceOAuthFormdataBodyWorkspaceID1(v DecideMcpWorkspaceOAuthFormdataBodyWorkspaceID1) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
+func (t DecideMcpWorkspaceOAuthFormdataBody_WorkspaceID) MarshalJSON() ([]byte, error) {
+	b, err := t.union.MarshalJSON()
+	return b, err
+}
+
+func (t *DecideMcpWorkspaceOAuthFormdataBody_WorkspaceID) UnmarshalJSON(b []byte) error {
 	err := t.union.UnmarshalJSON(b)
 	return err
 }

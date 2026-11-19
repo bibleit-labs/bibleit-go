@@ -2,6 +2,13 @@
 
 ## Unreleased
 
+- Recognize explicitly consented `broadcast.get` in MCP metadata and owner grant
+  response scope validators. Add the optional typed workspace probe profile so
+  strict decoders can retain it without widening ordinary OAuth request scopes.
+- Synchronize the canonical workspace-read contract and generated models. MCP
+  protocol routes remain excluded from the ordinary REST client. This model
+  update does not enable tools, select a workspace or change existing grants.
+
 ## v0.5.0 — 2026-11-19
 
 - Preserve existing public generated enum names when new Broadcast metadata
