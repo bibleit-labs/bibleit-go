@@ -8778,7 +8778,7 @@
         "x-required-scopes": [
           "broadcast.get"
         ],
-        "description": "Personal bt_ tokens only. Requires the current workspace role/approval and the indicated personal token scope ceiling. Service tokens and delegated OAuth grants are not accepted. Shared server permissions are rechecked after waits. No provider credentials, ingestion addresses or capture capabilities are returned.",
+        "description": "**Required token scope ceiling:** `broadcast.get`.\n\nPersonal bt_ tokens only. Requires the current workspace role/approval and the indicated personal token scope ceiling. Service tokens and delegated OAuth grants are not accepted. Shared server permissions are rechecked after waits. No provider credentials, ingestion addresses or capture capabilities are returned.",
         "responses": {
           "200": {
             "description": "Shared broadcast control-plane result",
@@ -8838,7 +8838,7 @@
         "x-required-scopes": [
           "broadcast.create"
         ],
-        "description": "Personal bt_ tokens only. Requires the current workspace role/approval and the indicated personal token scope ceiling. Service tokens and delegated OAuth grants are not accepted. Shared server permissions are rechecked after waits. No provider credentials, ingestion addresses or capture capabilities are returned. Idempotency-Key must be the signed ticket from createBroadcastWriteRequest for this exact operation, target, revision, payload length and SHA-256. Send exactly those JSON bytes (including whitespace); do not reserialize after hashing. The same ticket reconciles through REST and SSH; expiry/recovery fences prevent unsafe fresh retries. DELETE requires the exact JSON body {}.",
+        "description": "**Required token scope ceiling:** `broadcast.create`.\n\nPersonal bt_ tokens only. Requires the current workspace role/approval and the indicated personal token scope ceiling. Service tokens and delegated OAuth grants are not accepted. Shared server permissions are rechecked after waits. No provider credentials, ingestion addresses or capture capabilities are returned. Idempotency-Key must be the signed ticket from createBroadcastWriteRequest for this exact operation, target, revision, payload length and SHA-256. Send exactly those JSON bytes (including whitespace); do not reserialize after hashing. The same ticket reconciles through REST and SSH; expiry/recovery fences prevent unsafe fresh retries. DELETE requires the exact JSON body {}.",
         "responses": {
           "201": {
             "description": "Shared broadcast control-plane result",
@@ -8922,7 +8922,7 @@
         "x-required-scopes": [
           "broadcast.get"
         ],
-        "description": "Personal bt_ tokens only. Requires the current workspace role/approval and the indicated personal token scope ceiling. Service tokens and delegated OAuth grants are not accepted. Shared server permissions are rechecked after waits. No provider credentials, ingestion addresses or capture capabilities are returned.",
+        "description": "**Required token scope ceiling:** `broadcast.get`.\n\nPersonal bt_ tokens only. Requires the current workspace role/approval and the indicated personal token scope ceiling. Service tokens and delegated OAuth grants are not accepted. Shared server permissions are rechecked after waits. No provider credentials, ingestion addresses or capture capabilities are returned.\n\nThe `ETag` response header is the current strong resource revision validator; retain it unchanged for supported If-Match writes.",
         "responses": {
           "200": {
             "description": "Shared broadcast control-plane result",
@@ -8967,7 +8967,7 @@
         "x-required-scopes": [
           "broadcast.manage"
         ],
-        "description": "Personal bt_ tokens only. Requires the current workspace role/approval and the indicated personal token scope ceiling. Service tokens and delegated OAuth grants are not accepted. Shared server permissions are rechecked after waits. No provider credentials, ingestion addresses or capture capabilities are returned. Idempotency-Key must be the signed ticket from createBroadcastWriteRequest for this exact operation, target, revision, payload length and SHA-256. Send exactly those JSON bytes (including whitespace); do not reserialize after hashing. The same ticket reconciles through REST and SSH; expiry/recovery fences prevent unsafe fresh retries. DELETE requires the exact JSON body {}. If-Match must be the current setup revision validator. Missing:428; stale:412. It must also match a signed Setup intent where applicable.",
+        "description": "**Required token scope ceiling:** `broadcast.manage`.\n\nPersonal bt_ tokens only. Requires the current workspace role/approval and the indicated personal token scope ceiling. Service tokens and delegated OAuth grants are not accepted. Shared server permissions are rechecked after waits. No provider credentials, ingestion addresses or capture capabilities are returned. Idempotency-Key must be the signed ticket from createBroadcastWriteRequest for this exact operation, target, revision, payload length and SHA-256. Send exactly those JSON bytes (including whitespace); do not reserialize after hashing. The same ticket reconciles through REST and SSH; expiry/recovery fences prevent unsafe fresh retries. DELETE requires the exact JSON body {}. If-Match must be the current setup revision validator. Missing:428; stale:412. It must also match a signed Setup intent where applicable.",
         "responses": {
           "200": {
             "description": "Shared broadcast control-plane result",
@@ -9038,7 +9038,7 @@
         "x-required-scopes": [
           "broadcast.manage"
         ],
-        "description": "Personal bt_ tokens only. Requires the current workspace role/approval and the indicated personal token scope ceiling. Service tokens and delegated OAuth grants are not accepted. Shared server permissions are rechecked after waits. No provider credentials, ingestion addresses or capture capabilities are returned. Idempotency-Key must be the signed ticket from createBroadcastWriteRequest for this exact operation, target, revision, payload length and SHA-256. Send exactly those JSON bytes (including whitespace); do not reserialize after hashing. The same ticket reconciles through REST and SSH; expiry/recovery fences prevent unsafe fresh retries. DELETE requires the exact JSON body {}. If-Match must be the current setup revision validator. Missing:428; stale:412. It must also match a signed Setup intent where applicable.",
+        "description": "**Required token scope ceiling:** `broadcast.manage`.\n\nPersonal bt_ tokens only. Requires the current workspace role/approval and the indicated personal token scope ceiling. Service tokens and delegated OAuth grants are not accepted. Shared server permissions are rechecked after waits. No provider credentials, ingestion addresses or capture capabilities are returned. Idempotency-Key must be the signed ticket from createBroadcastWriteRequest for this exact operation, target, revision, payload length and SHA-256. Send exactly those JSON bytes (including whitespace); do not reserialize after hashing. The same ticket reconciles through REST and SSH; expiry/recovery fences prevent unsafe fresh retries. DELETE requires the exact JSON body {}. If-Match must be the current setup revision validator. Missing:428; stale:412. It must also match a signed Setup intent where applicable.",
         "responses": {
           "200": {
             "description": "Shared broadcast control-plane result",
@@ -9131,7 +9131,7 @@
         "x-required-scopes": [
           "broadcast.create"
         ],
-        "description": "Personal bt_ tokens only. Requires the current workspace role/approval and the indicated personal token scope ceiling. Service tokens and delegated OAuth grants are not accepted. Shared server permissions are rechecked after waits. No provider credentials, ingestion addresses or capture capabilities are returned. Idempotency-Key must be the signed ticket from createBroadcastWriteRequest for this exact operation, target, revision, payload length and SHA-256. Send exactly those JSON bytes (including whitespace); do not reserialize after hashing. The same ticket reconciles through REST and SSH; expiry/recovery fences prevent unsafe fresh retries. DELETE requires the exact JSON body {}. If-Match must be the current setup revision validator. Missing:428; stale:412. It must also match a signed Setup intent where applicable.",
+        "description": "**Required token scope ceiling:** `broadcast.create`.\n\nPersonal bt_ tokens only. Requires the current workspace role/approval and the indicated personal token scope ceiling. Service tokens and delegated OAuth grants are not accepted. Shared server permissions are rechecked after waits. No provider credentials, ingestion addresses or capture capabilities are returned. Idempotency-Key must be the signed ticket from createBroadcastWriteRequest for this exact operation, target, revision, payload length and SHA-256. Send exactly those JSON bytes (including whitespace); do not reserialize after hashing. The same ticket reconciles through REST and SSH; expiry/recovery fences prevent unsafe fresh retries. DELETE requires the exact JSON body {}. If-Match must be the current setup revision validator. Missing:428; stale:412. It must also match a signed Setup intent where applicable.",
         "responses": {
           "201": {
             "description": "Shared broadcast control-plane result",
@@ -9216,7 +9216,7 @@
           "broadcast.create",
           "broadcast.manage"
         ],
-        "description": "Personal bt_ tokens only. Requires the current workspace role/approval and the indicated personal token scope ceiling. Service tokens and delegated OAuth grants are not accepted. Shared server permissions are rechecked after waits. No provider credentials, ingestion addresses or capture capabilities are returned. The token ceiling is broadcast.create for create/duplicate intents, broadcast.manage for save/delete intents; the matching workspace create/update/delete permission is mandatory.",
+        "description": "**Required token scope ceiling:** `broadcast.create`, `broadcast.manage`.\n\nPersonal bt_ tokens only. Requires the current workspace role/approval and the indicated personal token scope ceiling. Service tokens and delegated OAuth grants are not accepted. Shared server permissions are rechecked after waits. No provider credentials, ingestion addresses or capture capabilities are returned. The token ceiling is broadcast.create for create/duplicate intents, broadcast.manage for save/delete intents; the matching workspace create/update/delete permission is mandatory.",
         "responses": {
           "201": {
             "description": "Shared broadcast control-plane result",
@@ -9291,7 +9291,7 @@
           "broadcast.create",
           "broadcast.manage"
         ],
-        "description": "Personal bt_ tokens only. Requires the current workspace role/approval and the indicated personal token scope ceiling. Service tokens and delegated OAuth grants are not accepted. Shared server permissions are rechecked after waits. No provider credentials, ingestion addresses or capture capabilities are returned. Requires broadcast.create for create/duplicate tickets, broadcast.manage for save/delete tickets; current corresponding workspace authority is mandatory. Status may be read after expiry to reconcile a retained receipt.",
+        "description": "**Required token scope ceiling:** `broadcast.create`, `broadcast.manage`.\n\nPersonal bt_ tokens only. Requires the current workspace role/approval and the indicated personal token scope ceiling. Service tokens and delegated OAuth grants are not accepted. Shared server permissions are rechecked after waits. No provider credentials, ingestion addresses or capture capabilities are returned. Requires broadcast.create for create/duplicate tickets, broadcast.manage for save/delete tickets; current corresponding workspace authority is mandatory. Status may be read after expiry to reconcile a retained receipt.",
         "responses": {
           "200": {
             "description": "Shared broadcast control-plane result",
@@ -9345,7 +9345,7 @@
         "x-required-scopes": [
           "broadcast.get"
         ],
-        "description": "Personal bt_ tokens only. Requires the current workspace role/approval and the indicated personal token scope ceiling. Service tokens and delegated OAuth grants are not accepted. Shared server permissions are rechecked after waits. No provider credentials, ingestion addresses or capture capabilities are returned.",
+        "description": "**Required token scope ceiling:** `broadcast.get`.\n\nPersonal bt_ tokens only. Requires the current workspace role/approval and the indicated personal token scope ceiling. Service tokens and delegated OAuth grants are not accepted. Shared server permissions are rechecked after waits. No provider credentials, ingestion addresses or capture capabilities are returned.",
         "responses": {
           "200": {
             "description": "Shared broadcast control-plane result",
@@ -9398,7 +9398,7 @@
         "x-required-scopes": [
           "broadcast.get"
         ],
-        "description": "Personal bt_ tokens only. Requires the current workspace role/approval and the indicated personal token scope ceiling. Service tokens and delegated OAuth grants are not accepted. Shared server permissions are rechecked after waits. No provider credentials, ingestion addresses or capture capabilities are returned.",
+        "description": "**Required token scope ceiling:** `broadcast.get`.\n\nPersonal bt_ tokens only. Requires the current workspace role/approval and the indicated personal token scope ceiling. Service tokens and delegated OAuth grants are not accepted. Shared server permissions are rechecked after waits. No provider credentials, ingestion addresses or capture capabilities are returned.\n\nThe `ETag` response header is the current strong resource revision validator; retain it unchanged for supported If-Match writes.",
         "responses": {
           "200": {
             "description": "Shared broadcast control-plane result",
@@ -9456,7 +9456,7 @@
         "x-required-scopes": [
           "broadcast.get"
         ],
-        "description": "Personal bt_ tokens only. Requires the current workspace role/approval and the indicated personal token scope ceiling. Service tokens and delegated OAuth grants are not accepted. Shared server permissions are rechecked after waits. No provider credentials, ingestion addresses or capture capabilities are returned.",
+        "description": "**Required token scope ceiling:** `broadcast.get`.\n\nPersonal bt_ tokens only. Requires the current workspace role/approval and the indicated personal token scope ceiling. Service tokens and delegated OAuth grants are not accepted. Shared server permissions are rechecked after waits. No provider credentials, ingestion addresses or capture capabilities are returned.",
         "responses": {
           "200": {
             "description": "Shared broadcast control-plane result",
@@ -9509,7 +9509,7 @@
         "x-required-scopes": [
           "broadcast.get"
         ],
-        "description": "Personal bt_ tokens only. Requires the current workspace role/approval and the indicated personal token scope ceiling. Service tokens and delegated OAuth grants are not accepted. Shared server permissions are rechecked after waits. No provider credentials, ingestion addresses or capture capabilities are returned.",
+        "description": "**Required token scope ceiling:** `broadcast.get`.\n\nPersonal bt_ tokens only. Requires the current workspace role/approval and the indicated personal token scope ceiling. Service tokens and delegated OAuth grants are not accepted. Shared server permissions are rechecked after waits. No provider credentials, ingestion addresses or capture capabilities are returned.",
         "responses": {
           "200": {
             "description": "Shared broadcast control-plane result",
@@ -9549,7 +9549,7 @@
         "x-required-scopes": [
           "broadcast.create"
         ],
-        "description": "Personal bt_ tokens only. Requires the current workspace role/approval and the indicated personal token scope ceiling. Service tokens and delegated OAuth grants are not accepted. Shared server permissions are rechecked after waits. No provider credentials, ingestion addresses or capture capabilities are returned. Idempotency-Key must be a canonical UUID retained for this provider operation. An ambiguous reply must be reconciled using getBroadcastOperation; do not generate a new UUID automatically.",
+        "description": "**Required token scope ceiling:** `broadcast.create`.\n\nPersonal bt_ tokens only. Requires the current workspace role/approval and the indicated personal token scope ceiling. Service tokens and delegated OAuth grants are not accepted. Shared server permissions are rechecked after waits. No provider credentials, ingestion addresses or capture capabilities are returned. Idempotency-Key must be a canonical UUID retained for this provider operation. An ambiguous reply must be reconciled using getBroadcastOperation; do not generate a new UUID automatically.",
         "responses": {
           "202": {
             "description": "Shared broadcast control-plane result",
@@ -9623,7 +9623,7 @@
         "x-required-scopes": [
           "broadcast.create"
         ],
-        "description": "Personal bt_ tokens only. Requires the current workspace role/approval and the indicated personal token scope ceiling. Service tokens and delegated OAuth grants are not accepted. Shared server permissions are rechecked after waits. No provider credentials, ingestion addresses or capture capabilities are returned. Idempotency-Key must be a canonical UUID retained for this provider operation. An ambiguous reply must be reconciled using getBroadcastOperation; do not generate a new UUID automatically.",
+        "description": "**Required token scope ceiling:** `broadcast.create`.\n\nPersonal bt_ tokens only. Requires the current workspace role/approval and the indicated personal token scope ceiling. Service tokens and delegated OAuth grants are not accepted. Shared server permissions are rechecked after waits. No provider credentials, ingestion addresses or capture capabilities are returned. Idempotency-Key must be a canonical UUID retained for this provider operation. An ambiguous reply must be reconciled using getBroadcastOperation; do not generate a new UUID automatically.",
         "responses": {
           "202": {
             "description": "Shared broadcast control-plane result",
@@ -9706,7 +9706,7 @@
         "x-required-scopes": [
           "broadcast.get"
         ],
-        "description": "Personal bt_ tokens only. Requires the current workspace role/approval and the indicated personal token scope ceiling. Service tokens and delegated OAuth grants are not accepted. Shared server permissions are rechecked after waits. No provider credentials, ingestion addresses or capture capabilities are returned.",
+        "description": "**Required token scope ceiling:** `broadcast.get`.\n\nPersonal bt_ tokens only. Requires the current workspace role/approval and the indicated personal token scope ceiling. Service tokens and delegated OAuth grants are not accepted. Shared server permissions are rechecked after waits. No provider credentials, ingestion addresses or capture capabilities are returned.\n\nThe `ETag` response header is the current strong resource revision validator; retain it unchanged for supported If-Match writes.",
         "responses": {
           "200": {
             "description": "Shared broadcast control-plane result",
@@ -9773,7 +9773,7 @@
         "x-required-scopes": [
           "broadcast.publish"
         ],
-        "description": "Personal bt_ tokens only. Requires the current workspace role/approval and the indicated personal token scope ceiling. Service tokens and delegated OAuth grants are not accepted. Shared server permissions are rechecked after waits. No provider credentials, ingestion addresses or capture capabilities are returned. Idempotency-Key must be a canonical UUID retained for this provider operation. An ambiguous reply must be reconciled using getBroadcastOperation; do not generate a new UUID automatically. If-Match must be the current event revision validator. Missing:428; stale:412. It must also match a signed Setup intent where applicable. Testing/live require broadcast.publish and an existing browser publisher; complete requires broadcast.manage. Shared workspace permissions apply to the requested action.",
+        "description": "**Required token scope ceiling:** `broadcast.publish`.\n\nPersonal bt_ tokens only. Requires the current workspace role/approval and the indicated personal token scope ceiling. Service tokens and delegated OAuth grants are not accepted. Shared server permissions are rechecked after waits. No provider credentials, ingestion addresses or capture capabilities are returned. Idempotency-Key must be a canonical UUID retained for this provider operation. An ambiguous reply must be reconciled using getBroadcastOperation; do not generate a new UUID automatically. If-Match must be the current event revision validator. Missing:428; stale:412. It must also match a signed Setup intent where applicable. Testing/live require broadcast.publish and an existing browser publisher; complete requires broadcast.manage. Shared workspace permissions apply to the requested action.",
         "responses": {
           "202": {
             "description": "Shared broadcast control-plane result",
@@ -9866,7 +9866,7 @@
         "x-required-scopes": [
           "broadcast.get"
         ],
-        "description": "Personal bt_ tokens only. Requires the current workspace role/approval and the indicated personal token scope ceiling. Service tokens and delegated OAuth grants are not accepted. Shared server permissions are rechecked after waits. No provider credentials, ingestion addresses or capture capabilities are returned.",
+        "description": "**Required token scope ceiling:** `broadcast.get`.\n\nPersonal bt_ tokens only. Requires the current workspace role/approval and the indicated personal token scope ceiling. Service tokens and delegated OAuth grants are not accepted. Shared server permissions are rechecked after waits. No provider credentials, ingestion addresses or capture capabilities are returned.",
         "responses": {
           "200": {
             "description": "Shared broadcast control-plane result",
@@ -9919,7 +9919,7 @@
         "x-required-scopes": [
           "broadcast.get"
         ],
-        "description": "Personal bt_ tokens only. Requires the current workspace role/approval and the indicated personal token scope ceiling. Service tokens and delegated OAuth grants are not accepted. Shared server permissions are rechecked after waits. No provider credentials, ingestion addresses or capture capabilities are returned.",
+        "description": "**Required token scope ceiling:** `broadcast.get`.\n\nPersonal bt_ tokens only. Requires the current workspace role/approval and the indicated personal token scope ceiling. Service tokens and delegated OAuth grants are not accepted. Shared server permissions are rechecked after waits. No provider credentials, ingestion addresses or capture capabilities are returned.",
         "responses": {
           "200": {
             "description": "Shared broadcast control-plane result",
@@ -9981,7 +9981,7 @@
         "x-required-scopes": [
           "broadcast.get"
         ],
-        "description": "Personal bt_ tokens only. Requires the current workspace role/approval and the indicated personal token scope ceiling. Service tokens and delegated OAuth grants are not accepted. Shared server permissions are rechecked after waits. No provider credentials, ingestion addresses or capture capabilities are returned.",
+        "description": "**Required token scope ceiling:** `broadcast.get`.\n\nPersonal bt_ tokens only. Requires the current workspace role/approval and the indicated personal token scope ceiling. Service tokens and delegated OAuth grants are not accepted. Shared server permissions are rechecked after waits. No provider credentials, ingestion addresses or capture capabilities are returned.\n\nThe `ETag` response header is the current strong resource revision validator; retain it unchanged for supported If-Match writes.",
         "responses": {
           "200": {
             "description": "Shared broadcast control-plane result",
@@ -10048,7 +10048,7 @@
         "x-required-scopes": [
           "broadcast.manage"
         ],
-        "description": "Personal bt_ tokens only. Requires the current workspace role/approval and the indicated personal token scope ceiling. Service tokens and delegated OAuth grants are not accepted. Shared server permissions are rechecked after waits. No provider credentials, ingestion addresses or capture capabilities are returned. If-Match must be the current publisher revision validator. Missing:428; stale:412. It must also match a signed Setup intent where applicable.",
+        "description": "**Required token scope ceiling:** `broadcast.manage`.\n\nPersonal bt_ tokens only. Requires the current workspace role/approval and the indicated personal token scope ceiling. Service tokens and delegated OAuth grants are not accepted. Shared server permissions are rechecked after waits. No provider credentials, ingestion addresses or capture capabilities are returned. If-Match must be the current publisher revision validator. Missing:428; stale:412. It must also match a signed Setup intent where applicable.",
         "responses": {
           "202": {
             "description": "Shared broadcast control-plane result",
@@ -10122,7 +10122,7 @@
         "x-required-scopes": [
           "broadcast.get"
         ],
-        "description": "Personal bt_ tokens only. Requires the current workspace role/approval and the indicated personal token scope ceiling. Service tokens and delegated OAuth grants are not accepted. Shared server permissions are rechecked after waits. No provider credentials, ingestion addresses or capture capabilities are returned. Requires fresh browser capture; after authorization the current control plane returns 409 browser_required. Reconnect never restarts publishing automatically.",
+        "description": "**Required token scope ceiling:** `broadcast.get`.\n\nPersonal bt_ tokens only. Requires the current workspace role/approval and the indicated personal token scope ceiling. Service tokens and delegated OAuth grants are not accepted. Shared server permissions are rechecked after waits. No provider credentials, ingestion addresses or capture capabilities are returned. Requires fresh browser capture; after authorization the current control plane returns 409 browser_required. Reconnect never restarts publishing automatically.",
         "responses": {
           "default": {
             "$ref": "#/components/responses/Problem"
