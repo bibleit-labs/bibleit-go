@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## v0.5.0 — 2026-11-19
+
 - Preserve existing public generated enum names when new Broadcast metadata
   values collide, with a complete v0.4.0 API compatibility baseline test.
 
