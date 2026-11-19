@@ -9,7 +9,6 @@ import (
 	"errors"
 	"regexp"
 	"strconv"
-	"strings"
 )
 
 const (
@@ -23,6 +22,7 @@ const (
 var broadcastUUID = regexp.MustCompile(`^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$`)
 var broadcastProviderID = regexp.MustCompile(`^[A-Za-z0-9_-]{1,128}$`)
 var broadcastDigest = regexp.MustCompile(`^[a-f0-9]{64}$`)
+var broadcastTicketEncoding = regexp.MustCompile(`^[A-Za-z0-9_-]+$`)
 
 // BroadcastWriteOperation binds the immutable intent to a Setup mutation.
 type BroadcastWriteOperation string
@@ -69,7 +69,7 @@ func broadcastNumber(s string, min, max int64) bool {
 	return e == nil && n >= min && n <= max
 }
 func broadcastTicket(s string) bool {
-	return len(s) > 0 && len(s) <= 768 && !strings.ContainsAny(s, " \t\r\n\x00\"")
+	return len(s) > 0 && len(s) <= 768 && broadcastTicketEncoding.MatchString(s)
 }
 func validBroadcastArgs(a []string) bool {
 	if len(a) == 0 {

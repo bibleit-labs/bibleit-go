@@ -154,3 +154,17 @@ func TestBroadcastReceiptsPreserveUnknownOutcomes(t *testing.T) {
 		t.Fatal("overflow revision accepted")
 	}
 }
+
+func TestBroadcastTicketsUseCanonicalURLEncoding(t *testing.T) {
+	for _, ticket := range []string{"ticket;PING", "$(id)", "`id`", "ticket=", "ticket+", "ticket/", "ticket\\name", "ticket\x01"} {
+		if _, err := BroadcastWriteStatusCommand(broadcastTestOrg, ticket); err == nil {
+			t.Errorf("accepted malformed ticket %q", ticket)
+		}
+		if _, err := BroadcastWriteOptions(ticket, 0, []byte("{}")); err == nil {
+			t.Errorf("accepted malformed REST ticket %q", ticket)
+		}
+	}
+	if _, err := BroadcastWriteStatusCommand(broadcastTestOrg, "Az09_signed-ticket"); err != nil {
+		t.Fatal(err)
+	}
+}
