@@ -3,7 +3,7 @@
   "info": {
     "title": "Bibleit REST API",
     "version": "1.0.0-alpha.16",
-    "description": "Versioned REST surface with distinct organization service-token and personal bearer authentication. Organization routes require Authorization: Bearer svc_<secret>. Personal routes require existing finite bt_ API/CLI tokens; browser sessions are not accepted. Organization ownership, current status, scopes, processing rules and quotas apply. JSON bodies are bounded to 16 KiB except full presentation PUT, whose transport limit is 2,016,384 bytes and whose document limit is 2,000,000 encoded JSON bytes. Unknown body fields and unknown query fields are rejected. All responses are no-store. Rate limiting is node-local (120 requests/minute per authenticated principal plus existing peer/global admission). Duplicate-sensitive creation POSTs support optional Idempotency-Key with a 24-hour atomic replay contract. Unsupported REST operations reject the header with 422. Credential issuance/rotation and one-use downloads never replay secrets or streams. Service-token PATCH and rotation require strong configuration validators. Catalogue discovery is distinct from enabled libraries. Library PUT accepts an empty JSON object and never downloads content. Organization identity and active memberships require explicit organization.get and membership scopes. Live metadata PATCH edits the name. Live workspace PUT requires a source live.move token and a destination live.create token in X-Destination-Service-Token. Both mutations require the latest Live If-Match validator. Live scripture queue items have stable persisted IDs and zero-based positions. Queue writes use the shared Live If-Match validator. Ordered pagination rejects cursor use after a sequence change. Organization Live Studio GET/PUT use explicit live_studio.get/update scopes and strong settings ETags. PUT preserves the existing complete-settings validation and revision increments; saves notify Lives after commit. Organization presentations support paginated CRUD with strong document ETags. Presentation display PUT requires presentation.present, an explicit current saved revision and the Live If-Match validator; draft saves never publish. Raw binary asset uploads and portable ZIP imports are exceptions to JSON transport limits; require Content-Length, identity encoding and scoped authorization. Assets remain bearer-protected and support single byte ranges. Imports create a new unpublished presentation atomically. Presentation exports are asynchronous requester-private saved-revision jobs. POST their downloads collection with an empty JSON object to consume and stream a completed file once; GET never consumes exports. No ranges or automatic retries for export downloads. Personal /me and /accounts expose only the caller’s personal identity/account. Personal library, scripture and Live routes bind that account explicitly. Personal tokens cannot authenticate organization management, presentations, Studio or workspace moves. Shared Live/control routes select credential type and enforce account ownership. Personal Live DELETE requires If-Match. Tokens are checked freshly after queue/lock waits and at final commits; existing personal scope inheritance and fifteen-minute rotation overlap remain unchanged. No delegated OAuth is implied. Registered public clients can now use Authorization Code with S256 PKCE and explicit browser consent for personal access. Metadata is /.well-known/oauth-authorization-server; OAuth protocol routes stay on https://bibleit.app/oauth, outside the API origin. Opaque oa_ access tokens last at most 15 minutes; optional offline_access enables single-use rotating refresh tokens within a fixed 30-day grant. Code or refresh replay revokes the grant. Existing bt_ and svc_ rules are unchanged. Versioned operator realtime delivery is GET /lives/{live_id}/events with optional opaque after cursor and wait=0..25 seconds. It returns current snapshots or a heartbeat, never a durable event log. Current bearer secret identity, scopes, account ownership and processing policy are checked before delayed delivery. Operator watches do not consume audience seats. The Fern reference is configured for the bibleit organization. SDK generation is maintained separately in bibleit-go. Browser API Explorer execution is disabled: the current API has no cross-origin browser contract or documentation credential proxy. Copy the HTTP examples into a backend or CLI client. The API origin serves the latest major version without a prefix (currently v1), while /v1 stays pinned. Production integrations should use the explicit major version. The existing https://bibleit.app/api/v1 URL remains supported. API-host resource links pin /v1, including links returned through the latest alias. Documentation is hosted at https://docs.bibleit.dev; https://api.bibleit.app/docs redirects there."
+    "description": "Versioned REST surface with distinct organization service-token and personal bearer authentication. Organization routes require Authorization: Bearer svc_<secret>. Personal routes require existing finite bt_ API/CLI tokens; browser sessions are not accepted. Organization ownership, current status, scopes, processing rules and quotas apply. JSON bodies are bounded to 16 KiB except full presentation PUT, whose transport limit is 2,016,384 bytes and whose document limit is 2,000,000 encoded JSON bytes. Unknown body fields and unknown query fields are rejected. All responses are no-store. Rate limiting is node-local (120 requests/minute per authenticated principal plus existing peer/global admission). Duplicate-sensitive creation POSTs support optional Idempotency-Key with a 24-hour atomic replay contract. Unsupported REST operations reject the header with 422. Credential issuance/rotation and one-use downloads never replay secrets or streams. Service-token PATCH and rotation require strong configuration validators. Catalogue discovery is distinct from enabled libraries. Library PUT accepts an empty JSON object and never downloads content. Organization identity and active memberships require explicit organization.get and membership scopes. Live metadata PATCH edits the name. Live workspace PUT requires a source live.move token and a destination live.create token in X-Destination-Service-Token. Both mutations require the latest Live If-Match validator. Live scripture queue items have stable persisted IDs and zero-based positions. Queue writes use the shared Live If-Match validator. Ordered pagination rejects cursor use after a sequence change. Organization Live Studio GET/PUT use explicit live_studio.get/update scopes and strong settings ETags. PUT preserves the existing complete-settings validation and revision increments; saves notify Lives after commit. Organization presentations support paginated CRUD with strong document ETags. Presentation display PUT requires presentation.present, an explicit current saved revision and the Live If-Match validator; draft saves never publish. Raw binary asset uploads and portable ZIP imports are exceptions to JSON transport limits; require Content-Length, identity encoding and scoped authorization. Assets remain bearer-protected and support single byte ranges. Imports create a new unpublished presentation atomically. Presentation exports are asynchronous requester-private saved-revision jobs. POST their downloads collection with an empty JSON object to consume and stream a completed file once; GET never consumes exports. No ranges or automatic retries for export downloads. Personal /me and /accounts expose only the caller’s personal identity/account. Personal library, scripture and Live routes bind that account explicitly. Personal tokens cannot authenticate organization management, presentations, Studio or workspace moves. Shared Live/control routes select credential type and enforce account ownership. Personal Live DELETE requires If-Match. Tokens are checked freshly after queue/lock waits and at final commits; existing personal scope inheritance and fifteen-minute rotation overlap remain unchanged. No delegated OAuth is implied. Registered public clients can now use Authorization Code with S256 PKCE and explicit browser consent for personal access. Metadata is /.well-known/oauth-authorization-server; OAuth protocol routes stay on https://bibleit.app/oauth, outside the API origin. Opaque oa_ access tokens last at most 15 minutes; optional offline_access enables single-use rotating refresh tokens within a fixed 30-day grant. Code or refresh replay revokes the grant. Existing bt_ and svc_ rules are unchanged. Versioned operator realtime delivery is GET /lives/{live_id}/events with optional opaque after cursor and wait=0..25 seconds. It returns current snapshots or a heartbeat, never a durable event log. Current bearer secret identity, scopes, account ownership and processing policy are checked before delayed delivery. Operator watches do not consume audience seats. The Fern reference is configured for the bibleit organization. SDK generation is maintained separately in bibleit-go. Browser API Explorer execution is disabled: the current API has no cross-origin browser contract or documentation credential proxy. Copy the HTTP examples into a backend or CLI client. The API origin serves the latest major version without a prefix (currently v1), while /v1 stays pinned. Production integrations should use the explicit major version. The existing https://bibleit.app/api/v1 URL remains supported. API-host resource links pin /v1, including links returned through the latest alias. Documentation is hosted at https://docs.bibleit.dev; https://api.bibleit.app/docs redirects there.\n\nBroadcast Studio control-plane routes explicitly accept personal bt_ tokens for an approved organization when both the broadcast scope ceiling and current workspace role permit the operation. This exception does not expand personal-token authority over other organization resources. Browser capture and Google consent remain browser-only."
   },
   "servers": [
     {
@@ -8751,6 +8751,1399 @@
         "x-fern-server-name": "protocol",
         "x-fern-explorer": false
       }
+    },
+    "/organizations/{organization_id}/broadcast/setups": {
+      "parameters": [
+        {
+          "name": "organization_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "format": "uuid"
+          }
+        }
+      ],
+      "get": {
+        "operationId": "listBroadcastSetups",
+        "summary": "listBroadcastSetups",
+        "tags": [
+          "Broadcast Studio"
+        ],
+        "security": [
+          {
+            "personalToken": []
+          }
+        ],
+        "x-required-scopes": [
+          "broadcast.get"
+        ],
+        "description": "**Required token scope ceiling:** `broadcast.get`.\n\nPersonal bt_ tokens only. Requires the current workspace role/approval and the indicated personal token scope ceiling. Service tokens and delegated OAuth grants are not accepted. Shared server permissions are rechecked after waits. No provider credentials, ingestion addresses or capture capabilities are returned.",
+        "responses": {
+          "200": {
+            "description": "Shared broadcast control-plane result",
+            "headers": {
+              "X-Request-Id": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BroadcastSetupPage"
+                }
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/components/responses/Problem"
+          }
+        },
+        "x-fern-server-name": "rest",
+        "x-fern-explorer": false,
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 99,
+              "default": 25
+            }
+          },
+          {
+            "name": "after",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ]
+      },
+      "post": {
+        "operationId": "createBroadcastSetup",
+        "summary": "createBroadcastSetup",
+        "tags": [
+          "Broadcast Studio"
+        ],
+        "security": [
+          {
+            "personalToken": []
+          }
+        ],
+        "x-required-scopes": [
+          "broadcast.create"
+        ],
+        "description": "**Required token scope ceiling:** `broadcast.create`.\n\nPersonal bt_ tokens only. Requires the current workspace role/approval and the indicated personal token scope ceiling. Service tokens and delegated OAuth grants are not accepted. Shared server permissions are rechecked after waits. No provider credentials, ingestion addresses or capture capabilities are returned. Idempotency-Key must be the signed ticket from createBroadcastWriteRequest for this exact operation, target, revision, payload length and SHA-256. Send exactly those JSON bytes (including whitespace); do not reserialize after hashing. The same ticket reconciles through REST and SSH; expiry/recovery fences prevent unsafe fresh retries. DELETE requires the exact JSON body {}.",
+        "responses": {
+          "201": {
+            "description": "Shared broadcast control-plane result",
+            "headers": {
+              "X-Request-Id": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BroadcastWriteReceipt"
+                }
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/components/responses/Problem"
+          }
+        },
+        "x-fern-server-name": "rest",
+        "x-fern-explorer": false,
+        "parameters": [
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "maxLength": 768,
+              "description": "Immutable signed request ticket. Retain privately to reconcile ambiguous writes; never replace it automatically."
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BroadcastSetupDocument"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/organizations/{organization_id}/broadcast/setups/{setup_id}": {
+      "parameters": [
+        {
+          "name": "organization_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "format": "uuid"
+          }
+        },
+        {
+          "name": "setup_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "format": "uuid"
+          }
+        }
+      ],
+      "get": {
+        "operationId": "getBroadcastSetup",
+        "summary": "getBroadcastSetup",
+        "tags": [
+          "Broadcast Studio"
+        ],
+        "security": [
+          {
+            "personalToken": []
+          }
+        ],
+        "x-required-scopes": [
+          "broadcast.get"
+        ],
+        "description": "**Required token scope ceiling:** `broadcast.get`.\n\nPersonal bt_ tokens only. Requires the current workspace role/approval and the indicated personal token scope ceiling. Service tokens and delegated OAuth grants are not accepted. Shared server permissions are rechecked after waits. No provider credentials, ingestion addresses or capture capabilities are returned.\n\nThe `ETag` response header is the current strong resource revision validator; retain it unchanged for supported If-Match writes.",
+        "responses": {
+          "200": {
+            "description": "Shared broadcast control-plane result",
+            "headers": {
+              "X-Request-Id": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "ETag": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BroadcastSetup"
+                }
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/components/responses/Problem"
+          }
+        },
+        "x-fern-server-name": "rest",
+        "x-fern-explorer": false
+      },
+      "put": {
+        "operationId": "replaceBroadcastSetup",
+        "summary": "replaceBroadcastSetup",
+        "tags": [
+          "Broadcast Studio"
+        ],
+        "security": [
+          {
+            "personalToken": []
+          }
+        ],
+        "x-required-scopes": [
+          "broadcast.manage"
+        ],
+        "description": "**Required token scope ceiling:** `broadcast.manage`.\n\nPersonal bt_ tokens only. Requires the current workspace role/approval and the indicated personal token scope ceiling. Service tokens and delegated OAuth grants are not accepted. Shared server permissions are rechecked after waits. No provider credentials, ingestion addresses or capture capabilities are returned. Idempotency-Key must be the signed ticket from createBroadcastWriteRequest for this exact operation, target, revision, payload length and SHA-256. Send exactly those JSON bytes (including whitespace); do not reserialize after hashing. The same ticket reconciles through REST and SSH; expiry/recovery fences prevent unsafe fresh retries. DELETE requires the exact JSON body {}. If-Match must be the current setup revision validator. Missing:428; stale:412. It must also match a signed Setup intent where applicable.",
+        "responses": {
+          "200": {
+            "description": "Shared broadcast control-plane result",
+            "headers": {
+              "X-Request-Id": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BroadcastWriteReceipt"
+                }
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/components/responses/Problem"
+          }
+        },
+        "x-fern-server-name": "rest",
+        "x-fern-explorer": false,
+        "parameters": [
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "maxLength": 768,
+              "description": "Immutable signed request ticket. Retain privately to reconcile ambiguous writes; never replace it automatically."
+            }
+          },
+          {
+            "name": "If-Match",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^\"setup-[0-9]{1,19}\"$"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BroadcastSetupDocument"
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "operationId": "deleteBroadcastSetup",
+        "summary": "deleteBroadcastSetup",
+        "tags": [
+          "Broadcast Studio"
+        ],
+        "security": [
+          {
+            "personalToken": []
+          }
+        ],
+        "x-required-scopes": [
+          "broadcast.manage"
+        ],
+        "description": "**Required token scope ceiling:** `broadcast.manage`.\n\nPersonal bt_ tokens only. Requires the current workspace role/approval and the indicated personal token scope ceiling. Service tokens and delegated OAuth grants are not accepted. Shared server permissions are rechecked after waits. No provider credentials, ingestion addresses or capture capabilities are returned. Idempotency-Key must be the signed ticket from createBroadcastWriteRequest for this exact operation, target, revision, payload length and SHA-256. Send exactly those JSON bytes (including whitespace); do not reserialize after hashing. The same ticket reconciles through REST and SSH; expiry/recovery fences prevent unsafe fresh retries. DELETE requires the exact JSON body {}. If-Match must be the current setup revision validator. Missing:428; stale:412. It must also match a signed Setup intent where applicable.",
+        "responses": {
+          "200": {
+            "description": "Shared broadcast control-plane result",
+            "headers": {
+              "X-Request-Id": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BroadcastWriteReceipt"
+                }
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/components/responses/Problem"
+          }
+        },
+        "x-fern-server-name": "rest",
+        "x-fern-explorer": false,
+        "parameters": [
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "maxLength": 768,
+              "description": "Immutable signed request ticket. Retain privately to reconcile ambiguous writes; never replace it automatically."
+            }
+          },
+          {
+            "name": "If-Match",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^\"setup-[0-9]{1,19}\"$"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BroadcastEmptyInput"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/organizations/{organization_id}/broadcast/setups/{setup_id}/duplicate": {
+      "parameters": [
+        {
+          "name": "organization_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "format": "uuid"
+          }
+        },
+        {
+          "name": "setup_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "format": "uuid"
+          }
+        }
+      ],
+      "post": {
+        "operationId": "duplicateBroadcastSetup",
+        "summary": "duplicateBroadcastSetup",
+        "tags": [
+          "Broadcast Studio"
+        ],
+        "security": [
+          {
+            "personalToken": []
+          }
+        ],
+        "x-required-scopes": [
+          "broadcast.create"
+        ],
+        "description": "**Required token scope ceiling:** `broadcast.create`.\n\nPersonal bt_ tokens only. Requires the current workspace role/approval and the indicated personal token scope ceiling. Service tokens and delegated OAuth grants are not accepted. Shared server permissions are rechecked after waits. No provider credentials, ingestion addresses or capture capabilities are returned. Idempotency-Key must be the signed ticket from createBroadcastWriteRequest for this exact operation, target, revision, payload length and SHA-256. Send exactly those JSON bytes (including whitespace); do not reserialize after hashing. The same ticket reconciles through REST and SSH; expiry/recovery fences prevent unsafe fresh retries. DELETE requires the exact JSON body {}. If-Match must be the current setup revision validator. Missing:428; stale:412. It must also match a signed Setup intent where applicable.",
+        "responses": {
+          "201": {
+            "description": "Shared broadcast control-plane result",
+            "headers": {
+              "X-Request-Id": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BroadcastWriteReceipt"
+                }
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/components/responses/Problem"
+          }
+        },
+        "x-fern-server-name": "rest",
+        "x-fern-explorer": false,
+        "parameters": [
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "maxLength": 768,
+              "description": "Immutable signed request ticket. Retain privately to reconcile ambiguous writes; never replace it automatically."
+            }
+          },
+          {
+            "name": "If-Match",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^\"setup-[0-9]{1,19}\"$"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BroadcastDuplicateInput"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/organizations/{organization_id}/broadcast/write-requests": {
+      "parameters": [
+        {
+          "name": "organization_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "format": "uuid"
+          }
+        }
+      ],
+      "post": {
+        "operationId": "createBroadcastWriteRequest",
+        "summary": "createBroadcastWriteRequest",
+        "tags": [
+          "Broadcast Studio"
+        ],
+        "security": [
+          {
+            "personalToken": []
+          }
+        ],
+        "x-required-scopes": [
+          "broadcast.create",
+          "broadcast.manage"
+        ],
+        "description": "**Required token scope ceiling:** `broadcast.create`, `broadcast.manage`.\n\nPersonal bt_ tokens only. Requires the current workspace role/approval and the indicated personal token scope ceiling. Service tokens and delegated OAuth grants are not accepted. Shared server permissions are rechecked after waits. No provider credentials, ingestion addresses or capture capabilities are returned. The token ceiling is broadcast.create for create/duplicate intents, broadcast.manage for save/delete intents; the matching workspace create/update/delete permission is mandatory.",
+        "responses": {
+          "201": {
+            "description": "Shared broadcast control-plane result",
+            "headers": {
+              "X-Request-Id": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BroadcastWriteIntent"
+                }
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/components/responses/Problem"
+          }
+        },
+        "x-fern-server-name": "rest",
+        "x-fern-explorer": false,
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BroadcastWriteIntentInput"
+              }
+            }
+          }
+        },
+        "x-scope-policy": "operation-dependent; create/duplicate: broadcast.create; save/delete: broadcast.manage"
+      }
+    },
+    "/organizations/{organization_id}/broadcast/write-requests/{request_id}": {
+      "parameters": [
+        {
+          "name": "organization_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "format": "uuid"
+          }
+        },
+        {
+          "name": "request_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "maxLength": 768,
+            "description": "Immutable signed request ticket. Retain privately to reconcile ambiguous writes; never replace it automatically."
+          }
+        }
+      ],
+      "get": {
+        "operationId": "getBroadcastWriteRequest",
+        "summary": "getBroadcastWriteRequest",
+        "tags": [
+          "Broadcast Studio"
+        ],
+        "security": [
+          {
+            "personalToken": []
+          }
+        ],
+        "x-required-scopes": [
+          "broadcast.create",
+          "broadcast.manage"
+        ],
+        "description": "**Required token scope ceiling:** `broadcast.create`, `broadcast.manage`.\n\nPersonal bt_ tokens only. Requires the current workspace role/approval and the indicated personal token scope ceiling. Service tokens and delegated OAuth grants are not accepted. Shared server permissions are rechecked after waits. No provider credentials, ingestion addresses or capture capabilities are returned. Requires broadcast.create for create/duplicate tickets, broadcast.manage for save/delete tickets; current corresponding workspace authority is mandatory. Status may be read after expiry to reconcile a retained receipt.",
+        "responses": {
+          "200": {
+            "description": "Shared broadcast control-plane result",
+            "headers": {
+              "X-Request-Id": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BroadcastWriteReceipt"
+                }
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/components/responses/Problem"
+          }
+        },
+        "x-fern-server-name": "rest",
+        "x-fern-explorer": false,
+        "x-scope-policy": "operation-dependent; create/duplicate: broadcast.create; save/delete: broadcast.manage"
+      }
+    },
+    "/organizations/{organization_id}/broadcast/profiles": {
+      "parameters": [
+        {
+          "name": "organization_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "format": "uuid"
+          }
+        }
+      ],
+      "get": {
+        "operationId": "listBroadcastOutputProfiles",
+        "summary": "listBroadcastOutputProfiles",
+        "tags": [
+          "Broadcast Studio"
+        ],
+        "security": [
+          {
+            "personalToken": []
+          }
+        ],
+        "x-required-scopes": [
+          "broadcast.get"
+        ],
+        "description": "**Required token scope ceiling:** `broadcast.get`.\n\nPersonal bt_ tokens only. Requires the current workspace role/approval and the indicated personal token scope ceiling. Service tokens and delegated OAuth grants are not accepted. Shared server permissions are rechecked after waits. No provider credentials, ingestion addresses or capture capabilities are returned.",
+        "responses": {
+          "200": {
+            "description": "Shared broadcast control-plane result",
+            "headers": {
+              "X-Request-Id": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BroadcastOutputProfileList"
+                }
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/components/responses/Problem"
+          }
+        },
+        "x-fern-server-name": "rest",
+        "x-fern-explorer": false
+      }
+    },
+    "/organizations/{organization_id}/broadcast/channel": {
+      "parameters": [
+        {
+          "name": "organization_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "format": "uuid"
+          }
+        }
+      ],
+      "get": {
+        "operationId": "getBroadcastChannel",
+        "summary": "getBroadcastChannel",
+        "tags": [
+          "Broadcast Studio"
+        ],
+        "security": [
+          {
+            "personalToken": []
+          }
+        ],
+        "x-required-scopes": [
+          "broadcast.get"
+        ],
+        "description": "**Required token scope ceiling:** `broadcast.get`.\n\nPersonal bt_ tokens only. Requires the current workspace role/approval and the indicated personal token scope ceiling. Service tokens and delegated OAuth grants are not accepted. Shared server permissions are rechecked after waits. No provider credentials, ingestion addresses or capture capabilities are returned.\n\nThe `ETag` response header is the current strong resource revision validator; retain it unchanged for supported If-Match writes.",
+        "responses": {
+          "200": {
+            "description": "Shared broadcast control-plane result",
+            "headers": {
+              "X-Request-Id": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "ETag": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BroadcastChannelResult"
+                }
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/components/responses/Problem"
+          }
+        },
+        "x-fern-server-name": "rest",
+        "x-fern-explorer": false
+      }
+    },
+    "/organizations/{organization_id}/broadcast/preflight": {
+      "parameters": [
+        {
+          "name": "organization_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "format": "uuid"
+          }
+        }
+      ],
+      "get": {
+        "operationId": "getBroadcastPreflight",
+        "summary": "getBroadcastPreflight",
+        "tags": [
+          "Broadcast Studio"
+        ],
+        "security": [
+          {
+            "personalToken": []
+          }
+        ],
+        "x-required-scopes": [
+          "broadcast.get"
+        ],
+        "description": "**Required token scope ceiling:** `broadcast.get`.\n\nPersonal bt_ tokens only. Requires the current workspace role/approval and the indicated personal token scope ceiling. Service tokens and delegated OAuth grants are not accepted. Shared server permissions are rechecked after waits. No provider credentials, ingestion addresses or capture capabilities are returned.",
+        "responses": {
+          "200": {
+            "description": "Shared broadcast control-plane result",
+            "headers": {
+              "X-Request-Id": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BroadcastPreflight"
+                }
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/components/responses/Problem"
+          }
+        },
+        "x-fern-server-name": "rest",
+        "x-fern-explorer": false
+      }
+    },
+    "/organizations/{organization_id}/broadcast/events": {
+      "parameters": [
+        {
+          "name": "organization_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "format": "uuid"
+          }
+        }
+      ],
+      "get": {
+        "operationId": "listBroadcastEvents",
+        "summary": "listBroadcastEvents",
+        "tags": [
+          "Broadcast Studio"
+        ],
+        "security": [
+          {
+            "personalToken": []
+          }
+        ],
+        "x-required-scopes": [
+          "broadcast.get"
+        ],
+        "description": "**Required token scope ceiling:** `broadcast.get`.\n\nPersonal bt_ tokens only. Requires the current workspace role/approval and the indicated personal token scope ceiling. Service tokens and delegated OAuth grants are not accepted. Shared server permissions are rechecked after waits. No provider credentials, ingestion addresses or capture capabilities are returned.",
+        "responses": {
+          "200": {
+            "description": "Shared broadcast control-plane result",
+            "headers": {
+              "X-Request-Id": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BroadcastEventList"
+                }
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/components/responses/Problem"
+          }
+        },
+        "x-fern-server-name": "rest",
+        "x-fern-explorer": false
+      },
+      "post": {
+        "operationId": "createBroadcastEvent",
+        "summary": "createBroadcastEvent",
+        "tags": [
+          "Broadcast Studio"
+        ],
+        "security": [
+          {
+            "personalToken": []
+          }
+        ],
+        "x-required-scopes": [
+          "broadcast.create"
+        ],
+        "description": "**Required token scope ceiling:** `broadcast.create`.\n\nPersonal bt_ tokens only. Requires the current workspace role/approval and the indicated personal token scope ceiling. Service tokens and delegated OAuth grants are not accepted. Shared server permissions are rechecked after waits. No provider credentials, ingestion addresses or capture capabilities are returned. Idempotency-Key must be a canonical UUID retained for this provider operation. An ambiguous reply must be reconciled using getBroadcastOperation; do not generate a new UUID automatically.",
+        "responses": {
+          "202": {
+            "description": "Shared broadcast control-plane result",
+            "headers": {
+              "X-Request-Id": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BroadcastOperation"
+                }
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/components/responses/Problem"
+          }
+        },
+        "x-fern-server-name": "rest",
+        "x-fern-explorer": false,
+        "parameters": [
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BroadcastEventInput"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/organizations/{organization_id}/broadcast/events/attach": {
+      "parameters": [
+        {
+          "name": "organization_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "format": "uuid"
+          }
+        }
+      ],
+      "post": {
+        "operationId": "attachBroadcastEvent",
+        "summary": "attachBroadcastEvent",
+        "tags": [
+          "Broadcast Studio"
+        ],
+        "security": [
+          {
+            "personalToken": []
+          }
+        ],
+        "x-required-scopes": [
+          "broadcast.create"
+        ],
+        "description": "**Required token scope ceiling:** `broadcast.create`.\n\nPersonal bt_ tokens only. Requires the current workspace role/approval and the indicated personal token scope ceiling. Service tokens and delegated OAuth grants are not accepted. Shared server permissions are rechecked after waits. No provider credentials, ingestion addresses or capture capabilities are returned. Idempotency-Key must be a canonical UUID retained for this provider operation. An ambiguous reply must be reconciled using getBroadcastOperation; do not generate a new UUID automatically.",
+        "responses": {
+          "202": {
+            "description": "Shared broadcast control-plane result",
+            "headers": {
+              "X-Request-Id": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BroadcastOperation"
+                }
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/components/responses/Problem"
+          }
+        },
+        "x-fern-server-name": "rest",
+        "x-fern-explorer": false,
+        "parameters": [
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BroadcastAttachInput"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/organizations/{organization_id}/broadcast/events/{event_id}": {
+      "parameters": [
+        {
+          "name": "organization_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "format": "uuid"
+          }
+        },
+        {
+          "name": "event_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "format": "uuid"
+          }
+        }
+      ],
+      "get": {
+        "operationId": "getBroadcastEvent",
+        "summary": "getBroadcastEvent",
+        "tags": [
+          "Broadcast Studio"
+        ],
+        "security": [
+          {
+            "personalToken": []
+          }
+        ],
+        "x-required-scopes": [
+          "broadcast.get"
+        ],
+        "description": "**Required token scope ceiling:** `broadcast.get`.\n\nPersonal bt_ tokens only. Requires the current workspace role/approval and the indicated personal token scope ceiling. Service tokens and delegated OAuth grants are not accepted. Shared server permissions are rechecked after waits. No provider credentials, ingestion addresses or capture capabilities are returned.\n\nThe `ETag` response header is the current strong resource revision validator; retain it unchanged for supported If-Match writes.",
+        "responses": {
+          "200": {
+            "description": "Shared broadcast control-plane result",
+            "headers": {
+              "X-Request-Id": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "ETag": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BroadcastEvent"
+                }
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/components/responses/Problem"
+          }
+        },
+        "x-fern-server-name": "rest",
+        "x-fern-explorer": false
+      }
+    },
+    "/organizations/{organization_id}/broadcast/events/{event_id}/transitions": {
+      "parameters": [
+        {
+          "name": "organization_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "format": "uuid"
+          }
+        },
+        {
+          "name": "event_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "format": "uuid"
+          }
+        }
+      ],
+      "post": {
+        "operationId": "transitionBroadcastEvent",
+        "summary": "transitionBroadcastEvent",
+        "tags": [
+          "Broadcast Studio"
+        ],
+        "security": [
+          {
+            "personalToken": []
+          }
+        ],
+        "x-required-scopes": [
+          "broadcast.publish"
+        ],
+        "description": "**Required token scope ceiling:** `broadcast.publish`.\n\nPersonal bt_ tokens only. Requires the current workspace role/approval and the indicated personal token scope ceiling. Service tokens and delegated OAuth grants are not accepted. Shared server permissions are rechecked after waits. No provider credentials, ingestion addresses or capture capabilities are returned. Idempotency-Key must be a canonical UUID retained for this provider operation. An ambiguous reply must be reconciled using getBroadcastOperation; do not generate a new UUID automatically. If-Match must be the current event revision validator. Missing:428; stale:412. It must also match a signed Setup intent where applicable. Testing/live require broadcast.publish and an existing browser publisher; complete requires broadcast.manage. Shared workspace permissions apply to the requested action.",
+        "responses": {
+          "202": {
+            "description": "Shared broadcast control-plane result",
+            "headers": {
+              "X-Request-Id": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BroadcastOperation"
+                }
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/components/responses/Problem"
+          }
+        },
+        "x-fern-server-name": "rest",
+        "x-fern-explorer": false,
+        "parameters": [
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "If-Match",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^\"event-[0-9]{1,19}\"$"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BroadcastTransitionInput"
+              }
+            }
+          }
+        },
+        "x-scope-policy": "state-dependent; testing/live: broadcast.publish; complete: broadcast.manage"
+      }
+    },
+    "/organizations/{organization_id}/broadcast/operations/{operation_id}": {
+      "parameters": [
+        {
+          "name": "organization_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "format": "uuid"
+          }
+        },
+        {
+          "name": "operation_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "format": "uuid"
+          }
+        }
+      ],
+      "get": {
+        "operationId": "getBroadcastOperation",
+        "summary": "getBroadcastOperation",
+        "tags": [
+          "Broadcast Studio"
+        ],
+        "security": [
+          {
+            "personalToken": []
+          }
+        ],
+        "x-required-scopes": [
+          "broadcast.get"
+        ],
+        "description": "**Required token scope ceiling:** `broadcast.get`.\n\nPersonal bt_ tokens only. Requires the current workspace role/approval and the indicated personal token scope ceiling. Service tokens and delegated OAuth grants are not accepted. Shared server permissions are rechecked after waits. No provider credentials, ingestion addresses or capture capabilities are returned.",
+        "responses": {
+          "200": {
+            "description": "Shared broadcast control-plane result",
+            "headers": {
+              "X-Request-Id": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BroadcastOperation"
+                }
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/components/responses/Problem"
+          }
+        },
+        "x-fern-server-name": "rest",
+        "x-fern-explorer": false
+      }
+    },
+    "/organizations/{organization_id}/broadcast/publishers": {
+      "parameters": [
+        {
+          "name": "organization_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "format": "uuid"
+          }
+        }
+      ],
+      "get": {
+        "operationId": "listBroadcastPublishers",
+        "summary": "listBroadcastPublishers",
+        "tags": [
+          "Broadcast Studio"
+        ],
+        "security": [
+          {
+            "personalToken": []
+          }
+        ],
+        "x-required-scopes": [
+          "broadcast.get"
+        ],
+        "description": "**Required token scope ceiling:** `broadcast.get`.\n\nPersonal bt_ tokens only. Requires the current workspace role/approval and the indicated personal token scope ceiling. Service tokens and delegated OAuth grants are not accepted. Shared server permissions are rechecked after waits. No provider credentials, ingestion addresses or capture capabilities are returned.",
+        "responses": {
+          "200": {
+            "description": "Shared broadcast control-plane result",
+            "headers": {
+              "X-Request-Id": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BroadcastPublisherList"
+                }
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/components/responses/Problem"
+          }
+        },
+        "x-fern-server-name": "rest",
+        "x-fern-explorer": false
+      }
+    },
+    "/organizations/{organization_id}/broadcast/publishers/{publisher_id}": {
+      "parameters": [
+        {
+          "name": "organization_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "format": "uuid"
+          }
+        },
+        {
+          "name": "publisher_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "format": "uuid"
+          }
+        }
+      ],
+      "get": {
+        "operationId": "getBroadcastPublisher",
+        "summary": "getBroadcastPublisher",
+        "tags": [
+          "Broadcast Studio"
+        ],
+        "security": [
+          {
+            "personalToken": []
+          }
+        ],
+        "x-required-scopes": [
+          "broadcast.get"
+        ],
+        "description": "**Required token scope ceiling:** `broadcast.get`.\n\nPersonal bt_ tokens only. Requires the current workspace role/approval and the indicated personal token scope ceiling. Service tokens and delegated OAuth grants are not accepted. Shared server permissions are rechecked after waits. No provider credentials, ingestion addresses or capture capabilities are returned.\n\nThe `ETag` response header is the current strong resource revision validator; retain it unchanged for supported If-Match writes.",
+        "responses": {
+          "200": {
+            "description": "Shared broadcast control-plane result",
+            "headers": {
+              "X-Request-Id": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "ETag": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BroadcastPublisher"
+                }
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/components/responses/Problem"
+          }
+        },
+        "x-fern-server-name": "rest",
+        "x-fern-explorer": false
+      }
+    },
+    "/organizations/{organization_id}/broadcast/publishers/{publisher_id}/stop": {
+      "parameters": [
+        {
+          "name": "organization_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "format": "uuid"
+          }
+        },
+        {
+          "name": "publisher_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "format": "uuid"
+          }
+        }
+      ],
+      "post": {
+        "operationId": "stopBroadcastPublisher",
+        "summary": "stopBroadcastPublisher",
+        "tags": [
+          "Broadcast Studio"
+        ],
+        "security": [
+          {
+            "personalToken": []
+          }
+        ],
+        "x-required-scopes": [
+          "broadcast.manage"
+        ],
+        "description": "**Required token scope ceiling:** `broadcast.manage`.\n\nPersonal bt_ tokens only. Requires the current workspace role/approval and the indicated personal token scope ceiling. Service tokens and delegated OAuth grants are not accepted. Shared server permissions are rechecked after waits. No provider credentials, ingestion addresses or capture capabilities are returned. If-Match must be the current publisher revision validator. Missing:428; stale:412. It must also match a signed Setup intent where applicable.",
+        "responses": {
+          "202": {
+            "description": "Shared broadcast control-plane result",
+            "headers": {
+              "X-Request-Id": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BroadcastPublisher"
+                }
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/components/responses/Problem"
+          }
+        },
+        "x-fern-server-name": "rest",
+        "x-fern-explorer": false,
+        "parameters": [
+          {
+            "name": "If-Match",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^\"publisher-[0-9]{1,19}\"$"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BroadcastEmptyInput"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/organizations/{organization_id}/broadcast/takeover": {
+      "parameters": [
+        {
+          "name": "organization_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "format": "uuid"
+          }
+        }
+      ],
+      "post": {
+        "operationId": "requestBroadcastTakeover",
+        "summary": "requestBroadcastTakeover",
+        "tags": [
+          "Broadcast Studio"
+        ],
+        "security": [
+          {
+            "personalToken": []
+          }
+        ],
+        "x-required-scopes": [
+          "broadcast.get"
+        ],
+        "description": "**Required token scope ceiling:** `broadcast.get`.\n\nPersonal bt_ tokens only. Requires the current workspace role/approval and the indicated personal token scope ceiling. Service tokens and delegated OAuth grants are not accepted. Shared server permissions are rechecked after waits. No provider credentials, ingestion addresses or capture capabilities are returned. Requires fresh browser capture; after authorization the current control plane returns 409 browser_required. Reconnect never restarts publishing automatically.",
+        "responses": {
+          "default": {
+            "$ref": "#/components/responses/Problem"
+          },
+          "409": {
+            "$ref": "#/components/responses/Problem"
+          }
+        },
+        "x-fern-server-name": "rest",
+        "x-fern-explorer": false,
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BroadcastEmptyInput"
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -10139,6 +11532,7 @@
         ]
       },
       "LiveStudioSettings": {
+        "description": "REST v1 returns the serif, sans, or mono family in each base element's font field. Named fonts remain saved for Studio rendering.",
         "type": "object",
         "properties": {
           "version": {
@@ -10146,6 +11540,13 @@
             "enum": [
               1
             ]
+          },
+          "autoHideSeconds": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 300,
+            "default": 5,
+            "description": "Seconds before Broadcast Studio hides Translation. Set to zero to keep it visible."
           },
           "showLogo": {
             "type": "boolean"
@@ -10498,6 +11899,14 @@
                 "text"
               ]
             }
+          },
+          "overlays": {
+            "type": "array",
+            "maxItems": 32,
+            "items": {
+              "$ref": "#/components/schemas/LiveStudioOverlayNode"
+            },
+            "description": "Optional explicit composition. Omit to retain the legacy Live layout. An empty array explicitly hides all overlay elements."
           }
         },
         "required": [
@@ -10579,6 +11988,7 @@
         ]
       },
       "LiveStudioSettingsInput": {
+        "description": "Full settings replacement using the existing version-1 Studio model. Only preset and transition may be omitted; they default to default and none. Every other field and all nested keys are required. Unknown fields are rejected at every level.",
         "type": "object",
         "properties": {
           "version": {
@@ -10586,6 +11996,13 @@
             "enum": [
               1
             ]
+          },
+          "autoHideSeconds": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 300,
+            "default": 5,
+            "description": "Seconds before Broadcast Studio hides Translation. Set to zero to keep it visible."
           },
           "showLogo": {
             "type": "boolean"
@@ -10793,7 +12210,14 @@
                     "enum": [
                       "serif",
                       "sans",
-                      "mono"
+                      "mono",
+                      "arial",
+                      "comic-sans",
+                      "georgia",
+                      "palatino",
+                      "verdana",
+                      "trebuchet",
+                      "times"
                     ]
                   },
                   "size": {
@@ -10837,7 +12261,14 @@
                     "enum": [
                       "serif",
                       "sans",
-                      "mono"
+                      "mono",
+                      "arial",
+                      "comic-sans",
+                      "georgia",
+                      "palatino",
+                      "verdana",
+                      "trebuchet",
+                      "times"
                     ]
                   },
                   "size": {
@@ -10881,7 +12312,14 @@
                     "enum": [
                       "serif",
                       "sans",
-                      "mono"
+                      "mono",
+                      "arial",
+                      "comic-sans",
+                      "georgia",
+                      "palatino",
+                      "verdana",
+                      "trebuchet",
+                      "times"
                     ]
                   },
                   "size": {
@@ -10938,6 +12376,14 @@
                 "text"
               ]
             }
+          },
+          "overlays": {
+            "type": "array",
+            "maxItems": 32,
+            "items": {
+              "$ref": "#/components/schemas/LiveStudioOverlayNode"
+            },
+            "description": "Optional explicit composition. Omit to retain the legacy Live layout. An empty array explicitly hides all overlay elements."
           }
         },
         "required": [
@@ -11014,8 +12460,7 @@
               "text"
             ]
           }
-        ],
-        "description": "Full settings replacement using the existing version-1 Studio model. Only preset and transition may be omitted; they default to default and none. Every other field and all nested keys are required. Unknown fields are rejected at every level."
+        ]
       },
       "OrganizationLiveStudio": {
         "type": "object",
@@ -13747,6 +15192,1411 @@
           "authorization_response_iss_parameter_supported"
         ],
         "description": "MCP resource issuer capability metadata. Its advertised scope vocabulary can extend independently of ordinary REST issuer/request scopes; newly advertised write scopes require explicit consent and current domain authority."
+      },
+      "LiveStudioOverlayNode": {
+        "description": "Ordered Live overlay element. Coordinates use basis points; x + width and y + height must not exceed 10000. IDs are unique; logo, verse and viewer-controls each occur at most once. The full node array is limited to 64 KiB. Viewer controls remain interactive and are not rendered into broadcast video. The optional live-badge element is unique within each design, defaults absent, and appears in broadcast video only after fresh provider-confirmed LIVE status. Its red rounded appearance is previewed in Live Studio; public Reader views never assert YouTube LIVE status.",
+        "oneOf": [
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$"
+              },
+              "kind": {
+                "type": "string",
+                "const": "logo"
+              },
+              "visible": {
+                "type": "boolean"
+              },
+              "x": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 10000
+              },
+              "y": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 10000
+              },
+              "width": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 10000
+              },
+              "height": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 10000
+              },
+              "rotation": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 359,
+                "description": "Clockwise degrees about the center. Omission means zero."
+              }
+            },
+            "required": [
+              "id",
+              "kind",
+              "visible",
+              "x",
+              "y",
+              "width",
+              "height"
+            ]
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$"
+              },
+              "kind": {
+                "type": "string",
+                "const": "verse"
+              },
+              "visible": {
+                "type": "boolean"
+              },
+              "x": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 10000
+              },
+              "y": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 10000
+              },
+              "width": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 10000
+              },
+              "height": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 10000
+              },
+              "style": {
+                "description": "Optional per-node typography. Omitted values inherit shared settings; overriding one node does not mutate siblings or copied designs.",
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "elements"
+                ],
+                "properties": {
+                  "elements": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "minProperties": 1,
+                    "properties": {
+                      "translation": {
+                        "type": "object",
+                        "additionalProperties": false,
+                        "minProperties": 1,
+                        "properties": {
+                          "font": {
+                            "type": "string",
+                            "enum": [
+                              "serif",
+                              "sans",
+                              "mono",
+                              "arial",
+                              "comic-sans",
+                              "georgia",
+                              "palatino",
+                              "verdana",
+                              "trebuchet",
+                              "times"
+                            ]
+                          },
+                          "size": {
+                            "type": "integer",
+                            "minimum": 50,
+                            "maximum": 200
+                          },
+                          "bold": {
+                            "type": "boolean"
+                          },
+                          "italic": {
+                            "type": "boolean"
+                          },
+                          "align": {
+                            "type": "string",
+                            "enum": [
+                              "left",
+                              "center",
+                              "right"
+                            ]
+                          },
+                          "lineHeight": {
+                            "type": "integer",
+                            "minimum": 100,
+                            "maximum": 200
+                          }
+                        }
+                      },
+                      "reference": {
+                        "type": "object",
+                        "additionalProperties": false,
+                        "minProperties": 1,
+                        "properties": {
+                          "font": {
+                            "type": "string",
+                            "enum": [
+                              "serif",
+                              "sans",
+                              "mono",
+                              "arial",
+                              "comic-sans",
+                              "georgia",
+                              "palatino",
+                              "verdana",
+                              "trebuchet",
+                              "times"
+                            ]
+                          },
+                          "size": {
+                            "type": "integer",
+                            "minimum": 50,
+                            "maximum": 200
+                          },
+                          "bold": {
+                            "type": "boolean"
+                          },
+                          "italic": {
+                            "type": "boolean"
+                          },
+                          "align": {
+                            "type": "string",
+                            "enum": [
+                              "left",
+                              "center",
+                              "right"
+                            ]
+                          },
+                          "lineHeight": {
+                            "type": "integer",
+                            "minimum": 100,
+                            "maximum": 200
+                          }
+                        }
+                      },
+                      "text": {
+                        "type": "object",
+                        "additionalProperties": false,
+                        "minProperties": 1,
+                        "properties": {
+                          "font": {
+                            "type": "string",
+                            "enum": [
+                              "serif",
+                              "sans",
+                              "mono",
+                              "arial",
+                              "comic-sans",
+                              "georgia",
+                              "palatino",
+                              "verdana",
+                              "trebuchet",
+                              "times"
+                            ]
+                          },
+                          "size": {
+                            "type": "integer",
+                            "minimum": 50,
+                            "maximum": 200
+                          },
+                          "bold": {
+                            "type": "boolean"
+                          },
+                          "italic": {
+                            "type": "boolean"
+                          },
+                          "align": {
+                            "type": "string",
+                            "enum": [
+                              "left",
+                              "center",
+                              "right"
+                            ]
+                          },
+                          "lineHeight": {
+                            "type": "integer",
+                            "minimum": 100,
+                            "maximum": 200
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "rotation": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 359,
+                "description": "Clockwise degrees about the center. Omission means zero."
+              }
+            },
+            "required": [
+              "id",
+              "kind",
+              "visible",
+              "x",
+              "y",
+              "width",
+              "height"
+            ]
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$"
+              },
+              "kind": {
+                "type": "string",
+                "const": "text"
+              },
+              "visible": {
+                "type": "boolean"
+              },
+              "x": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 10000
+              },
+              "y": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 10000
+              },
+              "width": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 10000
+              },
+              "height": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 10000
+              },
+              "variable": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 80,
+                "description": "Optional prompt label. The design keeps its authored text for editing and preview. The operator supplies the value for each broadcast copy."
+              },
+              "text": {
+                "type": "string",
+                "maxLength": 1000,
+                "description": "At most 4000 UTF-8 bytes. Tabs/newlines are allowed; other control characters are rejected."
+              },
+              "style": {
+                "description": "Optional per-node typography. Omitted values inherit shared settings; overriding one node does not mutate siblings or copied designs.",
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "elements"
+                ],
+                "properties": {
+                  "elements": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "minProperties": 1,
+                    "properties": {
+                      "text": {
+                        "type": "object",
+                        "additionalProperties": false,
+                        "minProperties": 1,
+                        "properties": {
+                          "font": {
+                            "type": "string",
+                            "enum": [
+                              "serif",
+                              "sans",
+                              "mono",
+                              "arial",
+                              "comic-sans",
+                              "georgia",
+                              "palatino",
+                              "verdana",
+                              "trebuchet",
+                              "times"
+                            ]
+                          },
+                          "size": {
+                            "type": "integer",
+                            "minimum": 50,
+                            "maximum": 200
+                          },
+                          "bold": {
+                            "type": "boolean"
+                          },
+                          "italic": {
+                            "type": "boolean"
+                          },
+                          "align": {
+                            "type": "string",
+                            "enum": [
+                              "left",
+                              "center",
+                              "right"
+                            ]
+                          },
+                          "lineHeight": {
+                            "type": "integer",
+                            "minimum": 100,
+                            "maximum": 200
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "rotation": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 359,
+                "description": "Clockwise degrees about the center. Omission means zero."
+              }
+            },
+            "required": [
+              "id",
+              "kind",
+              "visible",
+              "x",
+              "y",
+              "width",
+              "height",
+              "text"
+            ]
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$"
+              },
+              "kind": {
+                "type": "string",
+                "const": "image"
+              },
+              "visible": {
+                "type": "boolean"
+              },
+              "x": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 10000
+              },
+              "y": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 10000
+              },
+              "width": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 10000
+              },
+              "height": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 10000
+              },
+              "assetId": {
+                "type": "string",
+                "pattern": "^[a-f0-9]{32}$",
+                "description": "Eligible image owned by the same organization."
+              },
+              "rotation": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 359,
+                "description": "Clockwise degrees about the center. Omission means zero."
+              }
+            },
+            "required": [
+              "id",
+              "kind",
+              "visible",
+              "x",
+              "y",
+              "width",
+              "height",
+              "assetId"
+            ]
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$"
+              },
+              "kind": {
+                "type": "string",
+                "const": "viewer-controls"
+              },
+              "visible": {
+                "type": "boolean"
+              },
+              "x": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 10000
+              },
+              "y": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 10000
+              },
+              "width": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 10000
+              },
+              "height": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 10000
+              },
+              "rotation": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 359,
+                "description": "Clockwise degrees about the center. Omission means zero."
+              }
+            },
+            "required": [
+              "id",
+              "kind",
+              "visible",
+              "x",
+              "y",
+              "width",
+              "height"
+            ]
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$"
+              },
+              "kind": {
+                "type": "string",
+                "const": "live-badge"
+              },
+              "visible": {
+                "type": "boolean"
+              },
+              "x": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 10000
+              },
+              "y": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 10000
+              },
+              "width": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 10000
+              },
+              "height": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 10000
+              },
+              "text": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 16,
+                "description": "Nonblank plain badge text, at most64UTF-8bytes; control characters are forbidden. Broadcast visibility additionally requires trusted provider-confirmed LIVE state."
+              },
+              "style": {
+                "description": "Optional per-node typography. Omitted values inherit shared settings; overriding one node does not mutate siblings or copied designs.",
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "elements"
+                ],
+                "properties": {
+                  "elements": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "minProperties": 1,
+                    "properties": {
+                      "text": {
+                        "type": "object",
+                        "additionalProperties": false,
+                        "minProperties": 1,
+                        "properties": {
+                          "font": {
+                            "type": "string",
+                            "enum": [
+                              "serif",
+                              "sans",
+                              "mono",
+                              "arial",
+                              "comic-sans",
+                              "georgia",
+                              "palatino",
+                              "verdana",
+                              "trebuchet",
+                              "times"
+                            ]
+                          },
+                          "size": {
+                            "type": "integer",
+                            "minimum": 50,
+                            "maximum": 200
+                          },
+                          "bold": {
+                            "type": "boolean"
+                          },
+                          "italic": {
+                            "type": "boolean"
+                          },
+                          "align": {
+                            "type": "string",
+                            "enum": [
+                              "left",
+                              "center",
+                              "right"
+                            ]
+                          },
+                          "lineHeight": {
+                            "type": "integer",
+                            "minimum": 100,
+                            "maximum": 200
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "rotation": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 359,
+                "description": "Clockwise degrees about the center. Omission means zero."
+              }
+            },
+            "required": [
+              "id",
+              "kind",
+              "visible",
+              "x",
+              "y",
+              "width",
+              "height",
+              "text"
+            ]
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$"
+              },
+              "kind": {
+                "type": "string",
+                "const": "container"
+              },
+              "visible": {
+                "type": "boolean"
+              },
+              "x": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 10000
+              },
+              "y": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 10000
+              },
+              "width": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 10000
+              },
+              "height": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 10000
+              },
+              "rotation": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 359,
+                "description": "Clockwise degrees about the center. Omission means zero."
+              }
+            },
+            "required": [
+              "id",
+              "kind",
+              "visible",
+              "x",
+              "y",
+              "width",
+              "height"
+            ]
+          }
+        ]
+      },
+      "BroadcastSource": {
+        "type": "object",
+        "additionalProperties": true,
+        "description": "Versioned Studio Source object, validated by the shared Broadcast Studio document contract."
+      },
+      "BroadcastScene": {
+        "type": "object",
+        "additionalProperties": true,
+        "description": "Versioned Studio Scene object, validated by the shared Broadcast Studio document contract."
+      },
+      "BroadcastMixer": {
+        "type": "object",
+        "additionalProperties": true,
+        "description": "Versioned Studio Mixer object, validated by the shared Broadcast Studio document contract."
+      },
+      "BroadcastOutputProfileSelection": {
+        "type": "object",
+        "additionalProperties": true,
+        "description": "Versioned Studio OutputProfileSelection object, validated by the shared Broadcast Studio document contract."
+      },
+      "BroadcastSetupDocument": {
+        "type": "object",
+        "properties": {
+          "version": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "name": {
+            "type": "string"
+          },
+          "outputProfile": {
+            "$ref": "#/components/schemas/BroadcastOutputProfileSelection"
+          },
+          "sources": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BroadcastSource"
+            }
+          },
+          "scenes": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BroadcastScene"
+            }
+          },
+          "defaultSceneId": {
+            "type": "string"
+          },
+          "mixer": {
+            "$ref": "#/components/schemas/BroadcastMixer"
+          },
+          "branding": {
+            "type": "object",
+            "additionalProperties": true
+          }
+        },
+        "required": [
+          "version",
+          "name",
+          "outputProfile",
+          "sources",
+          "scenes",
+          "defaultSceneId",
+          "mixer"
+        ],
+        "additionalProperties": false
+      },
+      "BroadcastSetupSummary": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "organization_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string"
+          },
+          "revision": {
+            "type": "integer",
+            "minimum": 1
+          }
+        },
+        "required": [
+          "id",
+          "organization_id",
+          "name",
+          "revision"
+        ],
+        "additionalProperties": false
+      },
+      "BroadcastSetup": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "organization_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "revision": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "document": {
+            "$ref": "#/components/schemas/BroadcastSetupDocument"
+          }
+        },
+        "required": [
+          "id",
+          "organization_id",
+          "revision",
+          "document"
+        ],
+        "additionalProperties": false
+      },
+      "BroadcastSetupPage": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BroadcastSetupSummary"
+            }
+          },
+          "next_cursor": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "uuid"
+          }
+        },
+        "required": [
+          "data",
+          "next_cursor"
+        ],
+        "additionalProperties": false
+      },
+      "BroadcastWriteIntentInput": {
+        "type": "object",
+        "properties": {
+          "operation": {
+            "type": "string",
+            "enum": [
+              "create",
+              "save",
+              "duplicate",
+              "delete"
+            ]
+          },
+          "target_id": {
+            "type": "string",
+            "description": "Use new for create; otherwise the Setup UUID."
+          },
+          "expected_revision": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "payload_bytes": {
+            "type": "integer",
+            "minimum": 2,
+            "maximum": 1048576
+          },
+          "payload_sha256": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          }
+        },
+        "required": [
+          "operation",
+          "expected_revision",
+          "payload_bytes",
+          "payload_sha256"
+        ],
+        "additionalProperties": false
+      },
+      "BroadcastWriteIntent": {
+        "type": "object",
+        "properties": {
+          "request_id": {
+            "type": "string",
+            "maxLength": 768,
+            "description": "Immutable signed request ticket. Retain privately to reconcile ambiguous writes; never replace it automatically."
+          },
+          "input_hash": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          },
+          "actor_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "expires_at": {
+            "type": "integer"
+          },
+          "chunk_bytes": {
+            "type": "integer"
+          }
+        },
+        "required": [
+          "request_id",
+          "input_hash",
+          "actor_id",
+          "expires_at",
+          "chunk_bytes"
+        ],
+        "additionalProperties": false
+      },
+      "BroadcastWriteReceipt": {
+        "type": "object",
+        "properties": {
+          "request_id": {
+            "type": "string",
+            "maxLength": 768,
+            "description": "Immutable signed request ticket. Retain privately to reconcile ambiguous writes; never replace it automatically."
+          },
+          "result_state": {
+            "type": "string"
+          },
+          "applied": {
+            "type": "boolean"
+          },
+          "terminal": {
+            "type": "boolean"
+          },
+          "replay": {
+            "type": "boolean"
+          },
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "revision": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "deleted_revision": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "document_sha256": {
+            "type": "string"
+          },
+          "error_code": {
+            "type": "string"
+          },
+          "operation": {
+            "type": "string"
+          },
+          "input_hash": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          }
+        },
+        "required": [
+          "request_id",
+          "result_state"
+        ],
+        "additionalProperties": false
+      },
+      "BroadcastDuplicateInput": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "name"
+        ],
+        "additionalProperties": false
+      },
+      "BroadcastEmptyInput": {
+        "type": "object",
+        "properties": {},
+        "required": [],
+        "additionalProperties": false
+      },
+      "BroadcastOutputProfile": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "version": {
+            "type": "integer"
+          },
+          "width": {
+            "type": "integer"
+          },
+          "height": {
+            "type": "integer"
+          },
+          "fps": {
+            "type": "integer"
+          },
+          "sampleRate": {
+            "type": "integer"
+          },
+          "channels": {
+            "type": "integer"
+          }
+        },
+        "required": [
+          "id",
+          "version",
+          "width",
+          "height",
+          "fps",
+          "sampleRate",
+          "channels"
+        ],
+        "additionalProperties": false
+      },
+      "BroadcastOutputProfileList": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BroadcastOutputProfile"
+            }
+          }
+        },
+        "required": [
+          "data"
+        ],
+        "additionalProperties": false
+      },
+      "BroadcastPreflight": {
+        "type": "object",
+        "properties": {
+          "channel_connected": {
+            "type": "boolean"
+          },
+          "active_publishers": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "browser_capture_required": {
+            "const": true,
+            "type": "boolean"
+          },
+          "automatic_restart": {
+            "const": false,
+            "type": "boolean"
+          },
+          "output_profile": {
+            "$ref": "#/components/schemas/BroadcastOutputProfile"
+          }
+        },
+        "required": [
+          "channel_connected",
+          "active_publishers",
+          "browser_capture_required",
+          "automatic_restart",
+          "output_profile"
+        ],
+        "additionalProperties": false
+      },
+      "BroadcastChannel": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "channel_id": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "state": {
+            "type": "string"
+          },
+          "revision": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "last_error": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        },
+        "required": [
+          "id",
+          "channel_id",
+          "title",
+          "state",
+          "revision"
+        ],
+        "additionalProperties": false
+      },
+      "BroadcastChannelResult": {
+        "anyOf": [
+          {
+            "$ref": "#/components/schemas/BroadcastChannel"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "BroadcastEvent": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "organization_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "channel_id": {
+            "type": "string"
+          },
+          "provider_broadcast_id": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "title": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "scheduled_start": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "privacy": {
+            "type": "string"
+          },
+          "made_for_kids": {
+            "type": "boolean"
+          },
+          "state": {
+            "type": "string"
+          },
+          "provider_state": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "stream_state": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "desired": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "health": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "revision": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "last_error": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "provider_observed_at": {
+            "type": [
+              "integer",
+              "null"
+            ]
+          },
+          "provider_observation_age_ms": {
+            "type": [
+              "integer",
+              "null"
+            ]
+          }
+        },
+        "required": [
+          "id",
+          "organization_id",
+          "channel_id",
+          "title",
+          "state",
+          "revision"
+        ],
+        "additionalProperties": false
+      },
+      "BroadcastEventList": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BroadcastEvent"
+            }
+          }
+        },
+        "required": [
+          "data"
+        ],
+        "additionalProperties": false
+      },
+      "BroadcastEventInput": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "scheduledStart": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "privacy": {
+            "type": "string",
+            "enum": [
+              "private",
+              "unlisted",
+              "public"
+            ]
+          },
+          "madeForKids": {
+            "type": "boolean"
+          },
+          "thumbnail": {
+            "$ref": "#/components/schemas/BroadcastThumbnailInput"
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "maxItems": 250
+          },
+          "categoryId": {
+            "type": "string"
+          },
+          "language": {
+            "type": "string"
+          },
+          "license": {
+            "type": "string",
+            "enum": [
+              "youtube",
+              "creativeCommon"
+            ]
+          },
+          "embeddable": {
+            "type": "boolean"
+          },
+          "publicStatsViewable": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "title",
+          "description",
+          "scheduledStart",
+          "privacy",
+          "madeForKids"
+        ],
+        "additionalProperties": false
+      },
+      "BroadcastAttachInput": {
+        "type": "object",
+        "properties": {
+          "provider_broadcast_id": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9_-]{1,128}$"
+          }
+        },
+        "required": [
+          "provider_broadcast_id"
+        ],
+        "additionalProperties": false
+      },
+      "BroadcastTransitionInput": {
+        "type": "object",
+        "properties": {
+          "state": {
+            "type": "string",
+            "enum": [
+              "testing",
+              "live",
+              "complete"
+            ]
+          }
+        },
+        "required": [
+          "state"
+        ],
+        "additionalProperties": false
+      },
+      "BroadcastOperation": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "event_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "kind": {
+            "type": "string"
+          },
+          "phase": {
+            "type": "string"
+          },
+          "state": {
+            "type": "string"
+          },
+          "last_error": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        },
+        "required": [
+          "id",
+          "event_id",
+          "kind",
+          "phase",
+          "state"
+        ],
+        "additionalProperties": false
+      },
+      "BroadcastPublisher": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "organization_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "snapshot_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "state": {
+            "type": "string"
+          },
+          "revision": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "control_status": {
+            "type": "string"
+          },
+          "shutdown_stage": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        },
+        "required": [
+          "id",
+          "organization_id",
+          "state",
+          "revision"
+        ],
+        "additionalProperties": false
+      },
+      "BroadcastPublisherList": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BroadcastPublisher"
+            }
+          }
+        },
+        "required": [
+          "data"
+        ],
+        "additionalProperties": false
+      },
+      "BroadcastThumbnailInput": {
+        "type": "object",
+        "properties": {
+          "mode": {
+            "type": "string",
+            "enum": [
+              "default",
+              "asset"
+            ]
+          },
+          "assetId": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{32}$"
+          }
+        },
+        "required": [
+          "mode"
+        ],
+        "additionalProperties": false,
+        "description": "default uses the connected channel image; asset requires an organization-owned image assetId."
       }
     },
     "responses": {
@@ -13856,6 +16706,10 @@
     {
       "name": "Live events",
       "description": "Versioned operator snapshots through bounded bearer-authenticated HTTP long polling. Separate from audience subscriptions."
+    },
+    {
+      "name": "Broadcast Studio",
+      "description": "Personal operator control plane with current workspace authority. Browser capture and Google consent remain browser-only."
     }
   ],
   "x-fern-explorer": false

@@ -111,6 +111,48 @@ var operations = map[string]Operation{
 
 	"getOrganization": {Method: "GET", Path: "/organizations/{organization_id}", Summary: "Read organization identity"},
 
+	"getBroadcastChannel": {Method: "GET", Path: "/organizations/{organization_id}/broadcast/channel", Summary: "getBroadcastChannel"},
+
+	"listBroadcastEvents": {Method: "GET", Path: "/organizations/{organization_id}/broadcast/events", Summary: "listBroadcastEvents"},
+
+	"createBroadcastEvent": {Method: "POST", Path: "/organizations/{organization_id}/broadcast/events", Summary: "createBroadcastEvent"},
+
+	"attachBroadcastEvent": {Method: "POST", Path: "/organizations/{organization_id}/broadcast/events/attach", Summary: "attachBroadcastEvent"},
+
+	"getBroadcastEvent": {Method: "GET", Path: "/organizations/{organization_id}/broadcast/events/{event_id}", Summary: "getBroadcastEvent"},
+
+	"transitionBroadcastEvent": {Method: "POST", Path: "/organizations/{organization_id}/broadcast/events/{event_id}/transitions", Summary: "transitionBroadcastEvent"},
+
+	"getBroadcastOperation": {Method: "GET", Path: "/organizations/{organization_id}/broadcast/operations/{operation_id}", Summary: "getBroadcastOperation"},
+
+	"getBroadcastPreflight": {Method: "GET", Path: "/organizations/{organization_id}/broadcast/preflight", Summary: "getBroadcastPreflight"},
+
+	"listBroadcastOutputProfiles": {Method: "GET", Path: "/organizations/{organization_id}/broadcast/profiles", Summary: "listBroadcastOutputProfiles"},
+
+	"listBroadcastPublishers": {Method: "GET", Path: "/organizations/{organization_id}/broadcast/publishers", Summary: "listBroadcastPublishers"},
+
+	"getBroadcastPublisher": {Method: "GET", Path: "/organizations/{organization_id}/broadcast/publishers/{publisher_id}", Summary: "getBroadcastPublisher"},
+
+	"stopBroadcastPublisher": {Method: "POST", Path: "/organizations/{organization_id}/broadcast/publishers/{publisher_id}/stop", Summary: "stopBroadcastPublisher"},
+
+	"listBroadcastSetups": {Method: "GET", Path: "/organizations/{organization_id}/broadcast/setups", Summary: "listBroadcastSetups"},
+
+	"createBroadcastSetup": {Method: "POST", Path: "/organizations/{organization_id}/broadcast/setups", Summary: "createBroadcastSetup"},
+
+	"deleteBroadcastSetup": {Method: "DELETE", Path: "/organizations/{organization_id}/broadcast/setups/{setup_id}", Summary: "deleteBroadcastSetup"},
+
+	"getBroadcastSetup": {Method: "GET", Path: "/organizations/{organization_id}/broadcast/setups/{setup_id}", Summary: "getBroadcastSetup"},
+
+	"replaceBroadcastSetup": {Method: "PUT", Path: "/organizations/{organization_id}/broadcast/setups/{setup_id}", Summary: "replaceBroadcastSetup"},
+
+	"duplicateBroadcastSetup": {Method: "POST", Path: "/organizations/{organization_id}/broadcast/setups/{setup_id}/duplicate", Summary: "duplicateBroadcastSetup"},
+
+	"requestBroadcastTakeover": {Method: "POST", Path: "/organizations/{organization_id}/broadcast/takeover", Summary: "requestBroadcastTakeover"},
+
+	"createBroadcastWriteRequest": {Method: "POST", Path: "/organizations/{organization_id}/broadcast/write-requests", Summary: "createBroadcastWriteRequest"},
+
+	"getBroadcastWriteRequest": {Method: "GET", Path: "/organizations/{organization_id}/broadcast/write-requests/{request_id}", Summary: "getBroadcastWriteRequest"},
+
 	"getOrganizationLiveStudio": {Method: "GET", Path: "/organizations/{organization_id}/live-studio", Summary: "Read organization Live Studio settings"},
 
 	"replaceOrganizationLiveStudio": {Method: "PUT", Path: "/organizations/{organization_id}/live-studio", Summary: "Replace organization Live Studio settings"},
@@ -889,6 +931,222 @@ func (c *Client) GetOrganization(ctx context.Context, organization_id string, op
 		return nil, err
 	}
 	return c.Call(ctx, "getOrganization", map[string]string{"organization_id": organization_id}, opts)
+}
+
+// GetBroadcastChannel getBroadcastChannel.
+func (c *Client) GetBroadcastChannel(ctx context.Context, organization_id string, options ...*Options) (*Response, error) {
+	opts, err := singleOptions(options)
+	if err != nil {
+		return nil, err
+	}
+	return c.Call(ctx, "getBroadcastChannel", map[string]string{"organization_id": organization_id}, opts)
+}
+
+// ListBroadcastEvents listBroadcastEvents.
+func (c *Client) ListBroadcastEvents(ctx context.Context, organization_id string, options ...*Options) (*Response, error) {
+	opts, err := singleOptions(options)
+	if err != nil {
+		return nil, err
+	}
+	return c.Call(ctx, "listBroadcastEvents", map[string]string{"organization_id": organization_id}, opts)
+}
+
+// CreateBroadcastEvent createBroadcastEvent.
+func (c *Client) CreateBroadcastEvent(ctx context.Context, organization_id string, options ...*Options) (*Response, error) {
+	opts, err := singleOptions(options)
+	if err != nil {
+		return nil, err
+	}
+	return c.Call(ctx, "createBroadcastEvent", map[string]string{"organization_id": organization_id}, opts)
+}
+
+// AttachBroadcastEvent attachBroadcastEvent.
+func (c *Client) AttachBroadcastEvent(ctx context.Context, organization_id string, options ...*Options) (*Response, error) {
+	opts, err := singleOptions(options)
+	if err != nil {
+		return nil, err
+	}
+	return c.Call(ctx, "attachBroadcastEvent", map[string]string{"organization_id": organization_id}, opts)
+}
+
+// GetBroadcastEvent getBroadcastEvent.
+func (c *Client) GetBroadcastEvent(ctx context.Context, organization_id string, event_id string, options ...*Options) (*Response, error) {
+	opts, err := singleOptions(options)
+	if err != nil {
+		return nil, err
+	}
+	return c.Call(ctx, "getBroadcastEvent", map[string]string{"organization_id": organization_id, "event_id": event_id}, opts)
+}
+
+// TransitionBroadcastEvent transitionBroadcastEvent.
+func (c *Client) TransitionBroadcastEvent(ctx context.Context, organization_id string, event_id string, options ...*Options) (*Response, error) {
+	opts, err := singleOptions(options)
+	if err != nil {
+		return nil, err
+	}
+	return c.Call(ctx, "transitionBroadcastEvent", map[string]string{"organization_id": organization_id, "event_id": event_id}, opts)
+}
+
+// GetBroadcastOperation getBroadcastOperation.
+func (c *Client) GetBroadcastOperation(ctx context.Context, organization_id string, operation_id string, options ...*Options) (*Response, error) {
+	opts, err := singleOptions(options)
+	if err != nil {
+		return nil, err
+	}
+	return c.Call(ctx, "getBroadcastOperation", map[string]string{"organization_id": organization_id, "operation_id": operation_id}, opts)
+}
+
+// GetBroadcastPreflight getBroadcastPreflight.
+func (c *Client) GetBroadcastPreflight(ctx context.Context, organization_id string, options ...*Options) (*Response, error) {
+	opts, err := singleOptions(options)
+	if err != nil {
+		return nil, err
+	}
+	return c.Call(ctx, "getBroadcastPreflight", map[string]string{"organization_id": organization_id}, opts)
+}
+
+// ListBroadcastOutputProfiles listBroadcastOutputProfiles.
+func (c *Client) ListBroadcastOutputProfiles(ctx context.Context, organization_id string, options ...*Options) (*Response, error) {
+	opts, err := singleOptions(options)
+	if err != nil {
+		return nil, err
+	}
+	return c.Call(ctx, "listBroadcastOutputProfiles", map[string]string{"organization_id": organization_id}, opts)
+}
+
+// ListBroadcastPublishers listBroadcastPublishers.
+func (c *Client) ListBroadcastPublishers(ctx context.Context, organization_id string, options ...*Options) (*Response, error) {
+	opts, err := singleOptions(options)
+	if err != nil {
+		return nil, err
+	}
+	return c.Call(ctx, "listBroadcastPublishers", map[string]string{"organization_id": organization_id}, opts)
+}
+
+// GetBroadcastPublisher getBroadcastPublisher.
+func (c *Client) GetBroadcastPublisher(ctx context.Context, organization_id string, publisher_id string, options ...*Options) (*Response, error) {
+	opts, err := singleOptions(options)
+	if err != nil {
+		return nil, err
+	}
+	return c.Call(ctx, "getBroadcastPublisher", map[string]string{"organization_id": organization_id, "publisher_id": publisher_id}, opts)
+}
+
+// StopBroadcastPublisher stopBroadcastPublisher.
+func (c *Client) StopBroadcastPublisher(ctx context.Context, organization_id string, publisher_id string, options ...*Options) (*Response, error) {
+	opts, err := singleOptions(options)
+	if err != nil {
+		return nil, err
+	}
+	return c.Call(ctx, "stopBroadcastPublisher", map[string]string{"organization_id": organization_id, "publisher_id": publisher_id}, opts)
+}
+
+// ListBroadcastSetups listBroadcastSetups.
+func (c *Client) ListBroadcastSetups(ctx context.Context, organization_id string, options ...*Options) (*Response, error) {
+	opts, err := singleOptions(options)
+	if err != nil {
+		return nil, err
+	}
+	return c.Call(ctx, "listBroadcastSetups", map[string]string{"organization_id": organization_id}, opts)
+}
+
+// WithLimit returns a copy with the limit query parameter set.
+func (p ListBroadcastSetupsParams) WithLimit(value int64) ListBroadcastSetupsParams {
+	p.Limit = &value
+	return p
+}
+
+// WithAfter returns a copy with the after query parameter set.
+func (p ListBroadcastSetupsParams) WithAfter(value string) ListBroadcastSetupsParams {
+	p.After = &value
+	return p
+}
+
+// QueryValues encodes the operation's typed query parameters. Each call returns fresh values.
+func (p ListBroadcastSetupsParams) QueryValues() url.Values {
+	values := url.Values{}
+
+	if p.Limit != nil {
+		values.Set("limit", fmt.Sprint(*p.Limit))
+	}
+
+	if p.After != nil {
+		values.Set("after", fmt.Sprint(*p.After))
+	}
+
+	return values
+}
+
+// CreateBroadcastSetup createBroadcastSetup.
+func (c *Client) CreateBroadcastSetup(ctx context.Context, organization_id string, options ...*Options) (*Response, error) {
+	opts, err := singleOptions(options)
+	if err != nil {
+		return nil, err
+	}
+	return c.Call(ctx, "createBroadcastSetup", map[string]string{"organization_id": organization_id}, opts)
+}
+
+// DeleteBroadcastSetup deleteBroadcastSetup.
+func (c *Client) DeleteBroadcastSetup(ctx context.Context, organization_id string, setup_id string, options ...*Options) (*Response, error) {
+	opts, err := singleOptions(options)
+	if err != nil {
+		return nil, err
+	}
+	return c.Call(ctx, "deleteBroadcastSetup", map[string]string{"organization_id": organization_id, "setup_id": setup_id}, opts)
+}
+
+// GetBroadcastSetup getBroadcastSetup.
+func (c *Client) GetBroadcastSetup(ctx context.Context, organization_id string, setup_id string, options ...*Options) (*Response, error) {
+	opts, err := singleOptions(options)
+	if err != nil {
+		return nil, err
+	}
+	return c.Call(ctx, "getBroadcastSetup", map[string]string{"organization_id": organization_id, "setup_id": setup_id}, opts)
+}
+
+// ReplaceBroadcastSetup replaceBroadcastSetup.
+func (c *Client) ReplaceBroadcastSetup(ctx context.Context, organization_id string, setup_id string, options ...*Options) (*Response, error) {
+	opts, err := singleOptions(options)
+	if err != nil {
+		return nil, err
+	}
+	return c.Call(ctx, "replaceBroadcastSetup", map[string]string{"organization_id": organization_id, "setup_id": setup_id}, opts)
+}
+
+// DuplicateBroadcastSetup duplicateBroadcastSetup.
+func (c *Client) DuplicateBroadcastSetup(ctx context.Context, organization_id string, setup_id string, options ...*Options) (*Response, error) {
+	opts, err := singleOptions(options)
+	if err != nil {
+		return nil, err
+	}
+	return c.Call(ctx, "duplicateBroadcastSetup", map[string]string{"organization_id": organization_id, "setup_id": setup_id}, opts)
+}
+
+// RequestBroadcastTakeover requestBroadcastTakeover.
+func (c *Client) RequestBroadcastTakeover(ctx context.Context, organization_id string, options ...*Options) (*Response, error) {
+	opts, err := singleOptions(options)
+	if err != nil {
+		return nil, err
+	}
+	return c.Call(ctx, "requestBroadcastTakeover", map[string]string{"organization_id": organization_id}, opts)
+}
+
+// CreateBroadcastWriteRequest createBroadcastWriteRequest.
+func (c *Client) CreateBroadcastWriteRequest(ctx context.Context, organization_id string, options ...*Options) (*Response, error) {
+	opts, err := singleOptions(options)
+	if err != nil {
+		return nil, err
+	}
+	return c.Call(ctx, "createBroadcastWriteRequest", map[string]string{"organization_id": organization_id}, opts)
+}
+
+// GetBroadcastWriteRequest getBroadcastWriteRequest.
+func (c *Client) GetBroadcastWriteRequest(ctx context.Context, organization_id string, request_id string, options ...*Options) (*Response, error) {
+	opts, err := singleOptions(options)
+	if err != nil {
+		return nil, err
+	}
+	return c.Call(ctx, "getBroadcastWriteRequest", map[string]string{"organization_id": organization_id, "request_id": request_id}, opts)
 }
 
 // GetOrganizationLiveStudio Read organization Live Studio settings.

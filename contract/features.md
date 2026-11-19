@@ -2,9 +2,10 @@
 
 | Surface | Client support |
 | --- | --- |
-| REST v1 | `bibleit.NewClient`: all 89 resource operations and generated schema models |
+| REST v1 | `bibleit.NewClient`: all 110 resource operations and generated schema models |
 | Personal resources | Finite personal/delegated tokens, identity, account, library, reading/search and Lives |
 | Organization resources | Scoped service tokens, membership, translations, Lives, Studio, presentations, assets and exports |
+| Broadcast SSH | Full validated Setup/read/write and lifecycle command surface, bounded decoding, exact-byte intents and explicit no-retry outcomes |
 | Conditional writes | Exact ETags and explicit caller-supplied idempotency keys; no automatic retries |
 | Live events | Bounded single HTTP polls with versioned snapshot validation |
 | Registered OAuth | Separate website-origin client for metadata, consent URLs, code exchange, refresh and revocation |
