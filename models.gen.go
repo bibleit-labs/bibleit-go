@@ -6,9 +6,142 @@ package bibleit
 import (
 	"encoding/json"
 	"errors"
+	"time"
 
 	"github.com/oapi-codegen/runtime"
 )
+
+// Defines values for BroadcastEventInputLicense.
+const (
+	BroadcastEventInputLicenseCreativeCommon BroadcastEventInputLicense = "creativeCommon"
+	BroadcastEventInputLicenseYoutube        BroadcastEventInputLicense = "youtube"
+)
+
+// Valid indicates whether the value is a known member of the BroadcastEventInputLicense enum.
+func (e BroadcastEventInputLicense) Valid() bool {
+	switch e {
+	case BroadcastEventInputLicenseCreativeCommon:
+		return true
+	case BroadcastEventInputLicenseYoutube:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for BroadcastEventInputPrivacy.
+const (
+	Private  BroadcastEventInputPrivacy = "private"
+	Public   BroadcastEventInputPrivacy = "public"
+	Unlisted BroadcastEventInputPrivacy = "unlisted"
+)
+
+// Valid indicates whether the value is a known member of the BroadcastEventInputPrivacy enum.
+func (e BroadcastEventInputPrivacy) Valid() bool {
+	switch e {
+	case Private:
+		return true
+	case Public:
+		return true
+	case Unlisted:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for BroadcastPreflightAutomaticRestart.
+const (
+	False BroadcastPreflightAutomaticRestart = false
+)
+
+// Valid indicates whether the value is a known member of the BroadcastPreflightAutomaticRestart enum.
+func (e BroadcastPreflightAutomaticRestart) Valid() bool {
+	switch e {
+	case False:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for BroadcastPreflightBrowserCaptureRequired.
+const (
+	BroadcastPreflightBrowserCaptureRequiredTrue BroadcastPreflightBrowserCaptureRequired = true
+)
+
+// Valid indicates whether the value is a known member of the BroadcastPreflightBrowserCaptureRequired enum.
+func (e BroadcastPreflightBrowserCaptureRequired) Valid() bool {
+	switch e {
+	case BroadcastPreflightBrowserCaptureRequiredTrue:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for BroadcastThumbnailInputMode.
+const (
+	BroadcastThumbnailInputModeAsset   BroadcastThumbnailInputMode = "asset"
+	BroadcastThumbnailInputModeDefault BroadcastThumbnailInputMode = "default"
+)
+
+// Valid indicates whether the value is a known member of the BroadcastThumbnailInputMode enum.
+func (e BroadcastThumbnailInputMode) Valid() bool {
+	switch e {
+	case BroadcastThumbnailInputModeAsset:
+		return true
+	case BroadcastThumbnailInputModeDefault:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for BroadcastTransitionInputState.
+const (
+	BroadcastTransitionInputStateComplete BroadcastTransitionInputState = "complete"
+	BroadcastTransitionInputStateLive     BroadcastTransitionInputState = "live"
+	BroadcastTransitionInputStateTesting  BroadcastTransitionInputState = "testing"
+)
+
+// Valid indicates whether the value is a known member of the BroadcastTransitionInputState enum.
+func (e BroadcastTransitionInputState) Valid() bool {
+	switch e {
+	case BroadcastTransitionInputStateComplete:
+		return true
+	case BroadcastTransitionInputStateLive:
+		return true
+	case BroadcastTransitionInputStateTesting:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for BroadcastWriteIntentInputOperation.
+const (
+	Create    BroadcastWriteIntentInputOperation = "create"
+	Delete    BroadcastWriteIntentInputOperation = "delete"
+	Duplicate BroadcastWriteIntentInputOperation = "duplicate"
+	Save      BroadcastWriteIntentInputOperation = "save"
+)
+
+// Valid indicates whether the value is a known member of the BroadcastWriteIntentInputOperation enum.
+func (e BroadcastWriteIntentInputOperation) Valid() bool {
+	switch e {
+	case Create:
+		return true
+	case Delete:
+		return true
+	case Duplicate:
+		return true
+	case Save:
+		return true
+	default:
+		return false
+	}
+}
 
 // Defines values for CatalogueTranslationLanguage.
 const (
@@ -361,6 +494,426 @@ func (e LiveSnapshotEventType) Valid() bool {
 	}
 }
 
+// Defines values for LiveStudioOverlayNode0Kind.
+const (
+	Logo LiveStudioOverlayNode0Kind = "logo"
+)
+
+// Valid indicates whether the value is a known member of the LiveStudioOverlayNode0Kind enum.
+func (e LiveStudioOverlayNode0Kind) Valid() bool {
+	switch e {
+	case Logo:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for LiveStudioOverlayNode1Kind.
+const (
+	LiveStudioOverlayNode1KindVerse LiveStudioOverlayNode1Kind = "verse"
+)
+
+// Valid indicates whether the value is a known member of the LiveStudioOverlayNode1Kind enum.
+func (e LiveStudioOverlayNode1Kind) Valid() bool {
+	switch e {
+	case LiveStudioOverlayNode1KindVerse:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for LiveStudioOverlayNode1StyleElementsReferenceAlign.
+const (
+	LiveStudioOverlayNode1StyleElementsReferenceAlignCenter LiveStudioOverlayNode1StyleElementsReferenceAlign = "center"
+	LiveStudioOverlayNode1StyleElementsReferenceAlignLeft   LiveStudioOverlayNode1StyleElementsReferenceAlign = "left"
+	LiveStudioOverlayNode1StyleElementsReferenceAlignRight  LiveStudioOverlayNode1StyleElementsReferenceAlign = "right"
+)
+
+// Valid indicates whether the value is a known member of the LiveStudioOverlayNode1StyleElementsReferenceAlign enum.
+func (e LiveStudioOverlayNode1StyleElementsReferenceAlign) Valid() bool {
+	switch e {
+	case LiveStudioOverlayNode1StyleElementsReferenceAlignCenter:
+		return true
+	case LiveStudioOverlayNode1StyleElementsReferenceAlignLeft:
+		return true
+	case LiveStudioOverlayNode1StyleElementsReferenceAlignRight:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for LiveStudioOverlayNode1StyleElementsReferenceFont.
+const (
+	LiveStudioOverlayNode1StyleElementsReferenceFontArial     LiveStudioOverlayNode1StyleElementsReferenceFont = "arial"
+	LiveStudioOverlayNode1StyleElementsReferenceFontComicSans LiveStudioOverlayNode1StyleElementsReferenceFont = "comic-sans"
+	LiveStudioOverlayNode1StyleElementsReferenceFontGeorgia   LiveStudioOverlayNode1StyleElementsReferenceFont = "georgia"
+	LiveStudioOverlayNode1StyleElementsReferenceFontMono      LiveStudioOverlayNode1StyleElementsReferenceFont = "mono"
+	LiveStudioOverlayNode1StyleElementsReferenceFontPalatino  LiveStudioOverlayNode1StyleElementsReferenceFont = "palatino"
+	LiveStudioOverlayNode1StyleElementsReferenceFontSans      LiveStudioOverlayNode1StyleElementsReferenceFont = "sans"
+	LiveStudioOverlayNode1StyleElementsReferenceFontSerif     LiveStudioOverlayNode1StyleElementsReferenceFont = "serif"
+	LiveStudioOverlayNode1StyleElementsReferenceFontTimes     LiveStudioOverlayNode1StyleElementsReferenceFont = "times"
+	LiveStudioOverlayNode1StyleElementsReferenceFontTrebuchet LiveStudioOverlayNode1StyleElementsReferenceFont = "trebuchet"
+	LiveStudioOverlayNode1StyleElementsReferenceFontVerdana   LiveStudioOverlayNode1StyleElementsReferenceFont = "verdana"
+)
+
+// Valid indicates whether the value is a known member of the LiveStudioOverlayNode1StyleElementsReferenceFont enum.
+func (e LiveStudioOverlayNode1StyleElementsReferenceFont) Valid() bool {
+	switch e {
+	case LiveStudioOverlayNode1StyleElementsReferenceFontArial:
+		return true
+	case LiveStudioOverlayNode1StyleElementsReferenceFontComicSans:
+		return true
+	case LiveStudioOverlayNode1StyleElementsReferenceFontGeorgia:
+		return true
+	case LiveStudioOverlayNode1StyleElementsReferenceFontMono:
+		return true
+	case LiveStudioOverlayNode1StyleElementsReferenceFontPalatino:
+		return true
+	case LiveStudioOverlayNode1StyleElementsReferenceFontSans:
+		return true
+	case LiveStudioOverlayNode1StyleElementsReferenceFontSerif:
+		return true
+	case LiveStudioOverlayNode1StyleElementsReferenceFontTimes:
+		return true
+	case LiveStudioOverlayNode1StyleElementsReferenceFontTrebuchet:
+		return true
+	case LiveStudioOverlayNode1StyleElementsReferenceFontVerdana:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for LiveStudioOverlayNode1StyleElementsTextAlign.
+const (
+	LiveStudioOverlayNode1StyleElementsTextAlignCenter LiveStudioOverlayNode1StyleElementsTextAlign = "center"
+	LiveStudioOverlayNode1StyleElementsTextAlignLeft   LiveStudioOverlayNode1StyleElementsTextAlign = "left"
+	LiveStudioOverlayNode1StyleElementsTextAlignRight  LiveStudioOverlayNode1StyleElementsTextAlign = "right"
+)
+
+// Valid indicates whether the value is a known member of the LiveStudioOverlayNode1StyleElementsTextAlign enum.
+func (e LiveStudioOverlayNode1StyleElementsTextAlign) Valid() bool {
+	switch e {
+	case LiveStudioOverlayNode1StyleElementsTextAlignCenter:
+		return true
+	case LiveStudioOverlayNode1StyleElementsTextAlignLeft:
+		return true
+	case LiveStudioOverlayNode1StyleElementsTextAlignRight:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for LiveStudioOverlayNode1StyleElementsTextFont.
+const (
+	LiveStudioOverlayNode1StyleElementsTextFontArial     LiveStudioOverlayNode1StyleElementsTextFont = "arial"
+	LiveStudioOverlayNode1StyleElementsTextFontComicSans LiveStudioOverlayNode1StyleElementsTextFont = "comic-sans"
+	LiveStudioOverlayNode1StyleElementsTextFontGeorgia   LiveStudioOverlayNode1StyleElementsTextFont = "georgia"
+	LiveStudioOverlayNode1StyleElementsTextFontMono      LiveStudioOverlayNode1StyleElementsTextFont = "mono"
+	LiveStudioOverlayNode1StyleElementsTextFontPalatino  LiveStudioOverlayNode1StyleElementsTextFont = "palatino"
+	LiveStudioOverlayNode1StyleElementsTextFontSans      LiveStudioOverlayNode1StyleElementsTextFont = "sans"
+	LiveStudioOverlayNode1StyleElementsTextFontSerif     LiveStudioOverlayNode1StyleElementsTextFont = "serif"
+	LiveStudioOverlayNode1StyleElementsTextFontTimes     LiveStudioOverlayNode1StyleElementsTextFont = "times"
+	LiveStudioOverlayNode1StyleElementsTextFontTrebuchet LiveStudioOverlayNode1StyleElementsTextFont = "trebuchet"
+	LiveStudioOverlayNode1StyleElementsTextFontVerdana   LiveStudioOverlayNode1StyleElementsTextFont = "verdana"
+)
+
+// Valid indicates whether the value is a known member of the LiveStudioOverlayNode1StyleElementsTextFont enum.
+func (e LiveStudioOverlayNode1StyleElementsTextFont) Valid() bool {
+	switch e {
+	case LiveStudioOverlayNode1StyleElementsTextFontArial:
+		return true
+	case LiveStudioOverlayNode1StyleElementsTextFontComicSans:
+		return true
+	case LiveStudioOverlayNode1StyleElementsTextFontGeorgia:
+		return true
+	case LiveStudioOverlayNode1StyleElementsTextFontMono:
+		return true
+	case LiveStudioOverlayNode1StyleElementsTextFontPalatino:
+		return true
+	case LiveStudioOverlayNode1StyleElementsTextFontSans:
+		return true
+	case LiveStudioOverlayNode1StyleElementsTextFontSerif:
+		return true
+	case LiveStudioOverlayNode1StyleElementsTextFontTimes:
+		return true
+	case LiveStudioOverlayNode1StyleElementsTextFontTrebuchet:
+		return true
+	case LiveStudioOverlayNode1StyleElementsTextFontVerdana:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for LiveStudioOverlayNode1StyleElementsTranslationAlign.
+const (
+	LiveStudioOverlayNode1StyleElementsTranslationAlignCenter LiveStudioOverlayNode1StyleElementsTranslationAlign = "center"
+	LiveStudioOverlayNode1StyleElementsTranslationAlignLeft   LiveStudioOverlayNode1StyleElementsTranslationAlign = "left"
+	LiveStudioOverlayNode1StyleElementsTranslationAlignRight  LiveStudioOverlayNode1StyleElementsTranslationAlign = "right"
+)
+
+// Valid indicates whether the value is a known member of the LiveStudioOverlayNode1StyleElementsTranslationAlign enum.
+func (e LiveStudioOverlayNode1StyleElementsTranslationAlign) Valid() bool {
+	switch e {
+	case LiveStudioOverlayNode1StyleElementsTranslationAlignCenter:
+		return true
+	case LiveStudioOverlayNode1StyleElementsTranslationAlignLeft:
+		return true
+	case LiveStudioOverlayNode1StyleElementsTranslationAlignRight:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for LiveStudioOverlayNode1StyleElementsTranslationFont.
+const (
+	LiveStudioOverlayNode1StyleElementsTranslationFontArial     LiveStudioOverlayNode1StyleElementsTranslationFont = "arial"
+	LiveStudioOverlayNode1StyleElementsTranslationFontComicSans LiveStudioOverlayNode1StyleElementsTranslationFont = "comic-sans"
+	LiveStudioOverlayNode1StyleElementsTranslationFontGeorgia   LiveStudioOverlayNode1StyleElementsTranslationFont = "georgia"
+	LiveStudioOverlayNode1StyleElementsTranslationFontMono      LiveStudioOverlayNode1StyleElementsTranslationFont = "mono"
+	LiveStudioOverlayNode1StyleElementsTranslationFontPalatino  LiveStudioOverlayNode1StyleElementsTranslationFont = "palatino"
+	LiveStudioOverlayNode1StyleElementsTranslationFontSans      LiveStudioOverlayNode1StyleElementsTranslationFont = "sans"
+	LiveStudioOverlayNode1StyleElementsTranslationFontSerif     LiveStudioOverlayNode1StyleElementsTranslationFont = "serif"
+	LiveStudioOverlayNode1StyleElementsTranslationFontTimes     LiveStudioOverlayNode1StyleElementsTranslationFont = "times"
+	LiveStudioOverlayNode1StyleElementsTranslationFontTrebuchet LiveStudioOverlayNode1StyleElementsTranslationFont = "trebuchet"
+	LiveStudioOverlayNode1StyleElementsTranslationFontVerdana   LiveStudioOverlayNode1StyleElementsTranslationFont = "verdana"
+)
+
+// Valid indicates whether the value is a known member of the LiveStudioOverlayNode1StyleElementsTranslationFont enum.
+func (e LiveStudioOverlayNode1StyleElementsTranslationFont) Valid() bool {
+	switch e {
+	case LiveStudioOverlayNode1StyleElementsTranslationFontArial:
+		return true
+	case LiveStudioOverlayNode1StyleElementsTranslationFontComicSans:
+		return true
+	case LiveStudioOverlayNode1StyleElementsTranslationFontGeorgia:
+		return true
+	case LiveStudioOverlayNode1StyleElementsTranslationFontMono:
+		return true
+	case LiveStudioOverlayNode1StyleElementsTranslationFontPalatino:
+		return true
+	case LiveStudioOverlayNode1StyleElementsTranslationFontSans:
+		return true
+	case LiveStudioOverlayNode1StyleElementsTranslationFontSerif:
+		return true
+	case LiveStudioOverlayNode1StyleElementsTranslationFontTimes:
+		return true
+	case LiveStudioOverlayNode1StyleElementsTranslationFontTrebuchet:
+		return true
+	case LiveStudioOverlayNode1StyleElementsTranslationFontVerdana:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for LiveStudioOverlayNode2Kind.
+const (
+	LiveStudioOverlayNode2KindText LiveStudioOverlayNode2Kind = "text"
+)
+
+// Valid indicates whether the value is a known member of the LiveStudioOverlayNode2Kind enum.
+func (e LiveStudioOverlayNode2Kind) Valid() bool {
+	switch e {
+	case LiveStudioOverlayNode2KindText:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for LiveStudioOverlayNode2StyleElementsTextAlign.
+const (
+	LiveStudioOverlayNode2StyleElementsTextAlignCenter LiveStudioOverlayNode2StyleElementsTextAlign = "center"
+	LiveStudioOverlayNode2StyleElementsTextAlignLeft   LiveStudioOverlayNode2StyleElementsTextAlign = "left"
+	LiveStudioOverlayNode2StyleElementsTextAlignRight  LiveStudioOverlayNode2StyleElementsTextAlign = "right"
+)
+
+// Valid indicates whether the value is a known member of the LiveStudioOverlayNode2StyleElementsTextAlign enum.
+func (e LiveStudioOverlayNode2StyleElementsTextAlign) Valid() bool {
+	switch e {
+	case LiveStudioOverlayNode2StyleElementsTextAlignCenter:
+		return true
+	case LiveStudioOverlayNode2StyleElementsTextAlignLeft:
+		return true
+	case LiveStudioOverlayNode2StyleElementsTextAlignRight:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for LiveStudioOverlayNode2StyleElementsTextFont.
+const (
+	LiveStudioOverlayNode2StyleElementsTextFontArial     LiveStudioOverlayNode2StyleElementsTextFont = "arial"
+	LiveStudioOverlayNode2StyleElementsTextFontComicSans LiveStudioOverlayNode2StyleElementsTextFont = "comic-sans"
+	LiveStudioOverlayNode2StyleElementsTextFontGeorgia   LiveStudioOverlayNode2StyleElementsTextFont = "georgia"
+	LiveStudioOverlayNode2StyleElementsTextFontMono      LiveStudioOverlayNode2StyleElementsTextFont = "mono"
+	LiveStudioOverlayNode2StyleElementsTextFontPalatino  LiveStudioOverlayNode2StyleElementsTextFont = "palatino"
+	LiveStudioOverlayNode2StyleElementsTextFontSans      LiveStudioOverlayNode2StyleElementsTextFont = "sans"
+	LiveStudioOverlayNode2StyleElementsTextFontSerif     LiveStudioOverlayNode2StyleElementsTextFont = "serif"
+	LiveStudioOverlayNode2StyleElementsTextFontTimes     LiveStudioOverlayNode2StyleElementsTextFont = "times"
+	LiveStudioOverlayNode2StyleElementsTextFontTrebuchet LiveStudioOverlayNode2StyleElementsTextFont = "trebuchet"
+	LiveStudioOverlayNode2StyleElementsTextFontVerdana   LiveStudioOverlayNode2StyleElementsTextFont = "verdana"
+)
+
+// Valid indicates whether the value is a known member of the LiveStudioOverlayNode2StyleElementsTextFont enum.
+func (e LiveStudioOverlayNode2StyleElementsTextFont) Valid() bool {
+	switch e {
+	case LiveStudioOverlayNode2StyleElementsTextFontArial:
+		return true
+	case LiveStudioOverlayNode2StyleElementsTextFontComicSans:
+		return true
+	case LiveStudioOverlayNode2StyleElementsTextFontGeorgia:
+		return true
+	case LiveStudioOverlayNode2StyleElementsTextFontMono:
+		return true
+	case LiveStudioOverlayNode2StyleElementsTextFontPalatino:
+		return true
+	case LiveStudioOverlayNode2StyleElementsTextFontSans:
+		return true
+	case LiveStudioOverlayNode2StyleElementsTextFontSerif:
+		return true
+	case LiveStudioOverlayNode2StyleElementsTextFontTimes:
+		return true
+	case LiveStudioOverlayNode2StyleElementsTextFontTrebuchet:
+		return true
+	case LiveStudioOverlayNode2StyleElementsTextFontVerdana:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for LiveStudioOverlayNode3Kind.
+const (
+	LiveStudioOverlayNode3KindImage LiveStudioOverlayNode3Kind = "image"
+)
+
+// Valid indicates whether the value is a known member of the LiveStudioOverlayNode3Kind enum.
+func (e LiveStudioOverlayNode3Kind) Valid() bool {
+	switch e {
+	case LiveStudioOverlayNode3KindImage:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for LiveStudioOverlayNode4Kind.
+const (
+	ViewerControls LiveStudioOverlayNode4Kind = "viewer-controls"
+)
+
+// Valid indicates whether the value is a known member of the LiveStudioOverlayNode4Kind enum.
+func (e LiveStudioOverlayNode4Kind) Valid() bool {
+	switch e {
+	case ViewerControls:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for LiveStudioOverlayNode5Kind.
+const (
+	LiveBadge LiveStudioOverlayNode5Kind = "live-badge"
+)
+
+// Valid indicates whether the value is a known member of the LiveStudioOverlayNode5Kind enum.
+func (e LiveStudioOverlayNode5Kind) Valid() bool {
+	switch e {
+	case LiveBadge:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for LiveStudioOverlayNode5StyleElementsTextAlign.
+const (
+	LiveStudioOverlayNode5StyleElementsTextAlignCenter LiveStudioOverlayNode5StyleElementsTextAlign = "center"
+	LiveStudioOverlayNode5StyleElementsTextAlignLeft   LiveStudioOverlayNode5StyleElementsTextAlign = "left"
+	LiveStudioOverlayNode5StyleElementsTextAlignRight  LiveStudioOverlayNode5StyleElementsTextAlign = "right"
+)
+
+// Valid indicates whether the value is a known member of the LiveStudioOverlayNode5StyleElementsTextAlign enum.
+func (e LiveStudioOverlayNode5StyleElementsTextAlign) Valid() bool {
+	switch e {
+	case LiveStudioOverlayNode5StyleElementsTextAlignCenter:
+		return true
+	case LiveStudioOverlayNode5StyleElementsTextAlignLeft:
+		return true
+	case LiveStudioOverlayNode5StyleElementsTextAlignRight:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for LiveStudioOverlayNode5StyleElementsTextFont.
+const (
+	LiveStudioOverlayNode5StyleElementsTextFontArial     LiveStudioOverlayNode5StyleElementsTextFont = "arial"
+	LiveStudioOverlayNode5StyleElementsTextFontComicSans LiveStudioOverlayNode5StyleElementsTextFont = "comic-sans"
+	LiveStudioOverlayNode5StyleElementsTextFontGeorgia   LiveStudioOverlayNode5StyleElementsTextFont = "georgia"
+	LiveStudioOverlayNode5StyleElementsTextFontMono      LiveStudioOverlayNode5StyleElementsTextFont = "mono"
+	LiveStudioOverlayNode5StyleElementsTextFontPalatino  LiveStudioOverlayNode5StyleElementsTextFont = "palatino"
+	LiveStudioOverlayNode5StyleElementsTextFontSans      LiveStudioOverlayNode5StyleElementsTextFont = "sans"
+	LiveStudioOverlayNode5StyleElementsTextFontSerif     LiveStudioOverlayNode5StyleElementsTextFont = "serif"
+	LiveStudioOverlayNode5StyleElementsTextFontTimes     LiveStudioOverlayNode5StyleElementsTextFont = "times"
+	LiveStudioOverlayNode5StyleElementsTextFontTrebuchet LiveStudioOverlayNode5StyleElementsTextFont = "trebuchet"
+	LiveStudioOverlayNode5StyleElementsTextFontVerdana   LiveStudioOverlayNode5StyleElementsTextFont = "verdana"
+)
+
+// Valid indicates whether the value is a known member of the LiveStudioOverlayNode5StyleElementsTextFont enum.
+func (e LiveStudioOverlayNode5StyleElementsTextFont) Valid() bool {
+	switch e {
+	case LiveStudioOverlayNode5StyleElementsTextFontArial:
+		return true
+	case LiveStudioOverlayNode5StyleElementsTextFontComicSans:
+		return true
+	case LiveStudioOverlayNode5StyleElementsTextFontGeorgia:
+		return true
+	case LiveStudioOverlayNode5StyleElementsTextFontMono:
+		return true
+	case LiveStudioOverlayNode5StyleElementsTextFontPalatino:
+		return true
+	case LiveStudioOverlayNode5StyleElementsTextFontSans:
+		return true
+	case LiveStudioOverlayNode5StyleElementsTextFontSerif:
+		return true
+	case LiveStudioOverlayNode5StyleElementsTextFontTimes:
+		return true
+	case LiveStudioOverlayNode5StyleElementsTextFontTrebuchet:
+		return true
+	case LiveStudioOverlayNode5StyleElementsTextFontVerdana:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for LiveStudioOverlayNode6Kind.
+const (
+	Container LiveStudioOverlayNode6Kind = "container"
+)
+
+// Valid indicates whether the value is a known member of the LiveStudioOverlayNode6Kind enum.
+func (e LiveStudioOverlayNode6Kind) Valid() bool {
+	switch e {
+	case Container:
+		return true
+	default:
+		return false
+	}
+}
+
 // Defines values for LiveStudioSettingsElementsReferenceAlign.
 const (
 	LiveStudioSettingsElementsReferenceAlignCenter LiveStudioSettingsElementsReferenceAlign = "center"
@@ -606,19 +1159,40 @@ func (e LiveStudioSettingsInputElementsReferenceAlign) Valid() bool {
 
 // Defines values for LiveStudioSettingsInputElementsReferenceFont.
 const (
-	LiveStudioSettingsInputElementsReferenceFontMono  LiveStudioSettingsInputElementsReferenceFont = "mono"
-	LiveStudioSettingsInputElementsReferenceFontSans  LiveStudioSettingsInputElementsReferenceFont = "sans"
-	LiveStudioSettingsInputElementsReferenceFontSerif LiveStudioSettingsInputElementsReferenceFont = "serif"
+	LiveStudioSettingsInputElementsReferenceFontArial     LiveStudioSettingsInputElementsReferenceFont = "arial"
+	LiveStudioSettingsInputElementsReferenceFontComicSans LiveStudioSettingsInputElementsReferenceFont = "comic-sans"
+	LiveStudioSettingsInputElementsReferenceFontGeorgia   LiveStudioSettingsInputElementsReferenceFont = "georgia"
+	LiveStudioSettingsInputElementsReferenceFontMono      LiveStudioSettingsInputElementsReferenceFont = "mono"
+	LiveStudioSettingsInputElementsReferenceFontPalatino  LiveStudioSettingsInputElementsReferenceFont = "palatino"
+	LiveStudioSettingsInputElementsReferenceFontSans      LiveStudioSettingsInputElementsReferenceFont = "sans"
+	LiveStudioSettingsInputElementsReferenceFontSerif     LiveStudioSettingsInputElementsReferenceFont = "serif"
+	LiveStudioSettingsInputElementsReferenceFontTimes     LiveStudioSettingsInputElementsReferenceFont = "times"
+	LiveStudioSettingsInputElementsReferenceFontTrebuchet LiveStudioSettingsInputElementsReferenceFont = "trebuchet"
+	LiveStudioSettingsInputElementsReferenceFontVerdana   LiveStudioSettingsInputElementsReferenceFont = "verdana"
 )
 
 // Valid indicates whether the value is a known member of the LiveStudioSettingsInputElementsReferenceFont enum.
 func (e LiveStudioSettingsInputElementsReferenceFont) Valid() bool {
 	switch e {
+	case LiveStudioSettingsInputElementsReferenceFontArial:
+		return true
+	case LiveStudioSettingsInputElementsReferenceFontComicSans:
+		return true
+	case LiveStudioSettingsInputElementsReferenceFontGeorgia:
+		return true
 	case LiveStudioSettingsInputElementsReferenceFontMono:
+		return true
+	case LiveStudioSettingsInputElementsReferenceFontPalatino:
 		return true
 	case LiveStudioSettingsInputElementsReferenceFontSans:
 		return true
 	case LiveStudioSettingsInputElementsReferenceFontSerif:
+		return true
+	case LiveStudioSettingsInputElementsReferenceFontTimes:
+		return true
+	case LiveStudioSettingsInputElementsReferenceFontTrebuchet:
+		return true
+	case LiveStudioSettingsInputElementsReferenceFontVerdana:
 		return true
 	default:
 		return false
@@ -648,19 +1222,40 @@ func (e LiveStudioSettingsInputElementsTextAlign) Valid() bool {
 
 // Defines values for LiveStudioSettingsInputElementsTextFont.
 const (
-	LiveStudioSettingsInputElementsTextFontMono  LiveStudioSettingsInputElementsTextFont = "mono"
-	LiveStudioSettingsInputElementsTextFontSans  LiveStudioSettingsInputElementsTextFont = "sans"
-	LiveStudioSettingsInputElementsTextFontSerif LiveStudioSettingsInputElementsTextFont = "serif"
+	LiveStudioSettingsInputElementsTextFontArial     LiveStudioSettingsInputElementsTextFont = "arial"
+	LiveStudioSettingsInputElementsTextFontComicSans LiveStudioSettingsInputElementsTextFont = "comic-sans"
+	LiveStudioSettingsInputElementsTextFontGeorgia   LiveStudioSettingsInputElementsTextFont = "georgia"
+	LiveStudioSettingsInputElementsTextFontMono      LiveStudioSettingsInputElementsTextFont = "mono"
+	LiveStudioSettingsInputElementsTextFontPalatino  LiveStudioSettingsInputElementsTextFont = "palatino"
+	LiveStudioSettingsInputElementsTextFontSans      LiveStudioSettingsInputElementsTextFont = "sans"
+	LiveStudioSettingsInputElementsTextFontSerif     LiveStudioSettingsInputElementsTextFont = "serif"
+	LiveStudioSettingsInputElementsTextFontTimes     LiveStudioSettingsInputElementsTextFont = "times"
+	LiveStudioSettingsInputElementsTextFontTrebuchet LiveStudioSettingsInputElementsTextFont = "trebuchet"
+	LiveStudioSettingsInputElementsTextFontVerdana   LiveStudioSettingsInputElementsTextFont = "verdana"
 )
 
 // Valid indicates whether the value is a known member of the LiveStudioSettingsInputElementsTextFont enum.
 func (e LiveStudioSettingsInputElementsTextFont) Valid() bool {
 	switch e {
+	case LiveStudioSettingsInputElementsTextFontArial:
+		return true
+	case LiveStudioSettingsInputElementsTextFontComicSans:
+		return true
+	case LiveStudioSettingsInputElementsTextFontGeorgia:
+		return true
 	case LiveStudioSettingsInputElementsTextFontMono:
+		return true
+	case LiveStudioSettingsInputElementsTextFontPalatino:
 		return true
 	case LiveStudioSettingsInputElementsTextFontSans:
 		return true
 	case LiveStudioSettingsInputElementsTextFontSerif:
+		return true
+	case LiveStudioSettingsInputElementsTextFontTimes:
+		return true
+	case LiveStudioSettingsInputElementsTextFontTrebuchet:
+		return true
+	case LiveStudioSettingsInputElementsTextFontVerdana:
 		return true
 	default:
 		return false
@@ -690,19 +1285,40 @@ func (e LiveStudioSettingsInputElementsTranslationAlign) Valid() bool {
 
 // Defines values for LiveStudioSettingsInputElementsTranslationFont.
 const (
-	LiveStudioSettingsInputElementsTranslationFontMono  LiveStudioSettingsInputElementsTranslationFont = "mono"
-	LiveStudioSettingsInputElementsTranslationFontSans  LiveStudioSettingsInputElementsTranslationFont = "sans"
-	LiveStudioSettingsInputElementsTranslationFontSerif LiveStudioSettingsInputElementsTranslationFont = "serif"
+	LiveStudioSettingsInputElementsTranslationFontArial     LiveStudioSettingsInputElementsTranslationFont = "arial"
+	LiveStudioSettingsInputElementsTranslationFontComicSans LiveStudioSettingsInputElementsTranslationFont = "comic-sans"
+	LiveStudioSettingsInputElementsTranslationFontGeorgia   LiveStudioSettingsInputElementsTranslationFont = "georgia"
+	LiveStudioSettingsInputElementsTranslationFontMono      LiveStudioSettingsInputElementsTranslationFont = "mono"
+	LiveStudioSettingsInputElementsTranslationFontPalatino  LiveStudioSettingsInputElementsTranslationFont = "palatino"
+	LiveStudioSettingsInputElementsTranslationFontSans      LiveStudioSettingsInputElementsTranslationFont = "sans"
+	LiveStudioSettingsInputElementsTranslationFontSerif     LiveStudioSettingsInputElementsTranslationFont = "serif"
+	LiveStudioSettingsInputElementsTranslationFontTimes     LiveStudioSettingsInputElementsTranslationFont = "times"
+	LiveStudioSettingsInputElementsTranslationFontTrebuchet LiveStudioSettingsInputElementsTranslationFont = "trebuchet"
+	LiveStudioSettingsInputElementsTranslationFontVerdana   LiveStudioSettingsInputElementsTranslationFont = "verdana"
 )
 
 // Valid indicates whether the value is a known member of the LiveStudioSettingsInputElementsTranslationFont enum.
 func (e LiveStudioSettingsInputElementsTranslationFont) Valid() bool {
 	switch e {
+	case LiveStudioSettingsInputElementsTranslationFontArial:
+		return true
+	case LiveStudioSettingsInputElementsTranslationFontComicSans:
+		return true
+	case LiveStudioSettingsInputElementsTranslationFontGeorgia:
+		return true
 	case LiveStudioSettingsInputElementsTranslationFontMono:
+		return true
+	case LiveStudioSettingsInputElementsTranslationFontPalatino:
 		return true
 	case LiveStudioSettingsInputElementsTranslationFontSans:
 		return true
 	case LiveStudioSettingsInputElementsTranslationFontSerif:
+		return true
+	case LiveStudioSettingsInputElementsTranslationFontTimes:
+		return true
+	case LiveStudioSettingsInputElementsTranslationFontTrebuchet:
+		return true
+	case LiveStudioSettingsInputElementsTranslationFontVerdana:
 		return true
 	default:
 		return false
@@ -1980,13 +2596,13 @@ func (e PresentationVideoElementType) Valid() bool {
 
 // Defines values for PresentationYouTubeElementType.
 const (
-	Youtube PresentationYouTubeElementType = "youtube"
+	PresentationYouTubeElementTypeYoutube PresentationYouTubeElementType = "youtube"
 )
 
 // Valid indicates whether the value is a known member of the PresentationYouTubeElementType enum.
 func (e PresentationYouTubeElementType) Valid() bool {
 	switch e {
-	case Youtube:
+	case PresentationYouTubeElementTypeYoutube:
 		return true
 	default:
 		return false
@@ -2374,6 +2990,250 @@ type BookDefinition_Names struct {
 	Pt string `json:"pt"`
 }
 
+// BroadcastAttachInput defines model for BroadcastAttachInput.
+type BroadcastAttachInput struct {
+	ProviderBroadcastID string `json:"provider_broadcast_id"`
+}
+
+// BroadcastChannel defines model for BroadcastChannel.
+type BroadcastChannel struct {
+	ChannelID string  `json:"channel_id"`
+	ID        string  `json:"id"`
+	LastError *string `json:"last_error,omitempty"`
+	Revision  int64   `json:"revision"`
+	State     string  `json:"state"`
+	Title     string  `json:"title"`
+}
+
+// BroadcastChannelResult defines model for BroadcastChannelResult.
+type BroadcastChannelResult = *BroadcastChannel
+
+// BroadcastDuplicateInput defines model for BroadcastDuplicateInput.
+type BroadcastDuplicateInput struct {
+	Name string `json:"name"`
+}
+
+// BroadcastEmptyInput defines model for BroadcastEmptyInput.
+type BroadcastEmptyInput = struct{}
+
+// BroadcastEvent defines model for BroadcastEvent.
+type BroadcastEvent struct {
+	ChannelID                string  `json:"channel_id"`
+	Description              *string `json:"description,omitempty"`
+	Desired                  *string `json:"desired,omitempty"`
+	Health                   *string `json:"health,omitempty"`
+	ID                       string  `json:"id"`
+	LastError                *string `json:"last_error,omitempty"`
+	MadeForKids              *bool   `json:"made_for_kids,omitempty"`
+	OrganizationID           string  `json:"organization_id"`
+	Privacy                  *string `json:"privacy,omitempty"`
+	ProviderBroadcastID      *string `json:"provider_broadcast_id,omitempty"`
+	ProviderObservationAgeMs *int64  `json:"provider_observation_age_ms,omitempty"`
+	ProviderObservedAt       *int64  `json:"provider_observed_at,omitempty"`
+	ProviderState            *string `json:"provider_state,omitempty"`
+	Revision                 int64   `json:"revision"`
+	ScheduledStart           *string `json:"scheduled_start,omitempty"`
+	State                    string  `json:"state"`
+	StreamState              *string `json:"stream_state,omitempty"`
+	Title                    string  `json:"title"`
+}
+
+// BroadcastEventInput defines model for BroadcastEventInput.
+type BroadcastEventInput struct {
+	CategoryID          *string                     `json:"categoryId,omitempty"`
+	Description         string                      `json:"description"`
+	Embeddable          *bool                       `json:"embeddable,omitempty"`
+	Language            *string                     `json:"language,omitempty"`
+	License             *BroadcastEventInputLicense `json:"license,omitempty"`
+	MadeForKids         bool                        `json:"madeForKids"`
+	Privacy             BroadcastEventInputPrivacy  `json:"privacy"`
+	PublicStatsViewable *bool                       `json:"publicStatsViewable,omitempty"`
+	ScheduledStart      time.Time                   `json:"scheduledStart"`
+	Tags                []string                    `json:"tags,omitempty"`
+
+	// Thumbnail default uses the connected channel image; asset requires an organization-owned image assetId.
+	Thumbnail *BroadcastThumbnailInput `json:"thumbnail,omitempty"`
+	Title     string                   `json:"title"`
+}
+
+// BroadcastEventInputLicense defines model for BroadcastEventInput.License.
+type BroadcastEventInputLicense string
+
+// BroadcastEventInputPrivacy defines model for BroadcastEventInput.Privacy.
+type BroadcastEventInputPrivacy string
+
+// BroadcastEventList defines model for BroadcastEventList.
+type BroadcastEventList struct {
+	Data []BroadcastEvent `json:"data"`
+}
+
+// BroadcastMixer Versioned Studio Mixer object, validated by the shared Broadcast Studio document contract.
+type BroadcastMixer map[string]interface{}
+
+// BroadcastOperation defines model for BroadcastOperation.
+type BroadcastOperation struct {
+	EventID   string  `json:"event_id"`
+	ID        string  `json:"id"`
+	Kind      string  `json:"kind"`
+	LastError *string `json:"last_error,omitempty"`
+	Phase     string  `json:"phase"`
+	State     string  `json:"state"`
+}
+
+// BroadcastOutputProfile defines model for BroadcastOutputProfile.
+type BroadcastOutputProfile struct {
+	Channels   int64  `json:"channels"`
+	Fps        int64  `json:"fps"`
+	Height     int64  `json:"height"`
+	ID         string `json:"id"`
+	SampleRate int64  `json:"sampleRate"`
+	Version    int64  `json:"version"`
+	Width      int64  `json:"width"`
+}
+
+// BroadcastOutputProfileList defines model for BroadcastOutputProfileList.
+type BroadcastOutputProfileList struct {
+	Data []BroadcastOutputProfile `json:"data"`
+}
+
+// BroadcastOutputProfileSelection Versioned Studio OutputProfileSelection object, validated by the shared Broadcast Studio document contract.
+type BroadcastOutputProfileSelection map[string]interface{}
+
+// BroadcastPreflight defines model for BroadcastPreflight.
+type BroadcastPreflight struct {
+	ActivePublishers       int64                                    `json:"active_publishers"`
+	AutomaticRestart       BroadcastPreflightAutomaticRestart       `json:"automatic_restart"`
+	BrowserCaptureRequired BroadcastPreflightBrowserCaptureRequired `json:"browser_capture_required"`
+	ChannelConnected       bool                                     `json:"channel_connected"`
+	OutputProfile          BroadcastOutputProfile                   `json:"output_profile"`
+}
+
+// BroadcastPreflightAutomaticRestart defines model for BroadcastPreflight.AutomaticRestart.
+type BroadcastPreflightAutomaticRestart bool
+
+// BroadcastPreflightBrowserCaptureRequired defines model for BroadcastPreflight.BrowserCaptureRequired.
+type BroadcastPreflightBrowserCaptureRequired bool
+
+// BroadcastPublisher defines model for BroadcastPublisher.
+type BroadcastPublisher struct {
+	ControlStatus  *string `json:"control_status,omitempty"`
+	ID             string  `json:"id"`
+	OrganizationID string  `json:"organization_id"`
+	Revision       int64   `json:"revision"`
+	ShutdownStage  *string `json:"shutdown_stage,omitempty"`
+	SnapshotID     *string `json:"snapshot_id,omitempty"`
+	State          string  `json:"state"`
+}
+
+// BroadcastPublisherList defines model for BroadcastPublisherList.
+type BroadcastPublisherList struct {
+	Data []BroadcastPublisher `json:"data"`
+}
+
+// BroadcastScene Versioned Studio Scene object, validated by the shared Broadcast Studio document contract.
+type BroadcastScene map[string]interface{}
+
+// BroadcastSetup defines model for BroadcastSetup.
+type BroadcastSetup struct {
+	Document       BroadcastSetupDocument `json:"document"`
+	ID             string                 `json:"id"`
+	OrganizationID string                 `json:"organization_id"`
+	Revision       int64                  `json:"revision"`
+}
+
+// BroadcastSetupDocument defines model for BroadcastSetupDocument.
+type BroadcastSetupDocument struct {
+	Branding       map[string]interface{} `json:"branding,omitempty"`
+	DefaultSceneID string                 `json:"defaultSceneId"`
+
+	// Mixer Versioned Studio Mixer object, validated by the shared Broadcast Studio document contract.
+	Mixer BroadcastMixer `json:"mixer"`
+	Name  string         `json:"name"`
+
+	// OutputProfile Versioned Studio OutputProfileSelection object, validated by the shared Broadcast Studio document contract.
+	OutputProfile BroadcastOutputProfileSelection `json:"outputProfile"`
+	Scenes        []BroadcastScene                `json:"scenes"`
+	Sources       []BroadcastSource               `json:"sources"`
+	Version       int64                           `json:"version"`
+}
+
+// BroadcastSetupPage defines model for BroadcastSetupPage.
+type BroadcastSetupPage struct {
+	Data       []BroadcastSetupSummary `json:"data"`
+	NextCursor *string                 `json:"next_cursor"`
+}
+
+// BroadcastSetupSummary defines model for BroadcastSetupSummary.
+type BroadcastSetupSummary struct {
+	ID             string `json:"id"`
+	Name           string `json:"name"`
+	OrganizationID string `json:"organization_id"`
+	Revision       int64  `json:"revision"`
+}
+
+// BroadcastSource Versioned Studio Source object, validated by the shared Broadcast Studio document contract.
+type BroadcastSource map[string]interface{}
+
+// BroadcastThumbnailInput default uses the connected channel image; asset requires an organization-owned image assetId.
+type BroadcastThumbnailInput struct {
+	AssetID *string                     `json:"assetId,omitempty"`
+	Mode    BroadcastThumbnailInputMode `json:"mode"`
+}
+
+// BroadcastThumbnailInputMode defines model for BroadcastThumbnailInput.Mode.
+type BroadcastThumbnailInputMode string
+
+// BroadcastTransitionInput defines model for BroadcastTransitionInput.
+type BroadcastTransitionInput struct {
+	State BroadcastTransitionInputState `json:"state"`
+}
+
+// BroadcastTransitionInputState defines model for BroadcastTransitionInput.State.
+type BroadcastTransitionInputState string
+
+// BroadcastWriteIntent defines model for BroadcastWriteIntent.
+type BroadcastWriteIntent struct {
+	ActorID    string `json:"actor_id"`
+	ChunkBytes int64  `json:"chunk_bytes"`
+	ExpiresAt  int64  `json:"expires_at"`
+	InputHash  string `json:"input_hash"`
+
+	// RequestID Immutable signed request ticket. Retain privately to reconcile ambiguous writes; never replace it automatically.
+	RequestID string `json:"request_id"`
+}
+
+// BroadcastWriteIntentInput defines model for BroadcastWriteIntentInput.
+type BroadcastWriteIntentInput struct {
+	ExpectedRevision int64                              `json:"expected_revision"`
+	Operation        BroadcastWriteIntentInputOperation `json:"operation"`
+	PayloadBytes     int64                              `json:"payload_bytes"`
+	PayloadSha256    string                             `json:"payload_sha256"`
+
+	// TargetID Use new for create; otherwise the Setup UUID.
+	TargetID *string `json:"target_id,omitempty"`
+}
+
+// BroadcastWriteIntentInputOperation defines model for BroadcastWriteIntentInput.Operation.
+type BroadcastWriteIntentInputOperation string
+
+// BroadcastWriteReceipt defines model for BroadcastWriteReceipt.
+type BroadcastWriteReceipt struct {
+	Applied         *bool   `json:"applied,omitempty"`
+	DeletedRevision *int64  `json:"deleted_revision,omitempty"`
+	DocumentSha256  *string `json:"document_sha256,omitempty"`
+	ErrorCode       *string `json:"error_code,omitempty"`
+	ID              *string `json:"id,omitempty"`
+	InputHash       *string `json:"input_hash,omitempty"`
+	Operation       *string `json:"operation,omitempty"`
+	Replay          *bool   `json:"replay,omitempty"`
+
+	// RequestID Immutable signed request ticket. Retain privately to reconcile ambiguous writes; never replace it automatically.
+	RequestID   string `json:"request_id"`
+	ResultState string `json:"result_state"`
+	Revision    *int64 `json:"revision,omitempty"`
+	Terminal    *bool  `json:"terminal,omitempty"`
+}
+
 // CatalogueTranslation defines model for CatalogueTranslation.
 type CatalogueTranslation struct {
 	BookIds    []int64                      `json:"book_ids"`
@@ -2556,7 +3416,9 @@ type LiveEventDesign struct {
 	Organization *string `json:"organization,omitempty"`
 	Revision     int64   `json:"revision"`
 
-	// Settings Examples: {"container":{"border":null,"padding":null,"radius":null},"controls":{"fontSize":true,"fullscreen":true,"theme":true},"elements":{"reference":{"align":"left","bold":true,"font":"sans","italic":false,"lineHeight":112,"size":100},"text":{"align":"left","bold":false,"font":"serif","italic":false,"lineHeight":112,"size":100},"translation":{"align":"left","bold":true,"font":"sans","italic":false,"lineHeight":112,"size":100}},"order":["translation","reference","text"],"palettes":{"dark":{"background":null,"container":null,"reference":null,"text":null,"translation":null},"light":{"background":null,"container":null,"reference":null,"text":null,"translation":null}},"preset":"default","showLogo":true,"transition":"none","version":1}
+	// Settings REST v1 returns the serif, sans, or mono family in each base element's font field. Named fonts remain saved for Studio rendering.
+	//
+	// Examples: {"container":{"border":null,"padding":null,"radius":null},"controls":{"fontSize":true,"fullscreen":true,"theme":true},"elements":{"reference":{"align":"left","bold":true,"font":"sans","italic":false,"lineHeight":112,"size":100},"text":{"align":"left","bold":false,"font":"serif","italic":false,"lineHeight":112,"size":100},"translation":{"align":"left","bold":true,"font":"sans","italic":false,"lineHeight":112,"size":100}},"order":["translation","reference","text"],"palettes":{"dark":{"background":null,"container":null,"reference":null,"text":null,"translation":null},"light":{"background":null,"container":null,"reference":null,"text":null,"translation":null}},"preset":"default","showLogo":true,"transition":"none","version":1}
 	Settings LiveStudioSettings `json:"settings"`
 }
 
@@ -2754,12 +3616,296 @@ type LiveStatistics struct {
 	UserConnections      int64            `json:"user_connections"`
 }
 
-// LiveStudioSettings Examples: {"container":{"border":null,"padding":null,"radius":null},"controls":{"fontSize":true,"fullscreen":true,"theme":true},"elements":{"reference":{"align":"left","bold":true,"font":"sans","italic":false,"lineHeight":112,"size":100},"text":{"align":"left","bold":false,"font":"serif","italic":false,"lineHeight":112,"size":100},"translation":{"align":"left","bold":true,"font":"sans","italic":false,"lineHeight":112,"size":100}},"order":["translation","reference","text"],"palettes":{"dark":{"background":null,"container":null,"reference":null,"text":null,"translation":null},"light":{"background":null,"container":null,"reference":null,"text":null,"translation":null}},"preset":"default","showLogo":true,"transition":"none","version":1}
+// LiveStudioOverlayNode Ordered Live overlay element. Coordinates use basis points; x + width and y + height must not exceed 10000. IDs are unique; logo, verse and viewer-controls each occur at most once. The full node array is limited to 64 KiB. Viewer controls remain interactive and are not rendered into broadcast video. The optional live-badge element is unique within each design, defaults absent, and appears in broadcast video only after fresh provider-confirmed LIVE status. Its red rounded appearance is previewed in Live Studio; public Reader views never assert YouTube LIVE status.
+type LiveStudioOverlayNode struct {
+	union json.RawMessage
+}
+
+// LiveStudioOverlayNode0 defines model for LiveStudioOverlayNode.0.
+type LiveStudioOverlayNode0 LiveStudioOverlayNode_0
+
+// LiveStudioOverlayNode0Kind defines model for LiveStudioOverlayNode.0.Kind.
+type LiveStudioOverlayNode0Kind string
+
+// LiveStudioOverlayNode_0 defines model for LiveStudioOverlayNode.0.
+type LiveStudioOverlayNode_0 struct {
+	Height int64                      `json:"height"`
+	ID     string                     `json:"id"`
+	Kind   LiveStudioOverlayNode0Kind `json:"kind"`
+
+	// Rotation Clockwise degrees about the center. Omission means zero.
+	Rotation *int64 `json:"rotation,omitempty"`
+	Visible  bool   `json:"visible"`
+	Width    int64  `json:"width"`
+	X        int64  `json:"x"`
+	Y        int64  `json:"y"`
+}
+
+// LiveStudioOverlayNode1 defines model for LiveStudioOverlayNode.1.
+type LiveStudioOverlayNode1 LiveStudioOverlayNode_1
+
+// LiveStudioOverlayNode1Kind defines model for LiveStudioOverlayNode.1.Kind.
+type LiveStudioOverlayNode1Kind string
+
+// LiveStudioOverlayNode1StyleElementsReferenceAlign defines model for LiveStudioOverlayNode.1.Style.Elements.Reference.Align.
+type LiveStudioOverlayNode1StyleElementsReferenceAlign string
+
+// LiveStudioOverlayNode1StyleElementsReferenceFont defines model for LiveStudioOverlayNode.1.Style.Elements.Reference.Font.
+type LiveStudioOverlayNode1StyleElementsReferenceFont string
+
+// LiveStudioOverlayNode_1_Style_Elements_Reference defines model for LiveStudioOverlayNode.1.Style.Elements.Reference.
+type LiveStudioOverlayNode_1_Style_Elements_Reference struct {
+	Align      *LiveStudioOverlayNode1StyleElementsReferenceAlign `json:"align,omitempty"`
+	Bold       *bool                                              `json:"bold,omitempty"`
+	Font       *LiveStudioOverlayNode1StyleElementsReferenceFont  `json:"font,omitempty"`
+	Italic     *bool                                              `json:"italic,omitempty"`
+	LineHeight *int64                                             `json:"lineHeight,omitempty"`
+	Size       *int64                                             `json:"size,omitempty"`
+}
+
+// LiveStudioOverlayNode1StyleElementsTextAlign defines model for LiveStudioOverlayNode.1.Style.Elements.Text.Align.
+type LiveStudioOverlayNode1StyleElementsTextAlign string
+
+// LiveStudioOverlayNode1StyleElementsTextFont defines model for LiveStudioOverlayNode.1.Style.Elements.Text.Font.
+type LiveStudioOverlayNode1StyleElementsTextFont string
+
+// LiveStudioOverlayNode_1_Style_Elements_Text defines model for LiveStudioOverlayNode.1.Style.Elements.Text.
+type LiveStudioOverlayNode_1_Style_Elements_Text struct {
+	Align      *LiveStudioOverlayNode1StyleElementsTextAlign `json:"align,omitempty"`
+	Bold       *bool                                         `json:"bold,omitempty"`
+	Font       *LiveStudioOverlayNode1StyleElementsTextFont  `json:"font,omitempty"`
+	Italic     *bool                                         `json:"italic,omitempty"`
+	LineHeight *int64                                        `json:"lineHeight,omitempty"`
+	Size       *int64                                        `json:"size,omitempty"`
+}
+
+// LiveStudioOverlayNode1StyleElementsTranslationAlign defines model for LiveStudioOverlayNode.1.Style.Elements.Translation.Align.
+type LiveStudioOverlayNode1StyleElementsTranslationAlign string
+
+// LiveStudioOverlayNode1StyleElementsTranslationFont defines model for LiveStudioOverlayNode.1.Style.Elements.Translation.Font.
+type LiveStudioOverlayNode1StyleElementsTranslationFont string
+
+// LiveStudioOverlayNode_1_Style_Elements_Translation defines model for LiveStudioOverlayNode.1.Style.Elements.Translation.
+type LiveStudioOverlayNode_1_Style_Elements_Translation struct {
+	Align      *LiveStudioOverlayNode1StyleElementsTranslationAlign `json:"align,omitempty"`
+	Bold       *bool                                                `json:"bold,omitempty"`
+	Font       *LiveStudioOverlayNode1StyleElementsTranslationFont  `json:"font,omitempty"`
+	Italic     *bool                                                `json:"italic,omitempty"`
+	LineHeight *int64                                               `json:"lineHeight,omitempty"`
+	Size       *int64                                               `json:"size,omitempty"`
+}
+
+// LiveStudioOverlayNode_1_Style_Elements defines model for LiveStudioOverlayNode.1.Style.Elements.
+type LiveStudioOverlayNode_1_Style_Elements struct {
+	Reference   *LiveStudioOverlayNode_1_Style_Elements_Reference   `json:"reference,omitempty"`
+	Text        *LiveStudioOverlayNode_1_Style_Elements_Text        `json:"text,omitempty"`
+	Translation *LiveStudioOverlayNode_1_Style_Elements_Translation `json:"translation,omitempty"`
+}
+
+// LiveStudioOverlayNode_1_Style Optional per-node typography. Omitted values inherit shared settings; overriding one node does not mutate siblings or copied designs.
+type LiveStudioOverlayNode_1_Style struct {
+	Elements LiveStudioOverlayNode_1_Style_Elements `json:"elements"`
+}
+
+// LiveStudioOverlayNode_1 defines model for LiveStudioOverlayNode.1.
+type LiveStudioOverlayNode_1 struct {
+	Height int64                      `json:"height"`
+	ID     string                     `json:"id"`
+	Kind   LiveStudioOverlayNode1Kind `json:"kind"`
+
+	// Rotation Clockwise degrees about the center. Omission means zero.
+	Rotation *int64 `json:"rotation,omitempty"`
+
+	// Style Optional per-node typography. Omitted values inherit shared settings; overriding one node does not mutate siblings or copied designs.
+	Style   *LiveStudioOverlayNode_1_Style `json:"style,omitempty"`
+	Visible bool                           `json:"visible"`
+	Width   int64                          `json:"width"`
+	X       int64                          `json:"x"`
+	Y       int64                          `json:"y"`
+}
+
+// LiveStudioOverlayNode2 defines model for LiveStudioOverlayNode.2.
+type LiveStudioOverlayNode2 LiveStudioOverlayNode_2
+
+// LiveStudioOverlayNode2Kind defines model for LiveStudioOverlayNode.2.Kind.
+type LiveStudioOverlayNode2Kind string
+
+// LiveStudioOverlayNode2StyleElementsTextAlign defines model for LiveStudioOverlayNode.2.Style.Elements.Text.Align.
+type LiveStudioOverlayNode2StyleElementsTextAlign string
+
+// LiveStudioOverlayNode2StyleElementsTextFont defines model for LiveStudioOverlayNode.2.Style.Elements.Text.Font.
+type LiveStudioOverlayNode2StyleElementsTextFont string
+
+// LiveStudioOverlayNode_2_Style_Elements_Text defines model for LiveStudioOverlayNode.2.Style.Elements.Text.
+type LiveStudioOverlayNode_2_Style_Elements_Text struct {
+	Align      *LiveStudioOverlayNode2StyleElementsTextAlign `json:"align,omitempty"`
+	Bold       *bool                                         `json:"bold,omitempty"`
+	Font       *LiveStudioOverlayNode2StyleElementsTextFont  `json:"font,omitempty"`
+	Italic     *bool                                         `json:"italic,omitempty"`
+	LineHeight *int64                                        `json:"lineHeight,omitempty"`
+	Size       *int64                                        `json:"size,omitempty"`
+}
+
+// LiveStudioOverlayNode_2_Style_Elements defines model for LiveStudioOverlayNode.2.Style.Elements.
+type LiveStudioOverlayNode_2_Style_Elements struct {
+	Text *LiveStudioOverlayNode_2_Style_Elements_Text `json:"text,omitempty"`
+}
+
+// LiveStudioOverlayNode_2_Style Optional per-node typography. Omitted values inherit shared settings; overriding one node does not mutate siblings or copied designs.
+type LiveStudioOverlayNode_2_Style struct {
+	Elements LiveStudioOverlayNode_2_Style_Elements `json:"elements"`
+}
+
+// LiveStudioOverlayNode_2 defines model for LiveStudioOverlayNode.2.
+type LiveStudioOverlayNode_2 struct {
+	Height int64                      `json:"height"`
+	ID     string                     `json:"id"`
+	Kind   LiveStudioOverlayNode2Kind `json:"kind"`
+
+	// Rotation Clockwise degrees about the center. Omission means zero.
+	Rotation *int64 `json:"rotation,omitempty"`
+
+	// Style Optional per-node typography. Omitted values inherit shared settings; overriding one node does not mutate siblings or copied designs.
+	Style *LiveStudioOverlayNode_2_Style `json:"style,omitempty"`
+
+	// Text At most 4000 UTF-8 bytes. Tabs/newlines are allowed; other control characters are rejected.
+	Text string `json:"text"`
+
+	// Variable Optional prompt label. The design keeps its authored text for editing and preview. The operator supplies the value for each broadcast copy.
+	Variable *string `json:"variable,omitempty"`
+	Visible  bool    `json:"visible"`
+	Width    int64   `json:"width"`
+	X        int64   `json:"x"`
+	Y        int64   `json:"y"`
+}
+
+// LiveStudioOverlayNode3 defines model for LiveStudioOverlayNode.3.
+type LiveStudioOverlayNode3 LiveStudioOverlayNode_3
+
+// LiveStudioOverlayNode3Kind defines model for LiveStudioOverlayNode.3.Kind.
+type LiveStudioOverlayNode3Kind string
+
+// LiveStudioOverlayNode_3 defines model for LiveStudioOverlayNode.3.
+type LiveStudioOverlayNode_3 struct {
+	// AssetID Eligible image owned by the same organization.
+	AssetID string                     `json:"assetId"`
+	Height  int64                      `json:"height"`
+	ID      string                     `json:"id"`
+	Kind    LiveStudioOverlayNode3Kind `json:"kind"`
+
+	// Rotation Clockwise degrees about the center. Omission means zero.
+	Rotation *int64 `json:"rotation,omitempty"`
+	Visible  bool   `json:"visible"`
+	Width    int64  `json:"width"`
+	X        int64  `json:"x"`
+	Y        int64  `json:"y"`
+}
+
+// LiveStudioOverlayNode4 defines model for LiveStudioOverlayNode.4.
+type LiveStudioOverlayNode4 LiveStudioOverlayNode_4
+
+// LiveStudioOverlayNode4Kind defines model for LiveStudioOverlayNode.4.Kind.
+type LiveStudioOverlayNode4Kind string
+
+// LiveStudioOverlayNode_4 defines model for LiveStudioOverlayNode.4.
+type LiveStudioOverlayNode_4 struct {
+	Height int64                      `json:"height"`
+	ID     string                     `json:"id"`
+	Kind   LiveStudioOverlayNode4Kind `json:"kind"`
+
+	// Rotation Clockwise degrees about the center. Omission means zero.
+	Rotation *int64 `json:"rotation,omitempty"`
+	Visible  bool   `json:"visible"`
+	Width    int64  `json:"width"`
+	X        int64  `json:"x"`
+	Y        int64  `json:"y"`
+}
+
+// LiveStudioOverlayNode5 defines model for LiveStudioOverlayNode.5.
+type LiveStudioOverlayNode5 LiveStudioOverlayNode_5
+
+// LiveStudioOverlayNode5Kind defines model for LiveStudioOverlayNode.5.Kind.
+type LiveStudioOverlayNode5Kind string
+
+// LiveStudioOverlayNode5StyleElementsTextAlign defines model for LiveStudioOverlayNode.5.Style.Elements.Text.Align.
+type LiveStudioOverlayNode5StyleElementsTextAlign string
+
+// LiveStudioOverlayNode5StyleElementsTextFont defines model for LiveStudioOverlayNode.5.Style.Elements.Text.Font.
+type LiveStudioOverlayNode5StyleElementsTextFont string
+
+// LiveStudioOverlayNode_5_Style_Elements_Text defines model for LiveStudioOverlayNode.5.Style.Elements.Text.
+type LiveStudioOverlayNode_5_Style_Elements_Text struct {
+	Align      *LiveStudioOverlayNode5StyleElementsTextAlign `json:"align,omitempty"`
+	Bold       *bool                                         `json:"bold,omitempty"`
+	Font       *LiveStudioOverlayNode5StyleElementsTextFont  `json:"font,omitempty"`
+	Italic     *bool                                         `json:"italic,omitempty"`
+	LineHeight *int64                                        `json:"lineHeight,omitempty"`
+	Size       *int64                                        `json:"size,omitempty"`
+}
+
+// LiveStudioOverlayNode_5_Style_Elements defines model for LiveStudioOverlayNode.5.Style.Elements.
+type LiveStudioOverlayNode_5_Style_Elements struct {
+	Text *LiveStudioOverlayNode_5_Style_Elements_Text `json:"text,omitempty"`
+}
+
+// LiveStudioOverlayNode_5_Style Optional per-node typography. Omitted values inherit shared settings; overriding one node does not mutate siblings or copied designs.
+type LiveStudioOverlayNode_5_Style struct {
+	Elements LiveStudioOverlayNode_5_Style_Elements `json:"elements"`
+}
+
+// LiveStudioOverlayNode_5 defines model for LiveStudioOverlayNode.5.
+type LiveStudioOverlayNode_5 struct {
+	Height int64                      `json:"height"`
+	ID     string                     `json:"id"`
+	Kind   LiveStudioOverlayNode5Kind `json:"kind"`
+
+	// Rotation Clockwise degrees about the center. Omission means zero.
+	Rotation *int64 `json:"rotation,omitempty"`
+
+	// Style Optional per-node typography. Omitted values inherit shared settings; overriding one node does not mutate siblings or copied designs.
+	Style *LiveStudioOverlayNode_5_Style `json:"style,omitempty"`
+
+	// Text Nonblank plain badge text, at most64UTF-8bytes; control characters are forbidden. Broadcast visibility additionally requires trusted provider-confirmed LIVE state.
+	Text    string `json:"text"`
+	Visible bool   `json:"visible"`
+	Width   int64  `json:"width"`
+	X       int64  `json:"x"`
+	Y       int64  `json:"y"`
+}
+
+// LiveStudioOverlayNode6 defines model for LiveStudioOverlayNode.6.
+type LiveStudioOverlayNode6 LiveStudioOverlayNode_6
+
+// LiveStudioOverlayNode6Kind defines model for LiveStudioOverlayNode.6.Kind.
+type LiveStudioOverlayNode6Kind string
+
+// LiveStudioOverlayNode_6 defines model for LiveStudioOverlayNode.6.
+type LiveStudioOverlayNode_6 struct {
+	Height int64                      `json:"height"`
+	ID     string                     `json:"id"`
+	Kind   LiveStudioOverlayNode6Kind `json:"kind"`
+
+	// Rotation Clockwise degrees about the center. Omission means zero.
+	Rotation *int64 `json:"rotation,omitempty"`
+	Visible  bool   `json:"visible"`
+	Width    int64  `json:"width"`
+	X        int64  `json:"x"`
+	Y        int64  `json:"y"`
+}
+
+// LiveStudioSettings REST v1 returns the serif, sans, or mono family in each base element's font field. Named fonts remain saved for Studio rendering.
+//
+// Examples: {"container":{"border":null,"padding":null,"radius":null},"controls":{"fontSize":true,"fullscreen":true,"theme":true},"elements":{"reference":{"align":"left","bold":true,"font":"sans","italic":false,"lineHeight":112,"size":100},"text":{"align":"left","bold":false,"font":"serif","italic":false,"lineHeight":112,"size":100},"translation":{"align":"left","bold":true,"font":"sans","italic":false,"lineHeight":112,"size":100}},"order":["translation","reference","text"],"palettes":{"dark":{"background":null,"container":null,"reference":null,"text":null,"translation":null},"light":{"background":null,"container":null,"reference":null,"text":null,"translation":null}},"preset":"default","showLogo":true,"transition":"none","version":1}
 type LiveStudioSettings struct {
-	Container  LiveStudioSettings_Container `json:"container"`
-	Controls   LiveStudioSettings_Controls  `json:"controls"`
-	Elements   LiveStudioSettings_Elements  `json:"elements"`
-	Order      []LiveStudioSettingsOrder    `json:"order"`
+	// AutoHideSeconds Seconds before Broadcast Studio hides Translation. Set to zero to keep it visible.
+	AutoHideSeconds *int64                       `json:"autoHideSeconds,omitempty"`
+	Container       LiveStudioSettings_Container `json:"container"`
+	Controls        LiveStudioSettings_Controls  `json:"controls"`
+	Elements        LiveStudioSettings_Elements  `json:"elements"`
+	Order           []LiveStudioSettingsOrder    `json:"order"`
+
+	// Overlays Optional explicit composition. Omit to retain the legacy Live layout. An empty array explicitly hides all overlay elements.
+	Overlays   []LiveStudioOverlayNode      `json:"overlays,omitempty"`
 	Palettes   LiveStudioSettings_Palettes  `json:"palettes"`
 	Preset     LiveStudioSettingsPreset     `json:"preset"`
 	ShowLogo   bool                         `json:"showLogo"`
@@ -2895,10 +4041,15 @@ type LiveStudioSettingsVersion int64
 //
 // Examples: {"container":{"border":null,"padding":null,"radius":null},"controls":{"fontSize":true,"fullscreen":true,"theme":true},"elements":{"reference":{"align":"left","bold":true,"font":"sans","italic":false,"lineHeight":112,"size":100},"text":{"align":"left","bold":false,"font":"serif","italic":false,"lineHeight":112,"size":100},"translation":{"align":"left","bold":true,"font":"sans","italic":false,"lineHeight":112,"size":100}},"order":["translation","reference","text"],"palettes":{"dark":{"background":null,"container":null,"reference":null,"text":null,"translation":null},"light":{"background":null,"container":null,"reference":null,"text":null,"translation":null}},"preset":"default","showLogo":true,"transition":"none","version":1}
 type LiveStudioSettingsInput struct {
-	Container  LiveStudioSettingsInput_Container  `json:"container"`
-	Controls   LiveStudioSettingsInput_Controls   `json:"controls"`
-	Elements   LiveStudioSettingsInput_Elements   `json:"elements"`
-	Order      []LiveStudioSettingsInputOrder     `json:"order"`
+	// AutoHideSeconds Seconds before Broadcast Studio hides Translation. Set to zero to keep it visible.
+	AutoHideSeconds *int64                            `json:"autoHideSeconds,omitempty"`
+	Container       LiveStudioSettingsInput_Container `json:"container"`
+	Controls        LiveStudioSettingsInput_Controls  `json:"controls"`
+	Elements        LiveStudioSettingsInput_Elements  `json:"elements"`
+	Order           []LiveStudioSettingsInputOrder    `json:"order"`
+
+	// Overlays Optional explicit composition. Omit to retain the legacy Live layout. An empty array explicitly hides all overlay elements.
+	Overlays   []LiveStudioOverlayNode            `json:"overlays,omitempty"`
 	Palettes   LiveStudioSettingsInput_Palettes   `json:"palettes"`
 	Preset     *LiveStudioSettingsInputPreset     `json:"preset,omitempty"`
 	ShowLogo   bool                               `json:"showLogo"`
@@ -3254,7 +4405,9 @@ type OrganizationLiveStudio struct {
 	// Revision Settings revision independent of any Live sequence. Zero represents unsaved defaults; every accepted PUT increments the revision, even for identical settings.
 	Revision int64 `json:"revision"`
 
-	// Settings Examples: {"container":{"border":null,"padding":null,"radius":null},"controls":{"fontSize":true,"fullscreen":true,"theme":true},"elements":{"reference":{"align":"left","bold":true,"font":"sans","italic":false,"lineHeight":112,"size":100},"text":{"align":"left","bold":false,"font":"serif","italic":false,"lineHeight":112,"size":100},"translation":{"align":"left","bold":true,"font":"sans","italic":false,"lineHeight":112,"size":100}},"order":["translation","reference","text"],"palettes":{"dark":{"background":null,"container":null,"reference":null,"text":null,"translation":null},"light":{"background":null,"container":null,"reference":null,"text":null,"translation":null}},"preset":"default","showLogo":true,"transition":"none","version":1}
+	// Settings REST v1 returns the serif, sans, or mono family in each base element's font field. Named fonts remain saved for Studio rendering.
+	//
+	// Examples: {"container":{"border":null,"padding":null,"radius":null},"controls":{"fontSize":true,"fullscreen":true,"theme":true},"elements":{"reference":{"align":"left","bold":true,"font":"sans","italic":false,"lineHeight":112,"size":100},"text":{"align":"left","bold":false,"font":"serif","italic":false,"lineHeight":112,"size":100},"translation":{"align":"left","bold":true,"font":"sans","italic":false,"lineHeight":112,"size":100}},"order":["translation","reference","text"],"palettes":{"dark":{"background":null,"container":null,"reference":null,"text":null,"translation":null},"light":{"background":null,"container":null,"reference":null,"text":null,"translation":null}},"preset":"default","showLogo":true,"transition":"none","version":1}
 	Settings LiveStudioSettings `json:"settings"`
 }
 
@@ -4275,6 +5428,56 @@ type ExchangeOAuthTokenFormdataBody_1 struct {
 	Scope *string `json:"scope,omitempty"`
 }
 
+// CreateBroadcastEventParams defines parameters for CreateBroadcastEvent.
+type CreateBroadcastEventParams struct {
+	IdempotencyKey string `json:"Idempotency-Key"`
+}
+
+// AttachBroadcastEventParams defines parameters for AttachBroadcastEvent.
+type AttachBroadcastEventParams struct {
+	IdempotencyKey string `json:"Idempotency-Key"`
+}
+
+// TransitionBroadcastEventParams defines parameters for TransitionBroadcastEvent.
+type TransitionBroadcastEventParams struct {
+	IdempotencyKey string `json:"Idempotency-Key"`
+	IfMatch        string `json:"If-Match"`
+}
+
+// StopBroadcastPublisherParams defines parameters for StopBroadcastPublisher.
+type StopBroadcastPublisherParams struct {
+	IfMatch string `json:"If-Match"`
+}
+
+// ListBroadcastSetupsParams defines parameters for ListBroadcastSetups.
+type ListBroadcastSetupsParams struct {
+	Limit *int64  `form:"limit,omitempty" json:"limit,omitempty"`
+	After *string `form:"after,omitempty" json:"after,omitempty"`
+}
+
+// CreateBroadcastSetupParams defines parameters for CreateBroadcastSetup.
+type CreateBroadcastSetupParams struct {
+	IdempotencyKey string `json:"Idempotency-Key"`
+}
+
+// DeleteBroadcastSetupParams defines parameters for DeleteBroadcastSetup.
+type DeleteBroadcastSetupParams struct {
+	IdempotencyKey string `json:"Idempotency-Key"`
+	IfMatch        string `json:"If-Match"`
+}
+
+// ReplaceBroadcastSetupParams defines parameters for ReplaceBroadcastSetup.
+type ReplaceBroadcastSetupParams struct {
+	IdempotencyKey string `json:"Idempotency-Key"`
+	IfMatch        string `json:"If-Match"`
+}
+
+// DuplicateBroadcastSetupParams defines parameters for DuplicateBroadcastSetup.
+type DuplicateBroadcastSetupParams struct {
+	IdempotencyKey string `json:"Idempotency-Key"`
+	IfMatch        string `json:"If-Match"`
+}
+
 // ReplaceOrganizationLiveStudioParams defines parameters for ReplaceOrganizationLiveStudio.
 type ReplaceOrganizationLiveStudioParams struct {
 	// IfMatch Strong validator covering the effective settings and revision. Separate from Live playback/display sequence validators. Use unchanged as If-Match on PUT.
@@ -4526,6 +5729,36 @@ type RevokeOAuthTokenFormdataRequestBody RevokeOAuthTokenFormdataBody
 
 // ExchangeOAuthTokenFormdataRequestBody defines body for ExchangeOAuthToken for application/x-www-form-urlencoded ContentType.
 type ExchangeOAuthTokenFormdataRequestBody ExchangeOAuthTokenFormdataBody
+
+// CreateBroadcastEventJSONRequestBody defines body for CreateBroadcastEvent for application/json ContentType.
+type CreateBroadcastEventJSONRequestBody = BroadcastEventInput
+
+// AttachBroadcastEventJSONRequestBody defines body for AttachBroadcastEvent for application/json ContentType.
+type AttachBroadcastEventJSONRequestBody = BroadcastAttachInput
+
+// TransitionBroadcastEventJSONRequestBody defines body for TransitionBroadcastEvent for application/json ContentType.
+type TransitionBroadcastEventJSONRequestBody = BroadcastTransitionInput
+
+// StopBroadcastPublisherJSONRequestBody defines body for StopBroadcastPublisher for application/json ContentType.
+type StopBroadcastPublisherJSONRequestBody = BroadcastEmptyInput
+
+// CreateBroadcastSetupJSONRequestBody defines body for CreateBroadcastSetup for application/json ContentType.
+type CreateBroadcastSetupJSONRequestBody = BroadcastSetupDocument
+
+// DeleteBroadcastSetupJSONRequestBody defines body for DeleteBroadcastSetup for application/json ContentType.
+type DeleteBroadcastSetupJSONRequestBody = BroadcastEmptyInput
+
+// ReplaceBroadcastSetupJSONRequestBody defines body for ReplaceBroadcastSetup for application/json ContentType.
+type ReplaceBroadcastSetupJSONRequestBody = BroadcastSetupDocument
+
+// DuplicateBroadcastSetupJSONRequestBody defines body for DuplicateBroadcastSetup for application/json ContentType.
+type DuplicateBroadcastSetupJSONRequestBody = BroadcastDuplicateInput
+
+// RequestBroadcastTakeoverJSONRequestBody defines body for RequestBroadcastTakeover for application/json ContentType.
+type RequestBroadcastTakeoverJSONRequestBody = BroadcastEmptyInput
+
+// CreateBroadcastWriteRequestJSONRequestBody defines body for CreateBroadcastWriteRequest for application/json ContentType.
+type CreateBroadcastWriteRequestJSONRequestBody = BroadcastWriteIntentInput
 
 // ReplaceOrganizationLiveStudioJSONRequestBody defines body for ReplaceOrganizationLiveStudio for application/json ContentType.
 type ReplaceOrganizationLiveStudioJSONRequestBody = PutOrganizationLiveStudio
@@ -4810,6 +6043,198 @@ func (t LiveEventSnapshot_Live) MarshalJSON() ([]byte, error) {
 }
 
 func (t *LiveEventSnapshot_Live) UnmarshalJSON(b []byte) error {
+	err := t.union.UnmarshalJSON(b)
+	return err
+}
+
+// AsLiveStudioOverlayNode0 returns the union data inside the LiveStudioOverlayNode as a LiveStudioOverlayNode0
+func (t LiveStudioOverlayNode) AsLiveStudioOverlayNode0() (LiveStudioOverlayNode0, error) {
+	var body LiveStudioOverlayNode0
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromLiveStudioOverlayNode0 overwrites any union data inside the LiveStudioOverlayNode as the provided LiveStudioOverlayNode0
+func (t *LiveStudioOverlayNode) FromLiveStudioOverlayNode0(v LiveStudioOverlayNode0) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeLiveStudioOverlayNode0 performs a merge with any union data inside the LiveStudioOverlayNode, using the provided LiveStudioOverlayNode0
+func (t *LiveStudioOverlayNode) MergeLiveStudioOverlayNode0(v LiveStudioOverlayNode0) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
+// AsLiveStudioOverlayNode1 returns the union data inside the LiveStudioOverlayNode as a LiveStudioOverlayNode1
+func (t LiveStudioOverlayNode) AsLiveStudioOverlayNode1() (LiveStudioOverlayNode1, error) {
+	var body LiveStudioOverlayNode1
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromLiveStudioOverlayNode1 overwrites any union data inside the LiveStudioOverlayNode as the provided LiveStudioOverlayNode1
+func (t *LiveStudioOverlayNode) FromLiveStudioOverlayNode1(v LiveStudioOverlayNode1) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeLiveStudioOverlayNode1 performs a merge with any union data inside the LiveStudioOverlayNode, using the provided LiveStudioOverlayNode1
+func (t *LiveStudioOverlayNode) MergeLiveStudioOverlayNode1(v LiveStudioOverlayNode1) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
+// AsLiveStudioOverlayNode2 returns the union data inside the LiveStudioOverlayNode as a LiveStudioOverlayNode2
+func (t LiveStudioOverlayNode) AsLiveStudioOverlayNode2() (LiveStudioOverlayNode2, error) {
+	var body LiveStudioOverlayNode2
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromLiveStudioOverlayNode2 overwrites any union data inside the LiveStudioOverlayNode as the provided LiveStudioOverlayNode2
+func (t *LiveStudioOverlayNode) FromLiveStudioOverlayNode2(v LiveStudioOverlayNode2) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeLiveStudioOverlayNode2 performs a merge with any union data inside the LiveStudioOverlayNode, using the provided LiveStudioOverlayNode2
+func (t *LiveStudioOverlayNode) MergeLiveStudioOverlayNode2(v LiveStudioOverlayNode2) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
+// AsLiveStudioOverlayNode3 returns the union data inside the LiveStudioOverlayNode as a LiveStudioOverlayNode3
+func (t LiveStudioOverlayNode) AsLiveStudioOverlayNode3() (LiveStudioOverlayNode3, error) {
+	var body LiveStudioOverlayNode3
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromLiveStudioOverlayNode3 overwrites any union data inside the LiveStudioOverlayNode as the provided LiveStudioOverlayNode3
+func (t *LiveStudioOverlayNode) FromLiveStudioOverlayNode3(v LiveStudioOverlayNode3) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeLiveStudioOverlayNode3 performs a merge with any union data inside the LiveStudioOverlayNode, using the provided LiveStudioOverlayNode3
+func (t *LiveStudioOverlayNode) MergeLiveStudioOverlayNode3(v LiveStudioOverlayNode3) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
+// AsLiveStudioOverlayNode4 returns the union data inside the LiveStudioOverlayNode as a LiveStudioOverlayNode4
+func (t LiveStudioOverlayNode) AsLiveStudioOverlayNode4() (LiveStudioOverlayNode4, error) {
+	var body LiveStudioOverlayNode4
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromLiveStudioOverlayNode4 overwrites any union data inside the LiveStudioOverlayNode as the provided LiveStudioOverlayNode4
+func (t *LiveStudioOverlayNode) FromLiveStudioOverlayNode4(v LiveStudioOverlayNode4) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeLiveStudioOverlayNode4 performs a merge with any union data inside the LiveStudioOverlayNode, using the provided LiveStudioOverlayNode4
+func (t *LiveStudioOverlayNode) MergeLiveStudioOverlayNode4(v LiveStudioOverlayNode4) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
+// AsLiveStudioOverlayNode5 returns the union data inside the LiveStudioOverlayNode as a LiveStudioOverlayNode5
+func (t LiveStudioOverlayNode) AsLiveStudioOverlayNode5() (LiveStudioOverlayNode5, error) {
+	var body LiveStudioOverlayNode5
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromLiveStudioOverlayNode5 overwrites any union data inside the LiveStudioOverlayNode as the provided LiveStudioOverlayNode5
+func (t *LiveStudioOverlayNode) FromLiveStudioOverlayNode5(v LiveStudioOverlayNode5) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeLiveStudioOverlayNode5 performs a merge with any union data inside the LiveStudioOverlayNode, using the provided LiveStudioOverlayNode5
+func (t *LiveStudioOverlayNode) MergeLiveStudioOverlayNode5(v LiveStudioOverlayNode5) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
+// AsLiveStudioOverlayNode6 returns the union data inside the LiveStudioOverlayNode as a LiveStudioOverlayNode6
+func (t LiveStudioOverlayNode) AsLiveStudioOverlayNode6() (LiveStudioOverlayNode6, error) {
+	var body LiveStudioOverlayNode6
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromLiveStudioOverlayNode6 overwrites any union data inside the LiveStudioOverlayNode as the provided LiveStudioOverlayNode6
+func (t *LiveStudioOverlayNode) FromLiveStudioOverlayNode6(v LiveStudioOverlayNode6) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeLiveStudioOverlayNode6 performs a merge with any union data inside the LiveStudioOverlayNode, using the provided LiveStudioOverlayNode6
+func (t *LiveStudioOverlayNode) MergeLiveStudioOverlayNode6(v LiveStudioOverlayNode6) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
+func (t LiveStudioOverlayNode) MarshalJSON() ([]byte, error) {
+	b, err := t.union.MarshalJSON()
+	return b, err
+}
+
+func (t *LiveStudioOverlayNode) UnmarshalJSON(b []byte) error {
 	err := t.union.UnmarshalJSON(b)
 	return err
 }

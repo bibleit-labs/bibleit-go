@@ -2,6 +2,14 @@
 
 ## Unreleased
 
+- Add 21 generated REST broadcast operations and shared domain models. Preserve
+  signed Setup mutation bytes with explicit raw-body options, null channel
+  results and the existing no-automatic-retry policy.
+
+- Add reusable Broadcast Studio SSH command builders for Setup reads and signed
+  writes, YouTube lifecycle controls and publisher status/stop. Add bounded
+  lifecycle, document and durable-receipt decoders without automatic retries.
+
 ## v0.4.0 — 2026-11-02
 
 - Use response-only `OAuthGrantedScope` values for `OAuthGrant.Scopes`, including

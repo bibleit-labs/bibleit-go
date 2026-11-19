@@ -17,7 +17,7 @@ go get github.com/bibleit-labs/bibleit-go
 
 ## Resource client
 
-Import `github.com/bibleit-labs/bibleit-go`. The client includes all 89 REST
+Import `github.com/bibleit-labs/bibleit-go`. The client includes all 110 REST
 operations, generated schemas, response metadata, conditional writes, binary
 streams, versioned Live event polling and lazy whole-book page iterators. See [REST usage](docs/api.md) and
 the [runnable reading example](examples/read/main.go).
@@ -60,6 +60,9 @@ No command-to-REST adapter is provided. Bearer credential clients cannot execute
 commands. `NewClient` returns a resource client; `NewSSHClient` returns an
 `SSHClient` with command and domain helpers. SSH decoders return `CommandResponse`;
 SSH Live collection results use `SSHLiveList`, `SSHLiveStack` and `SSHLiveStatistics`.
+
+Broadcast Studio control-plane command builders, bounded response decoders and
+immutable write intents are described in [Broadcast controls](docs/broadcast.md).
 
 ## Browser login and registered OAuth
 

@@ -226,7 +226,7 @@ func HelpCommand(topic string) (Command, error) {
 		return command("HELP")
 	}
 	switch strings.ToUpper(topic) {
-	case "ROOT", "SERVER", "ACCOUNT", "AUTH", "TRANSLATION", "LIVE", "ORGANIZATION":
+	case "ROOT", "SERVER", "ACCOUNT", "AUTH", "TRANSLATION", "LIVE", "ORGANIZATION", "BROADCAST":
 		return command("HELP", strings.ToUpper(topic))
 	default:
 		return Command{}, errors.New("unsupported help topic")

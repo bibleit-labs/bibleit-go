@@ -65,3 +65,10 @@ actions:
   - target: $.paths['/presentations/{presentation_id}/exports/{export_id}/downloads'].post.requestBody.content['application/json'].schema
     update:
       x-go-type: EmptyObject
+  - target: $.components.schemas.BroadcastEmptyInput
+    update:
+      x-go-type: struct{}
+  - target: $.components.schemas.BroadcastChannelResult
+    update:
+      x-go-type: '*BroadcastChannel'
+      x-go-type-skip-optional-pointer: true
