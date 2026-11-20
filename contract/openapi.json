@@ -10144,6 +10144,987 @@
           }
         }
       }
+    },
+    "/oauth/mcp/workspace-consent": {
+      "post": {
+        "operationId": "decideMcpWorkspaceOAuth",
+        "summary": "Approve or deny one explicit Broadcast workspace binding",
+        "description": "Browser-only, default-off MCP workspace consent. The old consent POST request is unchanged. Approval requires an explicitly selected currently authorized workspace; denial needs no selection. No existing grant is upgraded. Requires active session, CSRF and matching Origin; grant and binding commit atomically.\n\n**Additional request headers:**\n\n- `Origin` (required): Must match the browser request origin for CSRF validation.",
+        "tags": [
+          "OAuth"
+        ],
+        "servers": [
+          {
+            "url": "https://bibleit.app"
+          }
+        ],
+        "security": [
+          {
+            "browserSession": []
+          }
+        ],
+        "x-oauth-protocol": true,
+        "responses": {
+          "303": {
+            "description": "Validated redirect: existing login/continuation, registered consent result or same-origin settings. Code/denial responses echo state and include iss.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-referrer"
+                }
+              },
+              "Pragma": {
+                "schema": {
+                  "type": "string",
+                  "const": "no-cache"
+                }
+              },
+              "Location": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "OAuth protocol error. Unknown/duplicate/oversized parameters, invalid credentials, policy denial or rate limiting.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/McpWorkspaceConsentError"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "request": {
+                    "type": "string",
+                    "pattern": "^[a-f0-9]{64}$"
+                  },
+                  "csrf": {
+                    "type": "string",
+                    "pattern": "^[a-f0-9]{64}$"
+                  },
+                  "decision": {
+                    "type": "string",
+                    "enum": [
+                      "allow",
+                      "deny"
+                    ]
+                  },
+                  "workspace_id": {
+                    "oneOf": [
+                      {
+                        "type": "string",
+                        "format": "uuid",
+                        "pattern": "^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$"
+                      },
+                      {
+                        "type": "string",
+                        "const": ""
+                      }
+                    ]
+                  }
+                },
+                "required": [
+                  "request",
+                  "csrf",
+                  "decision"
+                ],
+                "additionalProperties": false,
+                "allOf": [
+                  {
+                    "if": {
+                      "properties": {
+                        "decision": {
+                          "const": "allow"
+                        }
+                      }
+                    },
+                    "then": {
+                      "required": [
+                        "workspace_id"
+                      ],
+                      "properties": {
+                        "workspace_id": {
+                          "type": "string",
+                          "format": "uuid",
+                          "pattern": "^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$"
+                        }
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "Origin",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uri"
+            }
+          }
+        ],
+        "x-fern-server-name": "protocol",
+        "x-fern-explorer": false
+      }
+    },
+    "/oauth/mcp/broadcast/list_workspaces": {
+      "post": {
+        "operationId": "listMcpBroadcastWorkspaces",
+        "summary": "listMcpBroadcastWorkspaces",
+        "tags": [
+          "OAuth"
+        ],
+        "servers": [
+          {
+            "url": "https://bibleit.app"
+          }
+        ],
+        "security": [
+          {
+            "delegatedOAuth": [
+              "identity.read",
+              "broadcast.get"
+            ]
+          }
+        ],
+        "x-required-scopes": [
+          "identity.read",
+          "broadcast.get"
+        ],
+        "x-oauth-protocol": true,
+        "x-fern-server-name": "protocol",
+        "x-fern-explorer": false,
+        "description": "Default-off read-only MCP issuer bridge. Accepts only the canonical MCP-audience delegated credential, an explicit workspace binding and current shared workspace authority. Personal operator/service tokens are rejected. Requires actor mcp.get/mcp.call. Input is at most 8192 bytes; output at most 256 KiB. No browser capture, provider mutation or arbitrary route is accepted. Setup reads are summaries without document bodies; event lists omit description/health and return at most 100 recent summaries; publisher lists return at most 25 records. Existing grants gain no workspace authority. Requires `identity.read` and separately consented `broadcast.get` for the selected workspace.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {},
+                "required": []
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Bounded authorized workspace read",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/McpWorkspaceList"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Closed MCP bridge error; 401 invalid_token, 403 insufficient_scope/access_denied, 404 disabled/not_found, 413 response_too_large, 429 rate_limited with Retry-After, 503 temporarily_unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/McpBroadcastError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/oauth/mcp/broadcast/list_setups": {
+      "post": {
+        "operationId": "listMcpBroadcastSetups",
+        "summary": "listMcpBroadcastSetups",
+        "tags": [
+          "OAuth"
+        ],
+        "servers": [
+          {
+            "url": "https://bibleit.app"
+          }
+        ],
+        "security": [
+          {
+            "delegatedOAuth": [
+              "identity.read",
+              "broadcast.get"
+            ]
+          }
+        ],
+        "x-required-scopes": [
+          "identity.read",
+          "broadcast.get"
+        ],
+        "x-oauth-protocol": true,
+        "x-fern-server-name": "protocol",
+        "x-fern-explorer": false,
+        "description": "Default-off read-only MCP issuer bridge. Accepts only the canonical MCP-audience delegated credential, an explicit workspace binding and current shared workspace authority. Personal operator/service tokens are rejected. Requires actor mcp.get/mcp.call. Input is at most 8192 bytes; output at most 256 KiB. No browser capture, provider mutation or arbitrary route is accepted. Setup reads are summaries without document bodies; event lists omit description/health and return at most 100 recent summaries; publisher lists return at most 25 records. Existing grants gain no workspace authority. Requires `identity.read` and separately consented `broadcast.get` for the selected workspace.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "organization_id": {
+                    "type": "string",
+                    "format": "uuid",
+                    "pattern": "^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$"
+                  },
+                  "limit": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 50,
+                    "default": 20
+                  },
+                  "after": {
+                    "oneOf": [
+                      {
+                        "type": "string",
+                        "format": "uuid",
+                        "pattern": "^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$"
+                      },
+                      {
+                        "type": "string",
+                        "const": ""
+                      }
+                    ]
+                  }
+                },
+                "required": [
+                  "organization_id"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Bounded authorized workspace read",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BroadcastSetupPage"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Closed MCP bridge error; 401 invalid_token, 403 insufficient_scope/access_denied, 404 disabled/not_found, 413 response_too_large, 429 rate_limited with Retry-After, 503 temporarily_unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/McpBroadcastError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/oauth/mcp/broadcast/get_setup": {
+      "post": {
+        "operationId": "getMcpBroadcastSetup",
+        "summary": "getMcpBroadcastSetup",
+        "tags": [
+          "OAuth"
+        ],
+        "servers": [
+          {
+            "url": "https://bibleit.app"
+          }
+        ],
+        "security": [
+          {
+            "delegatedOAuth": [
+              "identity.read",
+              "broadcast.get"
+            ]
+          }
+        ],
+        "x-required-scopes": [
+          "identity.read",
+          "broadcast.get"
+        ],
+        "x-oauth-protocol": true,
+        "x-fern-server-name": "protocol",
+        "x-fern-explorer": false,
+        "description": "Default-off read-only MCP issuer bridge. Accepts only the canonical MCP-audience delegated credential, an explicit workspace binding and current shared workspace authority. Personal operator/service tokens are rejected. Requires actor mcp.get/mcp.call. Input is at most 8192 bytes; output at most 256 KiB. No browser capture, provider mutation or arbitrary route is accepted. Setup reads are summaries without document bodies; event lists omit description/health and return at most 100 recent summaries; publisher lists return at most 25 records. Existing grants gain no workspace authority. Requires `identity.read` and separately consented `broadcast.get` for the selected workspace.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "organization_id": {
+                    "type": "string",
+                    "format": "uuid",
+                    "pattern": "^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$"
+                  },
+                  "setup_id": {
+                    "type": "string",
+                    "format": "uuid",
+                    "pattern": "^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$"
+                  }
+                },
+                "required": [
+                  "organization_id",
+                  "setup_id"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Bounded authorized workspace read",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/McpBroadcastSetupSummary"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Closed MCP bridge error; 401 invalid_token, 403 insufficient_scope/access_denied, 404 disabled/not_found, 413 response_too_large, 429 rate_limited with Retry-After, 503 temporarily_unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/McpBroadcastError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/oauth/mcp/broadcast/profiles": {
+      "post": {
+        "operationId": "listMcpBroadcastProfiles",
+        "summary": "listMcpBroadcastProfiles",
+        "tags": [
+          "OAuth"
+        ],
+        "servers": [
+          {
+            "url": "https://bibleit.app"
+          }
+        ],
+        "security": [
+          {
+            "delegatedOAuth": [
+              "identity.read",
+              "broadcast.get"
+            ]
+          }
+        ],
+        "x-required-scopes": [
+          "identity.read",
+          "broadcast.get"
+        ],
+        "x-oauth-protocol": true,
+        "x-fern-server-name": "protocol",
+        "x-fern-explorer": false,
+        "description": "Default-off read-only MCP issuer bridge. Accepts only the canonical MCP-audience delegated credential, an explicit workspace binding and current shared workspace authority. Personal operator/service tokens are rejected. Requires actor mcp.get/mcp.call. Input is at most 8192 bytes; output at most 256 KiB. No browser capture, provider mutation or arbitrary route is accepted. Setup reads are summaries without document bodies; event lists omit description/health and return at most 100 recent summaries; publisher lists return at most 25 records. Existing grants gain no workspace authority. Requires `identity.read` and separately consented `broadcast.get` for the selected workspace.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "organization_id": {
+                    "type": "string",
+                    "format": "uuid",
+                    "pattern": "^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$"
+                  }
+                },
+                "required": [
+                  "organization_id"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Bounded authorized workspace read",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BroadcastOutputProfileList"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Closed MCP bridge error; 401 invalid_token, 403 insufficient_scope/access_denied, 404 disabled/not_found, 413 response_too_large, 429 rate_limited with Retry-After, 503 temporarily_unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/McpBroadcastError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/oauth/mcp/broadcast/channel": {
+      "post": {
+        "operationId": "getMcpBroadcastChannel",
+        "summary": "getMcpBroadcastChannel",
+        "tags": [
+          "OAuth"
+        ],
+        "servers": [
+          {
+            "url": "https://bibleit.app"
+          }
+        ],
+        "security": [
+          {
+            "delegatedOAuth": [
+              "identity.read",
+              "broadcast.get"
+            ]
+          }
+        ],
+        "x-required-scopes": [
+          "identity.read",
+          "broadcast.get"
+        ],
+        "x-oauth-protocol": true,
+        "x-fern-server-name": "protocol",
+        "x-fern-explorer": false,
+        "description": "Default-off read-only MCP issuer bridge. Accepts only the canonical MCP-audience delegated credential, an explicit workspace binding and current shared workspace authority. Personal operator/service tokens are rejected. Requires actor mcp.get/mcp.call. Input is at most 8192 bytes; output at most 256 KiB. No browser capture, provider mutation or arbitrary route is accepted. Setup reads are summaries without document bodies; event lists omit description/health and return at most 100 recent summaries; publisher lists return at most 25 records. Existing grants gain no workspace authority. Requires `identity.read` and separately consented `broadcast.get` for the selected workspace.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "organization_id": {
+                    "type": "string",
+                    "format": "uuid",
+                    "pattern": "^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$"
+                  }
+                },
+                "required": [
+                  "organization_id"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Bounded authorized workspace read",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/McpBroadcastChannel"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Closed MCP bridge error; 401 invalid_token, 403 insufficient_scope/access_denied, 404 disabled/not_found, 413 response_too_large, 429 rate_limited with Retry-After, 503 temporarily_unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/McpBroadcastError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/oauth/mcp/broadcast/preflight": {
+      "post": {
+        "operationId": "getMcpBroadcastPreflight",
+        "summary": "getMcpBroadcastPreflight",
+        "tags": [
+          "OAuth"
+        ],
+        "servers": [
+          {
+            "url": "https://bibleit.app"
+          }
+        ],
+        "security": [
+          {
+            "delegatedOAuth": [
+              "identity.read",
+              "broadcast.get"
+            ]
+          }
+        ],
+        "x-required-scopes": [
+          "identity.read",
+          "broadcast.get"
+        ],
+        "x-oauth-protocol": true,
+        "x-fern-server-name": "protocol",
+        "x-fern-explorer": false,
+        "description": "Default-off read-only MCP issuer bridge. Accepts only the canonical MCP-audience delegated credential, an explicit workspace binding and current shared workspace authority. Personal operator/service tokens are rejected. Requires actor mcp.get/mcp.call. Input is at most 8192 bytes; output at most 256 KiB. No browser capture, provider mutation or arbitrary route is accepted. Setup reads are summaries without document bodies; event lists omit description/health and return at most 100 recent summaries; publisher lists return at most 25 records. Existing grants gain no workspace authority. Requires `identity.read` and separately consented `broadcast.get` for the selected workspace.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "organization_id": {
+                    "type": "string",
+                    "format": "uuid",
+                    "pattern": "^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$"
+                  }
+                },
+                "required": [
+                  "organization_id"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Bounded authorized workspace read",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BroadcastPreflight"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Closed MCP bridge error; 401 invalid_token, 403 insufficient_scope/access_denied, 404 disabled/not_found, 413 response_too_large, 429 rate_limited with Retry-After, 503 temporarily_unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/McpBroadcastError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/oauth/mcp/broadcast/events": {
+      "post": {
+        "operationId": "listMcpBroadcastEvents",
+        "summary": "listMcpBroadcastEvents",
+        "tags": [
+          "OAuth"
+        ],
+        "servers": [
+          {
+            "url": "https://bibleit.app"
+          }
+        ],
+        "security": [
+          {
+            "delegatedOAuth": [
+              "identity.read",
+              "broadcast.get"
+            ]
+          }
+        ],
+        "x-required-scopes": [
+          "identity.read",
+          "broadcast.get"
+        ],
+        "x-oauth-protocol": true,
+        "x-fern-server-name": "protocol",
+        "x-fern-explorer": false,
+        "description": "Default-off read-only MCP issuer bridge. Accepts only the canonical MCP-audience delegated credential, an explicit workspace binding and current shared workspace authority. Personal operator/service tokens are rejected. Requires actor mcp.get/mcp.call. Input is at most 8192 bytes; output at most 256 KiB. No browser capture, provider mutation or arbitrary route is accepted. Setup reads are summaries without document bodies; event lists omit description/health and return at most 100 recent summaries; publisher lists return at most 25 records. Existing grants gain no workspace authority. Requires `identity.read` and separately consented `broadcast.get` for the selected workspace.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "organization_id": {
+                    "type": "string",
+                    "format": "uuid",
+                    "pattern": "^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$"
+                  }
+                },
+                "required": [
+                  "organization_id"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Bounded authorized workspace read",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BroadcastEventList"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Closed MCP bridge error; 401 invalid_token, 403 insufficient_scope/access_denied, 404 disabled/not_found, 413 response_too_large, 429 rate_limited with Retry-After, 503 temporarily_unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/McpBroadcastError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/oauth/mcp/broadcast/event": {
+      "post": {
+        "operationId": "getMcpBroadcastEvent",
+        "summary": "getMcpBroadcastEvent",
+        "tags": [
+          "OAuth"
+        ],
+        "servers": [
+          {
+            "url": "https://bibleit.app"
+          }
+        ],
+        "security": [
+          {
+            "delegatedOAuth": [
+              "identity.read",
+              "broadcast.get"
+            ]
+          }
+        ],
+        "x-required-scopes": [
+          "identity.read",
+          "broadcast.get"
+        ],
+        "x-oauth-protocol": true,
+        "x-fern-server-name": "protocol",
+        "x-fern-explorer": false,
+        "description": "Default-off read-only MCP issuer bridge. Accepts only the canonical MCP-audience delegated credential, an explicit workspace binding and current shared workspace authority. Personal operator/service tokens are rejected. Requires actor mcp.get/mcp.call. Input is at most 8192 bytes; output at most 256 KiB. No browser capture, provider mutation or arbitrary route is accepted. Setup reads are summaries without document bodies; event lists omit description/health and return at most 100 recent summaries; publisher lists return at most 25 records. Existing grants gain no workspace authority. Requires `identity.read` and separately consented `broadcast.get` for the selected workspace.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "organization_id": {
+                    "type": "string",
+                    "format": "uuid",
+                    "pattern": "^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$"
+                  },
+                  "event_id": {
+                    "type": "string",
+                    "format": "uuid",
+                    "pattern": "^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$"
+                  }
+                },
+                "required": [
+                  "organization_id",
+                  "event_id"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Bounded authorized workspace read",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BroadcastEvent"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Closed MCP bridge error; 401 invalid_token, 403 insufficient_scope/access_denied, 404 disabled/not_found, 413 response_too_large, 429 rate_limited with Retry-After, 503 temporarily_unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/McpBroadcastError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/oauth/mcp/broadcast/operation": {
+      "post": {
+        "operationId": "getMcpBroadcastOperation",
+        "summary": "getMcpBroadcastOperation",
+        "tags": [
+          "OAuth"
+        ],
+        "servers": [
+          {
+            "url": "https://bibleit.app"
+          }
+        ],
+        "security": [
+          {
+            "delegatedOAuth": [
+              "identity.read",
+              "broadcast.get"
+            ]
+          }
+        ],
+        "x-required-scopes": [
+          "identity.read",
+          "broadcast.get"
+        ],
+        "x-oauth-protocol": true,
+        "x-fern-server-name": "protocol",
+        "x-fern-explorer": false,
+        "description": "Default-off read-only MCP issuer bridge. Accepts only the canonical MCP-audience delegated credential, an explicit workspace binding and current shared workspace authority. Personal operator/service tokens are rejected. Requires actor mcp.get/mcp.call. Input is at most 8192 bytes; output at most 256 KiB. No browser capture, provider mutation or arbitrary route is accepted. Setup reads are summaries without document bodies; event lists omit description/health and return at most 100 recent summaries; publisher lists return at most 25 records. Existing grants gain no workspace authority. Requires `identity.read` and separately consented `broadcast.get` for the selected workspace.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "organization_id": {
+                    "type": "string",
+                    "format": "uuid",
+                    "pattern": "^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$"
+                  },
+                  "operation_id": {
+                    "type": "string",
+                    "format": "uuid",
+                    "pattern": "^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$"
+                  }
+                },
+                "required": [
+                  "organization_id",
+                  "operation_id"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Bounded authorized workspace read",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BroadcastOperation"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Closed MCP bridge error; 401 invalid_token, 403 insufficient_scope/access_denied, 404 disabled/not_found, 413 response_too_large, 429 rate_limited with Retry-After, 503 temporarily_unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/McpBroadcastError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/oauth/mcp/broadcast/publishers": {
+      "post": {
+        "operationId": "listMcpBroadcastPublishers",
+        "summary": "listMcpBroadcastPublishers",
+        "tags": [
+          "OAuth"
+        ],
+        "servers": [
+          {
+            "url": "https://bibleit.app"
+          }
+        ],
+        "security": [
+          {
+            "delegatedOAuth": [
+              "identity.read",
+              "broadcast.get"
+            ]
+          }
+        ],
+        "x-required-scopes": [
+          "identity.read",
+          "broadcast.get"
+        ],
+        "x-oauth-protocol": true,
+        "x-fern-server-name": "protocol",
+        "x-fern-explorer": false,
+        "description": "Default-off read-only MCP issuer bridge. Accepts only the canonical MCP-audience delegated credential, an explicit workspace binding and current shared workspace authority. Personal operator/service tokens are rejected. Requires actor mcp.get/mcp.call. Input is at most 8192 bytes; output at most 256 KiB. No browser capture, provider mutation or arbitrary route is accepted. Setup reads are summaries without document bodies; event lists omit description/health and return at most 100 recent summaries; publisher lists return at most 25 records. Existing grants gain no workspace authority. Requires `identity.read` and separately consented `broadcast.get` for the selected workspace.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "organization_id": {
+                    "type": "string",
+                    "format": "uuid",
+                    "pattern": "^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$"
+                  }
+                },
+                "required": [
+                  "organization_id"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Bounded authorized workspace read",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BroadcastPublisherList"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Closed MCP bridge error; 401 invalid_token, 403 insufficient_scope/access_denied, 404 disabled/not_found, 413 response_too_large, 429 rate_limited with Retry-After, 503 temporarily_unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/McpBroadcastError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/oauth/mcp/broadcast/publisher": {
+      "post": {
+        "operationId": "getMcpBroadcastPublisher",
+        "summary": "getMcpBroadcastPublisher",
+        "tags": [
+          "OAuth"
+        ],
+        "servers": [
+          {
+            "url": "https://bibleit.app"
+          }
+        ],
+        "security": [
+          {
+            "delegatedOAuth": [
+              "identity.read",
+              "broadcast.get"
+            ]
+          }
+        ],
+        "x-required-scopes": [
+          "identity.read",
+          "broadcast.get"
+        ],
+        "x-oauth-protocol": true,
+        "x-fern-server-name": "protocol",
+        "x-fern-explorer": false,
+        "description": "Default-off read-only MCP issuer bridge. Accepts only the canonical MCP-audience delegated credential, an explicit workspace binding and current shared workspace authority. Personal operator/service tokens are rejected. Requires actor mcp.get/mcp.call. Input is at most 8192 bytes; output at most 256 KiB. No browser capture, provider mutation or arbitrary route is accepted. Setup reads are summaries without document bodies; event lists omit description/health and return at most 100 recent summaries; publisher lists return at most 25 records. Existing grants gain no workspace authority. Requires `identity.read` and separately consented `broadcast.get` for the selected workspace.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "organization_id": {
+                    "type": "string",
+                    "format": "uuid",
+                    "pattern": "^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$"
+                  },
+                  "publisher_id": {
+                    "type": "string",
+                    "format": "uuid",
+                    "pattern": "^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$"
+                  }
+                },
+                "required": [
+                  "organization_id",
+                  "publisher_id"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Bounded authorized workspace read",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BroadcastPublisher"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Closed MCP bridge error; 401 invalid_token, 403 insufficient_scope/access_denied, 404 disabled/not_found, 413 response_too_large, 429 rate_limited with Retry-After, 503 temporarily_unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/McpBroadcastError"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -14997,6 +15978,15 @@
             "uniqueItems": true,
             "maxItems": 5,
             "description": "Current personal Reader Live authority intersected with the grant’s approved scopes, including separately consented stopped creation and quiet queue staging. Absent in older issuer responses; clients must deny Live tools when absent. Existing read-only grants never acquire write scopes automatically."
+          },
+          "workspace_permissions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/McpWorkspacePermission"
+            },
+            "minItems": 1,
+            "maxItems": 1,
+            "description": "Optional fresh effective authority for the one explicitly consented workspace. Absent for unbound, revoked or unauthorized grants. Missing means no Broadcast tools. Stored OAuth scopes alone are not workspace authority."
           }
         },
         "required": [
@@ -15078,7 +16068,8 @@
           "live.get",
           "live.create",
           "live.queue.stage",
-          "live.rename"
+          "live.rename",
+          "broadcast.get"
         ],
         "description": "Scopes advertised by the MCP resource issuer. Preparation scopes require explicit client approval and new consent; existing grants remain unchanged. This is separate from ordinary REST authorization scopes."
       },
@@ -15097,7 +16088,8 @@
           "live.update",
           "live.delete",
           "live.queue.stage",
-          "live.rename"
+          "live.rename",
+          "broadcast.get"
         ],
         "description": "Response-only scope vocabulary for an owner inspecting existing REST or MCP grants. Does not allow MCP-only scopes in ordinary REST authorization requests."
       },
@@ -16597,6 +17589,203 @@
         ],
         "additionalProperties": false,
         "description": "default uses the connected channel image; asset requires an organization-owned image assetId."
+      },
+      "McpWorkspacePermission": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "organization_id": {
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$"
+          },
+          "name": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 200
+          },
+          "scopes": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "const": "broadcast.get"
+            },
+            "minItems": 1,
+            "maxItems": 1,
+            "uniqueItems": true
+          }
+        },
+        "required": [
+          "organization_id",
+          "name",
+          "scopes"
+        ]
+      },
+      "McpWorkspace": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$"
+          },
+          "name": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 200
+          },
+          "scopes": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "const": "broadcast.get"
+            },
+            "minItems": 1,
+            "maxItems": 1,
+            "uniqueItems": true
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "scopes"
+        ]
+      },
+      "McpWorkspaceList": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "workspaces": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/McpWorkspace"
+            },
+            "minItems": 1,
+            "maxItems": 1
+          }
+        },
+        "required": [
+          "workspaces"
+        ]
+      },
+      "McpBroadcastChannel": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "channel": {
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/BroadcastChannel"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "required": [
+          "channel"
+        ]
+      },
+      "McpBroadcastSetupSummary": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$"
+          },
+          "organization_id": {
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$"
+          },
+          "name": {
+            "type": "string"
+          },
+          "revision": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "document_bytes": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 1048576
+          },
+          "document_sha256": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          },
+          "source_count": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "scene_count": {
+            "type": "integer",
+            "minimum": 0
+          }
+        },
+        "required": [
+          "id",
+          "organization_id",
+          "name",
+          "revision",
+          "document_bytes",
+          "document_sha256",
+          "source_count",
+          "scene_count"
+        ]
+      },
+      "McpBroadcastError": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "error": {
+            "type": "string",
+            "enum": [
+              "invalid_request",
+              "invalid_token",
+              "insufficient_scope",
+              "access_denied",
+              "not_found",
+              "response_too_large",
+              "rate_limited",
+              "temporarily_unavailable"
+            ]
+          }
+        },
+        "required": [
+          "error"
+        ]
+      },
+      "McpWorkspaceConsentError": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "error": {
+            "type": "string",
+            "enum": [
+              "invalid_request",
+              "invalid_client",
+              "invalid_grant",
+              "invalid_scope",
+              "invalid_redirect_uri",
+              "unsupported_response_type",
+              "unsupported_grant_type",
+              "access_denied",
+              "slow_down",
+              "temporarily_unavailable",
+              "invalid_target",
+              "not_found"
+            ]
+          }
+        },
+        "required": [
+          "error"
+        ],
+        "description": "Closed workspace-consent error; disabled routes return not_found without changing existing issuer errors."
       }
     },
     "responses": {

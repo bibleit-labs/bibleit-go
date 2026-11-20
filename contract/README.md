@@ -181,3 +181,17 @@ This is a Go source migration for callers constructing `OAuthGrant` values or
 assigning their scope slices: use `[]OAuthGrantedScope` instead of `[]OAuthScope`.
 The wire JSON is unchanged. This contract/model update does not activate tools,
 change a grant or publish an SDK release.
+
+## Workspace-bound MCP response models
+
+MCP metadata and owner grant response scopes recognize `broadcast.get`.
+`McpOAuthProbe.WorkspacePermissions` represents the optional fresh projection of
+one explicitly consented workspace. Older personal responses omit it; an absent
+profile never implies Broadcast authority. Each server invocation still checks
+its stored grant, selected workspace and current permissions.
+
+These are response models, not ordinary OAuth request scopes. The SDK's REST
+client and OAuth client do not send MCP-audience credentials to Broadcast REST
+routes or expose the dedicated issuer bridge. The separate MCP adapter owns that
+protocol. Regenerating models or installing this SDK does not activate Broadcast,
+create consent or add a workspace binding.
