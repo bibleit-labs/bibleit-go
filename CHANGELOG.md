@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## v0.5.1 — 2026-11-20
 
 - Recognize explicitly consented `broadcast.get` in MCP metadata and owner grant
   response scope validators. Add the optional typed workspace probe profile so
