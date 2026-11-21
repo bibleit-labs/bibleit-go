@@ -63,6 +63,10 @@ var operations = map[string]Operation{
 
 	"getLiveEvents": {Method: "GET", Path: "/lives/{live_id}/events", Summary: "Receive versioned Live events"},
 
+	"getLiveOverlay": {Method: "GET", Path: "/lives/{live_id}/overlay", Summary: "Read the selected Live overlay"},
+
+	"setLiveOverlay": {Method: "PUT", Path: "/lives/{live_id}/overlay", Summary: "Select or clear the Live overlay"},
+
 	"getLivePlayback": {Method: "GET", Path: "/lives/{live_id}/playback", Summary: "Read Live playback state"},
 
 	"updateLivePlayback": {Method: "PATCH", Path: "/lives/{live_id}/playback", Summary: "Update Live playback state"},
@@ -671,6 +675,24 @@ func (p GetLiveEventsParams) QueryValues() url.Values {
 	}
 
 	return values
+}
+
+// GetLiveOverlay Read the selected Live overlay.
+func (c *Client) GetLiveOverlay(ctx context.Context, live_id string, options ...*Options) (*Response, error) {
+	opts, err := singleOptions(options)
+	if err != nil {
+		return nil, err
+	}
+	return c.Call(ctx, "getLiveOverlay", map[string]string{"live_id": live_id}, opts)
+}
+
+// SetLiveOverlay Select or clear the Live overlay.
+func (c *Client) SetLiveOverlay(ctx context.Context, live_id string, options ...*Options) (*Response, error) {
+	opts, err := singleOptions(options)
+	if err != nil {
+		return nil, err
+	}
+	return c.Call(ctx, "setLiveOverlay", map[string]string{"live_id": live_id}, opts)
 }
 
 // GetLivePlayback Read Live playback state.

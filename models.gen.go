@@ -3499,6 +3499,29 @@ type LiveMetadataPatch struct {
 	Name string `json:"name"`
 }
 
+// LiveOverlayInput defines model for LiveOverlayInput.
+type LiveOverlayInput struct {
+	// DesignID Select a current organization overlay design or use null to clear the selection.
+	DesignID *string `json:"design_id"`
+}
+
+// LiveOverlaySelection defines model for LiveOverlaySelection.
+type LiveOverlaySelection struct {
+	DesignID       string `json:"design_id"`
+	DesignRevision int64  `json:"design_revision"`
+	Name           string `json:"name"`
+
+	// YoutubeURL Verified current YouTube watch URL for a stream-link overlay, otherwise null.
+	YoutubeURL *string `json:"youtube_url"`
+}
+
+// LiveOverlayState defines model for LiveOverlayState.
+type LiveOverlayState struct {
+	LiveID   string                `json:"live_id"`
+	Overlay  *LiveOverlaySelection `json:"overlay"`
+	Sequence int64                 `json:"sequence"`
+}
+
 // LiveQueueItem defines model for LiveQueueItem.
 type LiveQueueItem struct {
 	// ID Opaque stable queue item ID. Preserved through reordering, metadata edits and restart; removing/recreating a verse yields a new ID.
@@ -5181,6 +5204,12 @@ type GetLiveEventsParams struct {
 	Wait *int64 `form:"wait,omitempty" json:"wait,omitempty"`
 }
 
+// SetLiveOverlayParams defines parameters for SetLiveOverlay.
+type SetLiveOverlayParams struct {
+	// IfMatch Current strong Live ETag, for example "live-42". Missing: 428; stale: 412. Wildcards, weak validators and lists are not accepted.
+	IfMatch string `json:"If-Match"`
+}
+
 // UpdateLivePlaybackParams defines parameters for UpdateLivePlayback.
 type UpdateLivePlaybackParams struct {
 	// IfMatch Use the ETag from the latest display/playback response. Missing: 428; stale: 412. Wildcards, weak validators and lists are not accepted.
@@ -5690,6 +5719,9 @@ type RotateLiveAudienceSecretJSONRequestBody = EmptyObject
 
 // ReplaceLiveDisplayJSONRequestBody defines body for ReplaceLiveDisplay for application/json ContentType.
 type ReplaceLiveDisplayJSONRequestBody = ReplaceDisplay
+
+// SetLiveOverlayJSONRequestBody defines body for SetLiveOverlay for application/json ContentType.
+type SetLiveOverlayJSONRequestBody = LiveOverlayInput
 
 // UpdateLivePlaybackJSONRequestBody defines body for UpdateLivePlayback for application/json ContentType.
 type UpdateLivePlaybackJSONRequestBody = PlaybackPatch

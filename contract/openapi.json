@@ -10144,6 +10144,188 @@
           }
         }
       }
+    },
+    "/lives/{live_id}/overlay": {
+      "parameters": [
+        {
+          "name": "live_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "get": {
+        "operationId": "getLiveOverlay",
+        "summary": "Read the selected Live overlay",
+        "tags": [
+          "Live controls"
+        ],
+        "x-required-scopes": [
+          "live.get"
+        ],
+        "description": "**Required scopes:** `live.get`.\n\nRead or select the current organization Live overlay using the same serialized Live authority and processing checks as display controls. Selection does not start a Live or publisher, and never grants access to a foreign design. Designs are resolved through the current organization library. The Live sequence increments only when the selection changes; the returned strong ETag shares the Live display/playback/metadata sequence. No browser cookies authenticate REST. Personal and delegated credentials may read only their own personal Live state; organization overlay selection remains unavailable to personal Lives.",
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LiveOverlayState"
+                }
+              }
+            },
+            "headers": {
+              "X-Request-Id": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "ETag": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Strong shared Live sequence validator, for example \"live-42\"."
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/components/responses/Problem"
+          },
+          "401": {
+            "$ref": "#/components/responses/Problem"
+          },
+          "403": {
+            "$ref": "#/components/responses/Problem"
+          },
+          "404": {
+            "$ref": "#/components/responses/Problem"
+          },
+          "429": {
+            "$ref": "#/components/responses/Problem"
+          },
+          "503": {
+            "$ref": "#/components/responses/Problem"
+          },
+          "412": {
+            "$ref": "#/components/responses/Problem"
+          },
+          "422": {
+            "$ref": "#/components/responses/Problem"
+          },
+          "428": {
+            "$ref": "#/components/responses/Problem"
+          }
+        },
+        "security": [
+          {
+            "serviceToken": []
+          },
+          {
+            "personalToken": []
+          },
+          {
+            "delegatedOAuth": [
+              "live.get"
+            ]
+          }
+        ],
+        "x-fern-server-name": "rest",
+        "x-fern-explorer": false
+      },
+      "put": {
+        "operationId": "setLiveOverlay",
+        "summary": "Select or clear the Live overlay",
+        "tags": [
+          "Live controls"
+        ],
+        "x-required-scopes": [
+          "live.update"
+        ],
+        "description": "**Required scopes:** `live.update`.\n\nRead or select the current organization Live overlay using the same serialized Live authority and processing checks as display controls. Selection does not start a Live or publisher, and never grants access to a foreign design. Designs are resolved through the current organization library. The Live sequence increments only when the selection changes; the returned strong ETag shares the Live display/playback/metadata sequence. No browser cookies authenticate REST. PUT requires exactly design_id (a design identifier or null to clear), and the current strong If-Match validator: missing conditions return 428, stale conditions 412 and malformed input 422. Setting a design is organization-only. The operation does not automatically retry a stale write.",
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LiveOverlayState"
+                }
+              }
+            },
+            "headers": {
+              "X-Request-Id": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "ETag": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Strong shared Live sequence validator, for example \"live-42\"."
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/components/responses/Problem"
+          },
+          "401": {
+            "$ref": "#/components/responses/Problem"
+          },
+          "403": {
+            "$ref": "#/components/responses/Problem"
+          },
+          "404": {
+            "$ref": "#/components/responses/Problem"
+          },
+          "429": {
+            "$ref": "#/components/responses/Problem"
+          },
+          "503": {
+            "$ref": "#/components/responses/Problem"
+          },
+          "412": {
+            "$ref": "#/components/responses/Problem"
+          },
+          "422": {
+            "$ref": "#/components/responses/Problem"
+          },
+          "428": {
+            "$ref": "#/components/responses/Problem"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LiveOverlayInput"
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "If-Match",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^\"live-[0-9]+\"$"
+            },
+            "description": "Current strong Live ETag, for example \"live-42\". Missing: 428; stale: 412. Wildcards, weak validators and lists are not accepted."
+          }
+        ],
+        "security": [
+          {
+            "serviceToken": []
+          }
+        ],
+        "x-fern-server-name": "rest",
+        "x-fern-explorer": false
+      }
     }
   },
   "components": {
@@ -16597,6 +16779,93 @@
         ],
         "additionalProperties": false,
         "description": "default uses the connected channel image; asset requires an organization-owned image assetId."
+      },
+      "LiveOverlayState": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "live_id",
+          "sequence",
+          "overlay"
+        ],
+        "properties": {
+          "live_id": {
+            "type": "string"
+          },
+          "sequence": {
+            "type": "integer",
+            "format": "int64",
+            "minimum": 0,
+            "maximum": 9223372036854775807
+          },
+          "overlay": {
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/LiveOverlaySelection"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        }
+      },
+      "LiveOverlaySelection": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "design_id",
+          "design_revision",
+          "name",
+          "youtube_url"
+        ],
+        "properties": {
+          "design_id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 64,
+            "pattern": "^(?:[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}|builtin-[a-z0-9-]+)$"
+          },
+          "design_revision": {
+            "type": "integer",
+            "format": "int64",
+            "minimum": 0
+          },
+          "name": {
+            "type": "string"
+          },
+          "youtube_url": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "uri",
+            "description": "Verified current YouTube watch URL for a stream-link overlay, otherwise null."
+          }
+        }
+      },
+      "LiveOverlayInput": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "design_id"
+        ],
+        "properties": {
+          "design_id": {
+            "oneOf": [
+              {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 64,
+                "pattern": "^(?:[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}|builtin-[a-z0-9-]+)$"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Select a current organization overlay design or use null to clear the selection."
+          }
+        }
       }
     },
     "responses": {

@@ -17,8 +17,8 @@ go get github.com/bibleit-labs/bibleit-go
 
 ## Resource client
 
-Import `github.com/bibleit-labs/bibleit-go`. The client includes all 110 REST
-operations, generated schemas, response metadata, conditional writes, binary
+Import `github.com/bibleit-labs/bibleit-go`. The client includes the pinned REST
+operation directory, generated schemas, response metadata, conditional writes, binary
 streams, versioned Live event polling and lazy whole-book page iterators. See [REST usage](docs/api.md) and
 the [runnable reading example](examples/read/main.go).
 
@@ -91,3 +91,18 @@ Licensed under [MIT](LICENSE).
 
 Generated-code and dependency redistribution notices are retained in
 [THIRD_PARTY_NOTICES](THIRD_PARTY_NOTICES), alongside the project MIT license.
+
+## Live overlays (candidate)
+
+`GetLiveOverlay` / `SetLiveOverlay` on the REST client read and select a saved or
+built-in design. Send `Options{IfMatch: etag, JSON: LiveOverlayInput{DesignID: &id}}`;
+use `DesignID: nil` for explicit JSON null to restore normal output. Reuse the
+strong ETag returned by the read, and refresh state after a precondition failure.
+The SSH client has `GetLiveOverlay`, `SetLiveOverlay` and `ClearLiveOverlay`, using
+the returned int64 sequence. Selection never starts playback or clears the queue.
+These additive operations require the corresponding server candidate; they have
+not been published as a new SDK release. Existing Live permissions still apply.
+
+REST overlay writes require an organization-bound credential with `live.update`;
+personal REST Lives cannot select the organization design library. SSH continues
+to enforce the actor’s current organization authority.
